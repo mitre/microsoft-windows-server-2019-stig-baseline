@@ -2,7 +2,7 @@
 
 #### Version 1 Release 3
 
-##### On Road Map - controls not yet implimented
+#### On Road Map - controls not yet implimented
 
 This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
 
