@@ -47,5 +47,7 @@ require it.
   tag fix_id: "F-99775r1_fix"
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4", "Rev_4"]
+
+  # control 'V-3245' windows 2012 Profile
 end
 

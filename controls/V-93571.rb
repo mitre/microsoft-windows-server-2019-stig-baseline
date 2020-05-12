@@ -25,5 +25,7 @@ firewall STIG.
   tag fix_id: "F-99815r1_fix"
   tag cci: ["CCI-000366", "CCI-002080"]
   tag nist: ["CM-6 b", "CA-3 (5)", "Rev_4"]
+
+  #Code can be found in Windows 10
 end
 

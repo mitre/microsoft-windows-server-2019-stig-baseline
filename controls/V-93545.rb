@@ -44,5 +44,9 @@ Windows Settings >> Security Settings >> Local Policies >> Security Options >>
   tag fix_id: "F-99789r1_fix"
   tag cci: ["CCI-002418", "CCI-002421"]
   tag nist: ["SC-8", "SC-8 (1)", "Rev_4"]
+
+   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+ 
+    if domain_role == '4' || domain_role == '5'
 end
 

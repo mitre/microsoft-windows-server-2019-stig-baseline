@@ -111,5 +111,7 @@ IASE at http://iase.disa.mil/pki-pke/Pages/tools.aspx.
   tag fix_id: "F-99735r1_fix"
   tag cci: ["CCI-000185", "CCI-002470"]
   tag nist: ["IA-5 (2) (a)", "SC-23 (5)", "Rev_4"]
+
+  #control 'V-32274' in Windows 2012
 end
 

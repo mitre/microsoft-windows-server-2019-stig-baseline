@@ -86,5 +86,7 @@ to the directory server after 5 minutes of inactivity.
   tag fix_id: "F-99753r1_fix"
   tag cci: ["CCI-001133"]
   tag nist: ["SC-10", "Rev_4"]
+
+  #control "V-14831" Windows 2012 Profile
 end
 
