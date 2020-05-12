@@ -11,13 +11,9 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Logon records user logons. If this is an interactive logon, it is recorded
 on the local system. If it is to a network share, it is recorded on the system
-accessed.
-
-
-  "
+accessed."
   desc  "rationale", ""
-  desc  "check", "
-    Security Option \"Audit: Force audit policy subcategory settings (Windows
+  desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
 effective.
@@ -33,23 +29,31 @@ as administrator\").
 
     If the system does not audit the following, this is a finding.
 
-    Logon/Logoff >> Logon - Failure
-  "
-  desc  "fix", "Configure the policy value for Computer Configuration >>
+    Logon/Logoff >> Logon - Failure"
+  desc  'fix', "Configure the policy value for Computer Configuration >>
 Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Logon/Logoff >> \"Audit Logon\" with \"Failure\"
 selected."
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000032-GPOS-00013"
-  tag satisfies: ["SRG-OS-000032-GPOS-00013", "SRG-OS-000470-GPOS-00214",
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000032-GPOS-00013'
+  tag 'satisfies': ["SRG-OS-000032-GPOS-00013", "SRG-OS-000470-GPOS-00214",
 "SRG-OS-000472-GPOS-00217", "SRG-OS-000473-GPOS-00218",
 "SRG-OS-000475-GPOS-00220"]
-  tag gid: "V-92969"
-  tag rid: "SV-103057r1_rule"
-  tag stig_id: "WN19-AU-000200"
-  tag fix_id: "F-99215r1_fix"
-  tag cci: ["CCI-000067", "CCI-000172"]
-  tag nist: ["AC-17 (1)", "AU-12 c", "Rev_4"]
+  tag 'gid': 'V-92969'
+  tag 'rid': 'SV-103057r1_rule'
+  tag 'stig_id': 'WN19-AU-000200'
+  tag 'fix_id': 'F-99215r1_fix'
+  tag 'cci': ["CCI-000067", "CCI-000172"]
+  tag 'nist': ["AC-17 (1)", "AU-12 c", "Rev_4"]
+
+  describe.one do
+    describe audit_policy do
+      its('Logon') { should eq 'Failure' }
+    end
+    describe audit_policy do
+      its('Logon') { should eq 'Success and Failure' }
+    end
+  end
 end
 
