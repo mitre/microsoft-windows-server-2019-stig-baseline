@@ -118,6 +118,12 @@ inputs:
    type: Array
    value: 
     -
+
+ - name: local_administrators_member
+   desc: "List of authorized users in the local Administrators group"
+   type: Array
+   value:
+    -
   
  - name: ntds_permissions
    desc: "Permissions on folder and file for NTDS Directory"
@@ -125,3 +131,18 @@ inputs:
    value:
     - BUILTIN\Administrators:(I)(F)
     - NT AUTHORITY\SYSTEM:(I)(F)
+
+ - name: c_windows_sysvol_perm
+   desc: "Permissions on folder and file for SYSVOL Directory"
+   type: Array
+   value:
+    - NT AUTHORITY\Authenticated Users:(RX)
+    - NT AUTHORITY\Authenticated Users:(OI)(CI)(IO)(GR,GE)
+    - BUILTIN\Server Operators:(RX)
+    - BUILTIN\Server Operators:(OI)(CI)(IO)(GR,GE)
+    - BUILTIN\Administrators:(M,WDAC,WO)
+    - BUILTIN\Administrators:(OI)(CI)(IO)(F)
+    - NT AUTHORITY\SYSTEM:(F)
+    - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
+    - BUILTIN\Administrators:(M,WDAC,WO)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)

@@ -15,11 +15,9 @@ attention. In a distributed administration model (i.e., help desk), Group
 Policy objects are more likely to have access permissions changed from the
 secure defaults. If inappropriate access permissions are defined for Group
 Policy objects, this could allow an intruder to change the security policy
-applied to all domain client computers (workstations and servers).
-  "
+applied to all domain client computers (workstations and servers)."
   desc  "rationale", ""
-  desc  "check", "
-    This applies to domain controllers. It is NA for other systems.
+  desc  'check', "This applies to domain controllers. It is NA for other systems.
 
     Review the permissions on Group Policy objects.
 
@@ -74,10 +72,8 @@ objects, Special permissions
     The Domain Admins and Enterprise Admins will not have the \"Delete all
 child objects\" permission on the two default Group Policy objects: Default
 Domain Policy and Default Domain Controllers Policy. They will have this
-permission on organization created Group Policy objects.
-  "
-  desc  "fix", "
-    Maintain the permissions on Group Policy objects to not allow greater than
+permission o'n organization created Group Policy objects."
+  desc  'fix', "Maintain the permissions on Group Policy objects to not allow greater than
 \"Read\" and \"Apply group policy\" for standard user accounts or groups. The
 default permissions below meet this requirement:
 
@@ -101,16 +97,21 @@ with the ISSO.
     The Domain Admins and Enterprise Admins will not have the \"Delete all
 child objects\" permission on the two default Group Policy objects: Default
 Domain Policy and Default Domain Controllers Policy. They will have this
-permission on created Group Policy objects.
-  "
+permission on created Group Policy objects."
   impact 0.7
-  tag severity: nil
-  tag gtitle: "SRG-OS-000324-GPOS-00125"
-  tag gid: "V-93033"
-  tag rid: "SV-103121r1_rule"
-  tag stig_id: "WN19-DC-000090"
-  tag fix_id: "F-99279r1_fix"
-  tag cci: ["CCI-002235"]
-  tag nist: ["AC-6 (10)", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
+  tag 'gid': 'V-93033'
+  tag 'rid': 'SV-103121r1_rule'
+  tag 'stig_id': 'WN19-DC-000090'
+  tag 'fix_id': 'F-99279r1_fix'
+  tag 'cci': ["CCI-002235"]
+  tag 'nist': ["AC-6 (10)", "Rev_4"]
+
+  #Checked Code in 2016 and it is not a validate way of checking permissions, Until a command is put together that can get all GPO's in a Domain and then check all permissions, this is manually
+  describe 'A manual review is required to ensure all Group Policies have the correct permisions' do
+    skip 'A manual review is required to ensure all Group Policies have the correct permisions'
+  end
+
 end
 
