@@ -78,7 +78,13 @@ groups:
   end
   if domain_role == '4' || domain_role == '5'
     describe security_policy do
-     its('SeNetworkLogonRight') { should include ['S-1-5-11', 'S-1-5-32-544', 'S-1-5-9'] }
+     its('SeNetworkLogonRight') { should include "S-1-5-11" }
+    end
+    describe security_policy do
+     its('SeNetworkLogonRight') { should include "S-1-5-32-544" }
+    end
+    describe security_policy do
+     its('SeNetworkLogonRight') { should include "S-1-5-9" }
     end
   else
     impact 0.0
