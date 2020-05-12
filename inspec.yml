@@ -5,28 +5,28 @@ copyright: The Authors
 copyright_email: you@example.com
 license: Apache-2.0
 summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
-version: 0.1.0
+version: 1.3.0
 
-  - name: temp_accounts_domain
-    desc: "List of temporary accounts on the domain"
-    type: Array
-    value: 
-      -
+ - name: temp_accounts_domain
+   desc: "List of temporary accounts on the domain"
+   type: Array
+   value: 
+    -
 
-  - name: temp_accounts_local
-    desc: "List of temporary accounts on local system"
-    type: Array
-    value: 
-      -
-      
-  - name: emergency_accounts_domain
-    desc: "List of emergency accounts on the domain"
-    type: Array
-    value: 
-      - 
+ - name: temp_accounts_local
+   desc: "List of temporary accounts on local system"
+   type: Array
+   value: 
+    -
 
-  - name: emergency_accounts_local
-    desc: "List of emergency accounts on the system"
-    type: Array
-    value: 
-      - 
+ - name: emergency_accounts_domain
+   desc: "List of emergency accounts on the domain"
+   type: Array
+   value: 
+    - 
+
+ - name: emergency_accounts_local
+   desc: "List of emergency accounts on the system"
+   type: Array
+   value: 
+    - 
