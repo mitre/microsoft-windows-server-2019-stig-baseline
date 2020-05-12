@@ -9,13 +9,9 @@ and installed applications.
 
     The default permissions are adequate when the Security Option \"Network
 access: Let Everyone permissions apply to anonymous users\" is set to
-\"Disabled\" (WN19-SO-000240).
-
-
-  "
+\"Disabled\" (WN19-SO-000240)."
   desc  "rationale", ""
-  desc  "check", "
-    The default permissions are adequate when the Security Option \"Network
+  desc  'check', "The default permissions are adequate when the Security Option \"Network
 access: Let Everyone permissions apply to anonymous users\" is set to
 \"Disabled\" (WN19-SO-000240).
 
@@ -78,9 +74,8 @@ subfolders, and files
     APPLICATION PACKAGE AUTHORITY\\ALL RESTRICTED APPLICATION PACKAGES:(RX)
     APPLICATION PACKAGE AUTHORITY\\ALL RESTRICTED APPLICATION
 PACKAGES:(OI)(CI)(IO)(GR,GE)
-    Successfully processed 1 files; Failed processing 0 files
-  "
-  desc  "fix", "
+    Successfully processed 1 files; Failed processing 0 files"
+  desc  'fix', "
     Maintain the default permissions for the program file directories and
 configure the Security Option \"Network access: Let Everyone permissions apply
 to anonymous users\" to \"Disabled\" (WN19-SO-000240).
@@ -102,18 +97,29 @@ to anonymous users\" to \"Disabled\" (WN19-SO-000240).
     ALL APPLICATION PACKAGES - Read & execute - This folder, subfolders, and
 files
     ALL RESTRICTED APPLICATION PACKAGES - Read & execute - This folder,
-subfolders, and files
-  "
+subfolders, and files"
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000312-GPOS-00122"
-  tag satisfies: ["SRG-OS-000312-GPOS-00122", "SRG-OS-000312-GPOS-00123",
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000312-GPOS-00122'
+  tag 'satisfies': ["SRG-OS-000312-GPOS-00122", "SRG-OS-000312-GPOS-00123",
 "SRG-OS-000312-GPOS-00124"]
-  tag gid: "V-93021"
-  tag rid: "SV-103109r1_rule"
-  tag stig_id: "WN19-00-000150"
-  tag fix_id: "F-99267r1_fix"
-  tag cci: ["CCI-002165"]
-  tag nist: ["AC-3 (4)", "Rev_4"]
+  tag 'gid': 'V-93021'
+  tag 'rid': 'SV-103109r1_rule'
+  tag 'stig_id': 'WN19-00-000150'
+  tag 'fix_id': 'F-99267r1_fix'
+  tag 'cci': ["CCI-002165"]
+  tag 'nist': ["AC-3 (4)", "Rev_4"]
+
+  c_program_files_perm = json( command: "icacls 'C:\\Program Files' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("C:\\Program Files ", '') }
+    describe "c:\\Program Files permissions are set correctly on folder structure" do
+      subject { c_program_files_perm.eql? input('c_program_files_perm') }
+      it { should eq true }
+    end
+
+    c_program_filesx86_perm = json( command: "icacls 'C:\\Program Files (x86)' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("C:\\Program Files (x86) ", '') }
+    describe "c:\\Program Files(x86) permissions are set correctly on folder structure" do
+      subject { c_program_filesx86_perm.eql? input('c_program_files_perm') }
+      it { should eq true }
+    end
 end
 

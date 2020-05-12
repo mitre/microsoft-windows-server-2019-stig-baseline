@@ -31,3 +31,97 @@ inputs:
    type: Array
    value: 
     - 
+
+ - name: c_perm
+   desc: "Permissions on folder and file for C:\\ Directory"
+   type: Array
+   value:
+    - NT AUTHORITY\\SYSTEM:(OI)(CI)(F)
+    - BUILTIN\Administrators:(OI)(CI)(F)
+    - BUILTIN\Users:(OI)(CI)(RX)
+    - BUILTIN\Users:(CI)(AD)
+    - BUILTIN\Users:(CI)(IO)(WD)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)
+
+ - name: c_program_files_perm
+   desc: "Permissions on folder and file for C:\\Program Files and C:\\Program Files(x86) Directory"
+   type: Array
+   value:
+    - NT SERVICE\TrustedInstaller:(F)
+    - NT SERVICE\TrustedInstaller:(CI)(IO)(F)
+    - NT AUTHORITY\SYSTEM:(M)
+    - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
+    - BUILTIN\Administrators:(M)
+    - BUILTIN\Administrators:(OI)(CI)(IO)(F)
+    - BUILTIN\Users:(RX)
+    - BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+  
+ - name: c_windows_perm
+   desc: "Permissions on folder and file for C:\\Windows Directory"
+   type: Array
+   value:
+    - NT SERVICE\TrustedInstaller:(F)
+    - NT SERVICE\TrustedInstaller:(CI)(IO)(F)
+    - NT AUTHORITY\SYSTEM:(M)
+    - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
+    - BUILTIN\Administrators:(M)
+    - BUILTIN\Administrators:(OI)(CI)(IO)(F)
+    - BUILTIN\Users:(RX)
+    - BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+
+ - name: reg_software_perms
+   desc: "The required Registry Software Permission Settings"
+   type: Array
+   value:
+    - CREATOR OWNER Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+    - BUILTIN\Users Allow  ReadKey
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadKey
+    - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  ReadKey
+
+  - name: reg_security_perms
+    desc: "The required Registry Security Permissions Settings"
+    type: Array
+    value:
+      - NT AUTHORITY\SYSTEM Allow  FullControl
+      - BUILTIN\Administrators Allow  ReadKey, ChangePermissions
+
+  - name: reg_system_perms
+    desc: "The required Registry System Permissions Settings"
+    type: Array
+    value:
+      - CREATOR OWNER Allow  268435456
+      - NT AUTHORITY\SYSTEM Allow  268435456
+      - NT AUTHORITY\SYSTEM Allow  FullControl
+      - BUILTIN\Administrators Allow  268435456
+      - BUILTIN\Administrators Allow  FullControl
+      - BUILTIN\Users Allow  -2147483648
+      - BUILTIN\Users Allow  ReadKey
+      - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadKey
+      - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  -2147483648
+      - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  ReadKey
+      - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  -2147483648
+
+  - name: local_administrators_dc
+    desc: "List of authorized users in the local Administrators group"
+    type: Array
+    value: 
+      -
+  
+  - name: ntds_permissions
+    desc: "Permissions on folder and file for NTDS Directory"
+    type: Array
+    value:
+      - BUILTIN\Administrators:(I)(F)
+      - NT AUTHORITY\SYSTEM:(I)(F)
