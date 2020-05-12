@@ -59,7 +59,7 @@ downloaded from the PKI and PKE Tools page on IASE:
   desc  "fix", "Obtain a server certificate for the domain controller issued by
 the DoD PKI or an approved ECA."
   impact 0.7
-  tag severity: nil
+  tag 'severity': nil
   tag gtitle: "SRG-OS-000066-GPOS-00034"
   tag gid: "V-93483"
   tag rid: "SV-103569r1_rule"
@@ -67,5 +67,7 @@ the DoD PKI or an approved ECA."
   tag fix_id: "F-99727r1_fix"
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)", "Rev_4"]
+
+  #control "V-14820" Windows 2012 Profile
 end
 

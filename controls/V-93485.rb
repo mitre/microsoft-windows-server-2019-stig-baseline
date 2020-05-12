@@ -52,5 +52,7 @@ User Principal Name (UPN) for the network. See PKE documentation for details."
   tag fix_id: "F-99729r1_fix"
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)", "Rev_4"]
+
+  #Made Manual Check
 end
 
