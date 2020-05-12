@@ -8,11 +8,9 @@ administrative, and other high-level capabilities.
 
     The \"Load and unload device drivers\" user right allows a user to load
 device drivers dynamically on a system. This could be used by an attacker to
-install malicious code.
-  "
+install malicious code."
   desc  "rationale", ""
-  desc  "check", "
-    Verify the effective setting in Local Group Policy Editor.
+  desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
 
@@ -33,23 +31,32 @@ and unload device drivers\" user right, this is a finding:
     If any SIDs other than the following are granted the
 \"SeLoadDriverPrivilege\" user right, this is a finding:
 
-    S-1-5-32-544 (Administrators)
-  "
-  desc  "fix", "
-    Configure the policy value for Computer Configuration >> Windows Settings
+    S-1-5-32-544 (Administrators)"
+  desc  'fix', "Configure the policy value for Computer Configuration >> Windows Settings
 >> Security Settings >> Local Policies >> User Rights Assignment >> \"Load and
 unload device drivers\" to include only the following accounts or groups:
 
-    - Administrators
-  "
+    - Administrators"
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000324-GPOS-00125"
-  tag gid: "V-93075"
-  tag rid: "SV-103163r1_rule"
-  tag stig_id: "WN19-UR-000150"
-  tag fix_id: "F-99321r1_fix"
-  tag cci: ["CCI-002235"]
-  tag nist: ["AC-6 (10)", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
+  tag 'gid': 'V-93075'
+  tag 'rid': 'SV-103163r1_rule'
+  tag 'stig_id': 'WN19-UR-000150'
+  tag 'fix_id': 'F-99321r1_fix'
+  tag 'cci': ["CCI-002235"]
+  tag 'nist': ["AC-6 (10)", "Rev_4"]
+
+  os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
+
+  if os_type == 'false'
+     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+      skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
+     end
+  else
+    describe security_policy do
+     its('SeLoadDriverPrivilege') { should eq ['S-1-5-32-544'] }
+  end
+ end
 end
 
