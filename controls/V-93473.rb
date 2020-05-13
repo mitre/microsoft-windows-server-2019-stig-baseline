@@ -57,5 +57,7 @@ member servers to accomplish this.
   tag fix_id: "F-99717r1_fix"
   tag cci: ["CCI-000199"]
   tag nist: ["IA-5 (1) (d)", "Rev_4"]
+
+  #check out Windows 2012 control 'V-14225'
 end
 

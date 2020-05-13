@@ -44,5 +44,7 @@ is a finding.
   tag fix_id: "F-99725r1_fix"
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)", "Rev_4"]
+
+  #Check out Windows 2012 control "V-39334"
 end
 
