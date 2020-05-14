@@ -42,8 +42,8 @@ to a lower level than the data."
   tag cci: ["CCI-002450"]
   tag nist: ["SC-13", "Rev_4"]
 
-  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  #domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   
-    if domain_role == '4' || domain_role == '5'
+    #if domain_role == '4' || domain_role == '5'
 end
 
