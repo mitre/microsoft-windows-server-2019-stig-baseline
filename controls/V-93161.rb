@@ -11,13 +11,9 @@ Collecting this data is essential for analyzing the security of information
 assets and detecting signs of suspicious and unexpected behavior.
 
     Special Logon records special logons that have administrative privileges
-and can be used to elevate processes.
-
-
-  "
+and can be used to elevate processes."
   desc  "rationale", ""
-  desc  "check", "
-    Security Option \"Audit: Force audit policy subcategory settings (Windows
+  desc 'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
 effective.
@@ -33,22 +29,30 @@ as administrator\").
 
     If the system does not audit the following, this is a finding.
 
-    Logon/Logoff >> Special Logon - Success
-  "
-  desc  "fix", "Configure the policy value for Computer Configuration >>
+    Logon/Logoff >> Special Logon - Success"
+  desc  'fix', "Configure the policy value for Computer Configuration >>
 Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Logon/Logoff >> \"Audit Special Logon\" with
 \"Success\" selected."
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000470-GPOS-00214"
-  tag satisfies: ["SRG-OS-000470-GPOS-00214", "SRG-OS-000472-GPOS-00217",
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000470-GPOS-00214'
+  tag 'satisfies': ["SRG-OS-000470-GPOS-00214", "SRG-OS-000472-GPOS-00217",
 "SRG-OS-000473-GPOS-00218", "SRG-OS-000475-GPOS-00220"]
-  tag gid: "V-93161"
-  tag rid: "SV-103249r1_rule"
-  tag stig_id: "WN19-AU-000210"
-  tag fix_id: "F-99407r1_fix"
-  tag cci: ["CCI-000172"]
-  tag nist: ["AU-12 c", "Rev_4"]
+  tag 'gid': 'V-93161'
+  tag 'rid': 'SV-103249r1_rule'
+  tag 'stig_id': 'WN19-AU-000210'
+  tag 'fix_id': 'F-99407r1_fix'
+  tag 'cci': ["CCI-000172"]
+  tag 'nist': ["AU-12 c", "Rev_4"]
+
+  describe.one do
+    describe audit_policy do
+      its('Special Logon') { should eq 'Success' }
+    end
+    describe audit_policy do
+      its('Special Logon') { should eq 'Success and Failure' }
+    end
+  end
 end
 
