@@ -59,5 +59,6 @@ the account."
       its('LockoutDuration') { should cmp == 0 }
     end
   end
+ end
 end
 
