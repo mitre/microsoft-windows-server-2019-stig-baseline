@@ -187,3 +187,37 @@ inputs:
  - name: LegalNoticeCaption
    type: string
    value: "DoD Notice and Consent Banner, US Department of Defense Warning Statement, or a site-defined equivalent."
+
+ - name: winevt_logs_application_perms
+   desc: "This is the values of the Application.evtx file under system32"
+   type: Array
+   value:
+    - NT SERVICE\EventLog Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+
+ - name: winevt_logs_security_perms
+   desc: "This is the values of the Security.evtx file under system32"
+   type: Array
+   value:
+    - NT SERVICE\EventLog Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+
+ - name: winevt_logs_system_perms
+   desc: "This is the values of the System.evtx file under system32"
+   type: Array
+   value:
+    - NT SERVICE\EventLog Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+
+ - name: eventvwr_perms
+   desc: "This is the values of the Eventvwr.exe file under system32"
+   type: Array
+   value:
+    - NT AUTHORITY\SYSTEM Allow  ReadAndExecute, Synchronize
+    - BUILTIN\Administrators Allow  ReadAndExecute, Synchronize
+    - BUILTIN\Users Allow  ReadAndExecute, Synchronize
+    - NT SERVICE\TrustedInstaller Allow  FullControl
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadAndExecute, Synchronize

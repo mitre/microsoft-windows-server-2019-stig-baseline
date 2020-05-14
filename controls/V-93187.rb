@@ -10,8 +10,7 @@ time source. Domain-joined systems are automatically configured to synchronize
 with domain controllers. If an NTP server is configured, it must synchronize
 with a secure, authorized time source."
   desc  "rationale", ""
-  desc  "check", "
-    Review the Windows time service configuration.
+  desc  'check', "Review the Windows time service configuration.
 
     Open an elevated \"Command Prompt\" (run as administrator).
 
@@ -33,10 +32,8 @@ DoD time server defined for \"NTPServer\", this is a finding.
 
     Open \"PowerShell\".
 
-    Enter \"Get-ADDomain | FT PDCEmulator\".
-  "
-  desc  "fix", "
-    Configure the system to synchronize time with an appropriate DoD time
+    Enter \"Get-ADDomain | FT PDCEmulator\"."
+  desc  'fix', "Configure the system to synchronize time with an appropriate DoD time
 source.
 
     Domain-joined systems use NT5DS to synchronize time from other systems in
@@ -51,16 +48,27 @@ configure the \"NtpServer\" field to point to an appropriate DoD time server.
     The US Naval Observatory operates stratum 1 time servers, identified at
 http://tycho.usno.navy.mil/ntp.html. Time synchronization will occur through a
 hierarchy of time servers down to the local level. Clients and lower-level
-servers will synchronize with an authorized time server in the hierarchy.
-  "
+servers will synchronize with an authorized time server in the hierarchy."
   impact 0.3
-  tag severity: nil
-  tag gtitle: "SRG-OS-000355-GPOS-00143"
-  tag gid: "V-93187"
-  tag rid: "SV-103275r1_rule"
-  tag stig_id: "WN19-00-000440"
-  tag fix_id: "F-99433r1_fix"
-  tag cci: ["CCI-001891"]
-  tag nist: ["AU-8 (1) (a)", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000355-GPOS-00143'
+  tag 'gid': 'V-93187'
+  tag 'rid': 'SV-103275r1_rule'
+  tag 'stig_id': 'WN19-00-000440'
+  tag 'fix_id': 'F-99433r1_fix'
+  tag 'cci': ["CCI-001891"]
+  tag 'nist': ["AU-8 (1) (a)", "Rev_4"]
+
+  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  if is_domain != 'WORKGROUP'
+   get_type = command('W32tm /query /configuration | Findstr Type').stdout.strip
+    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
+     its('NTPServer') { should_not cmp 'time.windows.com,0x9' }
+    end
+  else
+   describe command(' W32tm /query /configuration | Findstr Type') do
+    its('stdout') { should eq "Type: NT5DS (Local)\r\n" }
+   end
+  end
 end
 
