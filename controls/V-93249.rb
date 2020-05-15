@@ -9,8 +9,7 @@ can limit allowed drivers based on classifications determined by the malware
 protection application. At a minimum, drivers determined to be bad must not be
 allowed."
   desc  "rationale", ""
-  desc  "check", "
-    The default behavior is for Early Launch Antimalware - Boot-Start Driver
+  desc  'check', "The default behavior is for Early Launch Antimalware - Boot-Start Driver
 Initialization policy to enforce \"Good, unknown and bad but critical\"
 (preventing \"bad\").
 
@@ -32,10 +31,8 @@ Name does not exist)
     8 - Good only
     1 - Good and unknown
     3 - Good, unknown and bad but critical
-    7 - All (which includes \"bad\" and would be a finding)
-  "
-  desc  "fix", "
-    The default behavior is for Early Launch Antimalware - Boot-Start Driver
+    7 - All (which includes \"bad\" and would be a finding)"
+  desc  'fix', "The default behavior is for Early Launch Antimalware - Boot-Start Driver
 Initialization policy to enforce \"Good, unknown and bad but critical\"
 (preventing \"bad\").
 
@@ -43,16 +40,24 @@ Initialization policy to enforce \"Good, unknown and bad but critical\"
 configure the policy value for Computer Configuration >> Administrative
 Templates >> System >> Early Launch Antimalware >> \"Boot-Start Driver
 Initialization Policy\" to \"Not Configured\" or \"Enabled\" with any option
-other than \"All\" selected.
-  "
+other than \"All\" selected."
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000480-GPOS-00227"
-  tag gid: "V-93249"
-  tag rid: "SV-103337r1_rule"
-  tag stig_id: "WN19-CC-000130"
-  tag fix_id: "F-99495r1_fix"
-  tag cci: ["CCI-000366"]
-  tag nist: ["CM-6 b", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
+  tag 'gid': 'V-93249'
+  tag 'rid': 'SV-103337r1_rule'
+  tag 'stig_id': 'WN19-CC-000130'
+  tag 'fix_id': 'F-99495r1_fix'
+  tag 'cci': ["CCI-000366"]
+  tag 'nist': ["CM-6 b", "Rev_4"]
+
+  describe.one do
+    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Policies\EarlyLaunch') do
+      it { should_not have_property 'DriverLoadPolicy' }
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Policies\EarlyLaunch') do
+      its('DriverLoadPolicy') { should_not be 7 }
+    end
+  end
 end
 

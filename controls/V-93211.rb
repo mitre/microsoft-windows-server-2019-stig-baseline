@@ -12,11 +12,9 @@ Tickets (TGT).
     The password must be changed twice to effectively remove the password
 history. Changing once, waiting for replication to complete and the amount of
 time equal to or greater than the maximum Kerberos ticket lifetime, and
-changing again reduces the risk of issues.
-  "
+changing again reduces the risk of issues."
   desc  "rationale", ""
-  desc  "check", "
-    This requirement is applicable to domain controllers; it is NA for other
+  desc  'check', "This requirement is applicable to domain controllers; it is NA for other
 systems.
 
     Open \"Windows PowerShell\".
@@ -24,10 +22,8 @@ systems.
     Enter \"Get-ADUser krbtgt -Property PasswordLastSet\".
 
     If the \"PasswordLastSet\" date is more than 180 days old, this is a
-finding.
-  "
-  desc  "fix", "
-    Reset the password for the krbtgt account a least every 180 days. The
+finding."
+  desc  'fix', "Reset the password for the krbtgt account a least every 180 days. The
 password must be changed twice to effectively remove the password history.
 Changing once, waiting for replication to complete and changing again reduces
 the risk of issues. Changing twice in rapid succession forces clients to
@@ -54,16 +50,31 @@ selected.
     Clear the \"User must change password at next logon\" check box.
 
     The system will automatically change this to a system-generated complex
-password.
-  "
+password."
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000480-GPOS-00227"
-  tag gid: "V-93211"
-  tag rid: "SV-103299r3_rule"
-  tag stig_id: "WN19-DC-000430"
-  tag fix_id: "F-99457r1_fix"
-  tag cci: ["CCI-000366"]
-  tag nist: ["CM-6 b", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
+  tag 'gid': 'V-93211'
+  tag 'rid': 'SV-103299r3_rule'
+  tag 'stig_id': 'WN19-DC-000430'
+  tag 'fix_id': 'F-99457r1_fix'
+  tag 'cci': ["CCI-000366"]
+  tag 'nist': ["CM-6 b", "Rev_4"]
+
+  password_set_date = json(command: 'Get-ADUser krbtgt -Property PasswordLastSet | Where-Object {$_.PasswordLastSet -lt ((Get-Date).AddDays(-180))} | Select -ExpandProperty PasswordLastSet | ConvertTo-Csv | ConvertFrom-Csv | ConvertTo-Json').params
+  date = password_set_date['Date']
+   if date.nil?
+      describe 'Administrator Account is within 180 days since password change' do
+        subject { date }
+        its(date) { should eq nil }
+      end
+    else
+      describe 'Password Last Set' do
+        it 'Administrator Account Password Last Set Date is' do
+          failure_message = "Password Date should not be more that 180 Days: #{date}"
+          expect(date).to be_empty, failure_message
+        end
+      end
+     end
 end
 

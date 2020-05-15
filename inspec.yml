@@ -221,3 +221,30 @@ inputs:
     - BUILTIN\Users Allow  ReadAndExecute, Synchronize
     - NT SERVICE\TrustedInstaller Allow  FullControl
     - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadAndExecute, Synchronize
+
+ - name: backup_operators
+   desc: "List of authorized users in the Backup Operators Group"
+   type: Array
+   value: 
+    -
+
+ - name: application_accounts_domain
+   desc: "List Application or Service Accounts domain"
+   type: Array
+   value: 
+    - 
+
+ - name: application_accounts_local
+   desc: "List Application Local Accounts"
+   type: Array
+   value: 
+    - 
+
+ - name: av_approved_software
+   desc: "This is a list of Approved Anti-Virus Software"
+   type: Array
+   value:
+      - Windows Defender
+      - McAfee Host Intrusion Prevention
+      - McAfee Endpoint Security
+      - McAfee Agent

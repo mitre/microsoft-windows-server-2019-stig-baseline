@@ -8,8 +8,7 @@ must be defined to require mutual authentication and integrity for at least the
 hardened UNC paths before allowing access to them. This aids in preventing
 tampering with or spoofing of connections to these paths."
   desc  "rationale", ""
-  desc  "check", "
-    This requirement is applicable to domain-joined systems. For standalone
+  desc  'check', "This requirement is applicable to domain-joined systems. For standalone
 systems, this is NA.
 
     If the following registry values do not exist or are not configured as
@@ -27,10 +26,8 @@ specified, this is a finding:
     Value Type: REG_SZ
     Value: RequireMutualAuthentication=1, RequireIntegrity=1
 
-    Additional entries would not be a finding.
-  "
-  desc  "fix", "
-    Configure the policy value for Computer Configuration >> Administrative
+    Additional entries would not be a finding."
+  desc 'fix', "Configure the policy value for Computer Configuration >> Administrative
 Templates >> Network >> Network Provider >> \"Hardened UNC Paths\" to
 \"Enabled\" with at least the following configured in \"Hardened UNC Paths\"
 (click the \"Show\" button to display):
@@ -39,16 +36,36 @@ Templates >> Network >> Network Provider >> \"Hardened UNC Paths\" to
     Value: RequireMutualAuthentication=1, RequireIntegrity=1
 
     Value Name: \\\\*\\NETLOGON
-    Value: RequireMutualAuthentication=1, RequireIntegrity=1
-  "
+    Value: RequireMutualAuthentication=1, RequireIntegrity=1"
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000480-GPOS-00227"
-  tag gid: "V-93241"
-  tag rid: "SV-103329r1_rule"
-  tag stig_id: "WN19-CC-000080"
-  tag fix_id: "F-99487r1_fix"
-  tag cci: ["CCI-000366"]
-  tag nist: ["CM-6 b", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
+  tag 'gid': 'V-93241'
+  tag 'rid': 'SV-103329r1_rule'
+  tag 'stig_id': 'WN19-CC-000080'
+  tag 'fix_id': 'F-99487r1_fix'
+  tag 'cci': ["CCI-000366"]
+  tag 'nist': ["CM-6 b", "Rev_4"]
+
+  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  keyvalue_netlogon = '\\\\*\\NETLOGON'
+  keyvalue_sysvol = '\\\\*\\SYSVOL'
+
+  if is_domain == 'WORKGROUP'
+    impact 0.0
+    describe 'The system is not a member of a domain, control is NA' do
+      skip 'The system is not a member of a domain, control is NA'
+    end
+  elsif
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths') do
+      it { should have_property keyvalue_sysvol.gsub('\\', '\\\\\\\\') }
+      its (keyvalue_sysvol.gsub('\\', '\\\\\\\\')) { should cmp 'RequireMutualAuthentication=1, RequireIntegrity=1'}
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths') do
+      it { should have_property keyvalue_netlogon.gsub('\\', '\\\\\\\\') }
+      its (keyvalue_netlogon.gsub('\\', '\\\\\\\\')) { should cmp 'RequireMutualAuthentication=1, RequireIntegrity=1'}
+    end
+  end
+
 end
 
