@@ -49,5 +49,46 @@ logical partition than the directory server data files."
   tag fix_id: "F-99779r1_fix"
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4", "Rev_4"]
+
+  # domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  # if domain_role == '4' || domain_role == '5'
+
+  # SK: Copied from Windows 2016 V-73379
+  # Q: Test control
+
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+
+  if domain_role == '4' || domain_role == '5'
+    get_registry_value = command("Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\NTDS\\Parameters' | Findstr /c:'DSA Database file'").stdout.strip
+    database_file = get_registry_value[51..80]
+    share_names = []
+    share_paths = []
+    get = command('Get-WMIObject -Query "SELECT * FROM Win32_Share" | Findstr /V "Name --"').stdout.strip.split("\n")
+  
+    get.each do |share|
+      loc_space = share.index(' ')
+  
+      names = share[0..loc_space-1]
+      if names != 'C$' && names != 'ADMIN$' && names != 'SYSVOL'
+        share_names.push(names)
+        path = share[9..50]
+        share_paths.push(path)
+      end
+    end
+    share_paths.each do |paths|
+      describe "The share path #{paths}" do
+        subject { paths }
+        it { should_not eq database_file }
+      end
+    end
+  end
+
+  if !(domain_role == '4') && !(domain_role == '5')
+    impact 0.0
+    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    end
+  end
 end
 

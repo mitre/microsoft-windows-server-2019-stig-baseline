@@ -47,5 +47,44 @@ require it.
   tag fix_id: "F-99775r1_fix"
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4", "Rev_4"]
+
+  # control 'V-3245' windows 2012 Profile
+
+  # SK: Copied from Windows 2012 V-3245
+  # Q: Test pending
+
+  share_names = []
+  share_paths = []
+  get = command('Get-WMIObject -Query "SELECT * FROM Win32_Share" | Findstr /V "Name --"').stdout.strip.split("\n")
+
+  get.each do |share|
+    loc_space = share.index(' ')
+
+    names = share[0..loc_space-1]
+
+    share_names.push(names)
+    path = share[9..50]
+    share_paths.push(path)
+  end
+
+  share_names_string = share_names.join(',')
+
+  if share_names_string != 'ADMIN$,C$,IPC$'
+
+    [share_paths, share_names].each do |path1, _name1|
+
+      describe command("Get-Acl -Path '#{path1}' | Format-List | Findstr /i /C:'Everyone Allow'") do
+        its('stdout') { should eq '' }
+      end
+    end
+  end
+
+  if share_names_string == 'ADMIN$,C$,IPC$'
+    impact 0.0
+    describe 'The default files shares exist' do
+      skip 'This control is NA'
+    end
+  end
+
 end
 
