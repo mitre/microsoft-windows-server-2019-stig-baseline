@@ -2,21 +2,16 @@
 
 control "V-93423" do
   title "Windows Server 2019 must not have the Telnet Client installed."
-  desc  "Unnecessary services increase the attack surface of a system. Some of
-these services may not support required levels of authentication or encryption
-or may provide unauthorized access to the system."
+  desc  "Unnecessary services increase the attack surface of a system. Some of these services may not support required levels of authentication or encryption or may provide unauthorized access to the system."
   desc  "rationale", ""
-  desc  "check", "
-    Open \"PowerShell\".
+  desc  "check", "Open \"PowerShell\".
 
     Enter \"Get-WindowsFeature | Where Name -eq Telnet-Client\".
 
     If \"Installed State\" is \"Installed\", this is a finding.
 
-    An Installed State of \"Available\" or \"Removed\" is not a finding.
-  "
-  desc  "fix", "
-    Uninstall the \"Telnet Client\" feature.
+    An Installed State of \"Available\" or \"Removed\" is not a finding."
+  desc  "fix", "Uninstall the \"Telnet Client\" feature.
 
     Start \"Server Manager\".
 
@@ -26,13 +21,11 @@ or may provide unauthorized access to the system."
 
     Select \"Remove Roles and Features\" from the drop-down \"TASKS\" list.
 
-    Select the appropriate server on the \"Server Selection\" page and click
-\"Next\".
+    Select the appropriate server on the \"Server Selection\" page and click \"Next\".
 
     Deselect \"Telnet Client\" on the \"Features\" page.
 
-    Click \"Next\" and \"Remove\" as prompted.
-  "
+    Click \"Next\" and \"Remove\" as prompted."
   impact 0.5
   tag severity: nil
   tag gtitle: "SRG-OS-000096-GPOS-00050"
@@ -42,5 +35,13 @@ or may provide unauthorized access to the system."
   tag fix_id: "F-99667r1_fix"
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b", "Rev_4"]
+
+  # SK: Copied from Windows 2016 V-73295
+  # Q: Code validation pending
+
+  describe windows_feature('Telnet-Client') do
+    it { should_not be_installed }
+  end
+  
 end
 
