@@ -27,11 +27,10 @@ control "V-93553" do
   tag nist: ["SC-8", "SC-8 (1)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-3374
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'RequireStrongKey' }
     its('RequireStrongKey') { should cmp == 1 }
   end
-
 end
-

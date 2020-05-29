@@ -7,8 +7,7 @@ control "V-93543" do
   This can be accomplished via access control and encryption.
   Use of this requirement will be limited to situations where the data owner has a strict requirement for ensuring data integrity and confidentiality is maintained at every step of the data transfer and handling process. When transmitting data, operating systems need to support transmission protection mechanisms such as TLS, encrypted VPNs, or IPsec."
   desc  "rationale", ""
-  desc  "check", "If the data owner has a strict requirement for ensuring data integrity and confidentiality is maintained at every step of the data transfer and handling process, verify protection methods such as TLS, encrypted VPNs, or IPsec have
-been implemented.
+  desc  "check", "If the data owner has a strict requirement for ensuring data integrity and confidentiality is maintained at every step of the data transfer and handling process, verify protection methods such as TLS, encrypted VPNs, or IPsec have been implemented.
     If protection methods have not been implemented, this is a finding."
   desc  "fix", "Configure protection methods such as TLS, encrypted VPNs, or IPsec when the data owner has a strict requirement for ensuring data integrity and confidentiality is maintained at every step of the data transfer and handling process."
   impact 0.5
@@ -23,6 +22,7 @@ been implemented.
   tag nist: ["SC-8 (2)", "SC-8 (2)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-57641
+  # SK: No test necessary
 
   describe "A manual review is required to ensure protection methods such as TLS, encrypted VPNs, or IPSEC are
   implemented if the data owner has a strict requirement for ensuring data
@@ -31,6 +31,4 @@ been implemented.
     skip 'A manual review is required to ensure the operating system employs a deny-all, permit-by-exception
   policy to allow the execution of authorized software programs'
   end
-  
 end
-

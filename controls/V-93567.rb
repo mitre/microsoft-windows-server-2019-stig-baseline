@@ -17,10 +17,9 @@ control "V-93567" do
   tag nist: ["SI-2 (2)", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73281
+  # SK: No test necessary
 
   describe "A manual review is required to verify DoD approved HBSS software is installed, configured, and properly operating. Ask the operator to document the HBSS software installation and configuration. If the operator is not able to provide a documented configuration for an installed HBSS or if the HBSS software is not properly configured maintained, or used, this is a finding." do	
     skip "A manual review is required to verify DoD approved HBSS software is installed, configured, and properly operating. Ask the operator to document the HBSS software installation and configuration. If the operator is not able to provide a documented configuration for an installed HBSS or if the HBSS software is not properly configured maintained, or used, this is a finding."	
   end
-
 end
-

@@ -24,11 +24,10 @@ control "V-93497" do
   tag nist: ["IA-8", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1113
-  # Q: Check if code is valid for check text and run a test
+  # Q: Test pending
 
   describe security_policy do
     its('EnableGuestAccount') { should cmp 0 }
   end
   
 end
-

@@ -35,6 +35,7 @@ control "V-93519" do
   
   # SK: Copied from Windows 2012 V-36439
   # Q: Check the content carefully and verify code validity
+  # Q: Test pending
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
 
@@ -51,4 +52,3 @@ control "V-93519" do
   end
 
 end
-

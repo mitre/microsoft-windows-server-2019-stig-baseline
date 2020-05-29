@@ -4,8 +4,7 @@ control "V-93475" do
   title "Windows Server 2019 passwords must be configured to expire."
   desc  "Passwords that do not expire or are reused increase the exposure of a password with greater probability of being discovered or cracked."
   desc  "rationale", ""
-  desc  "check", "
-    Review the password never expires status for enabled user accounts.
+  desc  "check", "Review the password never expires status for enabled user accounts.
     Open \"PowerShell\".
     Domain Controllers:
     Enter \"Search-ADAccount -PasswordNeverExpires -UsersOnly | FT Name, PasswordNeverExpires, Enabled\".
@@ -68,5 +67,5 @@ control "V-93475" do
               end
           end
       end
-end
 
+end

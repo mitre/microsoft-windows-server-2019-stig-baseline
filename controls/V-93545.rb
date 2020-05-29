@@ -30,7 +30,7 @@ control "V-93545" do
   #if domain_role == '4' || domain_role == '5'
 
   # SK: Copied from Windows 2016 V-73629
-  # Q: Test control
+  # Q: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -48,5 +48,5 @@ control "V-93545" do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
-end
 
+end

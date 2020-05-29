@@ -80,6 +80,7 @@ control "V-93487" do
   
   # SK: Copied from Windows 2012 V-32274
   # Q: Powershell script update pending
+  # Q: Test pending
 
   if input('sensitive_system') == 'true'
     impact 0.0
@@ -97,4 +98,3 @@ control "V-93487" do
  end
  
 end
-

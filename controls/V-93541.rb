@@ -26,11 +26,10 @@ control "V-93541" do
   tag nist: ["SC-5", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-4116
+  # SK: Test - passed
   
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netbt\\Parameters') do
     it { should have_property 'NoNameReleaseOnDemand' }
     its('NoNameReleaseOnDemand') { should cmp == 1 }
   end
-
 end
-

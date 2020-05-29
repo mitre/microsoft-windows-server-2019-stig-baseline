@@ -32,7 +32,6 @@ control "V-93473" do
   # SK: Copied from Windows 2012 V-14225
   # Q: Review code and run tests
 
-  
   administrator = input('local_administrator')
   # returns a hash of {'Enabled' => 'true' } 
   is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })
@@ -73,4 +72,3 @@ control "V-93473" do
    end
 
 end
-

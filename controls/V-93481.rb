@@ -29,7 +29,8 @@ control "V-93481" do
   #Check out Windows 2012 control "V-39334"
 
   # SK: Temporarily copied from Windows 2016 V-73611
-  # Q: Unable to locate 2012 control | Run tests
+  # Q: Unable to locate 2012 control | Review content before skipping control
+  # Q: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -50,4 +51,3 @@ control "V-93481" do
   end
 
 end
-

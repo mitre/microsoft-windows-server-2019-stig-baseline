@@ -26,11 +26,10 @@ control "V-93499" do
   tag nist: ["MA-4 (6)", "MA-4 (6)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-36713
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\WinRM\\Client') do
     it { should have_property 'AllowUnencryptedTraffic' }
     its('AllowUnencryptedTraffic') { should cmp == 0 }
   end
-  
 end
-

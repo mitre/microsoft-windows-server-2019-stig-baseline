@@ -4,8 +4,7 @@ control "V-93507" do
   title "Windows Server 2019 Windows Remote Management (WinRM) service must not use Basic authentication."
   desc  "Basic authentication uses plain-text passwords that could be used to compromise a system. Disabling Basic authentication will reduce this potential."
   desc  "rationale", ""
-  desc  "check", "
-    If the following registry value does not exist or is not configured as specified, this is a finding:
+  desc  "check", "If the following registry value does not exist or is not configured as specified, this is a finding:
 
     Registry Hive: HKEY_LOCAL_MACHINE
     Registry Path: \\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Service\\
@@ -26,6 +25,7 @@ control "V-93507" do
   tag nist: ["MA-4 c", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-36718
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\WinRM\\Service') do
     it { should have_property 'AllowBasic' }
@@ -33,4 +33,3 @@ control "V-93507" do
   end
   
 end
-

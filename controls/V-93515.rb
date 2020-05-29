@@ -20,6 +20,7 @@ control "V-93515" do
   tag nist: ["SC-28", "SC-28 (1)", "SC-28 (1)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-57645
+  # SK: No test necessary
 
   describe "A manual review is required to ensure systems requiring data at rest protections must employ cryptographic
   mechanisms to prevent unauthorized disclosure and modification of the
@@ -28,6 +29,4 @@ control "V-93515" do
   mechanisms to prevent unauthorized disclosure and modification of the
   information at rest.'
   end
-
 end
-

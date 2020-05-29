@@ -23,10 +23,10 @@ control "V-93471" do
   tag nist: ["IA-5 (1) (d)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1105
+  # Q: Test pending
 
   describe security_policy do
     its('MinimumPasswordAge') { should be >= input('min_pass_age') }
   end
   
 end
-

@@ -67,7 +67,6 @@ control "V-93491" do
   tag nist: ["IA-5 (2) (a)", "SC-23 (5)", "Rev_4"]
 
   #control 'V-32274' in Windows 2012
-
   # SK: Copied from Windows 2012 V-32274
   # Q: Test pending
 

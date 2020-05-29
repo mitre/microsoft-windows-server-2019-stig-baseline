@@ -76,7 +76,7 @@ control "V-93489" do
   #control 'V-32274' in Windows 2012
 
   # SK: Copied from Windows 2012 V-32274
-  # Q: Review content and run tests
+  # Q: Test pending
 
   if input('sensitive_system') == 'true'
     impact 0.0
@@ -94,4 +94,3 @@ control "V-93489" do
  end
 
 end
-

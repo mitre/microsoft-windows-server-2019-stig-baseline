@@ -24,10 +24,10 @@ control "V-93479" do
 
   # SK: Copied from Windows 2012 V-1107
   # Q: Implement core check
+  # Q: Test pending
 
   describe security_policy do
     its('PasswordHistorySize') { should be >= input('pass_hist_size') }
   end
 
 end
-

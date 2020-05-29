@@ -38,6 +38,7 @@ control "V-93483" do
 
   # SK: Temporarily copied from Windows 2016 V-73611
   # Q: Unable to locate 2012 control | Run tests after added ECA part
+  # Q: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 

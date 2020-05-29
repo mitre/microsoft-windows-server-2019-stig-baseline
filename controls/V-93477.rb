@@ -25,6 +25,7 @@ control "V-93477" do
 
   # SK: Copied from Windows 2012 V-1104
   # Q: Implement core check
+  # Q: Test pending
 
   describe security_policy do
     its('MaximumPasswordAge') { should be <= input('max_pass_age') }
@@ -34,4 +35,3 @@ control "V-93477" do
   end
   
 end
-

@@ -38,6 +38,7 @@ control "V-93565" do
   #Code can be found in Windows 10
   # SK: Copied from Windows 10 V-77095
   # Q: HighEntropy=\"true\ added
+  # Q: Test pending
 
   aslr_bottomup_script = <<-EOH
   $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -65,4 +66,3 @@ control "V-93565" do
   end
 
 end
-
