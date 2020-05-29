@@ -7,15 +7,10 @@ control "V-93449" do
   desc  "check", "This applies to domain controllers. It is NA for other systems.
 
     Verify the following is configured in the Default Domain Policy:
-
     Open \"Group Policy Management\".
-
     Navigate to \"Group Policy Objects\" in the Domain being reviewed (Forest >> Domains >> Domain).
-
     Right-click on the \"Default Domain Policy\".
-
     Select \"Edit\".
-
     Navigate to Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy.
 
     If the \"Maximum lifetime for user ticket renewal\" is greater than \"7\" days, this is a finding."
@@ -51,4 +46,3 @@ control "V-93449" do
   end
   
 end
-

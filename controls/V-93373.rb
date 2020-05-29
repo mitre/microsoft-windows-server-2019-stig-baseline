@@ -25,11 +25,10 @@ control "V-93373" do
   tag nist: ["CM-7 (2)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-21973
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\Explorer') do
     it { should have_property 'NoAutoplayfornonVolume' }
     its('NoAutoplayfornonVolume') { should cmp == 1 }
   end
-  
 end
-

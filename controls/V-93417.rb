@@ -9,13 +9,9 @@ control "V-93417" do
   desc  "check", "This applies to domain controllers, it is NA for other systems.
 
     Review the installed roles the domain controller is supporting.
-
     Start \"Server Manager\".
-
     Select \"AD DS\" in the left pane and the server name under \"Servers\" to the right.
-
     Select \"Add (or Remove) Roles and Features\" from \"Tasks\" in the \"Roles and Features\" section. (Cancel before any changes are made.)
-
     Determine if any additional server roles are installed. A basic domain controller setup will include the following:
 
     - Active Directory Domain Services
@@ -23,13 +19,9 @@ control "V-93417" do
     - File and Storage Services
 
     If any roles not requiring installation on a domain controller are installed, this is a finding.
-
     A Domain Name System (DNS) server integrated with the directory server (e.g., AD-integrated DNS) is an acceptable application. However, the DNS server must comply with the DNS STIG security requirements.
-
     Run \"Programs and Features\".
-
     Review installed applications.
-
     If any applications are installed that are not required for the domain controller, this is a finding."
   desc  "fix", "Remove additional roles or applications such as web, database, and email from the domain controller."
   impact 0.5
@@ -43,7 +35,7 @@ control "V-93417" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73381
-  # Q: Code validation pending
+  # Q: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -69,4 +61,3 @@ control "V-93417" do
   end
   
 end
-

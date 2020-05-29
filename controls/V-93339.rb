@@ -7,9 +7,7 @@ control "V-93339" do
   desc  "check", "If the referenced application is not installed on the system, this is NA.
 
     This is applicable to unclassified systems, for other systems this is NA.
-
     Run \"Windows PowerShell\" with elevated privileges (run as administrator).
-
     Enter \"Get-ProcessMitigation -Name [application name]\" with each of the following substituted for [application name]:
     java.exe, javaw.exe, and javaws.exe
     (Get-ProcessMitigation can be run without the -Name parameter to get a list of all application mitigations configured.)
@@ -56,6 +54,7 @@ control "V-93339" do
 
   # SK: Modified and copied from Windows 10 V-77223
   # Q: Condition added - If the referenced application is not installed on the system, this is NA.
+  # Q: Test pending
 
   dep_script = <<~EOH
     $convert_json = Get-ProcessMitigation -Name java.exe | ConvertTo-Json
@@ -155,4 +154,3 @@ control "V-93339" do
    end
 
 end
-

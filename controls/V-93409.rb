@@ -27,11 +27,10 @@ control "V-93409" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-21971
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\AppCompat') do
     it { should have_property 'DisableInventory' }
     its('DisableInventory') { should cmp == 1 }
   end
-  
 end
-

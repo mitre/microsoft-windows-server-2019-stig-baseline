@@ -30,10 +30,10 @@ control "V-93463" do
 
   # SK: Copied from Windows 2012 V-6836
   # Q: Server core installation command addition pending
+  # Q: Test pending
 
   describe security_policy do
     its('MinimumPasswordLength') { should be >= input('min_pass_len')}
   end
   
 end
-

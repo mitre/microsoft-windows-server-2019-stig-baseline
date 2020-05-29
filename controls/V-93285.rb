@@ -16,7 +16,6 @@ control "V-93285" do
     Value Type: REG_DWORD
     Value: 0x0000001e (30) (or less, but not 0)"
   desc  "fix", "This is the default configuration for this setting (30 days).
-
     Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> \"Domain member: Maximum machine account password age\" to \"30\" or less (excluding \"0\", which is unacceptable)."
   impact 0.5
   tag severity: nil
@@ -29,10 +28,11 @@ control "V-93285" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-3373
+  # Q: Find a better way to combine the conditions
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'MaximumPasswordAge' }
-    its('MaximumPasswordAge') { should cmp <= 30 }
+    its('MaximumPasswordAge') { should cmp <= 30 } # && its('MaximumPasswordAge') { should cmp > 0 }
   end
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'MaximumPasswordAge' }
@@ -40,4 +40,3 @@ control "V-93285" do
   end
   
 end
-

@@ -7,28 +7,18 @@ control "V-93421" do
   desc  "check", "If the server has the role of an FTP server, this is NA.
 
     Open \"PowerShell\".
-
     Enter \"Get-WindowsFeature | Where Name -eq Web-Ftp-Service\".
-
     If \"Installed State\" is \"Installed\", this is a finding.
-
     An Installed State of \"Available\" or \"Removed\" is not a finding.
-
     If the system has the role of an FTP server, this must be documented with the ISSO."
   desc  "fix", "Uninstall the \"FTP Server\" role.
 
     Start \"Server Manager\".
-
     Select the server with the role.
-
     Scroll down to \"ROLES AND FEATURES\" in the right pane.
-
     Select \"Remove Roles and Features\" from the drop-down \"TASKS\" list.
-
     Select the appropriate server on the \"Server Selection\" page and click \"Next\".
-
     Deselect \"FTP Server\" under \"Web Server (IIS)\" on the \"Roles\" page.
-
     Click \"Next\" and \"Remove\" as prompted."
   impact 0.5
   tag severity: nil
@@ -41,7 +31,7 @@ control "V-93421" do
   tag nist: ["CM-7 b", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73289
-  # Q: Code validation pending
+  # Q: Test pending
 
   has_ftp_server_role = attribute('has_ftp_server_role')
 
@@ -54,4 +44,3 @@ control "V-93421" do
   end
 
 end
-

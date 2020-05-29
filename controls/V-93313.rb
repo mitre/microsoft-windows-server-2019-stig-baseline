@@ -46,6 +46,7 @@ control "V-93313" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Modified and copied from Windows 10 V-77091
+  # Q: Test pending
 
   dep_script = <<~EOH
     $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -73,4 +74,3 @@ control "V-93313" do
   end
 
 end
-

@@ -32,4 +32,3 @@ control "V-93269" do
     its('DisableAutomaticRestartSignOn') { should cmp 1 }
   end
 end
-

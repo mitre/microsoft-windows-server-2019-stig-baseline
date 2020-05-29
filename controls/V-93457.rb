@@ -52,6 +52,7 @@ control "V-93457" do
   tag nist: ["IA-4 e", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1112
+  # Q: Test pending
 
   application_accounts = input('application_accounts_domain')
   excluded_accounts = input('excluded_accounts_domain')
@@ -90,4 +91,3 @@ control "V-93457" do
   end
   
 end
-

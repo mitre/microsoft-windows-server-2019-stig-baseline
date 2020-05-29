@@ -26,29 +26,20 @@ control "V-93419" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied both from Windows 2012 V- 36684
-  # Q: Code validation pending (2016 has domain controller section)
-
-  describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System') do
-    it { should have_property 'EnumerateLocalUsers' }
-    its('EnumerateLocalUsers') { should cmp == 0 }
-  end
-
   # SK: Copied from Windows 2016 V-73533
+  # SK: Test - passed for Server with Desktop Experience
+  # Q: Domain controller test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-
   if !(domain_role == '4') && !(domain_role == '5')
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System') do
       it { should have_property 'EnumerateLocalUsers' }
       its('EnumerateLocalUsers') { should cmp 0 }
     end
   end
-
   if domain_role == '4' || domain_role == '5'
     impact 0.0
     desc 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers and standalone systems'
   end
   
 end
-

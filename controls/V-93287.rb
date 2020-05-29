@@ -27,9 +27,12 @@ control "V-93287" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1157
+  # SK: Test - passed
+  # Q: Look into commented code | Refer to V-93523
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
     it { should have_property 'scremoveoption' }
+  # its('scremoveoption') { should be_in [ 1, 2 ] }
   end
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
@@ -41,4 +44,3 @@ control "V-93287" do
   end
 
 end
-

@@ -21,10 +21,10 @@ control "V-93461" do
   tag nist: ["IA-5 (1) (a)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-36661
+  # SK: No test necessary
 
   describe 'Please Check all Accounts that are used for Services or Applications to validate they meet the Password Length Policy, Control is a Manual Check' do
     skip 'Determine if manually managed application/service accounts exist. If none exist, this is NA. Verify the organization has a policy to ensure passwords for manually managed application/service accounts are at least 15 characters in length.'
   end
 
 end
-

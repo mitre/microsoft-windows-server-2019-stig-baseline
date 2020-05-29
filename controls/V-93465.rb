@@ -29,10 +29,10 @@ control "V-93465" do
   tag nist: ["IA-5 (1) (c)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-2372
+  # Q: Test pending
 
   describe security_policy do
     its('ClearTextPassword') { should eq 0 }
   end
   
 end
-

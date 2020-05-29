@@ -63,6 +63,7 @@ control "V-93335" do
 
   # SK: Modified and copied from Windows 10 V-77217
   # Q: Condition added - If the referenced application is not installed on the system, this is NA.
+  # Q: Test pending
 
   dep_script = <<~EOH
     $convert_json = Get-ProcessMitigation -Name iexplore.exe | ConvertTo-Json
@@ -186,4 +187,3 @@ control "V-93335" do
   end
 
 end
-

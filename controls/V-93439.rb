@@ -8,19 +8,12 @@ control "V-93439" do
     Open \"PowerShell\".
 
     Domain Controllers:
-
     Enter \"Get-Aduser -Filter * -Properties Passwordnotrequired |FT Name, Passwordnotrequired, Enabled\".
-
     Exclude disabled accounts (e.g., DefaultAccount, Guest) and Trusted Domain Objects (TDOs).
-
     If \"Passwordnotrequired\" is \"True\" or blank for any enabled user account, this is a finding.
-
     Member servers and standalone systems:
-
     Enter 'Get-CimInstance -Class Win32_Useraccount -Filter \"PasswordRequired=False and LocalAccount=True\" | FT Name, PasswordRequired, Disabled, LocalAccount'.
-
     Exclude disabled accounts (e.g., DefaultAccount, Guest).
-
     If any enabled user accounts are returned with a \"PasswordRequired\" status of \"False\", this is a finding."
   desc  "fix", "Configure all enabled accounts to require passwords.
     The password required flag can be set by entering the following on a command line: \"Net user [username] /passwordreq:yes\", substituting [username] with the name of the user account."
@@ -36,6 +29,7 @@ control "V-93439" do
 
   # SK: Copied from Windows 2012 V-7002
   # Q: Password required condition removed - review modifications
+  # Q: Test pending
 
     # returns a hash of {'Enabled' => 'true' } 
   is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })
@@ -70,4 +64,3 @@ control "V-93439" do
   end
 
 end
-

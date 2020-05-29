@@ -7,9 +7,7 @@ control "V-93311" do
   desc  "check", "The default behavior is for Windows to mark file attachments with their zone information.
 
     If the registry Value Name below does not exist, this is not a finding.
-
     If it exists and is configured with a value of \"2\", this is not a finding.
-
     If it exists and is configured with a value of \"1\", this is a finding.
 
     Registry Hive: HKEY_CURRENT_USER
@@ -33,6 +31,7 @@ control "V-93311" do
   tag nist: ["CM-6 b", "Rev_4"]
 
  # SK: Copied from Windows 10 V-63841
+ # Q: Test passed | Check if the screenshot scenario is acceptable. Consider an if statement
 
   describe.one do
     describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
@@ -45,4 +44,3 @@ control "V-93311" do
   end
 
 end
-

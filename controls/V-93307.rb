@@ -25,11 +25,10 @@ control "V-93307" do
   tag nist: ["CM-6 b", "Rev_4"]
 
  # SK: Copied from Windows 2012 V-3666
+ # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0') do
     it { should have_property 'NTLMMinServerSec' }
     its('NTLMMinServerSec') { should cmp == 537395200 }
   end
-
 end
-

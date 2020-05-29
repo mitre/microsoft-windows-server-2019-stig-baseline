@@ -27,11 +27,10 @@ control "V-93403" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14260
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Printers') do
     it { should have_property 'DisableWebPnPDownload' }
     its('DisableWebPnPDownload') { should cmp == 1 }
   end
-  
 end
-

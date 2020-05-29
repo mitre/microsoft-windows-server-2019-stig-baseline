@@ -7,41 +7,25 @@ control "V-93271" do
   desc  "check", "This applies to domain controllers. It is NA for other systems.
 
     Open \"Command Prompt\" (not elevated).
-
     Run \"ldp.exe\".
-
     From the \"Connection menu\", select \"Bind\".
-
     Clear the User, Password, and Domain fields.
-
     Select \"Simple bind\" for the Bind type and click \"OK\".
-
     Confirmation of anonymous access will be displayed at the end:
-
     res = ldap_simple_bind_s
     Authenticated as: 'NT AUTHORITY\\ANONYMOUS LOGON'
-
     From the \"Browse\" menu, select \"Search\".
-
     In the Search dialog, enter the DN of the domain naming context (generally something like \"dc=disaost,dc=mil\") in the Base DN field.
-
     Clear the Attributes field and select \"Run\".
-
     Error messages should display related to Bind and user not authenticated.
 
     If attribute data is displayed, anonymous access is enabled to the domain naming context and this is a finding.
-
     The following network controls allow the finding severity to be downgraded to a CAT II since these measures lower the risk associated with anonymous access.
-
     Network hardware ports at the site are subject to 802.1x authentication or MAC address restrictions.
-
     Premise firewall or host restrictions prevent access to ports 389, 636, 3268, and 3269 from client hosts not explicitly identified by domain (.mil) or IP address."
   desc  "fix", "Configure directory data (outside the root DSE) of a non-public directory to prevent anonymous access.
-
     For AD, there are multiple configuration items that could enable anonymous access.
-
     Changing the access permissions on the domain naming context object (from the secure defaults) could enable anonymous access. If the check procedures indicate this is the cause, the process that was used to change the permissions should be reversed. This could have been through the Windows Support Tools ADSI Edit console (adsiedit.msc).
-
     The dsHeuristics option is used. This is addressed in check V-8555 in the AD Forest STIG."
   impact 0.7
   tag severity: nil
@@ -54,7 +38,7 @@ control "V-93271" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73385
-  # Q: Code validation pending
+  # Q: Code validation and test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -75,4 +59,3 @@ control "V-93271" do
   end
 
 end
-

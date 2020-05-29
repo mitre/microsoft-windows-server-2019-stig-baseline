@@ -7,35 +7,24 @@ control "V-93441" do
   desc  "check", "This applies to domain controllers. It is NA for other systems.
 
     Open \"PowerShell\".
-
     Enter the following:
-
     \"Get-ADUser -Filter {(Enabled -eq $True) -and (SmartcardLogonRequired -eq $False)} | FT Name\"
     (\"DistinguishedName\" may be substituted for \"Name\" for more detailed output.)
-
     If any user accounts, including administrators, are listed, this is a finding.
 
     Alternately:
-
     To view sample accounts in \"Active Directory Users and Computers\" (available from various menus or run \"dsa.msc\"):
-
     Select the Organizational Unit (OU) where the user accounts are located. (By default, this is the Users node; however, accounts may be under other organization-defined OUs.)
-
     Right-click the sample user account and select \"Properties\".
-
     Select the \"Account\" tab.
 
     If any user accounts, including administrators, do not have \"Smart card is required for interactive logon\" checked in the \"Account Options\" area, this is a finding."
   desc  "fix", "Configure all user accounts, including administrator accounts, in Active Directory to enable the option \"Smart card is required for interactive logon\".
 
     Run \"Active Directory Users and Computers\" (available from various menus or run \"dsa.msc\"):
-
     Select the OU where the user accounts are located. (By default this is the Users node; however, accounts may be under other organization-defined OUs.)
-
     Right-click the user account and select \"Properties\".
-
     Select the \"Account\" tab.
-
     Check \"Smart card is required for interactive logon\" in the \"Account Options\" area."
   impact 0.5
   tag severity: nil
@@ -49,7 +38,7 @@ control "V-93441" do
   tag nist: ["IA-2 (1)", "IA-2 (2)", "IA-2 (3)", "IA-2 (4)", "IA-2 (11)", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73617
-  # Q: Code validation pending
+  # Q: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -68,4 +57,3 @@ control "V-93441" do
   end
   
 end
-

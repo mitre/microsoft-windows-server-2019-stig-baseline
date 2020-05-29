@@ -28,7 +28,8 @@ control "V-93433" do
   tag nist: ["IA-11", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14236
-  # Q: Check text parenthesis added
+  # SK: Test - passed for Server with Desktop Experience
+  # Q: Server Core Installation test pending
 
   #command checks to see if install is a Core or Gui Based install, if the result is false it is a server core build, if true it is a full install with gui
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
@@ -46,4 +47,3 @@ control "V-93433" do
   end
   
 end
-

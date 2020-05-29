@@ -7,9 +7,7 @@ control "V-93413" do
   desc  "check", "The default behavior is for the Windows RSS platform to not use Basic authentication over HTTP connections.
 
     If the registry value name below does not exist, this is not a finding.
-
     If it exists and is configured with a value of \"0\", this is not a finding.
-
     If it exists and is configured with a value of \"1\", this is a finding.
 
     Registry Hive: HKEY_LOCAL_MACHINE
@@ -32,6 +30,7 @@ control "V-93413" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-63747
+  # Q: Check review and test pending
 
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
@@ -44,4 +43,3 @@ control "V-93413" do
   end
 
 end
-

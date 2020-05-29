@@ -32,6 +32,7 @@ control "V-93393" do
 
   # SK: Modified and copied from Windows 2012 V-73519
   # Q: Condition to add -  if WN19-00-000380 is configured, this is NA.
+  # Q: Check review and test pending
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters') do
     it { should have_property 'SMB1' }
@@ -39,4 +40,3 @@ control "V-93393" do
   end
   
 end
-

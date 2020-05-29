@@ -7,15 +7,10 @@ control "V-93443" do
   desc  "check", "This applies to domain controllers. It is NA for other systems.
 
     Verify the following is configured in the Default Domain Policy:
-
     Open \"Group Policy Management\".
-
     Navigate to \"Group Policy Objects\" in the Domain being reviewed (Forest >> Domains >> Domain).
-
     Right-click on the \"Default Domain Policy\".
-
     Select \"Edit\".
-
     Navigate to Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy.
 
     If the \"Enforce user logon restrictions\" is not set to \"Enabled\", this is a finding."
@@ -32,8 +27,8 @@ control "V-93443" do
   tag nist: ["IA-2 (8)", "IA-2 (9)", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73359
-  # Q: Code validation pending
-
+  # Q: Test pending
+  
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
@@ -51,4 +46,3 @@ control "V-93443" do
   end
   
 end
-

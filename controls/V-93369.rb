@@ -18,6 +18,7 @@ control "V-93369" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-36659
+  # Q: Test pending
 
   administrators = input('administrators')
   administrator_group = command("net localgroup Administrators | Format-List | Findstr /V 'Alias Name Comment Members - command'").stdout.strip.split("\r\n")
@@ -34,4 +35,3 @@ control "V-93369" do
   end
   
 end
-

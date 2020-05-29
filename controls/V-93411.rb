@@ -29,6 +29,7 @@ control "V-93411" do
 
   # SK: Copied from Windows 2012 V-36707
   # Q: Skip - This is applicable to unclassified systems; for other systems, this is NA.
+  # Q: Check review and test pending
 
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System') do
@@ -42,4 +43,3 @@ control "V-93411" do
   end
 
 end
-

@@ -8,13 +8,9 @@ control "V-93451" do
     Verify the following is configured in the Default Domain Policy:
 
     Open \"Group Policy Management\".
-
     Navigate to \"Group Policy Objects\" in the Domain being reviewed (Forest >> Domains >> Domain).
-
     Right-click on the \"Default Domain Policy\".
-
     Select \"Edit\".
-
     Navigate to Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy.
 
     If the \"Maximum tolerance for computer clock synchronization\" is greater than \"5\" minutes, this is a finding."
@@ -50,4 +46,3 @@ control "V-93451" do
   end
 
 end
-

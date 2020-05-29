@@ -4,8 +4,7 @@ control "V-93453" do
   title "Windows Server 2019 must restrict unauthenticated Remote Procedure Call (RPC) clients from connecting to the RPC server on domain-joined member servers and standalone systems."
   desc  "Unauthenticated RPC clients may allow anonymous access to sensitive information. Configuring RPC to restrict unauthenticated RPC clients from connecting to the RPC server will prevent anonymous connections."
   desc  "rationale", ""
-  desc  "check", "
-    This applies to member servers and standalone systems, it is NA for domain controllers.
+  desc  "check", "This applies to member servers and standalone systems, it is NA for domain controllers.
 
     If the following registry value does not exist or is not configured as specified, this is a finding:
 
@@ -28,11 +27,10 @@ control "V-93453" do
   tag nist: ["IA-3 (1)", "Rev_4"]
 
   # SK: Copied from Windows V-14253
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Rpc') do
     it { should have_property 'RestrictRemoteClients' }
     its('RestrictRemoteClients') { should cmp == 1 }
   end
-  
 end
-

@@ -7,9 +7,7 @@ control "V-93381" do
   desc  "check", "Required roles and features will vary based on the function of the individual system.
 
     Roles and features specifically required to be disabled per the STIG are identified in separate requirements.
-
     If the organization has not documented the roles and features required for the system(s), this is a finding.
-
     The PowerShell command \"Get-WindowsFeature\" will list all roles and features with an \"Install State\"."
   desc  "fix", "Document the roles and features required for the system to operate. Uninstall any that are not required."
   impact 0.5
@@ -23,10 +21,10 @@ control "V-93381" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73277
+  # Q: Check content to verify that this control can be skipped
   
   describe 'A manual review is required to verify that the roles and features required by the system are documented' do
     skip 'A manual review is required to verify that the roles and features required by the system are documented'
   end
 
 end
-

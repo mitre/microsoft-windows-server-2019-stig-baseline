@@ -46,6 +46,7 @@ control "V-93317" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 10 V-77101
+  # Q: Test pending
 
   sehop_script = <<~EOH
     $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -73,4 +74,3 @@ control "V-93317" do
   end
 
 end
-

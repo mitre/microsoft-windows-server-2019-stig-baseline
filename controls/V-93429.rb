@@ -26,11 +26,10 @@ control "V-93429" do
   tag nist: ["IA-11", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-36720
+  # SK: Test passed
 
-  describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\WinRM\\Service') do
+  describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Service') do
     it { should have_property 'DisableRunAs' }
     its('DisableRunAs') { should cmp == 1 }
   end
-  
 end
-

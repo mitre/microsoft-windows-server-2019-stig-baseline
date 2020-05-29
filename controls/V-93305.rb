@@ -25,11 +25,10 @@ control "V-93305" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-3382
+  # SK: Test passed | Ref: No need for underscores? V-93495
   
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0') do
     it { should have_property 'NTLMMinClientSec' }
     its('NTLMMinClientSec') { should cmp == 537395200 }
   end 
-
 end
-

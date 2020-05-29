@@ -32,6 +32,7 @@ control "V-93395" do
 
   # SK: Modified and copied from Windows 2012 V-73523
   # Q: Condition to add -  if WN19-00-000380 is configured, this is NA.
+  # Q: Check review and test pending
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10') do
     it { should have_property 'Start' }
@@ -39,4 +40,3 @@ control "V-93395" do
   end
 
 end
-

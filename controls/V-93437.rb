@@ -23,7 +23,7 @@ control "V-93437" do
   tag nist: ["IA-2", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1072
-  # Q: Test with input
+  # Q: Test pending | Try with input
 
   #Critical Input for Control
   shared_accounts = input('shared_accounts')
@@ -42,4 +42,3 @@ control "V-93437" do
   end
 
 end
-

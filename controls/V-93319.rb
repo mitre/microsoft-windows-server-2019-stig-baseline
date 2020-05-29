@@ -7,13 +7,9 @@ control "V-93319" do
   desc  "check", "This is applicable to unclassified systems, for other systems this is NA.
 
     The default configuration in Exploit Protection is \"On by default\" which meets this requirement.  The PowerShell query results for this show as \"NOTSET\".
-
     Run \"Windows PowerShell\" with elevated privileges (run as administrator).
-
     Enter \"Get-ProcessMitigation -System\".
-
     If the status of \"Heap: TerminateOnError\" is \"OFF\", this is a finding.
-
     Values that would not be a finding include:
 
     ON
@@ -21,11 +17,8 @@ control "V-93319" do
   desc  "fix", "Ensure Exploit Protection system-level mitigation, \"Validate heap integrity\" is turned on. The default configuration in Exploit Protection is \"On by default\" which meets this requirement.
 
     Open \"Windows Defender Security Center\".
-
     Select \"App & browser control\".
-
     Select \"Exploit protection settings\".
-
     Under \"System settings\", configure \"Validate heap integrity\" to \"On by default\" or \"Use default (<On>)\".
 
     The STIG package includes a DoD EP XML file in the \"Supporting Files\" folder for configuring application mitigations defined in the STIG.  This can also be modified to explicitly enforce the system level requirements.  Adding the following to the XML file will explicitly turn Validate heap integrity on (other system level EP requirements can be combined under <SystemConfig>):
@@ -46,6 +39,7 @@ control "V-93319" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 10 V-77103
+  # Q: Test pending
 
   dep_script = <<-EOH
   $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -73,4 +67,3 @@ control "V-93319" do
   end
 
 end
-

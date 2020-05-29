@@ -7,24 +7,16 @@ control "V-93389" do
   desc  "check", "Open \"PowerShell\".
 
     Enter \"Get-WindowsFeature | Where Name -eq TFTP-Client\".
-
     If \"Installed State\" is \"Installed\", this is a finding.
-
     An Installed State of \"Available\" or \"Removed\" is not a finding."
   desc  "fix", "Uninstall the \"TFTP Client\" feature.
 
     Start \"Server Manager\".
-
     Select the server with the feature.
-
     Scroll down to \"ROLES AND FEATURES\" in the right pane.
-
     Select \"Remove Roles and Features\" from the drop-down \"TASKS\" list.
-
     Select the appropriate server on the \"Server Selection\" page and click \"Next\".
-
     Deselect \"TFTP Client\" on the \"Features\" page.
-
     Click \"Next\" and \"Remove\" as prompted."
   impact 0.5
   tag severity: nil
@@ -37,11 +29,10 @@ control "V-93389" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73297
-  # Q: Code validation pending
+  # Q: Test pending
 
   describe windows_feature('TFTP-Client') do
     it { should_not be_installed }
   end
   
 end
-

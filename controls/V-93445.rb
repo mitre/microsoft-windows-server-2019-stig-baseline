@@ -32,7 +32,7 @@ control "V-93445" do
   tag nist: ["IA-2 (8)", "IA-2 (9)", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73361
-  # Q: Code validation pending
+  # Q: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -54,4 +54,3 @@ control "V-93445" do
   end
   
 end
-

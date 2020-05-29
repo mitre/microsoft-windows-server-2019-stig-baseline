@@ -7,9 +7,7 @@ control "V-93329" do
   desc  "check", "If the referenced application is not installed on the system, this is NA.
 
     This is applicable to unclassified systems, for other systems this is NA.
-
     Run \"Windows PowerShell\" with elevated privileges (run as administrator).
-
     Enter \"Get-ProcessMitigation -Name firefox.exe\".
     (Get-ProcessMitigation can be run without the -Name parameter to get a list of all application mitigations configured.)
 
@@ -47,6 +45,7 @@ control "V-93329" do
 
   # SK: Modified and copied from Windows 10 V-77205
   # Q: Condition added - If the referenced application is not installed on the system, this is NA.
+  # Q: Test pending
 
   dep_script = <<-EOH
   $convert_json = Get-ProcessMitigation -Name firefox.exe | ConvertTo-Json
@@ -96,5 +95,5 @@ control "V-93329" do
       it { should_not eq '2' }
     end
   end
-end
 
+end

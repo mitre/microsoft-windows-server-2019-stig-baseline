@@ -61,6 +61,7 @@ control "V-93341" do
 
   # SK: Modified and copied from Windows 10 V-77227
   # Q: Condition added - If the referenced application is not installed on the system, this is NA.
+  # Q: Test pending
 
   dep_script = <<~EOH
     $convert_json = Get-ProcessMitigation -Name lync.exe | ConvertTo-Json
@@ -172,4 +173,3 @@ control "V-93341" do
   end
 
 end
-

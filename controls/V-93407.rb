@@ -24,13 +24,11 @@ control "V-93407" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-43240
-  # Q: Removed the 2012 condition
+  # SK: Copied and modified from Windows 2012 V-43240 | Removed the 2012 condition
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\System') do
     it { should have_property 'DontDisplayNetworkSelectionUI' }
     its('DontDisplayNetworkSelectionUI') { should cmp == 1 }
   end
-
 end
-

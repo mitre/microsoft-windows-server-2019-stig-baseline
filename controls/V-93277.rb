@@ -9,21 +9,14 @@ control "V-93277" do
     Current hardware and virtual environments may not support virtualization-based security features, including Credential Guard, due to specific supporting requirements, including a TPM, UEFI with Secure Boot, and the capability to run the Hyper-V feature within a virtual machine.
 
     Open \"PowerShell\" with elevated privileges (run as administrator).
-
     Enter the following:
-
     \"Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\\Microsoft\\Windows\\DeviceGuard\"
-
     If \"SecurityServicesRunning\" does not include a value of \"1\" (e.g., \"{1, 2}\"), this is a finding.
 
     Alternately:
-
     Run \"System Information\".
-
     Under \"System Summary\", verify the following:
-
     If \"Device Guard Security Services Running\" does not list \"Credential Guard\", this is a finding.
-
     The policy settings referenced in the Fix section will configure the following registry value. However, due to hardware requirements, the registry value alone does not ensure proper function.
 
     Registry Hive: HKEY_LOCAL_MACHINE
@@ -36,7 +29,6 @@ control "V-93277" do
     A Microsoft article on Credential Guard system requirement can be found at the following link:
     https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-requirements"
   desc  "fix", "Configure the policy value for Computer Configuration >> Administrative Templates >> System >> Device Guard >> \"Turn On Virtualization Based Security\" to \"Enabled\" with \"Enabled with UEFI lock\" selected for \"Credential Guard Configuration\".
-
     A Microsoft article on Credential Guard system requirement can be found at the following link: https://docs.microsoft.com/en-us/windows/security/identity-protection/credential-guard/credential-guard-requirements"
   impact 0.7
   tag severity: nil
@@ -50,6 +42,7 @@ control "V-93277" do
 
   # SK: Modified and copied from Windows 2016 V-73515
   # Q: Condition added - For domain controllers this is NA.
+  # Q: Test pending
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
   describe.one do
@@ -73,4 +66,3 @@ control "V-93277" do
   end
 
 end
-
