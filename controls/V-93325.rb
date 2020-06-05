@@ -60,6 +60,6 @@ control "V-93325" do
     describe 'DEP is required to be enabled on Chrome' do
       subject { powershell(dep_script).strip }
       it { should_not eq '2' }
+    end
   end
-
 end

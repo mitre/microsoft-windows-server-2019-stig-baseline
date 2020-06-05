@@ -25,11 +25,9 @@ control "V-93479" do
   # SK: Copied from Windows 2012 V-1107
   # SK: Test - passed for Server with Desktop Experience
   # Q: Server Core Installation test pending
-  # QJ: Unable to set a value higher than 24, check if hardcoding the value would be okay
 
   describe security_policy do
-  #  its('PasswordHistorySize') { should be >= input('pass_hist_size') }
-    its('PasswordHistorySize') { should be >= 24 }
+    its('PasswordHistorySize') { should be >= input('pass_hist_size') }
   end
 
 end

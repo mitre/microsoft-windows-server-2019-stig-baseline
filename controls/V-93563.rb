@@ -28,28 +28,15 @@ control "V-93563" do
   tag nist: ["SI-16", "Rev_4"]
 
   # SK: Copied from Windows 10 V-63689
-  # QJ: Refer to the test output. Conflict - it's expected to have property and not to have property
-
-  describe.one do
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
-      it { should have_property 'NoDataExecutionPrevention' }
-      its('NoDataExecutionPrevention') { should_not be 1 }
-    end
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
-      it { should_not have_property 'NoDataExecutionPrevention' }
-    end
-  end
-
-  # Suggestion: If statement depending on the existence of the property
+  # SK: Test - passed
 
   if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer').has_property?("NoDataExecutionPrevention")
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
-    its('NoDataExecutionPrevention') { should_not be 1 }
+    its('NoDataExecutionPrevention') { should cmp 0 }
     end
   else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
       it { should_not have_property 'NoDataExecutionPrevention' }
     end
   end
-
 end

@@ -26,22 +26,9 @@ control "V-93477" do
   # SK: Copied from Windows 2012 V-1104
   # SK: Test - passed for Server with Desktop Experience
   # Q: Server Core Installation test pending
-  # QJ: Check if hardcoding the value would be okay
 
   describe security_policy do
-  #  its('MaximumPasswordAge') { should be <= input('max_pass_age') }
-    its('MaximumPasswordAge') { should be <= 60 }
-  end
-  describe security_policy do
-    its('MaximumPasswordAge') { should be > 0 }
-  end
-
-  # QJ: Need to clean up the test output, adding a subject doesn't seem to help, thoughts?
-
-  password_age_range = (1..60).step(1).to_a
-  describe 'Maximum password age to 60 days or less (excluding 0, which is unacceptable)' do
-    subject { security_policy }
-    its('MaximumPasswordAge') { should be_in password_age_range }
+    its('MaximumPasswordAge') { should be_between(1,input('max_pass_age')) }
   end
 
 end

@@ -32,12 +32,12 @@ control "V-93545" do
   # SK: Copied from Windows 2016 V-73629
   # QJ: Test pending | For controls with the domain role condition, an easy way to test for all?
 
-  #  0  Stand-alone workstation
-  #  1  Member workstation
-  #  2  Stand-alone server
-  #  3  Member server
-  #  4  Domain controller
-  #  5  Pdc emulator domain controller
+  #  0  Stand-alone workstation - Workgroup
+  #  1  Member workstation - NA
+  #  2  Stand-alone server - 10.0.0.11
+  #  3  Member server - 10.0.0.14/18
+  #  4  Domain controller - #5
+  #  5  Pdc emulator domain controller - 10.0.0.1
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
