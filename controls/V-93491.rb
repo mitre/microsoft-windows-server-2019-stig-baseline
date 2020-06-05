@@ -68,14 +68,14 @@ control "V-93491" do
 
   #control 'V-32274' in Windows 2012
   # SK: Copied from Windows 2012 V-32274
-  # Q: Test pending
+  # QJ: Test pending | Powershell command from Check has no output, is it important to download and install the FBCA tool?
 
   if input('sensitive_system') == 'true'
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  else 
+  else
    dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
    query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\\\disallowed  | Where {$_.Issuer -Like "*DoD Interoperability*" -and $_.Subject -Like "*DoD*"} | Select Subject, Issuer, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
  

@@ -47,7 +47,7 @@ control "V-93509" do
   #control "V-14831" Windows 2012 Profile
 
   # SK: Temporarily copied from Windows 2016 V-73387
-  # Q: Unable to find 2012 control
+  # QJ: Unable to find 2012 control
   # Q: Test pending
 
   max_conn_idle_time = input('max_conn_idle_time')

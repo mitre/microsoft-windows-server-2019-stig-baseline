@@ -28,6 +28,12 @@ control "V-93281" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # Q: New?
+  # QJ: New?
+  # SK: Test - passed for Server with Desktop Experience
+  # Q: Server Core Installation test pending
 
+  describe security_policy do
+    its('NewAdministratorName') { should eq "Administrator" }
+  end
+  
 end

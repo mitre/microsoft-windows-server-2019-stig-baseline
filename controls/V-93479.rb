@@ -23,11 +23,13 @@ control "V-93479" do
   tag nist: ["IA-5 (1) (e)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1107
-  # Q: Implement core check
-  # Q: Test pending
+  # SK: Test - passed for Server with Desktop Experience
+  # Q: Server Core Installation test pending
+  # QJ: Unable to set a value higher than 24, check if hardcoding the value would be okay
 
   describe security_policy do
-    its('PasswordHistorySize') { should be >= input('pass_hist_size') }
+  #  its('PasswordHistorySize') { should be >= input('pass_hist_size') }
+    its('PasswordHistorySize') { should be >= 24 }
   end
 
 end

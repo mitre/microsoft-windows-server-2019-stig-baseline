@@ -30,7 +30,7 @@ control "V-93481" do
 
   # SK: Temporarily copied from Windows 2016 V-73611
   # Q: Unable to locate 2012 control | Review content before skipping control
-  # Q: Test pending
+  # QJ: Test pending for domain controller
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 

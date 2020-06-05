@@ -38,34 +38,34 @@ control "V-93475" do
  # returns a hash of {'Enabled' => 'true' } 
   is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })
 
-   if (is_domain_controller['Enabled'] == true)
-     list_of_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" })
-     ad_accounts = list_of_accounts.params
-     untracked_accounts = ad_accounts - list_smart_card_acct - application_accounts_domain - excluded_accounts_domain
+  if (is_domain_controller['Enabled'] == true)
+    list_of_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" })
+    ad_accounts = list_of_accounts.params
+    untracked_accounts = ad_accounts - list_smart_card_acct - application_accounts_domain - excluded_accounts_domain
     
-       describe 'Untracked Accounts' do
-         it 'No Enabled Domain Account should be set to have Password Never Expire' do
-         failure_message = "Users Accounts are set to Password Never Expire: #{untracked_accounts}"
-         expect(untracked_accounts).to be_empty, failure_message
-        end
-       end
-   end
-       if (is_domain_controller.params == {} )
+    describe 'Untracked Accounts' do
+      it 'No Enabled Domain Account should be set to have Password Never Expire' do
+        failure_message = "Users Accounts are set to Password Never Expire: #{untracked_accounts}"
+        expect(untracked_accounts).to be_empty, failure_message
+      end
+    end
+  end
+  if (is_domain_controller.params == {} )
     local_users = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter 'PasswordExpires=False and LocalAccount=True and Disabled=False' | Select -ExpandProperty Name | ConvertTo-Json" })
     local_users_list = local_users.params
-          if (local_users_list == ' ')
-            impact 0.0
-            describe 'The system does not have any local accounts where password is set to Password Never Expires, control is NA' do
-               skip 'The system does not have any local accounts where password is set to Password Never Expires, controls is NA'
-            end
-          else
-              describe "Account or Accounts exists" do
-                 it 'Server should not have Accounts with Password Never Expire' do
-                 failure_message = "User or Users #{local_users_list} have Password set to not expire" 
-                 expect(local_users_list).to be_empty, failure_message
-                 end
-              end
-          end
+    if (local_users_list == ' ')
+      impact 0.0
+      describe 'The system does not have any local accounts where password is set to Password Never Expires, control is NA' do
+         skip 'The system does not have any local accounts where password is set to Password Never Expires, controls is NA'
       end
+    else
+      describe "Account or Accounts exists" do
+        it 'Server should not have Accounts with Password Never Expire' do
+          failure_message = "User or Users #{local_users_list} have Password set to not expire" 
+          expect(local_users_list).to be_empty, failure_message
+        end
+      end
+    end
+  end
 
 end

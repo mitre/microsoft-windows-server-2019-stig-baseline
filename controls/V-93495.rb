@@ -51,7 +51,7 @@ control "V-93495" do
 
 
   # SK: Copied also from Windows 2016 V-73685
-  # Q: Test - passed | Validate modified code before removing the comment below
+  # QJ: Test - passed | Validate modified code before removing the comment below
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Kerberos\\Parameters') do
     it { should have_property 'SupportedEncryptionTypes' }

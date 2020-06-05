@@ -18,7 +18,7 @@ control "V-93571" do
 
   #Code can be found in Windows 10
   # SK: Copied from Windows 10 V-63399
-  # Q: Test pending
+  # SK: Test - passed
 
   query_domain = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Domain' } | Select Enabled | ConvertTo-Json" })
   query_private = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Private' } | Select Enabled | ConvertTo-Json" })
@@ -47,5 +47,4 @@ control "V-93571" do
       end
     end
   end
-
 end

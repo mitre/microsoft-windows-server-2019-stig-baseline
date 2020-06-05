@@ -7,13 +7,9 @@ control "V-93531" do
   desc  "check", "If only system-created shares such as \"ADMIN$\", \"C$\", and \"IPC$\" exist on the system, this is NA. (System-created shares will display a message that it has been shared for administrative purposes when \"Properties\" is selected.)
 
     Run \"Computer Management\".
-
     Navigate to System Tools >> Shared Folders >> Shares.
-
     Right-click any non-system-created shares.
-
     Select \"Properties\".
-
     Select the \"Share Permissions\" tab.
 
     If the file shares have not been configured to restrict permissions to the specific groups or accounts that require access, this is a finding.
@@ -36,7 +32,7 @@ control "V-93531" do
   # control 'V-3245' windows 2012 Profile
 
   # SK: Copied from Windows 2012 V-3245
-  # Q: Test pending
+  # SK: Test - passed
 
   share_names = []
   share_paths = []
@@ -44,9 +40,7 @@ control "V-93531" do
 
   get.each do |share|
     loc_space = share.index(' ')
-
     names = share[0..loc_space-1]
-
     share_names.push(names)
     path = share[9..50]
     share_paths.push(path)
@@ -55,20 +49,15 @@ control "V-93531" do
   share_names_string = share_names.join(',')
 
   if share_names_string != 'ADMIN$,C$,IPC$'
-
     [share_paths, share_names].each do |path1, _name1|
-
       describe command("Get-Acl -Path '#{path1}' | Format-List | Findstr /i /C:'Everyone Allow'") do
         its('stdout') { should eq '' }
       end
     end
-  end
-
-  if share_names_string == 'ADMIN$,C$,IPC$'
+  else # share_names_string == 'ADMIN$,C$,IPC$'
     impact 0.0
     describe 'The default files shares exist' do
       skip 'This control is NA'
     end
   end
-
 end

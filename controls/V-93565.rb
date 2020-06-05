@@ -37,8 +37,7 @@ control "V-93565" do
 
   #Code can be found in Windows 10
   # SK: Copied from Windows 10 V-77095
-  # Q: HighEntropy=\"true\ added
-  # Q: Test pending
+  # SK: Test - passed
 
   aslr_bottomup_script = <<-EOH
   $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -53,16 +52,10 @@ control "V-93565" do
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  elsif registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId < '1709'
-    impact 0.0
-    describe 'This STIG does not apply to Prior Versions before 1709.' do
-      skip 'This STIG does not apply to Prior Versions before 1709.'
-    end
   else
     describe 'ALSR BottomUp is required to be enabled on System' do
       subject { powershell(aslr_bottomup_script).strip }
       it { should_not eq '2' }
     end
   end
-
 end

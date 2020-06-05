@@ -30,7 +30,14 @@ control "V-93545" do
   #if domain_role == '4' || domain_role == '5'
 
   # SK: Copied from Windows 2016 V-73629
-  # Q: Test pending
+  # QJ: Test pending | For controls with the domain role condition, an easy way to test for all?
+
+  #  0  Stand-alone workstation
+  #  1  Member workstation
+  #  2  Stand-alone server
+  #  3  Member server
+  #  4  Domain controller
+  #  5  Pdc emulator domain controller
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 

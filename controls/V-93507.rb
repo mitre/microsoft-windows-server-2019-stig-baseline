@@ -31,5 +31,4 @@ control "V-93507" do
     it { should have_property 'AllowBasic' }
     its('AllowBasic') { should cmp == 0 }
   end
-  
 end

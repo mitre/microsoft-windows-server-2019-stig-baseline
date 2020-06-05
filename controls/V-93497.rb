@@ -24,7 +24,8 @@ control "V-93497" do
   tag nist: ["IA-8", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1113
-  # Q: Test pending
+  # SK: Test - passed for Server with Desktop Experience
+  # Q: Server Core Installation test pending
 
   describe security_policy do
     its('EnableGuestAccount') { should cmp 0 }
