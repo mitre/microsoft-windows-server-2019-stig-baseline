@@ -7,9 +7,7 @@ control "V-93335" do
   desc  "check", "If the referenced application is not installed on the system, this is NA.
 
     This is applicable to unclassified systems, for other systems this is NA.
-
     Run \"Windows PowerShell\" with elevated privileges (run as administrator).
-
     Enter \"Get-ProcessMitigation -Name iexplore.exe\".
     (Get-ProcessMitigation can be run without the -Name parameter to get a list of all application mitigations configured.)
 

@@ -28,15 +28,10 @@ control "V-93285" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-3373
-  # Q: Find a better way to combine the conditions
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'MaximumPasswordAge' }
-    its('MaximumPasswordAge') { should cmp <= 30 } # && its('MaximumPasswordAge') { should cmp > 0 }
+    its('MaximumPasswordAge') { should be_between(1,30) }
   end
-  describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
-    it { should have_property 'MaximumPasswordAge' }
-    its('MaximumPasswordAge') { should cmp > 0 }
-  end
-  
 end

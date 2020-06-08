@@ -33,11 +33,9 @@ control "V-93485" do
 
   #Made Manual Check
 
-  # Q: Verify statement
-  # Q: Test pending
+  # SK: No test necessary
 
   describe 'This control needs to be check manually' do
     skip 'Control not executed as this test is manual'
   end
-
 end

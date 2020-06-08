@@ -9,13 +9,9 @@ control "V-93535" do
   desc  "check", "This applies to domain controllers. It is NA for other systems.
 
     Run \"Regedit\".
-
     Navigate to \"HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\NTDS\\Parameters\".
-
     Note the directory locations in the values for \"DSA Database file\".
-
     Open \"Command Prompt\".
-
     Enter \"net share\".
 
     Note the logical drive(s) or file system partition for any organization-created data shares.
@@ -38,7 +34,7 @@ control "V-93535" do
   # if domain_role == '4' || domain_role == '5'
 
   # SK: Copied from Windows 2016 V-73379
-  # Q: Test pending
+  # QJ: Test Unable to validate test after changing the property or replacing path with the logon server share
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -63,6 +59,7 @@ control "V-93535" do
       describe "The share path #{paths}" do
         subject { paths }
         it { should_not eq database_file }
+        print("Here are the #{paths}")
       end
     end
   end
@@ -74,5 +71,5 @@ control "V-93535" do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
-  
+
 end

@@ -28,19 +28,20 @@ control "V-93287" do
 
   # SK: Copied from Windows 2012 V-1157
   # SK: Test - passed
-  # Q: Look into commented code | Refer to V-93523
+  # QJ: Verify that a range of strings is acceptable before removing old code
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
     it { should have_property 'scremoveoption' }
-  # its('scremoveoption') { should be_in [ 1, 2 ] }
+    its('scremoveoption') { should be_between("1", "2") }
   end
-  describe.one do
-    describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
-      its('scremoveoption') { should cmp == 1 }
-    end
-    describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
-      its('scremoveoption') { should cmp == 2 }
-    end
-  end
+
+  # describe.one do
+  #   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
+  #     its('scremoveoption') { should cmp == 1 }
+  #   end
+  #   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
+  #     its('scremoveoption') { should cmp == 2 }
+  #   end
+  # end
 
 end

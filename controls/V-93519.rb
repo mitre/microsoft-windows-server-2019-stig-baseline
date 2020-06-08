@@ -34,15 +34,21 @@ control "V-93519" do
   # if domain_role == '4' || domain_role == '5'
   
   # SK: Copied from Windows 2012 V-36439
-  # Q: Check the content carefully and verify code validity
-  # Q: Test pending
+  # SK: Test - passed for domain controllers
+  # Q: Test pending for member and standalone servers
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
    if is_domain == 'WORKGROUP'
     impact 0.0
     describe 'This requirement is applicable to domain-joined systems, for standalone systems this is NA' do
       skip 'This requirement is applicable to domain-joined systems, for standalone systems this is NA'
+    end
+  elsif domain_role == '4' || domain_role == '5'
+    impact 0.0
+    describe 'This requirement is applicable to domain-joined systems, for domain controllers this is NA' do
+      skip 'This requirement is applicable to domain-joined systems, for domain controllers this is NA'
     end
   else
     describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do

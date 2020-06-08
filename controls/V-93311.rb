@@ -31,13 +31,23 @@ control "V-93311" do
   tag nist: ["CM-6 b", "Rev_4"]
 
  # SK: Copied from Windows 10 V-63841
- # Q: Test passed | Check if the screenshot scenario is acceptable. Consider an if statement
+ # QJ: Test passed | Changes need to be made in the Windows 10 control listed above
 
-  describe.one do
+  # describe.one do
+  #   describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
+  #     it { should have_property 'SaveZoneInformation' }
+  #     its('SaveZoneInformation') { should_not be 1 }
+  #   end
+  #   describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
+  #     it { should_not have_property 'SaveZoneInformation' }
+  #   end
+  # end
+
+  if registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments').has_property?('SaveZoneInformation')
     describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
-      it { should have_property 'SaveZoneInformation' }
-      its('SaveZoneInformation') { should_not be 1 }
+    its('SaveZoneInformation') { should cmp 2 }
     end
+  else
     describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
       it { should_not have_property 'SaveZoneInformation' }
     end

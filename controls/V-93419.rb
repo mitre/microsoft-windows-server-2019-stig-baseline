@@ -27,19 +27,21 @@ control "V-93419" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73533
-  # SK: Test - passed for Server with Desktop Experience
-  # Q: Domain controller test pending
+  # SK: Test - passed for Domain controller
+  # QJ: Member server test pending | Member server should return 3 for the domain_role command, but since the condition is met but other installations, it might not be accruate
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+
   if !(domain_role == '4') && !(domain_role == '5')
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System') do
       it { should have_property 'EnumerateLocalUsers' }
       its('EnumerateLocalUsers') { should cmp 0 }
     end
-  end
-  if domain_role == '4' || domain_role == '5'
+  else
     impact 0.0
-    desc 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers and standalone systems'
+    describe 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers and standalone systems' do
+      skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers and standalone systems'
+    end
   end
   
 end

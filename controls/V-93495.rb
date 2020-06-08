@@ -31,32 +31,11 @@ control "V-93495" do
   tag cci: ["CCI-000803"]
   tag nist: ["IA-7", "Rev_4"]
 
-  # SK: Copied from both Windows 2012 V-21954 | This code block may not be necessary, check comments below
-
-  # if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Server\ServerLevels').exists?
-  #   describe.one do
-  #     describe registry_key('HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters') do
-  #       its('SupportedEncryptionTypes') { should eq 2_147_483_647 }
-  #     end
-  #     describe registry_key('HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters') do
-  #       its('SupportedEncryptionTypes') { should eq 0 }
-  #     end
-  #   end
-  # else
-  #   impact 0.0
-  #   describe 'Registry Key for Kerberos Encryption does not exist, this control is NA' do
-  #     skip 'Registry Key for Kerberos Encryption does not exist, this control is NA'
-  #   end
-  #  end
-
-
-  # SK: Copied also from Windows 2016 V-73685
-  # QJ: Test - passed | Validate modified code before removing the comment below
+  # SK: Copied from Windows 2016 V-73685
+  # SK: Test - passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Kerberos\\Parameters') do
     it { should have_property 'SupportedEncryptionTypes' }
-  # its('SupportedEncryptionTypes') { should cmp 2_147_483_640 }
     its('SupportedEncryptionTypes') { should cmp 2147483640 }
   end
-
 end

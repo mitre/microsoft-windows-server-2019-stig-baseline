@@ -28,18 +28,18 @@ control "V-93411" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-36707
-  # Q: Skip - This is applicable to unclassified systems; for other systems, this is NA.
-  # Q: Check review and test pending
+  # QJ: Test passed | 2012 code can be changed to remove describe.one and use the bet_between matcher
 
-  describe.one do
-    describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System') do
-     it { should have_property 'EnableSmartScreen' }
-     its('EnableSmartScreen') { should cmp == 1 }
+  if input('sensitive_system') == 'true' || nil
+    impact 0.0
+    describe 'This Control is Not Applicable to sensitive systems.' do
+      skip 'This Control is Not Applicable to sensitive systems.'
     end
+  else
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System') do
-     it { should have_property 'EnableSmartScreen' }
-     its('EnableSmartScreen') { should cmp == 2 }
+      it { should have_property 'EnableSmartScreen' }
+      its('EnableSmartScreen') { should cmp 1 }
     end
   end
-
+  
 end

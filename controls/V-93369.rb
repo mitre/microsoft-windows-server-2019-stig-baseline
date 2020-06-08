@@ -25,6 +25,7 @@ control "V-93369" do
   administrator_group.each do |user|
     describe user.to_s do
       it { should be_in administrators }
+      # QJ: Should it be administrators be_in administrator_group
     end
   end
   if administrator_group.empty?

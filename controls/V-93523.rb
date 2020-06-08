@@ -30,8 +30,7 @@ control "V-93523" do
   tag nist: ["SC-3", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14235
-  # SK: Test - passed for Server with Desktop Experience and using a list for values
-  # Q: Verify that list usage is okay before removing the commented code
+  # SK: Test - passed for Server with Desktop Experience and using a range for values
   # Q: Server Core Installation test pending
 
   #command checks to see if install is a Core or Gui Based install, if the result is false it is a server core build, if true it is a full install with gui
@@ -45,13 +44,8 @@ control "V-93523" do
   else
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
       it { should have_property 'ConsentPromptBehaviorAdmin' }
-    # its('ConsentPromptBehaviorAdmin') { should cmp <= 2 }
-      its('ConsentPromptBehaviorAdmin') { should be_in [ 1, 2 ] }
+      its('ConsentPromptBehaviorAdmin') { should be_between(1,2) }
     end
-    # describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
-    #   it { should have_property 'ConsentPromptBehaviorAdmin' }
-    #   its('ConsentPromptBehaviorAdmin') { should cmp > 0 }
-    # end
   end
-
+  
 end

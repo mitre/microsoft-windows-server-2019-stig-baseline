@@ -6,10 +6,12 @@ control "V-93475" do
   desc  "rationale", ""
   desc  "check", "Review the password never expires status for enabled user accounts.
     Open \"PowerShell\".
+
     Domain Controllers:
     Enter \"Search-ADAccount -PasswordNeverExpires -UsersOnly | FT Name, PasswordNeverExpires, Enabled\".
     Exclude application accounts, disabled accounts (e.g., DefaultAccount, Guest) and the krbtgt account.
     If any enabled user accounts are returned with a \"PasswordNeverExpires\" status of \"True\", this is a finding.
+
     Member servers and standalone systems:
     Enter 'Get-CimInstance -Class Win32_Useraccount -Filter \"PasswordExpires=False and LocalAccount=True\" | FT Name, PasswordExpires, Disabled, LocalAccount'.
     Exclude application accounts and disabled accounts (e.g., DefaultAccount, Guest).
@@ -29,14 +31,19 @@ control "V-93475" do
   #Check out Windows 2012 control 'V-6840'
 
   # SK: Copied from Windows 2012 V-6840
-  # Q: Review code and run tests
+  # Q: Test pending | Need to modify code to remove previous conditions
 
   application_accounts = input('application_accounts_domain')
   excluded_accounts = input('excluded_accounts_domain')
   smart_card_check = json({ command: "Get-ADUser -Filter * -Properties SmartcardLogonRequired | Where-Object {$_.SmartcardLogonRequired -eq 'True' } | Select -ExpandProperty SamAccountName | ConvertTo-Json" })
   list_smart_card_acct = smart_card_check.params
  # returns a hash of {'Enabled' => 'true' } 
+
   is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })
+  # QJ: Why not this:
+  # domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  # if domain_role == '4' || domain_role == '5'
+
 
   if (is_domain_controller['Enabled'] == true)
     list_of_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" })

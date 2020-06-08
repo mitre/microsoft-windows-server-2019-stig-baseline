@@ -29,10 +29,9 @@ control "V-93385" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73291
-  # Q: Test pending
+  # SK: Test - passed
 
   describe windows_feature('PNRP') do
     it { should_not be_installed }
   end
-  
 end

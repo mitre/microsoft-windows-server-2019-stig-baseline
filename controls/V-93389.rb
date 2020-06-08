@@ -29,10 +29,9 @@ control "V-93389" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73297
-  # Q: Test pending
+  # SK: Test - passed
 
   describe windows_feature('TFTP-Client') do
     it { should_not be_installed }
   end
-  
 end

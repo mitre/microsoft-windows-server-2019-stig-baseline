@@ -31,16 +31,21 @@ control "V-93421" do
   tag nist: ["CM-7 b", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73289
-  # Q: Test pending
+  # SK: Test - passed Skip statement added
+  # QJ: Does having the FTP Server windows feature mean that it has the FTP role? | Check if input can be replaced with the following test
 
   has_ftp_server_role = attribute('has_ftp_server_role')
 
-  describe windows_feature('Web-Ftp-Service') do
-    it { should_not be_installed }
-  end
-  if has_ftp_server_role == 'True'
-    impact 0.0
-    desc 'This server has the role of an FTP server, therefore this control is not applicable'
+  #if has_ftp_server_role == 'True'
+  if windows_feature('web-ftp-server').installed?
+    #impact 0.0
+    describe 'This server has the role of an FTP server, therefore this control is not applicable' do
+      skip 'This server has the role of an FTP server, therefore this control is not applicable'
+    end
+  else
+    describe windows_feature('Web-Ftp-Service') do
+      it { should_not be_installed }
+    end
   end
 
 end

@@ -11,6 +11,7 @@ control "V-93439" do
     Enter \"Get-Aduser -Filter * -Properties Passwordnotrequired |FT Name, Passwordnotrequired, Enabled\".
     Exclude disabled accounts (e.g., DefaultAccount, Guest) and Trusted Domain Objects (TDOs).
     If \"Passwordnotrequired\" is \"True\" or blank for any enabled user account, this is a finding.
+
     Member servers and standalone systems:
     Enter 'Get-CimInstance -Class Win32_Useraccount -Filter \"PasswordRequired=False and LocalAccount=True\" | FT Name, PasswordRequired, Disabled, LocalAccount'.
     Exclude disabled accounts (e.g., DefaultAccount, Guest).
@@ -29,22 +30,41 @@ control "V-93439" do
 
   # SK: Copied from Windows 2012 V-7002
   # Q: Password required condition removed - review modifications
-  # Q: Test pending
+  # QJ: Test pending | Could use guidance
 
-    # returns a hash of {'Enabled' => 'true' } 
+  # returns a hash of {'Enabled' => 'true' } 
   is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })
 
   if (is_domain_controller['Enabled'] == true)
-   list_of_accounts = json({ command: "Get-ADUser -Filter * -Properties PasswordNotRequired | Where-Object {$_.PasswordNotRequired -eq 'True' -and $_.Enabled -eq 'True'} Select -ExpandProperty Name | ConvertTo-Json" })
-   ad_accounts = list_of_accounts.params
+    list_of_accounts = json({ command: "Get-ADUser -Filter * -Properties PasswordNotRequired | Where-Object {$_.PasswordNotRequired -eq 'True' -and $_.Enabled -eq 'True'} Select -ExpandProperty Name | ConvertTo-Json" })
+
+    #list_of_accounts = json({ command: "Get-ADUser -Filter * -Properties PasswordNotRequired | (Where PasswordNotRequired -eq True) -and (Where Enabled -eq True) | ConvertTo-Json" })
+    ad_accounts = list_of_accounts.params
+  
+    # EXPERIMENT
+    # state = powershell("get-aduser -Filter {(Passwordnotrequired -eq $true) -and (Enabled -eq $true)} | ConvertTo-Json").stdout.strip
+    # subject { state }
+    # it { should_not eq "Enabled"}
+
+    # certs = command("Get-ChildItem -Path Cert:\\LocalMachine\\My | ConvertTo-JSON").stdout
+    # describe "The domain controller's  server certificate" do
+    #   subject { certs }
+    #   it { should_not cmp '' }
+    # end
+    # OJ: Sugestion
+    # ad_accounts = json({ command: "get-aduser -Filter {(Passwordnotrequired -eq $true) -and (Enabled -eq $true)} | ConvertTo-Json" }).params
+    #print(ad_accounts)
+
     # require 'pry'; binding.pry
-     describe 'AD Accounts' do
-       it 'AD should not have any Accounts that have Password Not Required' do
-       failure_message = "Users that have Password Not Required #{ad_accounts}"
-       expect(ad_accounts).to be_empty, failure_message
+    describe 'AD Accounts' do
+      it 'AD should not have any Accounts that have Password Not Required' do
+      failure_message = "Users that have Password Not Required #{ad_accounts}"
+      expect(ad_accounts).to be_empty, failure_message
       end
     end
   end
+
+  # QJ: Need to have a specific condition that needs to be met by member and standalone servers
   if (is_domain_controller.params == {} )
     local_users = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter PasswordRequired=False and LocalAccount=True | Select -ExpandProperty Name | ConvertTo-Json" })
     local_users_list = local_users.params

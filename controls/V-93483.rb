@@ -13,8 +13,9 @@ control "V-93483" do
     Click \"OK\".
     Select and expand the Certificates (Local Computer) entry in the left pane.
     Select and expand the Personal entry in the left pane.
-    Select the Certificates entry in the left pane.
-    In the right pane, examine the \"Issued By\" field for the certificate to determine the issuing CA.
+    Select the Certificates entry in the left pane."
+    #Reference control stops check if the right pane is empty, the following is new
+    "In the right pane, examine the \"Issued By\" field for the certificate to determine the issuing CA.
     If the \"Issued By\" field of the PKI certificate being used by the domain controller does not indicate the issuing CA is part of the DoD PKI or an approved ECA, this is a finding.
     If the certificates in use are issued by a CA authorized by the Component's CIO, this is a CAT II finding.
     There are multiple sources from which lists of valid DoD CAs and approved ECAs can be obtained:
@@ -23,7 +24,8 @@ control "V-93483" do
 
     DoD Public Key Enablement (PKE) Engineering Support maintains the InstallRoot utility to manage DoD supported root certificates on Windows computers, which includes a list of authorized CAs. The utility package can be downloaded from the PKI and PKE Tools page on IASE:
     http://iase.disa.mil/pki-pke/function_pages/tools.html"
-  desc  "fix", "Obtain a server certificate for the domain controller issued by the DoD PKI or an approved ECA."
+  desc  "fix", "Obtain a server certificate for the domain controller" #New: 
+  "issued by the DoD PKI or an approved ECA."
   impact 0.7
   tag severity: nil
   tag gtitle: "SRG-OS-000066-GPOS-00034"
@@ -37,8 +39,8 @@ control "V-93483" do
   #control "V-14820" Windows 2012 Profile
 
   # SK: Temporarily copied from Windows 2016 V-73611
-  # Q: Unable to locate 2012 control | Run tests after added ECA part
-  # Q: Test pending
+  # QJ: Unable to locate 2012 control | Need guidance on obtaining a server cert to write and test code for additional check critera - check comments aboce
+  # SK: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 

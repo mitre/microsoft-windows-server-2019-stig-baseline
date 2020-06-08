@@ -30,16 +30,15 @@ control "V-93413" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-63747
-  # Q: Check review and test pending
+  # SK: Test - passed
 
-  describe.one do
+  if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds').has_property?('AllowBasicAuthInClear')
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
-      it { should have_property 'AllowBasicAuthInClear' }
-      its('AllowBasicAuthInClear') { should_not be 1 }
+    its('AllowBasicAuthInClear') { should cmp 0 }
     end
+  else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
       it { should_not have_property 'AllowBasicAuthInClear' }
     end
   end
-
 end
