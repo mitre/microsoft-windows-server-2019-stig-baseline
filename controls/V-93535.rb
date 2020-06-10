@@ -11,11 +11,10 @@ control "V-93535" do
     Run \"Regedit\".
     Navigate to \"HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\NTDS\\Parameters\".
     Note the directory locations in the values for \"DSA Database file\".
+    
     Open \"Command Prompt\".
     Enter \"net share\".
-
     Note the logical drive(s) or file system partition for any organization-created data shares.
-
     Ignore system shares (e.g., NETLOGON, SYSVOL, and administrative shares ending in $). User shares that are hidden (ending with $) should not be ignored.
 
     If user shares are located on the same logical partition as the directory server data files, this is a finding."
@@ -34,13 +33,13 @@ control "V-93535" do
   # if domain_role == '4' || domain_role == '5'
 
   # SK: Copied from Windows 2016 V-73379
-  # QJ: Test Unable to validate test after changing the property or replacing path with the logon server share
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
     get_registry_value = command("Get-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Services\\NTDS\\Parameters' | Findstr /c:'DSA Database file'").stdout.strip
     database_file = get_registry_value[51..80]
+
     share_names = []
     share_paths = []
     get = command('Get-WMIObject -Query "SELECT * FROM Win32_Share" | Findstr /V "Name --"').stdout.strip.split("\n")
@@ -51,8 +50,10 @@ control "V-93535" do
       names = share[0..loc_space-1]
       if names != 'C$' && names != 'ADMIN$' && names != 'SYSVOL'
         share_names.push(names)
+        print(names)
         path = share[9..50]
         share_paths.push(path)
+        print(path)
       end
     end
     share_paths.each do |paths|
@@ -64,9 +65,32 @@ control "V-93535" do
     end
   end
 
+  # -------------
+
+  # EXPERIMENT:
+  # This variable replaces database_file
+  dsa_db_file = command('Get-ItemPropertyValue -Path HKLM:\\System\\CurrentControlSet\\Services\\NTDS\\Parameters -Name "DSA Database file"').stdout.strip
+
+  # This variable replaces share_names
+  net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,D$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Path | ConvertTo-Json" })
+
+  # QJ: Should D$ be removed?
+  # To test: Toggle the comment for this vs the variable above
+  #net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,D$ | Select Path | ConvertTo-Json" })
+  net_shares.each do |paths|
+    paths.each do |key, value|
+      describe "Net Share path: #{value}" do
+        subject { value }
+        it { should_not eq dsa_db_file }
+      end
+    end
+  end
+
+  # -------------
+
+  # Suggestion: if can simply be changed to else after the if statement above
   if !(domain_role == '4') && !(domain_role == '5')
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
