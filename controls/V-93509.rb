@@ -53,11 +53,8 @@ control "V-93509" do
   max_conn_idle_time = input('max_conn_idle_time')
   #forrest = attribute('forrest')
 
-  #Temporarily hardcoded value for testing
-  forest = 'corp.contoso.com'.split('.')
-  print(forest)
-
-  forest_name = forest.join(",dc=")
+  #Temporarily hardcoded value for testing | Need to set it to input based upon approval
+  forest_name = 'corp.contoso.com'.split('.')join(",dc=")
   print(forest_name)
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
