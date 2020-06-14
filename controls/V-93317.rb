@@ -49,7 +49,7 @@ control "V-93317" do
     write-output $result
   EOH
 
-  if input('sensitive_system') == 'true' || nil
+  if input('sensitive_system') == true || nil
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'

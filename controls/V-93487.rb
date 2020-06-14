@@ -82,7 +82,7 @@ control "V-93487" do
   # Q: Powershell script update pending
   # Q: Test pending
 
-  if input('sensitive_system') == 'true'
+  if input('sensitive_system') == true
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'

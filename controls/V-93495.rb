@@ -32,7 +32,7 @@ control "V-93495" do
   tag nist: ["IA-7", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73685
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Kerberos\\Parameters') do
     it { should have_property 'SupportedEncryptionTypes' }

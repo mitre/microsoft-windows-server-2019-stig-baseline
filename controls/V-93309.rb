@@ -25,7 +25,7 @@ control "V-93309" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1173
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager') do
     it { should have_property 'ProtectionMode' }

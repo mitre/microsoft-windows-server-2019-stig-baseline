@@ -27,7 +27,7 @@ control "V-93513" do
   #if domain_role == '4' || domain_role == '5'
 
   # SK: Copied from Windows 2016 V-73383
-  # SK: Test - passed
+  # SK: Test passed
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 

@@ -25,7 +25,7 @@ control "V-93297" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-21952
-  # SK: Test - passed
+  # SK: Test passed
   
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0') do
     it { should have_property 'allownullsessionfallback' }

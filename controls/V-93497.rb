@@ -9,6 +9,7 @@ control "V-93497" do
     Run \"gpedit.msc\".
     Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options.
     If the value for \"Accounts: Guest account status\" is not set to \"Disabled\", this is a finding.
+    
     For server core installations, run the following command:
     Secedit /Export /Areas SecurityPolicy /CFG C:\\Path\\FileName.Txt
     If \"EnableGuestAccount\" equals \"1\" in the file, this is a finding."
@@ -24,11 +25,9 @@ control "V-93497" do
   tag nist: ["IA-8", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1113
-  # SK: Test - passed for Server with Desktop Experience
-  # Q: Server Core Installation test pending
+  # SK: Test passed
 
   describe security_policy do
     its('EnableGuestAccount') { should cmp 0 }
   end
-  
 end

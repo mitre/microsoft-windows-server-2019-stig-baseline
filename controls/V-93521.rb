@@ -26,12 +26,11 @@ control "V-93521" do
   tag nist: ["SC-3", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14235
-  # SK: Test - passed for Server with Desktop Experience
-  # Q: Server Core Installation test pending
+  # SK: Test passed
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
-  if os_type == 'false'
+  if os_type == 'False'
     impact 0.0
     describe 'This system is a Server Core Installation, control is NA' do
       skip 'This system is a Server Core Installation control is NA'
@@ -42,5 +41,4 @@ control "V-93521" do
       its('EnableUIADesktopToggle') { should cmp == 0 }
     end
   end
-
 end

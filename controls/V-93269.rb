@@ -25,7 +25,7 @@ control "V-93269" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 10 V-63333
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
     it { should have_property 'DisableAutomaticRestartSignOn' }

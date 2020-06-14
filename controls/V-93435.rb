@@ -28,7 +28,7 @@ control "V-93435" do
   tag nist: ["IA-11", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14240
-  # SK: Test - passed for Server with Desktop Experience
+  # SK: Test passed for Server with Desktop Experience
   # Q: Server Core Installation test pending
 
   #command checks to see if install is a Core or Gui Based install, if the result is false it is a server core build, if true it is a full install with gui

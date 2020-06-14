@@ -29,8 +29,9 @@ control "V-93411" do
 
   # SK: Copied from Windows 2012 V-36707
   # QJ: Test passed | 2012 code can be changed to remove describe.one and use the be_between matcher
+  # Add input
 
-  if input('sensitive_system') == 'true' || nil
+  if input('sensitive_system') == true || nil
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'

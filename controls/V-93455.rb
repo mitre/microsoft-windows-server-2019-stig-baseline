@@ -25,7 +25,7 @@ control "V-93455" do
   tag nist: ["IA-3 (1)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1165
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'DisablePasswordChange' }

@@ -30,7 +30,7 @@ control "V-93493" do
   tag nist: ["IA-5 (2) (b)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-57639
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Cryptography') do
     it { should have_property 'ForceKeyProtection' }

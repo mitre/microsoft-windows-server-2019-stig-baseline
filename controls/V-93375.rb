@@ -25,7 +25,7 @@ control "V-93375" do
   tag nist: ["CM-7 (2)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-22692
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer') do
     it { should have_property 'NoAutorun' }

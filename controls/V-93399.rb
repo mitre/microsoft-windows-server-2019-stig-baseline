@@ -25,7 +25,7 @@ control "V-93399" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied and modified from Windows 2012 V-43238 | Removed the 2012 condition
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization') do
     it { should have_property 'NoLockScreenSlideshow' }

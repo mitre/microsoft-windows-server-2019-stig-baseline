@@ -27,7 +27,7 @@ control "V-93419" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73533
-  # SK: Test - passed for Domain controller
+  # SK: Test passed for Domain controller
   # QJ: Member server test pending | Member server should return 3 for the domain_role command, but since the condition is met but other installations, it might not be accruate
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip

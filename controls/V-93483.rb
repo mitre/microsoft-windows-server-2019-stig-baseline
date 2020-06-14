@@ -39,7 +39,7 @@ control "V-93483" do
   #control "V-14820" Windows 2012 Profile
 
   # SK: Temporarily copied from Windows 2016 V-73611
-  # QJ: Unable to locate 2012 control | Need guidance on obtaining a server cert to write and test code for additional check critera - check comments aboce
+  # Q: Unable to locate 2012 control | Need guidance on obtaining a server cert to write and test code for additional check critera - check comments above
   # SK: Test pending
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip

@@ -26,13 +26,12 @@ control "V-93525" do
   tag nist: ["SC-3", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14237
-  # SK: Test - passed for Server with Desktop Experience
-  # Q: Server Core Installation test pending
+  # SK: Test passed
   
   #command checks to see if install is a Core or Gui Based install, if the result is false it is a server core build, if true it is a full install with gui
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
-  if os_type == 'false'
+  if os_type == 'False'
     impact 0.0
     describe 'This system is a Server Core Installation, control is NA' do
       skip 'This system is a Server Core Installation control is NA'
@@ -43,5 +42,4 @@ control "V-93525" do
       its('EnableInstallerDetection') { should cmp == 1 }
     end
   end
-  
 end

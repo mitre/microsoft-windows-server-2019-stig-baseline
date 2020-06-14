@@ -28,8 +28,8 @@ control "V-93283" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # QJ: New?
-  # SK: Test - passed for Server with Desktop Experience
+  # New?
+  # SK: Test passed for Server with Desktop Experience
   # Q: Server Core Installation test pending
 
   describe security_policy do

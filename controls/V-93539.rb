@@ -25,7 +25,7 @@ control "V-93539" do
   tag nist: ["SC-4", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-6834
-  # SK: Test - passed
+  # SK: Test passed
  
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\LanManServer\\Parameters') do
     it { should have_property 'restrictnullsessaccess' }

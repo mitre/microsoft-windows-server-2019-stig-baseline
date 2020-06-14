@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 control "V-93421" do
-  title "Windows Server 2019 must not have the Microsoft FTP service installed unles required by the organization."
+  title "Windows Server 2019 must not have the Microsoft FTP service installed unless required by the organization."
   desc  "Unnecessary services increase the attack surface of a system. Some of these services may not support required levels of authentication or encryption."
   desc  "rationale", ""
   desc  "check", "If the server has the role of an FTP server, this is NA.
@@ -31,8 +31,30 @@ control "V-93421" do
   tag nist: ["CM-7 b", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73289
-  # SK: Test - passed Skip statement added
+  # SK: Test passed Skip statement added
   # QJ: Does having the FTP Server windows feature mean that it has the FTP role? | Check if input can be replaced with the following test
+
+  # ------------------ J
+  
+  is_ftp_installed = command('Get-WindowsFeature Web-Ftp-Server | Select -Expand Installed').stdout.strip
+
+  if is_ftp_installed == 'False'
+    describe 'The system does not have Ftp installed' do
+      skip 'The system does not have Ftp installed, this requirement is Not Applicable.'
+    end
+  else
+    startmode = powershell('Get-WmiObject -Class Win32_Service | Where-Object {$_.Name -eq "FTPSVC"} | Select StartMode | ConvertTo-Json').stdout.strip
+    clean_startmode = startmode[22..29]
+    describe 'Fax Service is installed and disabled' do
+      subject { clean_startmode }
+      it { should eq 'Disabled' }
+    end
+  end
+
+  # ------------------ J
+
+
+
 
   has_ftp_server_role = attribute('has_ftp_server_role')
 

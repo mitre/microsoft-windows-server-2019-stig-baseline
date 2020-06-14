@@ -8,6 +8,7 @@ control "V-93479" do
     Run \"gpedit.msc\".
     Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Account Policies >> Password Policy.
     If the value for \"Enforce password history\" is less than \"24\" passwords remembered, this is a finding.
+
     For server core installations, run the following command:
     Secedit /Export /Areas SecurityPolicy /CFG C:\\Path\\FileName.Txt
     If \"PasswordHistorySize\" is less than \"24\" in the file, this is a finding."
@@ -23,11 +24,9 @@ control "V-93479" do
   tag nist: ["IA-5 (1) (e)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1107
-  # SK: Test - passed for Server with Desktop Experience
-  # Q: Server Core Installation test pending
+  # SK: Test passed for Server with Desktop Experience and Server Core Installation
 
   describe security_policy do
-    its('PasswordHistorySize') { should be >= input('pass_hist_size') }
+    its('PasswordHistorySize') { should be >= input('password_history_size') }
   end
-
 end

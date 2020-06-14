@@ -27,7 +27,7 @@ control "V-93511" do
   tag nist: ["SC-13", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-3383
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\FIPSAlgorithmPolicy') do
     it { should have_property 'Enabled' }

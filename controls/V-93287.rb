@@ -27,7 +27,7 @@ control "V-93287" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1157
-  # SK: Test - passed
+  # SK: Test passed
   # QJ: Verify that a range of strings is acceptable before removing old code
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do

@@ -30,7 +30,7 @@ control "V-93439" do
 
   # SK: Copied from Windows 2012 V-7002
   # Q: Password required condition removed - review modifications
-  # QJ: Test pending | Could use guidance
+  # Q: Test pending | Could use guidance
 
   # returns a hash of {'Enabled' => 'true' } 
   is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })

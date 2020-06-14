@@ -11,11 +11,8 @@ control "V-93531" do
     Right-click any non-system-created shares.
     Select \"Properties\".
     Select the \"Share Permissions\" tab.
-
     If the file shares have not been configured to restrict permissions to the specific groups or accounts that require access, this is a finding.
-
     Select the \"Security\" tab.
-
     If the permissions have not been configured to restrict permissions to the specific groups or accounts that require access, this is a finding."
   desc  "fix", "If a non-system-created share is required on a system, configure the share and NTFS permissions to limit access to the specific groups or accounts that require it.
     Remove any unnecessary non-system-created shares."
@@ -32,32 +29,30 @@ control "V-93531" do
   # control 'V-3245' windows 2012 Profile
 
   # SK: Copied from Windows 2012 V-3245
-  # SK: Test - passed
+  # SK: Test passed
 
-  share_names = []
-  share_paths = []
-  get = command('Get-WMIObject -Query "SELECT * FROM Win32_Share" | Findstr /V "Name --"').stdout.strip.split("\n")
-
-  get.each do |share|
-    loc_space = share.index(' ')
-    names = share[0..loc_space-1]
-    share_names.push(names)
-    path = share[9..50]
-    share_paths.push(path)
-  end
-
-  share_names_string = share_names.join(',')
-
-  if share_names_string != 'ADMIN$,C$,IPC$'
-    [share_paths, share_names].each do |path1, _name1|
-      describe command("Get-Acl -Path '#{path1}' | Format-List | Findstr /i /C:'Everyone Allow'") do
+  net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Name, Path | ConvertTo-Json" })
+  
+  if net_shares.params.empty?
+    impact 0.0
+    describe 'No non-default file shares were detected' do
+    skip 'This control is NA'
+    end
+  elsif net_shares.is_a?(Hash)
+    paths.each do |key, value|
+      describe "Unrestricted file shares" do
+        subject { command("Get-Acl -Path '#{value}' | ?{$_.AccessToString -match 'Everyone\sAllow'} | %{($_.PSPath -split '::')[1]}") }
         its('stdout') { should eq '' }
       end
     end
-  else # share_names_string == 'ADMIN$,C$,IPC$'
-    impact 0.0
-    describe 'The default files shares exist' do
-      skip 'This control is NA'
+  else
+    net_shares.each do |paths| #If the JSON output is an array of hashes
+      paths.each do |key, value|
+        describe "Unrestricted file shares" do
+          subject { command("Get-Acl -Path '#{value}' | ?{$_.AccessToString -match 'Everyone\sAllow'} | %{($_.PSPath -split '::')[1]}") }
+          its('stdout') { should eq '' }
+        end
+      end
     end
   end
 end

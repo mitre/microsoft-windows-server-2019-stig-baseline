@@ -6,3 +6,261 @@ copyright_email: you@example.com
 license: Apache-2.0
 summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
 version: 0.1.0
+
+
+inputs:
+ - name: temp_accounts_domain
+   desc: "List of temporary accounts on the domain"
+   type: Array
+   value: 
+    -
+
+ - name: temp_accounts_local
+   desc: "List of temporary accounts on local system"
+   type: Array
+   value: 
+    -
+
+ - name: emergency_accounts_domain
+   desc: "List of emergency accounts on the domain"
+   type: Array
+   value: 
+    - 
+
+ - name: emergency_accounts_local
+   desc: "List of emergency accounts on the system"
+   type: Array
+   value: 
+    - 
+
+ - name: c_perm
+   desc: "Permissions on folder and file for C:\\ Directory"
+   type: Array
+   value:
+    - NT AUTHORITY\\SYSTEM:(OI)(CI)(F)
+    - BUILTIN\Administrators:(OI)(CI)(F)
+    - BUILTIN\Users:(OI)(CI)(RX)
+    - BUILTIN\Users:(CI)(AD)
+    - BUILTIN\Users:(CI)(IO)(WD)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)
+
+ - name: c_program_files_perm
+   desc: "Permissions on folder and file for C:\\Program Files and C:\\Program Files(x86) Directory"
+   type: Array
+   value:
+    - NT SERVICE\TrustedInstaller:(F)
+    - NT SERVICE\TrustedInstaller:(CI)(IO)(F)
+    - NT AUTHORITY\SYSTEM:(M)
+    - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
+    - BUILTIN\Administrators:(M)
+    - BUILTIN\Administrators:(OI)(CI)(IO)(F)
+    - BUILTIN\Users:(RX)
+    - BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+  
+ - name: c_windows_perm
+   desc: "Permissions on folder and file for C:\\Windows Directory"
+   type: Array
+   value:
+    - NT SERVICE\TrustedInstaller:(F)
+    - NT SERVICE\TrustedInstaller:(CI)(IO)(F)
+    - NT AUTHORITY\SYSTEM:(M)
+    - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
+    - BUILTIN\Administrators:(M)
+    - BUILTIN\Administrators:(OI)(CI)(IO)(F)
+    - BUILTIN\Users:(RX)
+    - BUILTIN\Users:(OI)(CI)(IO)(GR,GE)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
+    - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
+
+ - name: reg_software_perms
+   desc: "The required Registry Software Permission Settings"
+   type: Array
+   value:
+    - CREATOR OWNER Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+    - BUILTIN\Users Allow  ReadKey
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadKey
+    - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  ReadKey
+
+ - name: reg_security_perms
+   desc: "The required Registry Security Permissions Settings"
+   type: Array
+   value:
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  ReadKey, ChangePermissions
+
+ - name: reg_system_perms
+   desc: "The required Registry System Permissions Settings"
+   type: Array
+   value:
+    - CREATOR OWNER Allow  268435456
+    - NT AUTHORITY\SYSTEM Allow  268435456
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  268435456
+    - BUILTIN\Administrators Allow  FullControl
+    - BUILTIN\Users Allow  -2147483648
+    - BUILTIN\Users Allow  ReadKey
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadKey
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  -2147483648
+    - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  ReadKey
+    - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  -2147483648
+
+ - name: local_administrators_dc
+   desc: "List of authorized users in the local Administrators group"
+   type: Array
+   value: 
+    -
+
+ - name: local_administrators_member
+   desc: "List of authorized users in the local Administrators group"
+   type: Array
+   value:
+    -
+  
+ - name: ntds_permissions
+   desc: "Permissions on folder and file for NTDS Directory"
+   type: Array
+   value:
+    - BUILTIN\Administrators:(I)(F)
+    - NT AUTHORITY\SYSTEM:(I)(F)
+
+ - name: c_windows_sysvol_perm
+   desc: "Permissions on folder and file for SYSVOL Directory"
+   type: Array
+   value:
+    - NT AUTHORITY\Authenticated Users:(RX)
+    - NT AUTHORITY\Authenticated Users:(OI)(CI)(IO)(GR,GE)
+    - BUILTIN\Server Operators:(RX)
+    - BUILTIN\Server Operators:(OI)(CI)(IO)(GR,GE)
+    - BUILTIN\Administrators:(M,WDAC,WO)
+    - BUILTIN\Administrators:(OI)(CI)(IO)(F)
+    - NT AUTHORITY\SYSTEM:(F)
+    - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
+    - BUILTIN\Administrators:(M,WDAC,WO)
+    - CREATOR OWNER:(OI)(CI)(IO)(F)
+
+ - name: max_pass_lockout
+   desc: "Account lockout threshold is recommended to be 3 or less invalid logon attempts [3]"
+   type: Numeric
+   value: 3
+
+ - name: pass_lock_time
+   desc: "Sets the number of min before a session is locked out [15]"
+   type: Numeric
+   value: 15
+
+ - name: pass_lock_duration
+   desc: "Account lockout duration must be configured to [15] minutes or greater"
+   type: Numeric
+   value: 15
+
+ - name: LegalNoticeText
+   type: string
+   value: "You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
+    By using this IS (which includes any device attached to this IS), you consent
+    to the following conditions:
+    -The USG routinely intercepts and monitors communications on this IS for
+    purposes including, but not limited to, penetration testing, COMSEC monitoring,
+    network operations and defense, personnel misconduct (PM), law enforcement
+    (LE), and counterintelligence (CI) investigations.
+    -At any time, the USG may inspect and seize data stored on this IS.
+    -Communications using, or data stored on, this IS are not private, are subject
+    to routine monitoring, interception, and search, and may be disclosed or used
+    for any USG-authorized purpose.
+    -This IS includes security measures (e.g., authentication and access controls)
+    to protect USG interests--not for your personal benefit or privacy.
+    -Notwithstanding the above, using this IS does not constitute consent to PM, LE
+    or CI investigative searching or monitoring of the content of privileged
+    communications, or work product, related to personal representation or services
+    by attorneys, psychotherapists, or clergy, and their assistants.  Such
+    communications and work product are private and confidential.  See User
+    Agreement for details."
+
+ - name: LegalNoticeCaption
+   type: string
+   value: "DoD Notice and Consent Banner, US Department of Defense Warning Statement, or a site-defined equivalent."
+
+ - name: winevt_logs_application_perms
+   desc: "This is the values of the Application.evtx file under system32"
+   type: Array
+   value:
+    - NT SERVICE\EventLog Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+
+ - name: winevt_logs_security_perms
+   desc: "This is the values of the Security.evtx file under system32"
+   type: Array
+   value:
+    - NT SERVICE\EventLog Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+
+ - name: winevt_logs_system_perms
+   desc: "This is the values of the System.evtx file under system32"
+   type: Array
+   value:
+    - NT SERVICE\EventLog Allow  FullControl
+    - NT AUTHORITY\SYSTEM Allow  FullControl
+    - BUILTIN\Administrators Allow  FullControl
+
+ - name: eventvwr_perms
+   desc: "This is the values of the Eventvwr.exe file under system32"
+   type: Array
+   value:
+    - NT AUTHORITY\SYSTEM Allow  ReadAndExecute, Synchronize
+    - BUILTIN\Administrators Allow  ReadAndExecute, Synchronize
+    - BUILTIN\Users Allow  ReadAndExecute, Synchronize
+    - NT SERVICE\TrustedInstaller Allow  FullControl
+    - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadAndExecute, Synchronize
+
+ - name: backup_operators
+   desc: "List of authorized users in the Backup Operators Group"
+   type: Array
+   value: 
+    -
+
+ - name: application_accounts_domain
+   desc: "List Application or Service Accounts domain"
+   type: Array
+   value: 
+    - 
+
+ - name: application_accounts_local
+   desc: "List Application Local Accounts"
+   type: Array
+   value: 
+    - 
+
+ - name: av_approved_software
+   desc: "This is a list of Approved Anti-Virus Software"
+   type: Array
+   value:
+      - Windows Defender
+      - McAfee Host Intrusion Prevention
+      - McAfee Endpoint Security
+      - McAfee Agent
+
+ - name: sensitive_system
+   desc: "Set it to true if the system is sensitive or classified"
+   type: Boolean
+   value: false
+
+ - name: password_history_size
+   desc: "Set the password history size set by your organization"
+   type: Numeric
+   value: 24
+
+ - name: maximum_password_age
+   desc: "Set the maximum password age set by your organization"
+   type: Numeric
+   value: 60

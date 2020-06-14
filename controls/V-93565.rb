@@ -37,7 +37,7 @@ control "V-93565" do
 
   #Code can be found in Windows 10
   # SK: Copied from Windows 10 V-77095
-  # SK: Test - passed
+  # SK: Test passed
 
   aslr_bottomup_script = <<-EOH
   $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -47,7 +47,7 @@ control "V-93565" do
   write-output $result
   EOH
 
-  if input('sensitive_system') == 'true' || nil
+  if input('sensitive_system') == true || nil
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'

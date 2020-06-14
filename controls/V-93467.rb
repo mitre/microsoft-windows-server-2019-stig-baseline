@@ -25,7 +25,7 @@ control "V-93467" do
   tag nist: ["IA-5 (1) (c)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-3379
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa') do
     it { should have_property 'NoLMHash' }

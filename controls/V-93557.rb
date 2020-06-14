@@ -25,7 +25,7 @@ control "V-93557" do
   tag nist: ["SC-8", "SC-8 (1)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1166
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters') do
     it { should have_property 'EnableSecuritySignature' }

@@ -76,21 +76,21 @@ control "V-93489" do
   #control 'V-32274' in Windows 2012
 
   # SK: Copied from Windows 2012 V-32274
-  # Q: Test pending
+  # QJ: Test pending | Command output should not be nil + Check the NotAfter date against current date for expiration
 
-  if input('sensitive_system') == 'true'
+  if input('sensitive_system') == true
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
   else 
-   dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
-   query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\\\disallowed  | Where {$_.Issuer -Like "*DoD Interoperability*" -and $_.Subject -Like "*DoD*"} | Select Subject, Issuer, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
+    dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
+    query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\\\disallowed  | Where {$_.Issuer -Like "*DoD Interoperability*" -and $_.Subject -Like "*DoD*"} | Select Subject, Issuer, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
  
-  describe 'Verify the DoD Interoperability cross-certificates are installed on unclassified systems as Untrusted Certificates.' do
-    subject { query.params }
-    it { should be_in dod_interoperability_certificates }
+    describe 'Verify the DoD Interoperability cross-certificates are installed on unclassified systems as Untrusted Certificates.' do
+      subject { query.params }
+      it { should be_in dod_interoperability_certificates }
+    end
   end
- end
 
 end

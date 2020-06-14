@@ -26,13 +26,12 @@ control "V-93527" do
   tag nist: ["SC-3", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14239
-  # SK: Test - passed for Server with Desktop Experience
-  # QJ: Server Core Installation test pending
+  # SK: Test passed
 
   #command checks to see if install is a Core or Gui Based install, if the result is false it is a server core build, if true it is a full install with gui
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
-  if os_type == 'false'
+  if os_type == 'False'
     impact 0.0
     describe 'This system is a Server Core Installation, control is NA' do
       skip 'This system is a Server Core Installation control is NA'
@@ -42,6 +41,5 @@ control "V-93527" do
       it { should have_property 'EnableSecureUIAPaths' }
       its('EnableSecureUIAPaths') { should cmp == 1 }
     end
-  end  
-
+  end
 end

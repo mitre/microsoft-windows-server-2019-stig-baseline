@@ -28,7 +28,7 @@ control "V-93563" do
   tag nist: ["SI-16", "Rev_4"]
 
   # SK: Copied from Windows 10 V-63689
-  # SK: Test - passed
+  # SK: Test passed
 
   if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer').has_property?('NoDataExecutionPrevention')
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do

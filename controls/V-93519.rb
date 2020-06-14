@@ -34,8 +34,8 @@ control "V-93519" do
   # if domain_role == '4' || domain_role == '5'
   
   # SK: Copied from Windows 2012 V-36439
-  # SK: Test - passed for domain controllers
-  # Q: Test pending for member and standalone servers
+  # SK: Test passed for domain controllers and stanalone servers
+  # Q: Test pending for member servers | Verify if it needs to be explicitly defined with a number
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip

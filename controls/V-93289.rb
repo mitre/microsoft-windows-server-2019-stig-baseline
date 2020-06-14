@@ -23,7 +23,7 @@ control "V-93289" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 10 V-63739
-  # SK: Test - passed
+  # SK: Test passed
 
   describe security_policy do
     its('LSAAnonymousNameLookup') { should eq 0 }

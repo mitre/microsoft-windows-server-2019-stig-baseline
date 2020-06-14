@@ -26,7 +26,7 @@ control "V-93427" do
   tag nist: ["IA-11", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-3453
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows NT\\Terminal Services') do
     it { should have_property 'fPromptForPassword' }

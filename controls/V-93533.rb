@@ -25,7 +25,7 @@ control "V-93533" do
   tag nist: ["SC-4", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14249
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows NT\\Terminal Services') do
     it { should have_property 'fDisableCdm' }

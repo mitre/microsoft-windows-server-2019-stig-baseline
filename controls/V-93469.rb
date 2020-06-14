@@ -25,7 +25,7 @@ control "V-93469" do
   tag nist: ["IA-5 (1) (c)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1141
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters') do
     it { should have_property 'EnablePlainTextPassword' }

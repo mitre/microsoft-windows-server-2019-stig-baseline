@@ -47,23 +47,13 @@ control "V-93509" do
   #control "V-14831" Windows 2012 Profile
 
   # SK: Temporarily copied from Windows 2016 V-73387
-  # QJ: Unable to find 2012 control | Validate changes before removing old code
-  # Q: Test - passed
+  # SK: Test passed
 
-  max_conn_idle_time = input('max_conn_idle_time')
-  #forrest = attribute('forrest')
-
-  #Temporarily hardcoded value for testing | Need to set it to input based upon approval
-  forest_name = 'corp.contoso.com'.split('.')join(",dc=")
-  print(forest_name)
-
+  forest_name = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-Json').params
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  
   if domain_role == '4' || domain_role == '5'
-    #query = command("dsquery * \"cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,dc=testdomain,dc=com\" -attr LDAPAdminLimits").stdout
-    
-    #Temporarily hardcoded value for testing
-    query = command("dsquery * \"cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,dc=#{forest_name}\" -attr LDAPAdminLimits").stdout
-    
+    query = command("dsquery * 'cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,#{forest_name}' -attr LDAPAdminLimits").stdout    
     ldap_admin_limits = parse_config(query.gsub(/;/, "\n")).params
     describe "MaxConnIdleTime is configured" do
       subject { ldap_admin_limits }
@@ -75,10 +65,8 @@ control "V-93509" do
     end
   else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
-
 end

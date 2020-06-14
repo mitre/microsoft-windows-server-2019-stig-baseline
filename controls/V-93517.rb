@@ -24,7 +24,7 @@ control "V-93517" do
   tag nist: ["SC-3", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-14243
-  # SK: Test - passed
+  # SK: Test passed
 
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\CredUI') do
     it { should have_property 'EnumerateAdministrators' }
