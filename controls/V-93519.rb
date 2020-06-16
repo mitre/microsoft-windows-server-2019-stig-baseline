@@ -34,27 +34,30 @@ control "V-93519" do
   # if domain_role == '4' || domain_role == '5'
   
   # SK: Copied from Windows 2012 V-36439
-  # SK: Test passed for domain controllers and stanalone servers
-  # Q: Test pending for member servers | Verify if it needs to be explicitly defined with a number
+  # SK: Test passed for domain controllers, stanalone and member servers
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-   if is_domain == 'WORKGROUP'
-    impact 0.0
-    describe 'This requirement is applicable to domain-joined systems, for standalone systems this is NA' do
-      skip 'This requirement is applicable to domain-joined systems, for standalone systems this is NA'
-    end
+  if domain_role == '3'
+    describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
+      it { should have_property 'LocalAccountTokenFilterPolicy' }
+      its('LocalAccountTokenFilterPolicy') { should cmp == 0 }
+    end 
   elsif domain_role == '4' || domain_role == '5'
     impact 0.0
     describe 'This requirement is applicable to domain-joined systems, for domain controllers this is NA' do
       skip 'This requirement is applicable to domain-joined systems, for domain controllers this is NA'
     end
+  elsif is_domain == 'WORKGROUP'
+    impact 0.0
+    describe 'This requirement is applicable to domain-joined systems, for standalone systems this is NA' do
+      skip 'This requirement is applicable to domain-joined systems, for standalone systems this is NA'
+    end
   else
-    describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
-     it { should have_property 'LocalAccountTokenFilterPolicy' }
-     its('LocalAccountTokenFilterPolicy') { should cmp == 0 }
-    end 
+    impact 0.0
+    describe 'This requirement is only applicable to member servers' do
+      skip 'This is NA'
+    end
   end
-
 end

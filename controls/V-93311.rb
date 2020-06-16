@@ -31,17 +31,7 @@ control "V-93311" do
   tag nist: ["CM-6 b", "Rev_4"]
 
  # SK: Copied from Windows 10 V-63841
- # QJ: Test passed | Changes need to be made in the Windows 10 control listed above
-
-  # describe.one do
-  #   describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
-  #     it { should have_property 'SaveZoneInformation' }
-  #     its('SaveZoneInformation') { should_not be 1 }
-  #   end
-  #   describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
-  #     it { should_not have_property 'SaveZoneInformation' }
-  #   end
-  # end
+ # SK: Test passed | Changes need to be made in the Windows 10 control listed above
 
   if registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments').has_property?('SaveZoneInformation')
     describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
@@ -52,5 +42,4 @@ control "V-93311" do
       it { should_not have_property 'SaveZoneInformation' }
     end
   end
-
 end

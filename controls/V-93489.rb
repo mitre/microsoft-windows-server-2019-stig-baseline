@@ -76,7 +76,8 @@ control "V-93489" do
   #control 'V-32274' in Windows 2012
 
   # SK: Copied from Windows 2012 V-32274
-  # QJ: Test pending | Command output should not be nil + Check the NotAfter date against current date for expiration
+  # Q: Test pending
+  # QJ: Command output should not be nil + Check the NotAfter date against current date for expiration
 
   if input('sensitive_system') == true
     impact 0.0

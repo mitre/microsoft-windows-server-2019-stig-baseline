@@ -28,8 +28,7 @@ control "V-93411" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-36707
-  # QJ: Test passed | 2012 code can be changed to remove describe.one and use the be_between matcher
-  # Add input
+  # SK: Test passed
 
   if input('sensitive_system') == true || nil
     impact 0.0
@@ -42,5 +41,4 @@ control "V-93411" do
       its('EnableSmartScreen') { should cmp 1 }
     end
   end
-  
 end

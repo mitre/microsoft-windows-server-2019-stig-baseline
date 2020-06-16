@@ -29,11 +29,9 @@ control "V-93281" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # New?
-  # SK: Test passed for Server with Desktop Experience
-  # Q: Server Core Installation test pending
+  # SK: Test passed for Server with Desktop Experience and Core installation
 
   describe security_policy do
     its('NewAdministratorName') { should eq "Administrator" }
   end
-  
 end

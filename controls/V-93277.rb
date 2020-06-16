@@ -41,28 +41,68 @@ control "V-93277" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Modified and copied from Windows 2016 V-73515
-  # Q: Condition added - For domain controllers this is NA.
+  # QJ: Condition added - For domain controllers this is NA.
   # Q: Test pending
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
-  describe.one do
-    describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard') do
-      it { should have_property 'LsaCfgFlags' }
-      its('LsaCfgFlags') { should cmp 1 }
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+
+  if domain_role == '0' || domain_role == '2'
+    impact 0.0
+    describe 'This is NA for standalone systems' do
+      skip 'This is NA for standalone systems'
     end
+  elsif domain_role == '4' || domain_role == '5'
+    impact 0.0
+    describe 'This is NA for domain controllers' do
+      skip 'This is NA for domain controllers'
+    end
+  else
+      describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard') do
+        it { should have_property 'LsaCfgFlags' }
+        its('LsaCfgFlags') { should cmp 1 }
+      end
+    
     # describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard') do
     #   it { should have_property 'LsaCfgFlags' }
     #   its('LsaCfgFlags') { should cmp 2 }
     # end
-  end
-  only_if { is_domain != 'WORKGROUP' }
 
-  if is_domain == 'WORKGROUP'
-    impact 0.0
-    desc 'This system is not joined to a domain, therfore this control is not appliable as it does not apply to standalone systems'
-    describe 'This system is not joined to a domain, therfore this control is not appliable as it does not apply to standalone systems' do
-      skip 'This system is not joined to a domain, therfore this control is not appliable as it does not apply to standalone systems'
+    #only_if { is_domain != 'WORKGROUP' }
+
+    # Recommended command
+    security_services = command('Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\\Microsoft\\Windows\\DeviceGuard | Select -ExpandProperty "SecurityServicesRunning"').stdout.strip.split("\r\n")
+    # AvailableSecurityProperties                  : {1, 2, 3, 5}
+    # SecurityServicesRunning                      : {0}
+   
+    #-----------------------------------------------
+
+    describe.one do
+      security_services.each do |element|
+        describe element do
+          it { should cmp "1"}
+        end
+      end
     end
+
+    # FAILS
+
+    # describe 'SecurityServicesRunning' do
+    #   expect(security_services).to include("1")
+    # end
+
+    # describe do
+    #   its(security_services) { should include "1" }
+    # end
+
+    #-----------------------------------------------
   end
+
+  # if is_domain == 'WORKGROUP'
+  #   impact 0.0
+  #   describe 'This system is not joined to a domain, therfore this control is not appliable as it does not apply to standalone systems' do
+  #     skip 'This system is not joined to a domain, therfore this control is not appliable as it does not apply to standalone systems'
+  #   end
+  # end
 
 end
