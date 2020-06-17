@@ -47,7 +47,7 @@ control "V-93535" do
       skip 'This control is NA'
       end
     elsif net_shares.is_a?(Hash)
-      paths.each do |key, value|
+      net_shares.each do |key, value|
         describe "Net Share path: #{value}" do
           subject { value }
           it { should_not eq dsa_db_file }

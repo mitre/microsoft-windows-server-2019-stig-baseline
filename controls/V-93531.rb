@@ -39,7 +39,7 @@ control "V-93531" do
     skip 'This control is NA'
     end
   elsif net_shares.is_a?(Hash)
-    paths.each do |key, value|
+    net_shares.each do |key, value|
       describe "Unrestricted file shares" do
         subject { command("Get-Acl -Path '#{value}' | ?{$_.AccessToString -match 'Everyone\sAllow'} | %{($_.PSPath -split '::')[1]}") }
         its('stdout') { should eq '' }

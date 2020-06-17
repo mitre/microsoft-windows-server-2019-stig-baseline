@@ -39,7 +39,7 @@ control "V-93315" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Modified and copied from Windows 10 V-77097
-  # Q: Test pending
+  # SK: Test passed | Changed logic from should_not to should
 
   cfg_script = <<~EOH
     $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -54,16 +54,10 @@ control "V-93315" do
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  # elsif registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId < '1709'
-  #   impact 0.0
-  #   describe 'This STIG does not apply to Prior Versions before 1709.' do
-  #     skip 'This STIG does not apply to Prior Versions before 1709.'
-  #   end
   else
     describe 'CFG is required to be enabled on System' do
       subject { powershell(cfg_script).strip }
-      it { should_not eq '2' }
+      it { should be_in ['0', '1'] }
     end
   end
-
 end

@@ -76,8 +76,9 @@ control "V-93489" do
   #control 'V-32274' in Windows 2012
 
   # SK: Copied from Windows 2012 V-32274
-  # Q: Test pending
-  # QJ: Command output should not be nil + Check the NotAfter date against current date for expiration
+  # SK: Test passed
+  # QJ: Add conditions for -> command output should not be nil + Check the NotAfter date against current date for expiration
+  # QJ: If approved, copy code throughout the other controls
 
   if input('sensitive_system') == true
     impact 0.0
@@ -90,7 +91,30 @@ control "V-93489" do
  
     describe 'Verify the DoD Interoperability cross-certificates are installed on unclassified systems as Untrusted Certificates.' do
       subject { query.params }
+      it { should_not be_empty}
       it { should be_in dod_interoperability_certificates }
+    end
+      
+    if query.is_a?(Hash)
+      query.each do |key, value|
+        if key == "NotAfter"
+          cert_date = Date.parse(value)
+          describe cert_date do
+            it { should be >= Date.today }
+          end
+        end
+      end
+    else
+      query.each do |certs|
+        certs.each do |key, value|
+          if key == "NotAfter"
+            cert_date = Date.parse(value)
+            describe cert_date do
+              it { should be >= Date.today }
+            end
+          end
+        end
+      end
     end
   end
 

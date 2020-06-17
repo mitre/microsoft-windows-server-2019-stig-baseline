@@ -7,7 +7,7 @@ control "V-93487" do
   desc  "check", "The certificates and thumbprints referenced below apply to unclassified systems; see PKE documentation for other networks.
     Open \"Windows PowerShell\" as an administrator.
     Execute the following command:
-    Get-ChildItem -Path Cert:Localmachine\ oot | Where Subject -Like \"*DoD*\" | FL Subject, Thumbprint, NotAfter
+    Get-ChildItem -Path Cert:Localmachine\\root | Where Subject -Like \"*DoD*\" | FL Subject, Thumbprint, NotAfter
     If the following certificate \"Subject\" and \"Thumbprint\" information is not displayed, this is a finding.
     If an expired certificate (\"NotAfter\" date) is not listed in the results, this is not a finding.
 
@@ -79,22 +79,23 @@ control "V-93487" do
   #control 'V-32274' in Windows 2012 update Powershell script to have Get-ChildItem -Path Cert:Localmachine\root
   
   # SK: Copied from Windows 2012 V-32274
-  # Q: Powershell script update pending
-  # Q: Test pending
+  # SK: Test passed
 
   if input('sensitive_system') == true
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  else 
-   dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
-   query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\\\disallowed  | Where {$_.Issuer -Like "*DoD Interoperability*" -and $_.Subject -Like "*DoD*"} | Select Subject, Issuer, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
+  else
+  # QJ: Is this required? | Verify before removing ln 92 and ln 97
+  # dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
+    query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\root  | Where Subject -Like "*DoD*" | Select Subject, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
  
-  describe 'Verify the DoD Interoperability cross-certificates are installed on unclassified systems as Untrusted Certificates.' do
-    subject { query.params }
-    it { should be_in dod_interoperability_certificates }
+    describe 'Verify DoD Root Certificate Authority (CA) certificates are installed in the Trusted Root Store.' do
+      subject { query.params }
+    # it { should be_in dod_interoperability_certificates }
+      it { should_not be_empty }
+    end
   end
- end
  
 end

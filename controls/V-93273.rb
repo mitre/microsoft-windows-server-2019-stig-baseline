@@ -27,7 +27,7 @@ control "V-93273" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73631
-  # Q: Test - passed
+  # SK: Test - passed
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   if domain_role == '4' || domain_role == '5'

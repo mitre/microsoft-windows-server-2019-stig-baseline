@@ -29,25 +29,20 @@ control "V-93481" do
   #Check out Windows 2012 control "V-39334"
 
   # SK: Temporarily copied from Windows 2016 V-73611
-  # Q: Unable to locate 2012 control | Review V-93483 changed before marking this complete
-  # Q: Test pending
+  # SK: Test passed
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
     certs = command("Get-ChildItem -Path Cert:\\LocalMachine\\My | ConvertTo-JSON").stdout
-    describe "The domain controller's  server certificate" do
+    describe 'Verify that the domain controller has a PKI server certificate.' do
       subject { certs }
-      it { should_not cmp '' }
+      it { should_not be_empty }
     end
-  end
-
-  if !(domain_role == '4') && !(domain_role == '5')
+  else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
-
 end

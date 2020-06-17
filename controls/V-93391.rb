@@ -55,10 +55,11 @@ control "V-93391" do
       skip 'System is not Windows 2012, control is NA'
     end
   else
-   state = powershell("(Get-WindowsOptionalFeature -Online | Where {$_.FeatureName -eq 'SMB1Protocol'}).State ").stdout.strip
-   describe 'SMB 1.0 Procotocl is disabled as part of Security Requirement' do
-    subject { state }
-    it { should_not eq "Enabled"}
-   end
+    state = powershell("(Get-WindowsOptionalFeature -Online | Where {$_.FeatureName -eq 'SMB1Protocol'}).State ").stdout.strip
+    describe 'SMB 1.0 Procotocl is disabled as part of Security Requirement' do
+      subject { state }
+      it { should_not eq "Enabled"}
+    end
   end
+
 end

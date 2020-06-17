@@ -39,9 +39,9 @@ control "V-93319" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Copied from Windows 10 V-77103
-  # Q: Test pending
+  # SK: Test passed | Changed logic from should_not to should
 
-  dep_script = <<-EOH
+  heap_script = <<-EOH
   $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
   $convert_out_json = ConvertFrom-Json -InputObject $convert_json
   $select_object = $convert_out_json.Heap | Select TerminateOnError
@@ -54,16 +54,10 @@ control "V-93319" do
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  # elsif registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId < '1709'
-  #   impact 0.0
-  #   describe 'This STIG does not apply to Prior Versions before 1709.' do
-  #     skip 'This STIG does not apply to Prior Versions before 1709.'
-  #   end
   else
     describe 'Heap Terminate On Error is required to be enabled on System' do
-      subject { powershell(dep_script).strip }
-      it { should_not eq '2' }
+      subject { powershell(heap_script).strip }
+      it { should be_in ['0', '1'] }
     end
   end
-
 end

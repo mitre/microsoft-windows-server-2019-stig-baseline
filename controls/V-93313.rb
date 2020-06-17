@@ -7,25 +7,18 @@ control "V-93313" do
   desc  "check", "This is applicable to unclassified systems, for other systems this is NA.
 
     The default configuration in Exploit Protection is \"On by default\" which meets this requirement.  The PowerShell query results for this show as \"NOTSET\".
-
     Run \"Windows PowerShell\" with elevated privileges (run as administrator).
-
     Enter \"Get-ProcessMitigation -System\".
-
     If the status of \"DEP: Enable\" is \"OFF\", this is a finding.
 
     Values that would not be a finding include:
-
     ON
     NOTSET (Default configuration)"
   desc  "fix", "Ensure Exploit Protection system-level mitigation, \"Data Execution Prevention (DEP)\", is turned on.  The default configuration in Exploit Protection is \"On by default\" which meets this requirement.
 
     Open \"Windows Defender Security Center\".
-
     Select \"App & browser control\".
-
     Select \"Exploit protection settings\".
-
     Under \"System settings\", configure \"Data Execution Prevention (DEP)\" to \"On by default\" or \"Use default (<On>)\".
 
     The STIG package includes a DoD EP XML file in the \"Supporting Files\" folder for configuring application mitigations defined in the STIG.  This can also be modified to explicitly enforce the system level requirements.  Adding the following to the XML file will explicitly turn DEP on (other system level EP requirements can be combined under <SystemConfig>):
@@ -46,7 +39,7 @@ control "V-93313" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Modified and copied from Windows 10 V-77091
-  # Q: Test pending
+  # SK: Test passed | Changed logic from should_not to should
 
   dep_script = <<~EOH
     $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
@@ -61,16 +54,10 @@ control "V-93313" do
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  # elsif registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId < '1709'
-  #   impact 0.0
-  #   describe 'This STIG does not apply to Prior Versions before 1709.' do
-  #     skip 'This STIG does not apply to Prior Versions before 1709.'
-  #   end
   else
     describe 'DEP is required to be enabled on System' do
       subject { powershell(dep_script).strip }
-      it { should_not eq '2' }
+      it { should be_in ['0', '1'] }
     end
   end
-
 end

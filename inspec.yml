@@ -235,6 +235,12 @@ inputs:
    value: 
     - 
 
+  - name: excluded_accounts_domain
+    desc: "List Excluded Accounts domain"
+    type: Array
+    value: 
+      - 
+
  - name: application_accounts_local
    desc: "List Application Local Accounts"
    type: Array
