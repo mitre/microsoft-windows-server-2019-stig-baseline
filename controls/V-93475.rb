@@ -41,7 +41,7 @@ control "V-93475" do
   if domain_role == '4' || domain_role == '5'
     list_of_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" })
     ad_accounts = list_of_accounts.params
-    if application_accounts
+    # Check if application_accounts is empty to avoid control output error - No Value Set
     untracked_accounts = ad_accounts - application_accounts - excluded_accounts
     
     describe 'Untracked Accounts' do
