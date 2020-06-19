@@ -5,8 +5,8 @@ control "V-93459" do
   desc  "The use of complex passwords increases their strength against attack. The built-in Windows password complexity policy requires passwords to contain at least three of the four types of characters (numbers, uppercase and lowercase letters, and special characters) and prevents the inclusion of user names or parts of user names."
   desc  "rationale", ""
   desc  "check", "Verify the effective setting in Local Group Policy Editor.
+    
     Run \"gpedit.msc\".
-
     Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Account Policies >> Password Policy.
     If the value for \"Password must meet complexity requirements\" is not set to \"Enabled\", this is a finding.
 
@@ -28,10 +28,9 @@ control "V-93459" do
   tag nist: ["IA-5 (1) (a)", "IA-5 (1) (a)", "IA-5 (1) (a)", "IA-5 (1) (a)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1150
-  # Q: Server core installation command addition pending
+  # SK: Test passed for Desktop and Core
 
   describe security_policy do
-    its('PasswordComplexity') { should eq input('enable_pass_complexity') }
+    its('PasswordComplexity') { should eq input('enable_password_complexity') }
   end
-  
 end

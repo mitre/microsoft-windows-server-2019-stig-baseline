@@ -262,11 +262,21 @@ inputs:
     value: false
 
   - name: password_history_size
-    desc: "Set the password history size set by your organization"
+    desc: "Set the password history size stated by your organization"
     type: Numeric
     value: 24
 
   - name: maximum_password_age
-    desc: "Set the maximum password age set by your organization"
+    desc: "Set the maximum password age stated by your organization"
     type: Numeric
     value: 60
+
+  - name: minimum_password_age
+    desc: "Set the minimum password age stated by your organization"
+    type: Numeric
+    value: 1
+
+  - name: minimum_password_length
+    desc: "Set the minimum password length stated by your organization"
+    type: Numeric
+    value: 14

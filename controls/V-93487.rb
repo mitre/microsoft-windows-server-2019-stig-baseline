@@ -87,7 +87,7 @@ control "V-93487" do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
   else
-  # QJ: Is this required? | Verify before removing ln 92 and ln 97
+  # QJ: Is this required? | Verify before removing commented code
   # dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
     query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\root  | Where Subject -Like "*DoD*" | Select Subject, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
  

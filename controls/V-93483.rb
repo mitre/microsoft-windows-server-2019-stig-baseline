@@ -36,7 +36,7 @@ control "V-93483" do
   #control "V-14820" Windows 2012 Profile
 
   # SK: Copied from Windows 2012 V-14820
-  # QJ: Additional condition: If the certificates in use are issued by a CA authorized by the Component's CIO, this is a CAT II finding. I don't have any personal certs
+  # QJ: I don't have any personal certs | Additional condition: If the certificates in use are issued by a CA authorized by the Component's CIO, this is a CAT II finding.
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 

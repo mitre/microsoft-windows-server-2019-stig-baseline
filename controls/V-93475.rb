@@ -31,8 +31,7 @@ control "V-93475" do
   #Check out Windows 2012 control 'V-6840'
 
   # SK: Copied from Windows 2012 V-6840
-  # Q: Test pending | Need to modify code to remove previous conditions
-
+  # SK: Test passed
   application_accounts = input('application_accounts_domain')
   excluded_accounts = input('excluded_accounts_domain') 
 
@@ -41,7 +40,6 @@ control "V-93475" do
   if domain_role == '4' || domain_role == '5'
     list_of_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" })
     ad_accounts = list_of_accounts.params
-    # Check if application_accounts is empty to avoid control output error - No Value Set
     untracked_accounts = ad_accounts - application_accounts - excluded_accounts
     
     describe 'Untracked Accounts' do
@@ -67,5 +65,4 @@ control "V-93475" do
       end
     end
   end
-
 end

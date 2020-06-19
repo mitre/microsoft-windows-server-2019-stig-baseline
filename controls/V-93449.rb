@@ -35,11 +35,8 @@ control "V-93449" do
     describe security_policy do
       its('MaxRenewAge') { should be <= 7 }
     end
-  end
-
-  if domain_role != '4' && domain_role != '5'
+  else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end

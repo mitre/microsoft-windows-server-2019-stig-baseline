@@ -8,6 +8,7 @@ control "V-93471" do
     Run \"gpedit.msc\".
     Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Account Policies >> Password Policy.
     If the value for the \"Minimum password age\" is set to \"0\" days (\"Password can be changed immediately\"), this is a finding.
+
     For server core installations, run the following command:
     Secedit /Export /Areas SecurityPolicy /CFG C:\\Path\\FileName.Txt
     If \"MinimumPasswordAge\" equals \"0\" in the file, this is a finding."
@@ -23,10 +24,9 @@ control "V-93471" do
   tag nist: ["IA-5 (1) (d)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-1105
-  # Q: Test pending
+  # SK: Test passed for Desktop and Core
 
   describe security_policy do
-    its('MinimumPasswordAge') { should be >= input('min_pass_age') }
+    its('MinimumPasswordAge') { should be >= input('minimum_password_age') }
   end
-  
 end

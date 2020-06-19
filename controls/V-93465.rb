@@ -9,13 +9,10 @@ control "V-93465" do
     Run \"gpedit.msc\".
 
     Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Account Policies >> Password Policy.
-
     If the value for \"Store passwords using reversible encryption\" is not set to \"Disabled\", this is a finding.
 
     For server core installations, run the following command:
-
     Secedit /Export /Areas SecurityPolicy /CFG C:\\Path\\FileName.Txt
-
     If \"ClearTextPassword\" equals \"1\" in the file, this is a finding."
   desc  "fix", "Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Account Policies >> Password Policy >> \"Store passwords using reversible encryption\" to \"Disabled\"."
   impact 0.7
@@ -29,10 +26,9 @@ control "V-93465" do
   tag nist: ["IA-5 (1) (c)", "Rev_4"]
 
   # SK: Copied from Windows 2012 V-2372
-  # Q: Test pending
+  # SK: Test passed for Desktop and Core
 
   describe security_policy do
     its('ClearTextPassword') { should eq 0 }
   end
-  
 end

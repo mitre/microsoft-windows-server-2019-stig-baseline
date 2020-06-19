@@ -6,10 +6,12 @@ control "V-93473" do
     Organizations that use an automated tool, such Microsoft's Local Administrator Password Solution (LAPS), on domain-joined systems can configure this to occur more frequently. LAPS will change the password every \"30\" days by default."
   desc  "rationale", ""
   desc  "check", "Review the password last set date for the built-in Administrator account.
+
     Domain controllers:
     Open \"PowerShell\".
     Enter \"Get-ADUser -Filter * -Properties SID, PasswordLastSet | Where SID -Like \"*-500\" | Ft Name, SID, PasswordLastSet\".
     If the \"PasswordLastSet\" date is greater than \"60\" days old, this is a finding.
+
     Member servers and standalone systems:
     Open \"Command Prompt\".
     Enter 'Net User [account name] | Find /i \"Password Last Set\"', where [account name] is the name of the built-in administrator account.
@@ -30,45 +32,35 @@ control "V-93473" do
   #check out Windows 2012 control 'V-14225'
 
   # SK: Copied from Windows 2012 V-14225
-  # Q: Review code and run tests
+  # QJ: Changed skip statements to successful results | Added the STIG requirement for default Admin account name. Reflect it in 2012?
 
   administrator = input('local_administrator')
-  # returns a hash of {'Enabled' => 'true' } 
-  is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-   if (is_domain_controller['Enabled'] == true)
-    
-     password_set_date = json({ command: "Get-ADUser -Filter * -Properties SID, PasswordLastSet | Where-Object {$_.SID -like '*-500' -and $_.PasswordLastSet -lt ((Get-Date).AddDays(-365))} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
-     date = password_set_date["DateTime"]
-     if (date == nil)
-      describe 'Administrator Account is within 365 days since password change' do
-        skip 'Administrator Account is within 365 days since password change'
+  if domain_role == '4' || domain_role == '5'
+    password_set_date = json({ command: "Get-ADUser -Filter * -Properties SID, PasswordLastSet | Where-Object {$_.SID -like '*-500' -and $_.PasswordLastSet -lt ((Get-Date).AddDays(-60))} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
+    date = password_set_date["DateTime"]
+    describe "Password Last Set Date" do
+      it "The built-in Administrator account must be changed at least every 60 days." do
+        expect(date).to be_nil
       end
-    else
-       describe 'Password Last Set' do
-         it 'Administrator Account Password Last Set Date is' do
-         failure_message = "Password Date should not be more that 365 Days: #{date}"
-         expect(date).to be_empty, failure_message
+    end
+  else
+    if administrator == "Administrator"
+      describe 'The name of the built-in Administrator account:' do
+        it 'It must be changed to something other than "Administrator" per STIG requirements' do
+          failure_message = "Change the built-in Administrator account name to something other than: #{administrator}"
+          expect(administrator).not_to eq("Administrator"), failure_message
         end
-       end
       end
-   end
-   if (is_domain_controller.params == {} )
-   # Input local_administrator is critical here
-   local_password_set_date = json({ command: "Get-LocalUser -name #{administrator} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-365)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json"})
-   local_date =  local_password_set_date["DateTime"]
-    if (local_date == nil)
-      describe 'Local Administrator Account is within 365 days since password change' do
-        skip 'Local Administrator Account is within 365 days since password change'
+    end
+    local_password_set_date = json({ command: "Get-LocalUser -name #{administrator} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-60)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json"})
+    local_date =  local_password_set_date["DateTime"]
+    describe "Password Last Set Date" do
+      it "The built-in Administrator account must be changed at least every 60 days." do
+        expect(local_date).to be_nil
       end
-    else
-       describe 'Password Last Set' do
-         it 'Local Administrator Account Password Last Set Date is' do
-         failure_message = "Password Date should not be more that 365 Days: #{local_date}"
-         expect(local_date).to be_empty, failure_message
-        end
-       end
-      end
-   end
+    end
+  end
 
 end
