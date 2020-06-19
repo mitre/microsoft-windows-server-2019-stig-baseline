@@ -31,9 +31,9 @@ control "V-93531" do
   # SK: Copied from Windows 2012 V-3245
   # SK: Test passed
 
-  net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Name, Path | ConvertTo-Json" })
+  net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Name, Path | ConvertTo-Json" }).params
   
-  if net_shares.params.empty?
+  if net_shares.empty?
     impact 0.0
     describe 'No non-default file shares were detected' do
     skip 'This control is NA'

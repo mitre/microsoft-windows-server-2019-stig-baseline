@@ -89,10 +89,10 @@ control "V-93487" do
   else
   # QJ: Is this required? | Verify before removing commented code
   # dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
-    query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\root  | Where Subject -Like "*DoD*" | Select Subject, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
+    query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\root  | Where Subject -Like "*DoD*" | Select Subject, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' }).params
  
     describe 'Verify DoD Root Certificate Authority (CA) certificates are installed in the Trusted Root Store.' do
-      subject { query.params }
+      subject { query }
     # it { should be_in dod_interoperability_certificates }
       it { should_not be_empty }
     end

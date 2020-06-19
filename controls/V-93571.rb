@@ -20,27 +20,27 @@ control "V-93571" do
   # SK: Copied from Windows 10 V-63399
   # SK: Test passed
 
-  query_domain = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Domain' } | Select Enabled | ConvertTo-Json" })
-  query_private = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Private' } | Select Enabled | ConvertTo-Json" })
-  query_public = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Public' } | Select Enabled | ConvertTo-Json" })
+  query_domain = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Domain' } | Select Enabled | ConvertTo-Json" }).params
+  query_private = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Private' } | Select Enabled | ConvertTo-Json" }).params
+  query_public = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Public' } | Select Enabled | ConvertTo-Json" }).params
  
   describe.one do
     describe 'Windows Firewall should be Enabled' do
-      subject { query_public.params["Enabled"] }
+      subject { query_public["Enabled"] }
       it 'The Public host-based firewall' do
         failure_message = "is not Enabled"
         expect(subject).to eql(1), failure_message
       end
     end
     describe 'Windows Firewall should be Enabled' do
-      subject { query_private.params["Enabled"] }
+      subject { query_private["Enabled"] }
       it 'The Private host-based firewall' do
         failure_message = "is not enabled"
         expect(subject).to eql(1), failure_message
       end
     end
     describe 'Windows Firewall should be Enabled' do
-      subject { query_domain.params["Enabled"] }
+      subject { query_domain["Enabled"] }
       it 'The Domain host-based firewall' do
         failure_message = "is not Enabled"
         expect(subject).to eql(1), failure_message

@@ -32,14 +32,12 @@ control "V-93439" do
   # Q: Password required condition removed - review modifications
   # Q: Test pending | Could use guidance
 
-  # returns a hash of {'Enabled' => 'true' } 
-  is_domain_controller = json({ command: 'Get-ADDomainController | Select Enabled | ConvertTo-Json' })
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if (is_domain_controller['Enabled'] == true)
-    list_of_accounts = json({ command: "Get-ADUser -Filter * -Properties PasswordNotRequired | Where-Object {$_.PasswordNotRequired -eq 'True' -and $_.Enabled -eq 'True'} Select -ExpandProperty Name | ConvertTo-Json" })
+  if domain_role == '4' || domain_role == '5'
+    ad_accounts = json({ command: "Get-ADUser -Filter * -Properties PasswordNotRequired | Where-Object {$_.PasswordNotRequired -eq 'True' -and $_.Enabled -eq 'True'} Select -ExpandProperty Name | ConvertTo-Json" }).params
 
     #list_of_accounts = json({ command: "Get-ADUser -Filter * -Properties PasswordNotRequired | (Where PasswordNotRequired -eq True) -and (Where Enabled -eq True) | ConvertTo-Json" })
-    ad_accounts = list_of_accounts.params
   
     # EXPERIMENT
     # state = powershell("get-aduser -Filter {(Passwordnotrequired -eq $true) -and (Enabled -eq $true)} | ConvertTo-Json").stdout.strip
@@ -62,13 +60,9 @@ control "V-93439" do
       expect(ad_accounts).to be_empty, failure_message
       end
     end
-  end
-
-  # QJ: Need to have a specific condition that needs to be met by member and standalone servers
-  if (is_domain_controller.params == {} )
-    local_users = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter PasswordRequired=False and LocalAccount=True | Select -ExpandProperty Name | ConvertTo-Json" })
-    local_users_list = local_users.params
-    if (local_users_list == ' ')
+  else
+    local_accounts = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter PasswordRequired=False and LocalAccount=True | Select -ExpandProperty Name | ConvertTo-Json" }).params
+    if (local_accounts == ' ')
       impact 0.0
       describe 'The system does not have any accounts with a Password set, control is NA' do
         skip 'The system does not have any accounts with a Password set,, controls is NA'
@@ -76,8 +70,8 @@ control "V-93439" do
     else
       describe "Account or Accounts exists" do
         it 'Server should not have Accounts with No Password Set' do
-          failure_message = "User or Users #{local_users_list} have no Password Set" 
-          expect(local_users_list).to be_empty, failure_message
+          failure_message = "User or Users #{local_accounts} have no Password Set" 
+          expect(local_accounts).to be_empty, failure_message
         end
       end
     end

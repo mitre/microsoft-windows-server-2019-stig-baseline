@@ -38,8 +38,7 @@ control "V-93475" do
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   
   if domain_role == '4' || domain_role == '5'
-    list_of_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" })
-    ad_accounts = list_of_accounts.params
+    ad_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" }).params
     untracked_accounts = ad_accounts - application_accounts - excluded_accounts
     
     describe 'Untracked Accounts' do
@@ -49,20 +48,22 @@ control "V-93475" do
       end
     end
   else
-    local_users = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter 'PasswordExpires=False and LocalAccount=True and Disabled=False' | Select -ExpandProperty Name | ConvertTo-Json" })
-    local_users_list = local_users.params
-    if local_users_list.empty?
+    local_accounts = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter 'PasswordExpires=False and LocalAccount=True and Disabled=False' | Select -ExpandProperty Name | ConvertTo-Json" }).params
+    if local_accounts.empty?
       impact 0.0
+      # QJ:
+      # Q: Should not be skipped
       describe 'The system does not have any local accounts where password is set to Password Never Expires, control is NA' do
          skip 'The system does not have any local accounts where password is set to Password Never Expires, controls is NA'
       end
     else
       describe "Account or Accounts exists" do
         it 'Server should not have Accounts with Password Never Expire' do
-          failure_message = "User or Users #{local_users_list} have Password set to not expire" 
-          expect(local_users_list).to be_empty, failure_message
+          failure_message = "User or Users #{local_accounts} have Password set to not expire" 
+          expect(local_accounts).to be_empty, failure_message
         end
       end
     end
   end
+
 end

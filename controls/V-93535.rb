@@ -39,9 +39,9 @@ control "V-93535" do
 
   if domain_role == '4' || domain_role == '5'
     dsa_db_file = command('Get-ItemPropertyValue -Path HKLM:\\System\\CurrentControlSet\\Services\\NTDS\\Parameters -Name "DSA Database file"').stdout.strip
-    net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Path | ConvertTo-Json" })
+    net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Path | ConvertTo-Json" }).params
 
-    if net_shares.params.empty?
+    if net_shares.empty?
       impact 0.0
       describe 'No non-default file shares were detected' do
       skip 'This control is NA'

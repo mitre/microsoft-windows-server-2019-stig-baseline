@@ -52,9 +52,8 @@ control "V-93457" do
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
-    list_of_accounts = json({ command: 'Search-ADAccount -AccountInactive -UsersOnly -Timespan 35.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json' })
+    ad_accounts = json({ command: 'Search-ADAccount -AccountInactive -UsersOnly -Timespan 35.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json' }).params
     # QJ: Params return a Hash if empty, a string if one account, an array if multiple
-    ad_accounts = list_of_accounts.params
     untracked_accounts = ad_accounts - application_accounts - excluded_accounts
     # require 'pry'; binding.pry
     describe 'AD Accounts' do
@@ -64,9 +63,8 @@ control "V-93457" do
       end
     end
   else
-    local_users = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-35) } | Select -ExpandProperty Name | ConvertTo-Json" })
-    local_users_list = local_users.params
-    if (local_users_list == ' ')
+    local_accounts = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-35) } | Select -ExpandProperty Name | ConvertTo-Json" }).params
+    if (local_accounts == ' ')
       impact 0.0
       # QJ: Shouldn't this pass instead of skip?
       describe 'The system does not have any inactive accounts, control is NA' do
@@ -75,8 +73,8 @@ control "V-93457" do
     else
       describe "Account or Accounts exists" do
         it 'Server should not have Accounts' do
-          failure_message = "User or Users #{local_users_list} have not login to system in 35 days" 
-          expect(local_users_list).to be_empty, failure_message
+          failure_message = "User or Users #{local_accounts} have not login to system in 35 days" 
+          expect(local_accounts).to be_empty, failure_message
         end
       end
     end
