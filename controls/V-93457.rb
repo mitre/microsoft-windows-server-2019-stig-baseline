@@ -58,26 +58,19 @@ control "V-93457" do
     # require 'pry'; binding.pry
     describe 'AD Accounts' do
       it 'AD should not have any Accounts that are Inactive over 35 days' do
-        failure_message = "Users that have not log into in 35 days #{untracked_accounts}"
+        failure_message = "Users that have not logged into in 35 days #{untracked_accounts}"
         expect(untracked_accounts).to be_empty, failure_message
       end
     end
   else
     local_accounts = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-35) } | Select -ExpandProperty Name | ConvertTo-Json" }).params
-    if (local_accounts == ' ')
-      impact 0.0
-      # QJ: Shouldn't this pass instead of skip?
-      describe 'The system does not have any inactive accounts, control is NA' do
-        skip 'The system does not have any inactive accounts, controls is NA'
-      end
-    else
-      describe "Account or Accounts exists" do
-        it 'Server should not have Accounts' do
-          failure_message = "User or Users #{local_accounts} have not login to system in 35 days" 
-          expect(local_accounts).to be_empty, failure_message
-        end
+
+    describe "Inactive account or accounts exists" do
+      it 'Server should not have inactive accounts' do
+        failure_message = "User or Users have not logged in to system in 35 days: #{local_accounts}" 
+        expect(local_accounts).to be_empty, failure_message
       end
     end
   end
-  
+
 end

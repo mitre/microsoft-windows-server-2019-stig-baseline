@@ -17,7 +17,6 @@ control "V-93441" do
     Select the Organizational Unit (OU) where the user accounts are located. (By default, this is the Users node; however, accounts may be under other organization-defined OUs.)
     Right-click the sample user account and select \"Properties\".
     Select the \"Account\" tab.
-
     If any user accounts, including administrators, do not have \"Smart card is required for interactive logon\" checked in the \"Account Options\" area, this is a finding."
   desc  "fix", "Configure all user accounts, including administrator accounts, in Active Directory to enable the option \"Smart card is required for interactive logon\".
 
@@ -38,22 +37,22 @@ control "V-93441" do
   tag nist: ["IA-2 (1)", "IA-2 (2)", "IA-2 (3)", "IA-2 (4)", "IA-2 (11)", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73617
-  # Q: Test pending
+  # SK: Test passed
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
-    describe command("Get-ADUser -Filter {(Enabled -eq $True) -and (SmartcardLogonRequired -eq $False)} | FT Name | Findstr /v 'Name ---'") do
-      its('stdout') { should eq '' }
+    accounts = json(command: "Get-ADUser -Filter {(Enabled -eq $True) -and (SmartcardLogonRequired -eq $False)} | Select -ExpandProperty Name | ConvertTo-Json").params
+    describe 'Accounts without smartcard logon required' do
+      it 'Accounts must be configured to require the use of a CAC, PIV or ALT' do
+        failure_message = "#{accounts}"
+        expect(accounts).to be_empty, failure_message
+      end
     end
-  end
-
-  if !(domain_role == '4') && !(domain_role == '5')
+  else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
-  
 end

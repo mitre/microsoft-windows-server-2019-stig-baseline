@@ -60,7 +60,7 @@ control "V-93421" do
 
   #if has_ftp_server_role == 'True'
   if windows_feature('web-ftp-server').installed?
-    #impact 0.0
+    impact 0.0
     describe 'This server has the role of an FTP server, therefore this control is not applicable' do
       skip 'This server has the role of an FTP server, therefore this control is not applicable'
     end

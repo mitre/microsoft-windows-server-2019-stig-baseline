@@ -32,6 +32,7 @@ control "V-93475" do
 
   # SK: Copied from Windows 2012 V-6840
   # SK: Test passed
+
   application_accounts = input('application_accounts_domain')
   excluded_accounts = input('excluded_accounts_domain') 
 
@@ -49,21 +50,12 @@ control "V-93475" do
     end
   else
     local_accounts = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter 'PasswordExpires=False and LocalAccount=True and Disabled=False' | Select -ExpandProperty Name | ConvertTo-Json" }).params
-    if local_accounts.empty?
-      impact 0.0
-      # QJ:
-      # Q: Should not be skipped
-      describe 'The system does not have any local accounts where password is set to Password Never Expires, control is NA' do
-         skip 'The system does not have any local accounts where password is set to Password Never Expires, controls is NA'
-      end
-    else
-      describe "Account or Accounts exists" do
-        it 'Server should not have Accounts with Password Never Expire' do
-          failure_message = "User or Users #{local_accounts} have Password set to not expire" 
-          expect(local_accounts).to be_empty, failure_message
-        end
+    
+    describe "Account or Accounts exists" do
+      it 'Server should not have Accounts with Password Never Expire' do
+        failure_message = "User or Users have Password set to not expire: #{local_accounts}" 
+        expect(local_accounts).to be_empty, failure_message
       end
     end
   end
-
 end

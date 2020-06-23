@@ -35,31 +35,18 @@ control "V-93391" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73299
-  # Q: Condition to add -  if WN19-00-000390 and WN19-00-000400 are configured, this is NA.
-  # Q: Test pending
+  # SK: Test passed
 
-  if registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters').has_property_value?('SMB1', :dword, 0) && registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10').has_property_value?('Start', :dword, 4)
+  if powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name SMB1").stdout.strip == "0" && powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10' -Name Start").stdout.strip == "4"
     impact 0.0
-    desc 'This control is not applicable, as controls V-78123 and V-78125 are configured'
-  else
-    describe windows_feature('FS-SMB1') do
-      it { should_not be_installed }
-    end
-  end
-
-  # SK: Copied from Windows 2012 V-73805
-
-  if os['release'].to_f < 6.3
-    impact 0.0
-    describe 'System is not Windows 2012, control is NA' do
-      skip 'System is not Windows 2012, control is NA'
+    describe 'Controls V-93393 and V-93395 configuration successful' do
+      skip 'This is NA as the successful configuration of Controls V-93393 (STIG ID# WN19-00-000390) and V-93395 (STIG ID# WN19-00-000400) meets the requirement'
     end
   else
-    state = powershell("(Get-WindowsOptionalFeature -Online | Where {$_.FeatureName -eq 'SMB1Protocol'}).State ").stdout.strip
-    describe 'SMB 1.0 Procotocl is disabled as part of Security Requirement' do
+    state = powershell("Get-WindowsFeature -Name FS-SMB1 | Select -ExpandProperty 'InstallState'").stdout.strip
+    describe "Server Message Block (SMB) v1 protocol msut not be installed" do
       subject { state }
-      it { should_not eq "Enabled"}
+      it { should_not eq "Installed" }
     end
   end
-
 end

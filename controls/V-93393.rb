@@ -31,12 +31,21 @@ control "V-93393" do
   tag nist: ["CM-7 a", "Rev_4"]
 
   # SK: Modified and copied from Windows 2012 V-73519
-  # Q: Condition to add -  if WN19-00-000380 is configured, this is NA.
-  # Q: Check review and test pending
+  # QJ: Better way?
 
-  describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters') do
-    it { should have_property 'SMB1' }
-    its('SMB1') { should cmp == 0 }
+  if powershell("Get-WindowsFeature -Name FS-SMB1 | Select -ExpandProperty 'InstallState'").stdout.strip == "Installed" # V-93391
+    describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters') do # V-93393 THIS
+      it { should have_property 'SMB1' }
+      its('SMB1') { should cmp == 0 }
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10') do # V-93395
+      it { should have_property 'Start' }
+      its('Start') { should cmp == 4 }
+    end
+  else
+    impact 0.0
+    describe 'Control V-93391 configuration successful' do
+      skip 'This is NA as the successful configuration of Control V-93391 (STIG ID# WN19-00-000380) meets the requirement'
+    end
   end
-  
 end

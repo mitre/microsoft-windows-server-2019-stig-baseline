@@ -27,7 +27,7 @@ control "V-93449" do
   tag nist: ["IA-2 (8)", "IA-2 (9)", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73365
-  # Q: Code validation pending
+  # SK: Test passed
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -41,5 +41,4 @@ control "V-93449" do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
-  
 end

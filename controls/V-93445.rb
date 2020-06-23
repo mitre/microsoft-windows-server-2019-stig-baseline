@@ -7,17 +7,11 @@ control "V-93445" do
   desc  "check", "This applies to domain controllers. It is NA for other systems.
 
     Verify the following is configured in the Default Domain Policy:
-
     Open \"Group Policy Management\".
-
     Navigate to \"Group Policy Objects\" in the Domain being reviewed (Forest >> Domains >> Domain).
-
     Right-click on the \"Default Domain Policy\".
-
     Select \"Edit\".
-
     Navigate to Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy.
-
     If the value for \"Maximum lifetime for service ticket\" is \"0\" or greater than \"600\" minutes, this is a finding."
   desc  "fix", "Configure the policy value in the Default Domain Policy for Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy >> \"Maximum lifetime for service ticket\" to a maximum of \"600\" minutes, but not \"0\", which equates to \"Ticket doesn't expire\"."
   impact 0.5
@@ -32,25 +26,18 @@ control "V-93445" do
   tag nist: ["IA-2 (8)", "IA-2 (9)", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73361
-  # Q: Test pending
+  # SK: Test passed
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
     describe security_policy do
-      its('MaxServiceAge') { should be > 0 }
+      its('MaxServiceAge') { should be_between(0,600) }
     end
-    describe security_policy do
-      its('MaxServiceAge') { should be <= 600 }
-    end
-  end
-
-  if domain_role != '4' && domain_role != '5'
+  else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
-  
 end
