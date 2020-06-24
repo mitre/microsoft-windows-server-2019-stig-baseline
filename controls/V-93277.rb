@@ -90,12 +90,5 @@ control "V-93277" do
 
     #-----------------------------------------------
   end
-
-  # if is_domain == 'WORKGROUP'
-  #   impact 0.0
-  #   describe 'This system is not joined to a domain, therfore this control is not appliable as it does not apply to standalone systems' do
-  #     skip 'This system is not joined to a domain, therfore this control is not appliable as it does not apply to standalone systems'
-  #   end
-  # end
-
+  
 end

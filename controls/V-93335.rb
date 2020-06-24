@@ -60,8 +60,36 @@ control "V-93335" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Modified and copied from Windows 10 V-77217
-  # Q: Condition added - If the referenced application is not installed on the system, this is NA.
-  # Q: Test pending
+  # QJ: Condition added - If the referenced application is not installed on the system, this is NA. Updated the use the json resource
+
+  iexplore = json({ command: "Get-ProcessMitigation -Name iexplore.exe | ConvertTo-Json" }).params
+
+  if input('sensitive_system') == true || nil
+    impact 0.0
+    describe 'This Control is Not Applicable to sensitive systems.' do
+      skip 'This Control is Not Applicable to sensitive systems.'
+    end
+  elsif powershell("Get-ProcessMitigation -Name iexplore.exe").stdout.empty?
+    impact 0.0
+    describe 'The referenced application is not installed on the system, this is NA.' do
+      skip 'The referenced application is not installed on the system, this is NA.'
+    end
+  else
+    describe "Exploit Protection mitigations must be configured for iexplore.exe" do
+      subject { iexplore }
+      its(['Dep','Enable']) { should eq 1 }
+      its(['Aslr','BottomUp']) { should eq 1 }
+      its(['Aslr','ForceRelocateImages']) { should eq 1 }
+      its(['Payload','EnableExportAddressFilter']) { should eq 1 }
+      its(['Payload','EnableExportAddressFilterPlus']) { should eq 1 }
+      its(['Payload','EnableImportAddressFilter']) { should eq 1 }
+      its(['Payload','EnableRopStackPivot']) { should eq 1 }
+      its(['Payload','EnableRopCallerCheck']) { should eq 1 }
+      its(['Payload','EnableRopSimExec']) { should eq 1 }
+    end
+  end
+
+  # Copied the code below from Windows 10
 
   dep_script = <<~EOH
     $convert_json = Get-ProcessMitigation -Name iexplore.exe | ConvertTo-Json
