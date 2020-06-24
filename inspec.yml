@@ -280,3 +280,8 @@ inputs:
     desc: "Set the minimum password length stated by your organization"
     type: Numeric
     value: 14
+
+  - name: ftp_server
+    desc: "Set the value to true only if the system has the role of an FTP server, this must be documented with the ISSO"
+    type: Boolean
+    value: false

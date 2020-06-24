@@ -31,43 +31,19 @@ control "V-93421" do
   tag nist: ["CM-7 b", "Rev_4"]
 
   # SK: Copied from Windows 2016 V-73289
-  # SK: Test passed Skip statement added
-  # QJ: Does having the FTP Server windows feature mean that it has the FTP role? | Check if input can be replaced with the following test
-
-  # ------------------ J
+  # SK: Test passed | Skip statement added
   
-  is_ftp_installed = command('Get-WindowsFeature Web-Ftp-Server | Select -Expand Installed').stdout.strip
+  ftp_server_state = command('Get-WindowsFeature Web-Ftp-Server | Select -Expand Installed').stdout.strip
 
-  if is_ftp_installed == 'False'
-    describe 'The system does not have Ftp installed' do
-      skip 'The system does not have Ftp installed, this requirement is Not Applicable.'
+  if input('ftp_server') == false
+    describe 'Microsoft FTP service must not be installed unless required' do
+      subject { ftp_server_state }
+      it { should eq 'False' }
     end
   else
-    startmode = powershell('Get-WmiObject -Class Win32_Service | Where-Object {$_.Name -eq "FTPSVC"} | Select StartMode | ConvertTo-Json').stdout.strip
-    clean_startmode = startmode[22..29]
-    describe 'Fax Service is installed and disabled' do
-      subject { clean_startmode }
-      it { should eq 'Disabled' }
-    end
-  end
-
-  # ------------------ J
-
-
-
-
-  has_ftp_server_role = attribute('has_ftp_server_role')
-
-  #if has_ftp_server_role == 'True'
-  if windows_feature('web-ftp-server').installed?
     impact 0.0
     describe 'This server has the role of an FTP server, therefore this control is not applicable' do
       skip 'This server has the role of an FTP server, therefore this control is not applicable'
     end
-  else
-    describe windows_feature('Web-Ftp-Service') do
-      it { should_not be_installed }
-    end
   end
-
 end
