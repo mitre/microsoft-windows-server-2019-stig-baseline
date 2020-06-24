@@ -58,116 +58,31 @@ control "V-93337" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Modified and copied from Windows 10 V-77221
-  # Q: Condition added - If the referenced application is not installed on the system, this is NA.
-  # Q: Test pending
+  # SK: Test passed
 
-  dep_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_dep_enable = $convert_out_json.Dep | Select Enable
-    $result_dep_enable = $select_object_dep_enable.Enable
-    write-output $result_dep_enable
-  EOH
-
-  aslr_forcerelocimage_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_aslr_force_relocate_images = $convert_out_json.Aslr | Select ForceRelocateImages
-    $result_aslr_force_relocate_images = $select_object_aslr_force_relocate_images.ForceRelocateImages
-    write-output $result_aslr_force_relocate_images
-  EOH
-
-  payload_enexpaddrfil_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_payload_enexportaddrfil = $convert_out_json.Payload | Select EnableExportAddressFilter
-    $result_payload_enexportaddrfil = $select_object_payload_enexportaddrfil.EnableExportAddressFilter
-    write-output $result_payload_enexportaddrfil
-  EOH
-
-  payload_enexpaddrfilplus_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_payload_enexpaddrfilplus = $convert_out_json.Payload | Select EnableExportAddressFilterPlus
-    $result_payload_enexpaddrfilplus = $select_object_payload_enexpaddrfilplus.EnableExportAddressFilterPlus
-    write-output $result_payload_enexpaddrfilplus
-  EOH
-
-  payload_enimpaddrfil_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_payload_enimpaddrfil = $convert_out_json.Payload | Select EnableImportAddressFilter
-    $result_payload_enimpaddrfil = $select_object_payload_enimpaddrfil.EnableImportAddressFilter
-    write-output $result_payload_enimpaddrfil
-  EOH
-
-  payload_enropstacpiv_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_payload_enropstacpiv = $convert_out_json.Payload | Select EnableRopStackPivot
-    $result_payload_enropstacpiv = $select_object_payload_enropstacpiv.EnableRopStackPivot
-    write-output $result_payload_enropstacpiv
-  EOH
-
-  payload_enropcalleche_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_payload_enropcalleche = $convert_out_json.Payload | Select EnableRopCallerCheck
-    $result_payload_enropcalleche = $select_object_payload_enropcalleche.EnableRopCallerCheck
-    write-output $result_payload_enropcalleche
-  EOH
-
-  payload_enropsimexec_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_payload_enropsimexec = $convert_out_json.Payload | Select EnableRopSimExec
-    $result_payload_enropsimexec = $select_object_payload_enropsimexec.EnableRopSimExec
-    write-output $result_payload_enropsimexec
-  EOH
+  infopath = json({ command: "Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  # elsif registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId < '1709'
-  #   impact 0.0
-  #   describe 'This STIG does not apply to Prior Versions before 1709.' do
-  #     skip 'This STIG does not apply to Prior Versions before 1709.'
-  #   end
+  elsif infopath.empty?
+    impact 0.0
+    describe 'The referenced application is not installed on the system, this is NA.' do
+      skip 'The referenced application is not installed on the system, this is NA.'
+    end
   else
-    describe 'DEP is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(dep_script).strip }
-      it { should_not eq '2' }
-    end
-    describe 'ASLR Force Relocate Image is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(aslr_forcerelocimage_script).strip }
-      it { should_not eq '2' }
-    end
-    describe 'Payload Enable Export Address Filter is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(payload_enexpaddrfil_script).strip }
-      it { should_not eq '2' }
-    end
-    describe 'Payload Enable Export Address Filter Plus is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(payload_enexpaddrfilplus_script).strip }
-      it { should_not eq '2' }
-    end
-    describe 'Payload Enable Import Address Filter is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(payload_enimpaddrfil_script).strip }
-      it { should_not eq '2' }
-    end
-    describe 'Payload Enable Rop Stack Pivot is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(payload_enropstacpiv_script).strip }
-      it { should_not eq '2' }
-    end
-    describe 'Payload Enable Rop Caller Check is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(payload_enropcalleche_script).strip }
-      it { should_not eq '2' }
-    end
-    describe 'Payload Enable Rop Sim Exec is required to be enabled on Microsoft InfoPath' do
-      subject { powershell(payload_enropsimexec_script).strip }
-      it { should_not eq '2' }
+    describe "Exploit Protection: the following mitigations must be set to 'ON' for INFOPATH.EXE" do
+      subject { infopath }
+      its(['Dep','Enable']) { should eq 1 }
+      its(['Aslr','ForceRelocateImages']) { should eq 1 }
+      its(['Payload','EnableExportAddressFilter']) { should eq 1 }
+      its(['Payload','EnableExportAddressFilterPlus']) { should eq 1 }
+      its(['Payload','EnableImportAddressFilter']) { should eq 1 }
+      its(['Payload','EnableRopStackPivot']) { should eq 1 }
+      its(['Payload','EnableRopCallerCheck']) { should eq 1 }
+      its(['Payload','EnableRopSimExec']) { should eq 1 }
     end
   end
-
 end

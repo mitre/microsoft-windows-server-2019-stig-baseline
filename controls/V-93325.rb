@@ -35,32 +35,24 @@ control "V-93325" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   # SK: Modified and copied from Windows 10 V-77195
-  # Q: Condition added - If the referenced application is not installed on the system, this is NA.
-  # Q: Test pending
+  # SK: Test passed
 
-  dep_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -Name chrome.exe | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object_dep_enable = $convert_out_json.Dep | Select Enable
-    $result_dep_enable = $select_object_dep_enable.Enable
-    write-output $result_dep_enable
-  EOH
+  chrome = json({ command: "Get-ProcessMitigation -Name chrome.exe | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  # elsif registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').ReleaseId < '1709'
-  #   impact 0.0
-  #   describe 'This STIG does not apply to Prior Versions before 1709.' do
-  #     skip 'This STIG does not apply to Prior Versions before 1709.'
-  #   end
+  elsif chrome.empty?
+    impact 0.0
+    describe 'The referenced application is not installed on the system, this is NA.' do
+      skip 'The referenced application is not installed on the system, this is NA.'
+    end
   else
-    describe 'DEP is required to be enabled on Chrome' do
-      subject { powershell(dep_script).strip }
-      it { should_not eq '2' }
+    describe "Exploit Protection: the following mitigations must be set to 'ON' for chrome.exe" do
+      subject { chrome }
+      its(['Dep','Enable']) { should eq 1 }
     end
   end
-  
 end
