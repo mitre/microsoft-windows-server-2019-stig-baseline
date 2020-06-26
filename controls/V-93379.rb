@@ -37,9 +37,6 @@ control "V-93379" do
   tag cci: ["CCI-001774"]
   tag nist: ["CM-7 (5) (b)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-57637
-  # SK: No test necessary
-
   describe "A manual review is required to ensure the operating system employs a deny-all, permit-by-exception
   policy to allow the execution of authorized software programs" do
     skip 'A manual review is required to ensure the operating system employs a deny-all, permit-by-exception

@@ -24,9 +24,6 @@ control "V-93399" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied and modified from Windows 2012 V-43238 | Removed the 2012 condition
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization') do
     it { should have_property 'NoLockScreenSlideshow' }
     its('NoLockScreenSlideshow') { should cmp == 1 }

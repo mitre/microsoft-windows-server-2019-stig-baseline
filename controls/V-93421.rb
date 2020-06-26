@@ -30,9 +30,6 @@ control "V-93421" do
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73289
-  # SK: Test passed | Skip statement added
-  
   ftp_server_state = command('Get-WindowsFeature Web-Ftp-Server | Select -Expand Installed').stdout.strip
 
   if input('ftp_server') == false
@@ -42,8 +39,8 @@ control "V-93421" do
     end
   else
     impact 0.0
-    describe 'This server has the role of an FTP server, therefore this control is not applicable' do
-      skip 'This server has the role of an FTP server, therefore this control is not applicable'
+    describe 'This server has the role of an FTP server, therefore this control is NA' do
+      skip 'This server has the role of an FTP server, therefore this control is NA'
     end
   end
 end

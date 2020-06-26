@@ -24,9 +24,6 @@ control "V-93301" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1153
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa') do
     it { should have_property 'LmCompatibilityLevel' }
     its('LmCompatibilityLevel') { should cmp == 5 }

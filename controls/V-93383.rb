@@ -28,9 +28,6 @@ control "V-93383" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73287
-  # SK: Test passed
-
   describe windows_feature('fax') do
     it { should_not be_installed }
   end

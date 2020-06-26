@@ -30,15 +30,12 @@ control "V-93395" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Modified and copied from Windows 2012 V-73523
-  # SK: Test passed
-
-  if powershell("Get-WindowsFeature -Name FS-SMB1 | Select -ExpandProperty 'InstallState'").stdout.strip == "Installed" # V-93391
-    describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters') do # V-93393
+  if powershell("Get-WindowsFeature -Name FS-SMB1 | Select -ExpandProperty 'InstallState'").stdout.strip == "Installed"
+    describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters') do
       it { should have_property 'SMB1' }
       its('SMB1') { should cmp == 0 }
     end
-    describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10') do # V-93395 THIS
+    describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10') do
       it { should have_property 'Start' }
       its('Start') { should cmp == 4 }
     end

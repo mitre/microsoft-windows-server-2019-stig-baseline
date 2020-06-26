@@ -24,9 +24,6 @@ control "V-93537" do
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1093
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa') do
     it { should have_property 'RestrictAnonymous' }
     its('RestrictAnonymous') { should cmp == 1 }

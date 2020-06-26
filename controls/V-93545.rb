@@ -26,12 +26,6 @@ control "V-93545" do
   tag cci: ["CCI-002418", "CCI-002421"]
   tag nist: ["SC-8", "SC-8 (1)", "Rev_4"]
 
-  #domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  #if domain_role == '4' || domain_role == '5'
-
-  # SK: Copied from Windows 2016 V-73629
-  # SK: Test passed
-
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
@@ -39,13 +33,10 @@ control "V-93545" do
       it { should have_property 'LDAPServerIntegrity' }
       its('LDAPServerIntegrity') { should cmp 2 }
     end
-  end
-
-  if !(domain_role == '4') && !(domain_role == '5')
+  else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    describe 'This system is not a domain controller, therefore this control is NA' do
+      skip 'This system is not a domain controller, therefore this control is NA'
     end
   end
 end

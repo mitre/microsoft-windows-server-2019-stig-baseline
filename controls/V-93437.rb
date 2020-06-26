@@ -22,23 +22,7 @@ control "V-93437" do
   tag cci: ["CCI-000764"]
   tag nist: ["IA-2", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1072
-  # QJ: Logic?
-
-  #Critical Input for Control
-  shared_accounts = input('shared_accounts')
-
-  if shared_accounts.empty?
-    impact 0.0
-    describe 'The system does not have any shared accounts, control is NA' do
-      skip 'The system does not have any shared accounts, controls is NA'
-    end
-  else
-    shared_accounts.each do |user|
-      describe user do
-        it { should_not be_in shared_accounts }
-      end
-    end
+  describe 'This control needs to be check manually' do
+    skip 'Control not executed as this test is manual'
   end
-
 end

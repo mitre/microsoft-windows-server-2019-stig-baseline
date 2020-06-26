@@ -22,9 +22,6 @@ control "V-93289" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 10 V-63739
-  # SK: Test passed
-
   describe security_policy do
     its('LSAAnonymousNameLookup') { should eq 0 }
   end

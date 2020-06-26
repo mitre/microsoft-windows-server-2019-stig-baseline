@@ -35,17 +35,7 @@ control "V-93565" do
   tag cci: ["CCI-002824"]
   tag nist: ["SI-16", "Rev_4"]
 
-  #Code can be found in Windows 10
-  # SK: Copied from Windows 10 V-77095
-  # SK: Test passed
-
-  aslr_bottomup_script = <<-EOH
-  $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
-  $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-  $select_object = $convert_out_json.Aslr | Select BottomUp
-  $result = $select_object.BottomUp
-  write-output $result
-  EOH
+  systemaslr = json({ command: "Get-ProcessMitigation -System | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil
     impact 0.0
@@ -53,9 +43,9 @@ control "V-93565" do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
   else
-    describe 'ALSR BottomUp is required to be enabled on System' do
-      subject { powershell(aslr_bottomup_script).strip }
-      it { should_not eq '2' }
+    describe "Exploit Protection: the following mitigation must be set to 'ON' for the System" do
+      subject { systemaslr }
+      its(['Aslr','BottomUp']) { should be_between(0,1) }
     end
   end
 end

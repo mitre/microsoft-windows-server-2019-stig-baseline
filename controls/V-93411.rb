@@ -27,9 +27,6 @@ control "V-93411" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-36707
-  # SK: Test passed
-
   if input('sensitive_system') == true || nil
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do

@@ -26,11 +26,6 @@ control "V-93531" do
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4", "Rev_4"]
 
-  # control 'V-3245' windows 2012 Profile
-
-  # SK: Copied from Windows 2012 V-3245
-  # SK: Test passed
-
   net_shares = json({ command: "Get-SMBShare | Where-Object -Property Name -notin C$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Name, Path | ConvertTo-Json" }).params
   
   if net_shares.empty?
@@ -38,19 +33,22 @@ control "V-93531" do
     describe 'No non-default file shares were detected' do
     skip 'This control is NA'
     end
-  elsif net_shares.is_a?(Hash)
-    net_shares.each do |key, value|
-      describe "Unrestricted file shares" do
-        subject { command("Get-Acl -Path '#{value}' | ?{$_.AccessToString -match 'Everyone\sAllow'} | %{($_.PSPath -split '::')[1]}") }
-        its('stdout') { should eq '' }
-      end
-    end
   else
-    net_shares.each do |paths| #If the JSON output is an array of hashes
-      paths.each do |key, value|
+    case net_shares
+    when Hash
+      net_shares.each do |key, value|
         describe "Unrestricted file shares" do
           subject { command("Get-Acl -Path '#{value}' | ?{$_.AccessToString -match 'Everyone\sAllow'} | %{($_.PSPath -split '::')[1]}") }
           its('stdout') { should eq '' }
+        end
+      end
+    when Array
+      net_shares.each do |paths|
+        paths.each do |key, value|
+          describe "Unrestricted file shares" do
+            subject { command("Get-Acl -Path '#{value}' | ?{$_.AccessToString -match 'Everyone\sAllow'} | %{($_.PSPath -split '::')[1]}") }
+            its('stdout') { should eq '' }
+          end
         end
       end
     end

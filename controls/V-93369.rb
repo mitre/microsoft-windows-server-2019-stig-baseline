@@ -17,9 +17,6 @@ control "V-93369" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-36659
-  # SK: Test passed
-
   administrators = input('administrators')
   administrator_group = command("net localgroup Administrators | Format-List | Findstr /V 'Alias Name Comment Members - command'").stdout.strip.split("\r\n")
   administrator_group.each do |user|
@@ -30,7 +27,7 @@ control "V-93369" do
   if administrator_group.empty?
     impact 0.0
     describe 'There are no users with administrative privileges' do
-      skip 'This control is not applicable'
+      skip 'There are no users with administrative privileges so this control is NA'
     end
   end
 end

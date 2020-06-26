@@ -24,9 +24,6 @@ control "V-93533" do
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-14249
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows NT\\Terminal Services') do
     it { should have_property 'fDisableCdm' }
     its('fDisableCdm') { should cmp == 1 }

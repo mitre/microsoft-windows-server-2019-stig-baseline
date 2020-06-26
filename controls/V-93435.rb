@@ -27,10 +27,6 @@ control "V-93435" do
   tag cci: ["CCI-002038"]
   tag nist: ["IA-11", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-14240
-  # SK: Test passed for Server with Desktop Experience and Server Core Installation
-
-  #command checks to see if install is a Core or Gui Based install, if the result is false it is a server core build, if true it is a full install with gui
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'

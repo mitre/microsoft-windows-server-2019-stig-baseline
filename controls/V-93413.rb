@@ -29,9 +29,6 @@ control "V-93413" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-63747
-  # SK: Test passed
-
   if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds').has_property?('AllowBasicAuthInClear')
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
     its('AllowBasicAuthInClear') { should cmp 0 }

@@ -29,12 +29,6 @@ control "V-93535" do
   tag cci: ["CCI-001090"]
   tag nist: ["SC-4", "Rev_4"]
 
-  # domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  # if domain_role == '4' || domain_role == '5'
-
-  # SK: Copied from Windows 2016 V-73379
-  # SK: Test passed
-
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
@@ -46,19 +40,22 @@ control "V-93535" do
       describe 'No non-default file shares were detected' do
       skip 'This control is NA'
       end
-    elsif net_shares.is_a?(Hash)
-      net_shares.each do |key, value|
-        describe "Net Share path: #{value}" do
-          subject { value }
-          it { should_not eq dsa_db_file }
-        end
-      end
     else
-      net_shares.each do |paths| #If the JSON output is an array of hashes
-        paths.each do |key, value|
+      case net_shares
+      when Hash
+        net_shares.each do |key, value|
           describe "Net Share path: #{value}" do
             subject { value }
             it { should_not eq dsa_db_file }
+          end
+        end
+      when Array
+        net_shares.each do |paths|
+          paths.each do |key, value|
+            describe "Net Share path: #{value}" do
+              subject { value }
+              it { should_not eq dsa_db_file }
+            end
           end
         end
       end

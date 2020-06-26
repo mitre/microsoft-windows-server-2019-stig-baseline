@@ -37,22 +37,16 @@ control "V-93271" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73385
-  # SK: No test necessary
-
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
     describe 'Directory data (outside the root DSE) of a non-public directory must be configured to prevent anonymous access.' do
       skip 'Directory data (outside the root DSE) of a non-public directory must be configured to prevent anonymous access is a manual control'
     end
-  end
-
-  if !(domain_role == '4') && !(domain_role == '5')
+  else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    describe 'This system is not a domain controller, therefore this control is NA' do
+      skip 'This system is not a domain controller, therefore this control is NA'
     end
   end
 end

@@ -27,9 +27,6 @@ control "V-93459" do
   tag cci: ["CCI-000192", "CCI-000193", "CCI-000194", "CCI-001619"]
   tag nist: ["IA-5 (1) (a)", "IA-5 (1) (a)", "IA-5 (1) (a)", "IA-5 (1) (a)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1150
-  # SK: Test passed for Desktop and Core
-
   describe security_policy do
     its('PasswordComplexity') { should eq input('enable_password_complexity') }
   end

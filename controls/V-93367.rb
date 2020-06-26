@@ -51,9 +51,6 @@ control "V-93367" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 10 V-77269
-  # SK: Test passed
-
   wordpad = json({ command: "Get-ProcessMitigation -Name wordpad.exe | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

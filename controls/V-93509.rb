@@ -44,11 +44,6 @@ control 'V-93509' do
   tag 'cci': ["CCI-001133"]
   tag 'nist': ["SC-10", "Rev_4"]
 
-  #control "V-14831" Windows 2012 Profile
-
-  # SK: Temporarily copied from Windows 2016 V-73387
-  # SK: Test passed
-
   forest_name = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-Json').params
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   
@@ -65,8 +60,8 @@ control 'V-93509' do
     end
   else
     impact 0.0
-    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    describe 'This system is not a domain controller, therefore this control is NA' do
+      skip 'This system is not a domain controller, therefore this control is NA'
     end
   end
 end

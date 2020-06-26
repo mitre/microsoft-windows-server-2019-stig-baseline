@@ -23,9 +23,6 @@ control "V-93477" do
   tag cci: ["CCI-000199"]
   tag nist: ["IA-5 (1) (d)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1104
-  # SK: Test passed for Server with Desktop Experience and Server Core Installation
-
   describe security_policy do
     its('MaximumPasswordAge') { should be_between(1,input('maximum_password_age')) }
   end

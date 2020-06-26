@@ -20,9 +20,6 @@ control "V-93381" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73277
-  # SK: No test necessary
-  
   describe 'A manual review is required to verify that the roles and features required by the system are documented' do
     skip 'A manual review is required to verify that the roles and features required by the system are documented'
   end

@@ -40,11 +40,8 @@ control "V-93277" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 2016 V-73515
-  # QJ: Verify that the proposal makes sense. Condition added - For domain controllers this is NA.
-
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  security_services = command('Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\\Microsoft\\Windows\\DeviceGuard | Select -ExpandProperty "SecurityServicesRunning"').stdout.strip.split("\r\n")
 
   if domain_role == '0' || domain_role == '2'
     impact 0.0
@@ -57,38 +54,13 @@ control "V-93277" do
       skip 'This is NA for domain controllers'
     end
   else
-      describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard') do
-        it { should have_property 'LsaCfgFlags' }
-        its('LsaCfgFlags') { should cmp 1 }
-      end
-
-    # Recommended command for additional check due to check text:
-    # "However, due to hardware requirements, the registry value alone does not ensure proper function.""
-    security_services = command('Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\\Microsoft\\Windows\\DeviceGuard | Select -ExpandProperty "SecurityServicesRunning"').stdout.strip.split("\r\n")
-    # AvailableSecurityProperties                  : {1, 2, 3, 5}
-    # SecurityServicesRunning                      : {0}
-   
-    #-----------------------------------------------
-
-    describe.one do
-      security_services.each do |element|
-        describe element do
-          it { should cmp "1"}
-        end
-      end
+    describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceGuard') do
+      it { should have_property 'LsaCfgFlags' }
+      its('LsaCfgFlags') { should cmp 1 }
     end
-
-    # FAILS
-
-    # describe 'SecurityServicesRunning' do
-    #   expect(security_services).to include("1")
-    # end
-
-    # describe do
-    #   its(security_services) { should include "1" }
-    # end
-
-    #-----------------------------------------------
+    describe "Security Services Running should include 1" do
+      subject { security_services }
+      it { should include "1" }
+    end
   end
-  
 end

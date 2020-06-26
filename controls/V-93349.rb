@@ -63,10 +63,6 @@ control "V-93349" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77235
-  # SK: Test passed
-
-
   onedrive = json({ command: "Get-ProcessMitigation -Name OneDrive.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

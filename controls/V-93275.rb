@@ -26,9 +26,6 @@ control "V-93275" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73651
-  # SK: Added a skip statement for DC and tested it successfully
-
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '3'
@@ -36,15 +33,10 @@ control "V-93275" do
       it { should have_property 'CachedLogonsCount' }
       its('CachedLogonsCount') { should be <= 4 }
     end
-  elsif domain_role == '4' || domain_role == '5'
-    impact 0.0
-    describe 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers and standalone systems' do
-      skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers and standalone systems'
-    end
   else
     impact 0.0
     describe 'This requirement is only applicable to member servers' do
-      skip 'This is NA'
+      skip 'This control is NA as the requirement is only applicable to member servers'
     end
   end
 end

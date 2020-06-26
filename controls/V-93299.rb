@@ -24,9 +24,6 @@ control "V-93299" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-21953
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\pku2u') do
     it { should have_property 'AllowOnlineID' }
     its('AllowOnlineID') { should cmp == 0 }

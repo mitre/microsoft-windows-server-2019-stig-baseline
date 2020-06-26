@@ -16,10 +16,6 @@ control "V-93571" do
   tag cci: ["CCI-000366", "CCI-002080"]
   tag nist: ["CM-6 b", "CA-3 (5)", "Rev_4"]
 
-  #Code can be found in Windows 10
-  # SK: Copied from Windows 10 V-63399
-  # SK: Test passed
-
   query_domain = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Domain' } | Select Enabled | ConvertTo-Json" }).params
   query_private = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Private' } | Select Enabled | ConvertTo-Json" }).params
   query_public = json({ command: "Get-WmiObject -NameSpace 'root\\standardcimv2' -Class MSFT_NetFirewallProfile | Where {$_.Name -Like 'Public' } | Select Enabled | ConvertTo-Json" }).params

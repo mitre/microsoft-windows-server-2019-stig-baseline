@@ -24,9 +24,6 @@ control "V-93415" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 10 V-63751
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search') do
     it { should have_property 'AllowIndexingEncryptedStoresOrItems' }
     its('AllowIndexingEncryptedStoresOrItems') { should cmp 0 }

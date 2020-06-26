@@ -24,9 +24,6 @@ control "V-93463" do
   tag cci: ["CCI-000205"]
   tag nist: ["IA-5 (1) (a)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-6836
-  # SK: Test passed for Desktop and Core
-
   describe security_policy do
     its('MinimumPasswordLength') { should be >= input('minimum_password_length')}
   end

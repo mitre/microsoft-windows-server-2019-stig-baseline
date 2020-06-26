@@ -23,9 +23,6 @@ control "V-93479" do
   tag cci: ["CCI-000200"]
   tag nist: ["IA-5 (1) (e)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1107
-  # SK: Test passed for Server with Desktop Experience and Server Core Installation
-
   describe security_policy do
     its('PasswordHistorySize') { should be >= input('password_history_size') }
   end

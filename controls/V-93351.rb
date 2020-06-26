@@ -57,9 +57,6 @@ control "V-93351" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77243
-  # SK: Test passed
-  
   outlook = json({ command: "Get-ProcessMitigation -Name OUTLOOK.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

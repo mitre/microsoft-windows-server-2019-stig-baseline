@@ -31,9 +31,6 @@ control "V-93495" do
   tag cci: ["CCI-000803"]
   tag nist: ["IA-7", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73685
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\Kerberos\\Parameters') do
     it { should have_property 'SupportedEncryptionTypes' }
     its('SupportedEncryptionTypes') { should cmp 2147483640 }

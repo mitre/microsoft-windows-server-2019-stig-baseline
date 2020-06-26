@@ -24,9 +24,6 @@ control "V-93497" do
   tag cci: ["CCI-000804"]
   tag nist: ["IA-8", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1113
-  # SK: Test passed
-
   describe security_policy do
     its('EnableGuestAccount') { should cmp 0 }
   end

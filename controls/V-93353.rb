@@ -51,9 +51,6 @@ control "V-93353" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77245
-  # SK: Test passed
-
   container = json({ command: "Get-ProcessMitigation -Name plugin-container.exe | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

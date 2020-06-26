@@ -38,16 +38,7 @@ control "V-93313" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77091
-  # SK: Test passed | Changed logic from should_not to should
-
-  dep_script = <<~EOH
-    $convert_json = Get-ProcessMitigation -System | ConvertTo-Json
-    $convert_out_json = ConvertFrom-Json -InputObject $convert_json
-    $select_object = $convert_out_json.Dep | Select Enable
-    $result = $select_object.Enable
-    write-output $result
-  EOH
+  systemdep = json({ command: "Get-ProcessMitigation -System | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil
     impact 0.0
@@ -55,9 +46,9 @@ control "V-93313" do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
   else
-    describe 'DEP is required to be enabled on System' do
-      subject { powershell(dep_script).strip }
-      it { should be_in ['0', '1'] }
+    describe "Exploit Protection: the following mitigation must be set to 'ON' for the System" do
+      subject { systemdep }
+      its(['Dep','Enable']) { should be_between(0,1) }
     end
   end
 end

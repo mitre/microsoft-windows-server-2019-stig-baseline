@@ -45,9 +45,6 @@ control "V-93365" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77267
-  # SK: Test passed
-
   wmplayer = json({ command: "Get-ProcessMitigation -Name wmplayer.exe | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

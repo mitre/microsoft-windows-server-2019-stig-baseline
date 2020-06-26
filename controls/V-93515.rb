@@ -19,9 +19,6 @@ control "V-93515" do
   tag cci: ["CCI-001199", "CCI-002475", "CCI-002476"]
   tag nist: ["SC-28", "SC-28 (1)", "SC-28 (1)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-57645
-  # SK: No test necessary
-
   describe "A manual review is required to ensure systems requiring data at rest protections must employ cryptographic
   mechanisms to prevent unauthorized disclosure and modification of the
   information at rest." do

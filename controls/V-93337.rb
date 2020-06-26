@@ -57,9 +57,6 @@ control "V-93337" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77221
-  # SK: Test passed
-
   infopath = json({ command: "Get-ProcessMitigation -Name INFOPATH.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

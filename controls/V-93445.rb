@@ -25,9 +25,6 @@ control "V-93445" do
   tag cci: ["CCI-001941", "CCI-001942"]
   tag nist: ["IA-2 (8)", "IA-2 (9)", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73361
-  # SK: Test passed
-
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
@@ -36,8 +33,8 @@ control "V-93445" do
     end
   else
     impact 0.0
-    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    describe 'This system is not a domain controller, therefore this control is NA' do
+      skip 'This system is not a domain controller, therefore this control is NA'
     end
   end
 end

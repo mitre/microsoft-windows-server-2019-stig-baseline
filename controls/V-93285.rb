@@ -27,9 +27,6 @@ control "V-93285" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-3373
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'MaximumPasswordAge' }
     its('MaximumPasswordAge') { should be_between(1,30) }

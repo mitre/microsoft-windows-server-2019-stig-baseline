@@ -21,9 +21,6 @@ control "V-93543" do
   tag cci: ["CCI-002420", "CCI-002422"]
   tag nist: ["SC-8 (2)", "SC-8 (2)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-57641
-  # SK: No test necessary
-
   describe "A manual review is required to ensure protection methods such as TLS, encrypted VPNs, or IPSEC are
   implemented if the data owner has a strict requirement for ensuring data
   integrity and confidentiality is maintained at every step of the data transfer

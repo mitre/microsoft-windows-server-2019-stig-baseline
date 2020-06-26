@@ -43,9 +43,6 @@ control "V-93329" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77205
-  # SK: Test passed
-
   firefox = json({ command: "Get-ProcessMitigation -Name firefox.exe | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

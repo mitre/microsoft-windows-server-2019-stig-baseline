@@ -24,9 +24,6 @@ control "V-93555" do
   tag cci: ["CCI-002418", "CCI-002421"]
   tag nist: ["SC-8", "SC-8 (1)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-6832
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters') do
     it { should have_property 'RequireSecuritySignature' }
     its('RequireSecuritySignature') { should cmp == 1 }

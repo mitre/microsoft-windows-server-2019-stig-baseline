@@ -69,9 +69,6 @@ control "V-93333" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77213
-  # SK: Test passed
-
   groove = json({ command: "Get-ProcessMitigation -Name GROOVE.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

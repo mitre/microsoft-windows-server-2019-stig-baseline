@@ -73,13 +73,6 @@ control "V-93489" do
   tag cci: ["CCI-000185", "CCI-002470"]
   tag nist: ["IA-5 (2) (a)", "SC-23 (5)", "Rev_4"]
 
-  #control 'V-32274' in Windows 2012
-
-  # SK: Copied from Windows 2012 V-32274
-  # SK: Test passed
-  # QJ: Add conditions for -> command output should not be nil + Check the NotAfter date against current date for expiration
-  # QJ: If approved, copy code throughout the other controls
-
   if input('sensitive_system') == true
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
@@ -91,22 +84,14 @@ control "V-93489" do
  
     describe 'Verify the DoD Interoperability cross-certificates are installed on unclassified systems as Untrusted Certificates.' do
       subject { query }
-      it { should_not be_empty}
+      it { should_not be_empty }
       it { should be_in dod_interoperability_certificates }
     end
-      
-    if query.is_a?(Hash)
-      query.each do |key, value|
-        if key == "NotAfter"
-          cert_date = Date.parse(value)
-          describe cert_date do
-            it { should be >= Date.today }
-          end
-        end
-      end
-    else
-      query.each do |certs|
-        certs.each do |key, value|
+
+    unless query.empty?
+      case query
+      when Hash
+        query.each do |key, value|
           if key == "NotAfter"
             cert_date = Date.parse(value)
             describe cert_date do
@@ -114,8 +99,18 @@ control "V-93489" do
             end
           end
         end
+      when Array
+        query.each do |certs|
+          certs.each do |key, value|
+            if key == "NotAfter"
+              cert_date = Date.parse(value)
+              describe cert_date do
+                it { should be >= Date.today }
+              end
+            end
+          end
+        end
       end
     end
   end
-
 end

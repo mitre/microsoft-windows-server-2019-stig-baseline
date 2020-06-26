@@ -29,11 +29,6 @@ control "V-93473" do
   tag cci: ["CCI-000199"]
   tag nist: ["IA-5 (1) (d)", "Rev_4"]
 
-  #check out Windows 2012 control 'V-14225'
-
-  # SK: Copied from Windows 2012 V-14225
-  # QJ: Changed skip statements to successful results | Added the STIG requirement for default Admin account name. Reflect it in 2012?
-
   administrator = input('local_administrator')
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -62,5 +57,4 @@ control "V-93473" do
       end
     end
   end
-
 end

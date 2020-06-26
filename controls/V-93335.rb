@@ -59,8 +59,6 @@ control "V-93335" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Test passed
-
   iexplore = json({ command: "Get-ProcessMitigation -Name iexplore.exe | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

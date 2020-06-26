@@ -28,9 +28,6 @@ control "V-93439" do
   tag cci: ["CCI-000764"]
   tag nist: ["IA-2", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-7002
-  # SK: Test passed
-
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'

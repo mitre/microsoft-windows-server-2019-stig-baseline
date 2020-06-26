@@ -26,9 +26,6 @@ control "V-93453" do
   tag cci: ["CCI-001967"]
   tag nist: ["IA-3 (1)", "Rev_4"]
 
-  # SK: Copied from Windows V-14253
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Rpc') do
     it { should have_property 'RestrictRemoteClients' }
     its('RestrictRemoteClients') { should cmp == 1 }

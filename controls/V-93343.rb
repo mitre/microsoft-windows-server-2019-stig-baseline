@@ -57,9 +57,6 @@ control "V-93343" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77231
-  # SK: Test passed
-
   msaccess = json({ command: "Get-ProcessMitigation -Name MSACCESS.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

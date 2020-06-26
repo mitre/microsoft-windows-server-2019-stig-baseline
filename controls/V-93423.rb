@@ -28,9 +28,6 @@ control "V-93423" do
   tag cci: ["CCI-000382"]
   tag nist: ["CM-7 b", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73295
-  # SK: Test passed
-
   describe windows_feature('Telnet-Client') do
     it { should_not be_installed }
   end

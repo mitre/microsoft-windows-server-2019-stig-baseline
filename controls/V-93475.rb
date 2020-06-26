@@ -28,11 +28,6 @@ control "V-93475" do
   tag cci: ["CCI-000199"]
   tag nist: ["IA-5 (1) (d)", "Rev_4"]
 
-  #Check out Windows 2012 control 'V-6840'
-
-  # SK: Copied from Windows 2012 V-6840
-  # SK: Test passed
-
   application_accounts = input('application_accounts_domain')
   excluded_accounts = input('excluded_accounts_domain') 
 

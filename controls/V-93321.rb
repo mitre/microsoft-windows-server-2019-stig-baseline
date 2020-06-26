@@ -59,8 +59,6 @@ control "V-93321" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Test passed
-
   acrobat = json({ command: "Get-ProcessMitigation -Name Acrobat.exe | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

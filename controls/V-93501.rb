@@ -25,9 +25,6 @@ control "V-93501" do
   tag cci: ["CCI-002890", "CCI-003123"]
   tag nist: ["MA-4 (6)", "MA-4 (6)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-36719
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\WinRM\\Service') do
     it { should have_property 'AllowUnencryptedTraffic' }
     its('AllowUnencryptedTraffic') { should cmp == 0 }

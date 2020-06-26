@@ -26,9 +26,6 @@ control "V-93287" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1157
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
     it { should have_property 'scremoveoption' }
     its('scremoveoption') { should be_between("1", "2") }

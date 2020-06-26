@@ -24,9 +24,6 @@ control "V-93377" do
   tag cci: ["CCI-001764"]
   tag nist: ["CM-7 (2)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-2374
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer') do
     it { should have_property 'NoDriveTypeAutoRun' }
     its('NoDriveTypeAutoRun') { should cmp == 255 }

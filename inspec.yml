@@ -126,6 +126,12 @@ inputs:
     value:
       -
     
+  - name: local_administrator
+    desc: "Local Administrator Account on Windows Server"
+    type: String
+    value: ""
+    
+
   - name: ntds_permissions
     desc: "Permissions on folder and file for NTDS Directory"
     type: Array
@@ -281,7 +287,57 @@ inputs:
     type: Numeric
     value: 14
 
+  - name: enable_password_complexity
+    desc: "If windows should enforce password complexity (0/1) [1]"
+    type: Numeric
+    value: 1
+
   - name: ftp_server
     desc: "Set the value to true only if the system has the role of an FTP server, this must be documented with the ISSO"
     type: Boolean
     value: false
+
+  - name: dod_root_certificates
+    desc: "List of DoD CA Root Certificates"
+    type: Array
+    value: 
+     - :Subject: "CN=DoD Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Thumbprint: "8C941B34EA1EA6ED9AE2BC54CF687252B4C9B561"
+       :NotAfter: "Wednesday, December 05, 2029"
+     - :Subject: "CN=DoD Root CA 3, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Thumbprint: "D73CA91102A2204A36459ED32213B467D7CE97FB"
+       :NotAfter: "Sunday, December 30, 2029"
+     - :Subject: "CN=DoD Root CA 4, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Thumbprint: "B8269F25DBD937ECAFD4C35A9838571723F2D026"
+       :NotAfter: "Sunday, July 25, 2032"
+     - :Subject: "CN=DoD Root CA 5, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Thumbprint: "4ECB5CC3095670454DA1CBD410FC921F46B8564B"
+       :NotAfter: "Friday, June 14, 2041"
+
+  - name: dod_interoperability_certificates
+    desc: "List of DoD InterOperability CA Certificates"
+    type: Array
+    value: 
+     - :Subject: "CN=DoD Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Issuer: "CN=DoD Interoperability Root CA 1, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Thumbprint: "22BBE981F0694D246CC1472ED2B021DC8540A22F"
+       :NotAfter: "Friday, September 06, 2019"
+     - :Subject: "CN=DoD Root CA 3, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Issuer: "CN=DoD Interoperability Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Thumbprint: "AC06108CA348CC03B53795C64BF84403C1DBD341"
+       :NotAfter: "Saturday, January 22, 2022"
+
+  - name: dod_cceb_certificates
+    desc: "List of CCEB Certificates"
+    type: Array
+    value: 
+     - :Subject: "CN=DoD Root CA 3, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Issuer: "CN=US DoD CCEB Interoperability Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US"
+       :Thumbprint: "929BF3196896994C0A201DF4A5B71F603FEFBF2E"
+       :NotAfter: "Friday, September 27, 2019"
+  
+  - name: administrators
+    desc: "List of authorized users in the local Administrators group"
+    type: Array
+    value: 
+      -

@@ -23,9 +23,6 @@ control "V-93471" do
   tag cci: ["CCI-000198"]
   tag nist: ["IA-5 (1) (d)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1105
-  # SK: Test passed for Desktop and Core
-
   describe security_policy do
     its('MinimumPasswordAge') { should be >= input('minimum_password_age') }
   end

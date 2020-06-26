@@ -24,9 +24,6 @@ control "V-93547" do
   tag cci: ["CCI-002418", "CCI-002421"]
   tag nist: ["SC-8", "SC-8 (1)", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-6831
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'RequireSignOrSeal' }
     its('RequireSignOrSeal') { should cmp == 1 }

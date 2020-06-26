@@ -34,9 +34,6 @@ control "V-93391" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73299
-  # SK: Test passed
-
   if powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name SMB1").stdout.strip == "0" && powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10' -Name Start").stdout.strip == "4"
     impact 0.0
     describe 'Controls V-93393 and V-93395 configuration successful' do

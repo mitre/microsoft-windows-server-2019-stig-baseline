@@ -26,9 +26,6 @@ control "V-93401" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-72753
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\Wdigest') do
     it { should have_property 'UseLogonCredential' }
     its('UseLogonCredential') { should cmp == 0 }

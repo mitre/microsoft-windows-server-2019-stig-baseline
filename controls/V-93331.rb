@@ -63,9 +63,6 @@ control "V-93331" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77209
-  # SK: Test passed
-
   fltldr = json({ command: "Get-ProcessMitigation -Name FLTLDR.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

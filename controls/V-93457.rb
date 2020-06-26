@@ -44,18 +44,24 @@ control "V-93457" do
   tag cci: ["CCI-000795"]
   tag nist: ["IA-4 e", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-1112
-  # QJ: Added the condition logic for Enabled == True
-
   application_accounts = input('application_accounts_domain')
   excluded_accounts = input('excluded_accounts_domain')
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  untracked_accounts = []
 
   if domain_role == '4' || domain_role == '5'
     ad_accounts = json({ command: 'Search-ADAccount -AccountInactive -UsersOnly -Timespan 35.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json' }).params
-    # QJ: Params return a Hash if empty, a string if one account, an array if multiple
-    untracked_accounts = ad_accounts - application_accounts - excluded_accounts
-    # require 'pry'; binding.pry
+    
+    unless ad_accounts.empty?
+      case ad_accounts
+      when String
+        ( ad_account = [] ) << ad_accounts
+        untracked_accounts = ad_accounts - application_accounts - excluded_accounts
+      when Array
+        untracked_accounts = ad_accounts - application_accounts - excluded_accounts
+      end
+    end
+
     describe 'AD Accounts' do
       it 'AD should not have any Accounts that are Inactive over 35 days' do
         failure_message = "Users that have not logged into in 35 days #{untracked_accounts}"

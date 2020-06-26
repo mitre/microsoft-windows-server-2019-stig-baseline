@@ -57,9 +57,6 @@ control "V-93359" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77255
-  # SK: Test passed
-
   visio = json({ command: "Get-ProcessMitigation -Name VISIO.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

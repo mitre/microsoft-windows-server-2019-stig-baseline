@@ -24,9 +24,6 @@ control "V-93507" do
   tag cci: ["CCI-000877"]
   tag nist: ["MA-4 c", "Rev_4"]
 
-  # SK: Copied from Windows 2012 V-36718
-  # SK: Test passed
-
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\WinRM\\Service') do
     it { should have_property 'AllowBasic' }
     its('AllowBasic') { should cmp == 0 }

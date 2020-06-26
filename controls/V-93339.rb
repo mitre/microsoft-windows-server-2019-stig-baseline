@@ -52,9 +52,6 @@ control "V-93339" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77223
-  # SK: Test passed
-
   java = json({ command: "Get-ProcessMitigation -Name java.exe | ConvertTo-Json" }).params
   javaw = json({ command: "Get-ProcessMitigation -Name javaw.exe | ConvertTo-Json" }).params
   javaws = json({ command: "Get-ProcessMitigation -Name javaws.exe | ConvertTo-Json" }).params
@@ -68,13 +65,13 @@ control "V-93339" do
     end
   else
     if java.empty? && javaw.empty? && javaws.empty?
-      #impact 0.0
+      impact 0.0
       describe 'The referenced applications are not installed on the system, this is NA.' do
         skip 'The referenced applications are not installed on the system, this is NA.'
       end
     else
       apps.each do |app|
-        if app.empty? == false
+        next if app.empty?
           describe "Exploit Protection: the following mitigations must be set to 'ON' for java.exe" do
             subject { app }
             its(['Dep','Enable']) { should eq 1 }

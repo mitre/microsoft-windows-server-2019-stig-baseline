@@ -66,23 +66,43 @@ control "V-93491" do
   tag cci: ["CCI-000185", "CCI-002470"]
   tag nist: ["IA-5 (2) (a)", "SC-23 (5)", "Rev_4"]
 
-  #control 'V-32274' in Windows 2012
-  # SK: Copied from Windows 2012 V-32274
-  # QJ: Test pending |  Issuer -Like "*CCEB Interoperability*" or "*DoD Interoperability*"
-
-  if input('sensitive_system') == true
+  if input('sensitive_system') == 'true'
     impact 0.0
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
   else
-   dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
-   query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\\\disallowed  | Where {$_.Issuer -Like "*DoD Interoperability*" -and $_.Subject -Like "*DoD*"} | Select Subject, Issuer, Thumbprint, @{Name="NotAfter";Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' }).params
- 
-    describe 'Verify the DoD Interoperability cross-certificates are installed on unclassified systems as Untrusted Certificates.' do
-    subject { query }
-    it { should be_in dod_interoperability_certificates }
+    dod_cceb_certificates = JSON.parse(input('dod_cceb_certificates').to_json)
+    query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\\\disallowed | Where {$_.Issuer -Like "*CCEB Interoperability*"} | Select Subject, Issuer, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' })
+
+    describe 'Verify the DoD CCEB CA certificates are installed as Untrusted Certificate.' do
+      subject { query.params }
+      it { should be_in dod_cceb_certificates }
+    end
+
+    unless query.empty?
+      case query
+      when Hash
+        query.each do |key, value|
+          if key == "NotAfter"
+            cert_date = Date.parse(value)
+            describe cert_date do
+              it { should be >= Date.today }
+            end
+          end
+        end
+      when Array
+        query.each do |certs|
+          certs.each do |key, value|
+            if key == "NotAfter"
+              cert_date = Date.parse(value)
+              describe cert_date do
+                it { should be >= Date.today }
+              end
+            end
+          end
+        end
+      end
     end
   end
-
 end

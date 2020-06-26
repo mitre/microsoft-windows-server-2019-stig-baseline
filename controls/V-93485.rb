@@ -31,10 +31,6 @@ control "V-93485" do
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)", "Rev_4"]
 
-  #Made Manual Check
-
-  # SK: No test necessary
-
   describe 'This control needs to be check manually' do
     skip 'Control not executed as this test is manual'
   end

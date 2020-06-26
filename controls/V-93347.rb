@@ -51,9 +51,6 @@ control "V-93347" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Modified and copied from Windows 10 V-77239
-  # SK: Test passed
-
   ois = json({ command: "Get-ProcessMitigation -Name OIS.EXE | ConvertTo-Json" }).params
 
   if input('sensitive_system') == true || nil

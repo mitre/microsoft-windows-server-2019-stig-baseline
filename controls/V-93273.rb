@@ -26,22 +26,17 @@ control "V-93273" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  # SK: Copied from Windows 2016 V-73631
-  # SK: Test - passed
-
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  
   if domain_role == '4' || domain_role == '5'
     describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
       it { should have_property 'RefusePasswordChange' }
       its('RefusePasswordChange') { should cmp 0 }
     end
-  end
-
-  if !(domain_role == '4') && !(domain_role == '5')
+  else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    describe 'This system is not a domain controller, therefore this control is NA' do
+      skip 'This system is not a domain controller, therefore this control is NA'
     end
   end
 end
