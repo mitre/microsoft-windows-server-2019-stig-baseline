@@ -33,6 +33,8 @@ control "V-93483" do
   tag cci: ["CCI-000185"]
   tag nist: ["IA-5 (2) (a)", "Rev_4"]
 
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+
   if domain_role == '4' || domain_role == '5'
     describe 'This control needs to be check manually' do
       skip 'Control not executed as this test is manual'
