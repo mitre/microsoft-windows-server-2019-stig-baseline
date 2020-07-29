@@ -72,16 +72,15 @@ control "V-93339" do
     else
       apps.each do |app|
         next if app.empty?
-          describe "Exploit Protection: the following mitigations must be set to 'ON' for java.exe" do
-            subject { app }
-            its(['Dep','Enable']) { should eq 1 }
-            its(['Payload','EnableExportAddressFilter']) { should eq 1 }
-            its(['Payload','EnableExportAddressFilterPlus']) { should eq 1 }
-            its(['Payload','EnableImportAddressFilter']) { should eq 1 }
-            its(['Payload','EnableRopStackPivot']) { should eq 1 }
-            its(['Payload','EnableRopCallerCheck']) { should eq 1 }
-            its(['Payload','EnableRopSimExec']) { should eq 1 }
-          end
+        describe "Exploit Protection: the following mitigations must be set to 'ON' for java.exe" do
+          subject { app }
+          its(['Dep','Enable']) { should eq 1 }
+          its(['Payload','EnableExportAddressFilter']) { should eq 1 }
+          its(['Payload','EnableExportAddressFilterPlus']) { should eq 1 }
+          its(['Payload','EnableImportAddressFilter']) { should eq 1 }
+          its(['Payload','EnableRopStackPivot']) { should eq 1 }
+          its(['Payload','EnableRopCallerCheck']) { should eq 1 }
+          its(['Payload','EnableRopSimExec']) { should eq 1 }
         end
       end
     end
