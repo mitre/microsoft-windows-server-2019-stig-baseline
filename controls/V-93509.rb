@@ -56,7 +56,7 @@ control 'V-93509' do
     end
     describe "The MaxConnIdleTime" do
       subject { ldap_admin_limits['MaxConnIdleTime'] }
-      it { should cmp <= 300 }
+      it { should cmp <= input("maximum_idle_time") }
     end
   else
     impact 0.0
