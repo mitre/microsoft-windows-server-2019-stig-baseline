@@ -192,8 +192,12 @@ inputs:
       Agreement for details."
 
   - name: LegalNoticeCaption
-    type: string
-    value: "DoD Notice and Consent Banner, US Department of Defense Warning Statement, or a site-defined equivalent."
+    desc: "Use the default values or add an organization-defined legal notice caption"
+    type: Array
+    value:
+      - "DoD Notice and Consent Banner"
+      - "US Department of Defense Warning Statement"
+      -
 
   - name: winevt_logs_application_perms
     desc: "This is the values of the Application.evtx file under system32"
