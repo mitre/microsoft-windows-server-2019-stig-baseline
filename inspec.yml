@@ -197,7 +197,6 @@ inputs:
     value:
       - "DoD Notice and Consent Banner"
       - "US Department of Defense Warning Statement"
-      -
 
   - name: winevt_logs_application_perms
     desc: "This is the values of the Application.evtx file under system32"
