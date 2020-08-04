@@ -280,15 +280,20 @@ inputs:
     type: Numeric
     value: 35
 
+  - name: maximum_password_age_machine
+    desc: "Set the machine account maximum password age stated by your organiztion"
+    type: Numeric
+    value: 30
+
+  - name: maximum_password_age
+    desc: "Set the computer account maximum password age stated by your organization"
+    type: Numeric
+    value: 60
+
   - name: password_history_size
     desc: "Set the password history size stated by your organization"
     type: Numeric
     value: 24
-
-  - name: maximum_password_age
-    desc: "Set the maximum password age stated by your organization"
-    type: Numeric
-    value: 60
 
   - name: minimum_password_age
     desc: "Set the minimum password age stated by your organization"

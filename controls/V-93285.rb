@@ -29,6 +29,6 @@ control "V-93285" do
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'MaximumPasswordAge' }
-    its('MaximumPasswordAge') { should be_between(1,30) }
+    its('MaximumPasswordAge') { should be_between(1,input('maximum_password_age_machine')) }
   end
 end
