@@ -44,13 +44,14 @@ control "V-93457" do
   tag cci: ["CCI-000795"]
   tag nist: ["IA-4 e", "Rev_4"]
 
+  age = input('unused_account_age')
   application_accounts = input('application_accounts_domain')
   excluded_accounts = input('excluded_accounts_domain')
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   untracked_accounts = []
 
   if domain_role == '4' || domain_role == '5'
-    ad_accounts = json({ command: 'Search-ADAccount -AccountInactive -UsersOnly -Timespan 35.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json' }).params
+    ad_accounts = json({ command: 'Search-ADAccount -AccountInactive -UsersOnly -Timespan #{age}.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json' }).params
     
     unless ad_accounts.empty?
       case ad_accounts
@@ -63,17 +64,17 @@ control "V-93457" do
     end
 
     describe 'AD Accounts' do
-      it 'AD should not have any Accounts that are Inactive over 35 days' do
-        failure_message = "Users that have not logged into in 35 days #{untracked_accounts}"
+      it 'AD should not have any Accounts that are Inactive over #{age} days' do
+        failure_message = "Users that have not logged into in #{age} days #{untracked_accounts}"
         expect(untracked_accounts).to be_empty, failure_message
       end
     end
   else
-    local_accounts = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-35) } | Select -ExpandProperty Name | ConvertTo-Json" }).params
+    local_accounts = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-#{age}) } | Select -ExpandProperty Name | ConvertTo-Json" }).params
 
     describe "Inactive account or accounts exists" do
       it 'Server should not have inactive accounts' do
-        failure_message = "User or Users have not logged in to system in 35 days: #{local_accounts}" 
+        failure_message = "User or Users have not logged in to system in #{age} days: #{local_accounts}" 
         expect(local_accounts).to be_empty, failure_message
       end
     end

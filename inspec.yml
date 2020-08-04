@@ -271,9 +271,14 @@ inputs:
     value: false
 
   - name: maximum_idle_time
-    desc: "Set the maximum connection idle time stated by your organiztion"
+    desc: "Set the maximum connection idle time stated by your organization"
     type: Numeric
     value: 300
+
+  - name: unused_account_age
+    desc: "Set the maximum age in days for unused accounts stated by your organization"
+    type: Numeric
+    value: 35
 
   - name: password_history_size
     desc: "Set the password history size stated by your organization"
