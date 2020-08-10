@@ -100,7 +100,7 @@ failover clustering."
       describe 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control' do
         skip 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
       end
-    elsif os_type == 'false'
+    elsif os_type == 'False'
      describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
      end

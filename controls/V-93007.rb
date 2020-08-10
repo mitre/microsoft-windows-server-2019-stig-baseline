@@ -69,7 +69,7 @@ groups:
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
-  if os_type == 'false'
+  if os_type == 'False'
      describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
      end
