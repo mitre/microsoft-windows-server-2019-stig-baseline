@@ -129,7 +129,7 @@ control "V-92975" do
         end
       end
     end
- end
+  end
 
   temp_account_local = input('temp_account_local')
   if domain_role != '4' || domain_role != '5'
@@ -260,21 +260,22 @@ end
           expiring_accounts << ad_account unless expiring_accounts.any? {|h| h["SamAccountName"] == ad_account.fetch("SamAccountName")}
         end
       end
-      if expiring_accounts.nil?
-        impact 0.0
-        describe 'This control is not applicable as no expiring user accounts were found' do
-          skip 'This control is not applicable as no expiring user accounts were found'
-        end
-      end
     end
-    expiring_accounts.each do |expiring_account|
-      account_name = expiring_account.fetch("SamAccountName")
-      creation_date = Date.parse(expiring_account.fetch("WhenCreated"))
-      expiration_date = Date.parse(expiring_account.fetch("AccountExpirationDate"))
-      date_difference = expiration_date.mjd - creation_date.mjd
-      describe "Account expiration set for #{account_name}" do
-        subject { date_difference }
-        it { should cmp <= input('temporary_account_period')}
+    if expiring_accounts.empty?
+      impact 0.0
+      describe 'This control is not applicable as no expiring user accounts were found' do
+        skip 'This control is not applicable as no expiring user accounts were found'
+      end
+    else
+      expiring_accounts.each do |expiring_account|
+        account_name = expiring_account.fetch("SamAccountName")
+        creation_date = Date.parse(expiring_account.fetch("WhenCreated"))
+        expiration_date = Date.parse(expiring_account.fetch("AccountExpirationDate"))
+        date_difference = expiration_date.mjd - creation_date.mjd
+        describe "Account expiration set for #{account_name}" do
+          subject { date_difference }
+          it { should cmp <= input('temporary_account_period')}
+        end
       end
     end
 
@@ -304,24 +305,25 @@ end
       when Array # Multiple user accounts
         local_users.each do |local_user|
           next if local_user.fetch("AccountExpires").nil? || local_user.fetch("PasswordLastSet").nil?
-          expiring_users << local_user unless expiring_users.any? {|h| h["Name"] == local_user.fetch ("Name")}
-        end
-      end
-      if expiring_users.nil?
-        impact 0.0
-        describe 'This control is not applicable as no expiring user accounts with password last set date were found' do
-          skip 'This control is not applicable as no expiring user accounts with password last set date were found'
+          expiring_users << local_user unless expiring_users.any? {|h| h["Name"] == local_user.fetch("Name")}
         end
       end
     end
-    expiring_users.each do |expiring_account|
-      user_name = expiring_account.fetch("Name")
-      password_date = Date.parse(expiring_account.fetch("PasswordLastSet"))
-      expiration_date = Date.parse(expiring_account.fetch("AccountExpires"))
-      date_difference = expiration_date.mjd - password_date.mjd
-      describe "Account expiration set for #{user_name}" do
-        subject { date_difference }
-        it { should cmp <= input('temporary_account_period')}
+    if expiring_users.empty?
+      impact 0.0
+      describe 'This control is not applicable as no expiring user accounts with password last set date were found' do
+        skip 'This control is not applicable as no expiring user accounts with password last set date were found'
+      end
+    else
+      expiring_users.each do |expiring_account|
+        user_name = expiring_account.fetch("Name")
+        password_date = Date.parse(expiring_account.fetch("PasswordLastSet"))
+        expiration_date = Date.parse(expiring_account.fetch("AccountExpires"))
+        date_difference = expiration_date.mjd - password_date.mjd
+        describe "Account expiration set for #{user_name}" do
+          subject { date_difference }
+          it { should cmp <= input('temporary_account_period')}
+        end
       end
     end
 
