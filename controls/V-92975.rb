@@ -34,107 +34,6 @@ control "V-92975" do
   tag 'cci': ["CCI-000016"]
   tag 'nist': ["AC-2 (2)", "Rev_4"]
 
-  # Search-ADAccount -AccountExpiring -TimeSpan 999999.23:59:59 (only benefit of Search-ADAccount is that it includes all user, computer, and service accounts)
-  # Assumption: Accounts that have an expiration date set are temporary accounts
-  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5' # Domain Controller
-    ad_accounts = json({ command: "Get-ADUser -Filter * -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name=”WhenCreated”;Expression={$_.WhenCreated.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpirationDate”;Expression={$_.AccountExpirationDate.ToString(“yyyy-MM-dd”)}}| ConvertTo-Json"}).params
-    expiring_accounts = []
-    if ad_accounts.empty?
-      impact 0.0
-      describe 'This control is not applicable as no user accounts were found' do
-        skip 'This control is not applicable as no user accounts were found'
-      end
-    else
-      case ad_accounts
-      when Hash # One user account
-        if ad_accounts.fetch("AccountExpirationDate").nil?
-          impact 0.0
-          describe 'This control is not applicable as no expiring user accounts were found' do
-            skip 'This control is not applicable as no expiring user accounts were found'
-          end
-        else
-          expiring_accounts << ad_accounts
-        end
-      when Array # Multiple user accounts
-        ad_accounts.each do |ad_account|
-          next if ad_account.fetch("AccountExpirationDate").nil?
-          expiring_accounts << ad_account
-        end
-        if expiring_accounts.nil?
-          impact 0.0
-          describe 'This control is not applicable as no expiring user accounts were found' do
-            skip 'This control is not applicable as no expiring user accounts were found'
-          end
-        end
-      end
-    end
-
-    expiring_accounts.each do |expiring_account|
-      account_name = expiring_account.fetch("SamAccountName")
-      creation_date = Date.parse(expiring_account.fetch("WhenCreated"))
-      expiration_date = Date.parse(expiring_account.fetch("AccountExpirationDate"))
-      date_difference = expiration_date.mjd - creation_date.mjd
-      describe "Account expiration set for #{account_name}" do
-        subject { date_difference }
-        it { should cmp <= input('temporary_account_period')}
-      end
-    end
-  elsif domain_role == '2' || domain_role == '3' # Standalone and member servers
-    local_users = json({command: "Get-LocalUser * | Select-Object -Property Name, @{Name=”PasswordLastSet”;Expression={$_.PasswordLastSet.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpires”;Expression={$_.AccountExpires.ToString(“yyyy-MM-dd”)}} | ConvertTo-Json"}).params
-    expiring_users = []
-    if local_users.empty?
-      impact 0.0
-      describe 'This control is not applicable as no user accounts were found' do
-        skip 'This control is not applicable as no user accounts were found'
-      end
-    else
-      case local_users
-      when Hash # One user account
-        if local_users.fetch("AccountExpires").nil?
-          impact 0.0
-          describe 'This control is not applicable as no expiring user accounts were found' do
-            skip 'This control is not applicable as no expiring user accounts were found'
-          end
-        else
-          expiring_users << local_users
-        end
-      when Array # Multiple user accounts
-        local_users.each do |local_user|
-          next if local_user.fetch("AccountExpires").nil?
-          expiring_users << local_user
-        end
-        if expiring_users.nil?
-          impact 0.0
-          describe 'This control is not applicable as no expiring user accounts were found' do
-            skip 'This control is not applicable as no expiring user accounts were found'
-          end
-        end
-      end
-    end
-
-    expiring_users.each do |expiring_account|
-      user_name = expiring_account.fetch("Name")
-      password_date = Date.parse(expiring_account.fetch("PasswordLastSet"))
-      expiration_date = Date.parse(expiring_account.fetch("AccountExpires"))
-      date_difference = expiration_date.mjd - password_date.mjd
-      describe "Account expiration set for #{user_name}" do
-        subject { date_difference }
-        it { should cmp <= input('temporary_account_period')}
-      end
-    end
-  else
-    impact 0.0
-    describe 'This control is not applicable as this system is not a domain controller, standalone or member server' do
-      skip 'This control is not applicable as this system is not a domain controller, standalone or member server'
-    end
-  end
-end
-
-# PENDING
-input('temporary_account_period', value: 3)
-input for temporary accounts
-
 #____________________________JB_____________________________________________________
 
   # Critical Input by person running profile
@@ -324,3 +223,112 @@ input for temporary accounts
   end
 end
 
+
+#________________________________SK___________________________________________________________
+
+
+  # Search-ADAccount -AccountExpiring -TimeSpan 999999.23:59:59 (only benefit of Search-ADAccount is that it includes all user, computer, and service accounts)
+  # Assumption: Accounts that have an expiration date set are temporary accounts | PasswordLastSet for local users is as good as account creation date
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  
+  if domain_role == '4' || domain_role == '5' # Domain Controller
+    expiring_accounts = []
+    temporary_accounts = input("temp_accounts_domain")
+    temporary_accounts.each do |temporary_account|
+      expiring_accounts << json({ command: "Get-ADUser -Identity #{temporary_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name=”WhenCreated”;Expression={$_.WhenCreated.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpirationDate”;Expression={$_.AccountExpirationDate.ToString(“yyyy-MM-dd”)}}| ConvertTo-Json"}).params
+    end
+    ad_accounts = json({ command: "Get-ADUser -Filter * -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name=”WhenCreated”;Expression={$_.WhenCreated.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpirationDate”;Expression={$_.AccountExpirationDate.ToString(“yyyy-MM-dd”)}}| ConvertTo-Json"}).params
+    if ad_accounts.empty?
+      impact 0.0
+      describe 'This control is not applicable as no user accounts were found' do
+        skip 'This control is not applicable as no user accounts were found'
+      end
+    else
+      case ad_accounts
+      when Hash # One user account
+        if ad_accounts.fetch("AccountExpirationDate").nil?
+          impact 0.0
+          describe 'This control is not applicable as no expiring user accounts were found' do
+            skip 'This control is not applicable as no expiring user accounts were found'
+          end
+        else
+          expiring_accounts << ad_accounts unless expiring_accounts.any? {|h| h["SamAccountName"] == ad_accounts.fetch("SamAccountName")}
+        end
+      when Array # Multiple user accounts
+        ad_accounts.each do |ad_account|
+          next if ad_account.fetch("AccountExpirationDate").nil?
+          expiring_accounts << ad_account unless expiring_accounts.any? {|h| h["SamAccountName"] == ad_account.fetch("SamAccountName")}
+        end
+      end
+      if expiring_accounts.nil?
+        impact 0.0
+        describe 'This control is not applicable as no expiring user accounts were found' do
+          skip 'This control is not applicable as no expiring user accounts were found'
+        end
+      end
+    end
+    expiring_accounts.each do |expiring_account|
+      account_name = expiring_account.fetch("SamAccountName")
+      creation_date = Date.parse(expiring_account.fetch("WhenCreated"))
+      expiration_date = Date.parse(expiring_account.fetch("AccountExpirationDate"))
+      date_difference = expiration_date.mjd - creation_date.mjd
+      describe "Account expiration set for #{account_name}" do
+        subject { date_difference }
+        it { should cmp <= input('temporary_account_period')}
+      end
+    end
+
+  elsif domain_role == '2' || domain_role == '3' # Standalone and member servers
+    expiring_users = []
+    temporary_accounts = input("temp_accounts_local")
+    temporary_accounts.each do |temporary_account|
+      expiring_users << json({ command: "Get-LocalUser -Name #{temporary_account} | Select-Object -Property Name, @{Name=”PasswordLastSet”;Expression={$_.PasswordLastSet.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpires”;Expression={$_.AccountExpires.ToString(“yyyy-MM-dd”)}} | ConvertTo-Json"}).params
+    end
+    local_users = json({command: "Get-LocalUser * | Select-Object -Property Name, @{Name=”PasswordLastSet”;Expression={$_.PasswordLastSet.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpires”;Expression={$_.AccountExpires.ToString(“yyyy-MM-dd”)}} | ConvertTo-Json"}).params
+    if local_users.empty?
+      impact 0.0
+      describe 'This control is not applicable as no user accounts were found' do
+        skip 'This control is not applicable as no user accounts were found'
+      end
+    else
+      case local_users
+      when Hash # One user account
+        if local_users.fetch("AccountExpires").nil? || local_user.fetch("PasswordLastSet").nil?
+          impact 0.0
+          describe 'This control is not applicable as no expiring user accounts with password last set date were found' do
+            skip 'This control is not applicable as no expiring user accounts password last set date were found'
+          end
+        else
+          expiring_users << local_users unless expiring_users.any? {|h| h["Name"] == local_users.fetch("Name")}
+        end
+      when Array # Multiple user accounts
+        local_users.each do |local_user|
+          next if local_user.fetch("AccountExpires").nil? || local_user.fetch("PasswordLastSet").nil?
+          expiring_users << local_user unless expiring_users.any? {|h| h["Name"] == local_user.fetch ("Name")}
+        end
+      end
+      if expiring_users.nil?
+        impact 0.0
+        describe 'This control is not applicable as no expiring user accounts with password last set date were found' do
+          skip 'This control is not applicable as no expiring user accounts with password last set date were found'
+        end
+      end
+    end
+    expiring_users.each do |expiring_account|
+      user_name = expiring_account.fetch("Name")
+      password_date = Date.parse(expiring_account.fetch("PasswordLastSet"))
+      expiration_date = Date.parse(expiring_account.fetch("AccountExpires"))
+      date_difference = expiration_date.mjd - password_date.mjd
+      describe "Account expiration set for #{user_name}" do
+        subject { date_difference }
+        it { should cmp <= input('temporary_account_period')}
+      end
+    end
+
+  else
+    impact 0.0
+    describe 'This control is not applicable as this system is not a domain controller, standalone or member server' do
+      skip 'This control is not applicable as this system is not a domain controller, standalone or member server'
+    end
+  end
+end

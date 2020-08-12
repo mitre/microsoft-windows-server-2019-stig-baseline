@@ -21,6 +21,11 @@ inputs:
     value: 
       -
 
+  - name: temporary_account_period
+    desc: "List the number of days that temporary accounts remain active for"
+    type: Numeric
+    value: 3
+
   - name: emergency_accounts_domain
     desc: "List of emergency accounts on the domain"
     type: Array
