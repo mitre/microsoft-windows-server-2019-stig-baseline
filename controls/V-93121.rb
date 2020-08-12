@@ -131,7 +131,6 @@ Write gPLink, one instance - Write gPOptions)
     distinguishedNames = json(command: "Get-ADObject -Filter { objectclass -eq 'groupPolicyContainer'} | foreach {$_.DistinguishedName} | ConvertTo-JSON").params
     distinguishedNames.each do |distinguishedName|
       acl_rules = json(command: "(Get-ACL -Audit -Path AD:'#{distinguishedName}').Audit | ConvertTo-CSV | ConvertFrom-CSV | ConvertTo-JSON").params
-      puts acl_rules
       if acl_rules.is_a?(Hash)
         acl_rules = [JSON.parse(acl_rules.to_json)]
       end
