@@ -38,6 +38,11 @@ inputs:
     value: 
       - 
 
+  - name: emergency_account_period
+    desc: "List the number of days that temporary accounts remain active for"
+    type: Numeric
+    value: 3
+
   - name: c_perm
     desc: "Permissions on folder and file for C:\\ Directory"
     type: Array
@@ -136,7 +141,6 @@ inputs:
     type: String
     value: ""
     
-
   - name: ntds_permissions
     desc: "Permissions on folder and file for NTDS Directory"
     type: Array
@@ -314,6 +318,11 @@ inputs:
     desc: "If windows should enforce password complexity (0/1) [1]"
     type: Numeric
     value: 1
+
+  - name: app_password_age
+    desc: "Set the number of days that manually managed application account passwords must be changed"
+    type: Number
+    value: 365
 
   - name: ftp_server
     desc: "Set the value to true only if the system has the role of an FTP server, this must be documented with the ISSO"

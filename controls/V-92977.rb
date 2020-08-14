@@ -32,6 +32,8 @@ control "V-92977" do
   tag 'cci': ["CCI-001682"]
   tag 'nist': ["AC-2 (2)", "Rev_4"]
 
+#____________________________JB_____________________________________________________
+
   # Critical Input by person running profile
   emergency_accounts_domain = input('emergency_accounts_domain')
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
@@ -213,3 +215,56 @@ control "V-92977" do
  end
 end
 
+#____________________________SK_____________________________________________________
+
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  
+  if domain_role == '4' || domain_role == '5' # Domain Controller
+    emergency_accounts_list = input('emergency_accounts_domain')
+    if emergency_accounts_list.empty?
+      impact 0.0
+      describe 'There are no Emergency Account listed for this Control' do
+        skip 'This becomes a manual check if the input emergency_accounts_domain is not assigned a value'
+      end
+    else
+      emergency_accounts = []
+      emergency_accounts_list.each do |emergency_account|
+        emergency_accounts << json({ command: "Get-ADUser -Identity #{emergency_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name=”WhenCreated”;Expression={$_.WhenCreated.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpirationDate”;Expression={$_.AccountExpirationDate.ToString(“yyyy-MM-dd”)}}| ConvertTo-Json"}).params
+      end
+      emergency_accounts.each do |emergency_account|
+        account_name = emergency_account.fetch("SamAccountName")
+        creation_date = Date.parse(emergency_account.fetch("WhenCreated"))
+        expiration_date = Date.parse(emergency_account.fetch("AccountExpirationDate"))
+        date_difference = expiration_date.mjd - creation_date.mjd
+        describe "Account expiration set for #{account_name}" do
+          subject { date_difference }
+          it { should cmp <= input('emergency_account_period')}
+        end
+      end
+    end
+
+  else # Standalone and member servers
+    emergency_accounts_list = input('emergency_accounts_local')
+    if emergency_accounts_list.empty?
+      impact 0.0
+      describe 'There are no Emergency Account listed for this Control' do
+        skip 'This becomes a manual check if the input emergency_accounts_domain is not assigned a value'
+      end
+    else
+      emergency_accounts = []
+      emergency_accounts_list.each do |emergency_account|
+        emergency_accounts << json({ command: "Get-LocalUser -Name #{emergency_account} | Select-Object -Property Name, @{Name=”PasswordLastSet”;Expression={$_.PasswordLastSet.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpires”;Expression={$_.AccountExpires.ToString(“yyyy-MM-dd”)}} | ConvertTo-Json"}).params
+      end
+      emergency_accounts.each do |emergency_account|
+        user_name = emergency_account.fetch("Name")
+        password_date = Date.parse(emergency_account.fetch("PasswordLastSet"))
+        expiration_date = Date.parse(emergency_account.fetch("AccountExpires"))
+        date_difference = expiration_date.mjd - password_date.mjd
+        describe "Account expiration set for #{user_name}" do
+          subject { date_difference }
+          it { should cmp <= input('emergency_account_period')}
+        end
+      end
+    end
+  end
+end
