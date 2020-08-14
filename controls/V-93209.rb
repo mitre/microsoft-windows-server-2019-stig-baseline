@@ -92,16 +92,15 @@ if domain_role == '4' || domain_role == '5'
     #     skip "Application Accounts are all within 365 days since password change #{user}"
     #   end
     # else
-      describe 'Password Last Set' do
-        it "Application Account #{user} Password Last Set Date is: #{date}" do
-          failure_message = "Password Date should not be more that #{password_rotation} Days"
-          expect(date).to be_nil, failure_message
-        end
+    describe 'Password Last Set' do
+      it "Date should not be more that #{password_rotation} days for Application Account: #{user} " do
+        failure_message = "Password Date is: #{date}"
+        expect(date).to be_nil, failure_message
       end
+    end
     #end
   end
-end
-if domain_role != '4' || domain_role != '5'
+else
   application_accounts_local.each do |user|
     local_password_set_date = json({ command: "Get-LocalUser -name #{user} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-#{password_rotation})} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" }).params
     date = local_password_set_date['DateTime']
@@ -110,12 +109,12 @@ if domain_role != '4' || domain_role != '5'
     #     skip "Application Accounts are all within 365 days since password change #{user}"
     #   end
     # else
-      describe 'Password Last Set' do
-        it "Application Account #{user} Password Last Set Date is" do
-          failure_message = "Password Date should not be more that #{password_rotation} Days: #{date}"
-          expect(date).to be_empty, failure_message
-        end
+    describe 'Password Last Set' do
+      it "Date should not be more that #{password_rotation} days for Application Account: #{user} " do
+        failure_message = "Password Date is: #{date}"
+        expect(date).to be_nil, failure_message
       end
+    end
     #end
   end
 end
