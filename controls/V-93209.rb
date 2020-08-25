@@ -30,92 +30,47 @@ control "V-93209" do
   tag 'cci': ["CCI-000366"]
   tag 'nist': ["CM-6 b", "Rev_4"]
 
-#____________________________JB_____________________________________________________
+  application_accounts_domain = input('application_accounts_domain')
+  application_accounts_local = input('application_accounts_local')
+  app_password_age = input('app_password_age')
 
-#   application_accounts = input('application_accounts_domain')
-#   application_accounts_local = input('application_accounts_local')
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-#   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-
-#   if domain_role == '4' || domain_role == '5'
-#     application_accounts.each do |user|
-#       password_set_date = json({ command: "Get-ADUser -Identity #{user} -Properties PasswordLastSet | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-365)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
-#       date = password_set_date['DateTime']
-#       if date.nil?
-#         describe "Application Accounts are all within 365 days since password change #{user}" do
-#           skip "Application Accounts are all within 365 days since password change #{user}"
-#         end
-#       else
-#         describe 'Password Last Set' do
-#           it "Application Account #{user} Password Last Set Date is" do
-#             failure_message = "Password Date should not be more that 365 Days: #{date}"
-#             expect(date).to be_empty, failure_message
-#           end
-#         end
-#        end
-#     end
-#  end
-#   if domain_role != '4' || domain_role != '5'
-#     application_accounts_local.each do |user|
-#       local_password_set_date = json({ command: "Get-LocalUser -name #{user} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-365)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
-#       date = local_password_set_date['DateTime']
-#       if date.nil?
-#         describe "Application Accounts are all within 365 days since password change #{user}" do
-#           skip "Application Accounts are all within 365 days since password change #{user}"
-#         end
-#       else
-#         describe 'Password Last Set' do
-#           it "Application Account #{user} Password Last Set Date is" do
-#             failure_message = "Password Date should not be more that 365 Days: #{date}"
-#             expect(date).to be_empty, failure_message
-#           end
-#         end
-#        end
-#     end
-#   end
-# end
-
-#____________________________SK_____________________________________________________
-
-application_accounts = input('application_accounts_domain')
-application_accounts_local = input('application_accounts_local')
-password_rotation = input('app_password_age')
-
-domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-
-if domain_role == '4' || domain_role == '5'
-  application_accounts.each do |user|
-    password_set_date = json({ command: "Get-ADUser -Identity #{user} -Properties PasswordLastSet | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-#{password_rotation})} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" }).params
-    date = password_set_date['DateTime']
-    # if date.nil?
-    #   describe "Application Accounts are all within 365 days since password change #{user}" do
-    #     skip "Application Accounts are all within 365 days since password change #{user}"
-    #   end
-    # else
-    describe 'Password Last Set' do
-      it "Date should not be more that #{password_rotation} days for Application Account: #{user} " do
-        failure_message = "Password Date is: #{date}"
-        expect(date).to be_nil, failure_message
+  if domain_role == '4' || domain_role == '5'
+    if application_accounts_domain.empty?
+      impact 0.0
+      describe 'There are no application accounts are listed for this control' do
+        skip 'This is not applicable since no application accounts are listed for this control'
+      end
+    else
+      application_accounts_domain.each do |user|
+        password_set_date = json({ command: "Get-ADUser -Identity #{user} -Properties PasswordLastSet | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-#{app_password_age})} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" }).params
+        date = password_set_date['DateTime']
+        describe 'Password Last Set' do
+          it "Date should not be more that #{app_password_age} days for Application Account: #{user} " do
+            failure_message = "Password Date is: #{date}"
+            expect(date).to be_nil, failure_message
+          end
+        end
       end
     end
-    #end
-  end
-else
-  application_accounts_local.each do |user|
-    local_password_set_date = json({ command: "Get-LocalUser -name #{user} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-#{password_rotation})} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" }).params
-    date = local_password_set_date['DateTime']
-    # if date.nil?
-    #   describe "Application Accounts are all within 365 days since password change #{user}" do
-    #     skip "Application Accounts are all within 365 days since password change #{user}"
-    #   end
-    # else
-    describe 'Password Last Set' do
-      it "Date should not be more that #{password_rotation} days for Application Account: #{user} " do
-        failure_message = "Password Date is: #{date}"
-        expect(date).to be_nil, failure_message
+  else
+    if application_accounts_local.empty?
+      impact 0.0
+      describe 'There are no application accounts are listed for this control' do
+        skip 'This is not applicable since no application accounts are listed for this control'
+      end
+    else
+      application_accounts_local.each do |user|
+        local_password_set_date = json({ command: "Get-LocalUser -name #{user} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-#{app_password_age})} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" }).params
+        date = local_password_set_date['DateTime']
+        describe 'Password Last Set' do
+          it "Date should not be more that #{app_password_age} days for Application Account: #{user} " do
+            failure_message = "Password Date is: #{date}"
+            expect(date).to be_nil, failure_message
+          end
+        end
       end
     end
-    #end
   end
-end
 end
