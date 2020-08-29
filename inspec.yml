@@ -321,7 +321,7 @@ inputs:
 
   - name: app_password_age
     desc: "Set the number of days that manually managed application account passwords must be changed"
-    type: Number
+    type: Numeric
     value: 365
 
   - name: ftp_server
