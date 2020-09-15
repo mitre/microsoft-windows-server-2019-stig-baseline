@@ -50,20 +50,21 @@ control "V-92995" do
     end
   #end
   else
-  if domain_role == '4' || domain_role == '5'
-    describe security_policy do
-      its('SeNetworkLogonRight') { should include "S-1-5-11" }
-    end
-    describe security_policy do
-      its('SeNetworkLogonRight') { should include "S-1-5-32-544" }
-    end
-    describe security_policy do
-      its('SeNetworkLogonRight') { should include "S-1-5-9" }
-    end
-  else
-    impact 0.0
-    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    if domain_role == '4' || domain_role == '5'
+      describe security_policy do
+        its('SeNetworkLogonRight') { should include "S-1-5-11" }
+      end
+      describe security_policy do
+        its('SeNetworkLogonRight') { should include "S-1-5-32-544" }
+      end
+      describe security_policy do
+        its('SeNetworkLogonRight') { should include "S-1-5-9" }
+      end
+    else
+      impact 0.0
+      describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+        skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+      end
     end
   end
 end
