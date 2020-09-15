@@ -44,7 +44,7 @@ control "V-92977" do
     else
       emergency_accounts = []
       emergency_accounts_list.each do |emergency_account|
-        emergency_accounts << json({ command: "Get-ADUser -Identity #{emergency_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name=”WhenCreated”;Expression={$_.WhenCreated.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpirationDate”;Expression={$_.AccountExpirationDate.ToString(“yyyy-MM-dd”)}}| ConvertTo-Json"}).params
+        emergency_accounts << json({ command: "Get-ADUser -Identity #{emergency_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name='WhenCreated';Expression={$_.WhenCreated.ToString('yyyy-MM-dd')}}, @{Name='AccountExpirationDate';Expression={$_.AccountExpirationDate.ToString('yyyy-MM-dd')}}| ConvertTo-Json"}).params
       end
       emergency_accounts.each do |emergency_account|
         account_name = emergency_account.fetch("SamAccountName")
@@ -68,7 +68,7 @@ control "V-92977" do
     else
       emergency_accounts = []
       emergency_accounts_list.each do |emergency_account|
-        emergency_accounts << json({ command: "Get-LocalUser -Name #{emergency_account} | Select-Object -Property Name, @{Name=”PasswordLastSet”;Expression={$_.PasswordLastSet.ToString(“yyyy-MM-dd”)}}, @{Name=”AccountExpires”;Expression={$_.AccountExpires.ToString(“yyyy-MM-dd”)}} | ConvertTo-Json"}).params
+        emergency_accounts << json({ command: "Get-LocalUser -Name #{emergency_account} | Select-Object -Property Name, @{Name='PasswordLastSet';Expression={$_.PasswordLastSet.ToString('yyyy-MM-dd')}}, @{Name='AccountExpires';Expression={$_.AccountExpires.ToString('yyyy-MM-dd')}} | ConvertTo-Json"}).params
       end
       emergency_accounts.each do |emergency_account|
         user_name = emergency_account.fetch("Name")
