@@ -36,7 +36,7 @@ control "V-92977" do
   
   if domain_role == '4' || domain_role == '5'
     emergency_accounts_list = input('emergency_accounts_domain')
-    if emergency_accounts_list.empty?
+    if emergency_accounts_list == [nil]
       impact 0.0
       describe 'There are no Emergency Account listed for this Control' do
         skip 'This becomes a manual check if the input emergency_accounts_domain is not assigned a value'
@@ -60,7 +60,7 @@ control "V-92977" do
 
   else
     emergency_accounts_list = input('emergency_accounts_local')
-    if emergency_accounts_list.empty?
+    if emergency_accounts_list == [nil]
       impact 0.0
       describe 'There are no Emergency Account listed for this Control' do
         skip 'This is not applicable as there are no Emergency Account listed for this Control'

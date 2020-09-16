@@ -39,8 +39,10 @@ control "V-92975" do
   if domain_role == '4' || domain_role == '5'
     expiring_accounts = []
     temporary_accounts = input("temp_accounts_domain")
-    temporary_accounts.each do |temporary_account|
-      expiring_accounts << json({ command: "Get-ADUser -Identity #{temporary_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name='WhenCreated';Expression={$_.WhenCreated.ToString('yyyy-MM-dd')}}, @{Name='AccountExpirationDate';Expression={$_.AccountExpirationDate.ToString('yyyy-MM-dd')}}| ConvertTo-Json"}).params
+    unless temporary_accounts == [nil]
+      temporary_accounts.each do |temporary_account|
+        expiring_accounts << json({ command: "Get-ADUser -Identity #{temporary_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name='WhenCreated';Expression={$_.WhenCreated.ToString('yyyy-MM-dd')}}, @{Name='AccountExpirationDate';Expression={$_.AccountExpirationDate.ToString('yyyy-MM-dd')}}| ConvertTo-Json"}).params
+      end
     end
     ad_accounts = json({ command: "Get-ADUser -Filter * -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name='WhenCreated';Expression={$_.WhenCreated.ToString('yyyy-MM-dd')}}, @{Name='AccountExpirationDate';Expression={$_.AccountExpirationDate.ToString('yyyy-MM-dd')}}| ConvertTo-Json"}).params
     if ad_accounts.empty?
@@ -84,11 +86,13 @@ control "V-92975" do
       end
     end
 
-  else domain_role == '2' || domain_role == '3'
+  else
     expiring_users = []
     temporary_accounts = input("temp_accounts_local")
-    temporary_accounts.each do |temporary_account|
-      expiring_users << json({ command: "Get-LocalUser -Name #{temporary_account} | Select-Object -Property Name, @{Name='PasswordLastSet';Expression={$_.PasswordLastSet.ToString('yyyy-MM-dd')}}, @{Name='AccountExpires';Expression={$_.AccountExpires.ToString('yyyy-MM-dd')}} | ConvertTo-Json"}).params
+    unless temporary_accounts == [nil]
+      temporary_accounts.each do |temporary_account|
+        expiring_users << json({ command: "Get-LocalUser -Name #{temporary_account} | Select-Object -Property Name, @{Name='PasswordLastSet';Expression={$_.PasswordLastSet.ToString('yyyy-MM-dd')}}, @{Name='AccountExpires';Expression={$_.AccountExpires.ToString('yyyy-MM-dd')}} | ConvertTo-Json"}).params
+      end
     end
     local_users = json({command: "Get-LocalUser * | Select-Object -Property Name, @{Name='PasswordLastSet';Expression={$_.PasswordLastSet.ToString('yyyy-MM-dd')}}, @{Name='AccountExpires';Expression={$_.AccountExpires.ToString('yyyy-MM-dd')}} | ConvertTo-Json"}).params
     if local_users.empty?
