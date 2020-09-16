@@ -69,9 +69,10 @@ control "V-93035" do
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   if domain_role == '4' || domain_role == '5'
     perm_query = <<-EOH
+                    import-module ActiveDirectory
                     Set-Location ad:
                     $distinguishedName = (Get-ADDomain).DistinguishedName
-                    $acl_rules = (Get-Acl 'OU=Domain Controllers,$distinguishedName').Access
+                    $acl_rules = (Get-Acl "OU=Domain Controllers,$distinguishedName").Access
                     $acl_rules | ConvertTo-Csv | ConvertFrom-Csv | ConvertTo-Json
                     EOH
 
