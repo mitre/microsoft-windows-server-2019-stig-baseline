@@ -44,7 +44,7 @@ inputs:
     value: 3
 
   - name: allowed_network_access_users
-    desc: "List SIDs of accounts that are authorized to have network access (SeNetworkLogonRight)"
+    desc: "List SIDs of accounts that are authorized to have network logon user right (SeNetworkLogonRight)"
     type: Array
     value:
       - "S-1-5-32-544"
@@ -52,10 +52,25 @@ inputs:
       - "S-1-5-9"
 
   - name: disallowed_network_access_users
-    desc: "List SIDs of accounts that are not authorized to have network access (SeNetworkLogonRight)"
+    desc: "List SIDs of accounts that are not authorized to have network user right (SeNetworkLogonRight)"
     type: Array
     value:
       - 
+
+  - name: allowed_global_privilege_users
+    desc: "List SIDs of accounts that are authorized to have create global object user right (SeCreateGlobalPrivilege)"
+    type: Array
+    value:
+      - "S-1-5-32-544"
+      - "S-1-5-6"
+      - "S-1-5-19"
+      - "S-1-5-20"
+
+  - name: disallowed_global_privilege_users
+    desc: "List SIDs of accounts that are not authorized to have create global object user right (SeCreateGlobalPrivilege)"
+    type: Array
+    value:
+      -
 
   - name: c_perm
     desc: "Permissions on folder and file for C:\\ Directory"
