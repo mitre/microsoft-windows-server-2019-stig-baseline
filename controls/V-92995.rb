@@ -48,6 +48,9 @@ control "V-92995" do
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
+# Test
+  puts disallowed_network_access_users
+
   if os_type == 'False'
     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
