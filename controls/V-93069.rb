@@ -56,7 +56,7 @@ control "V-93069" do
         unauthorized_users << user
       end
     end
-    describe "Security Audit Generation Privilege must be limited" do
+    describe "Security Audit Generation Privilege must be limited to" do
       it "Authorized SIDs: #{allowed_audit_privilege_users}" do
         failure_message = "Unauthorized SIDs: #{unauthorized_users}"
         expect(unauthorized_users).to be_empty, failure_message

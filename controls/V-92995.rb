@@ -63,7 +63,7 @@ control "V-92995" do
           unauthorized_users << user
         end
       end
-      describe "Network Logon Privilege must be limited" do
+      describe "Network Logon Privilege must be limited to" do
         it "Authorized SIDs: #{allowed_network_access_users}" do
           failure_message = "Unauthorized SIDs: #{unauthorized_users}"
           expect(unauthorized_users).to be_empty, failure_message

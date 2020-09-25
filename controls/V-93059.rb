@@ -62,7 +62,7 @@ control "V-93059" do
         unauthorized_users << user
       end
     end
-    describe "Global Object Creation Privilege must be limited" do
+    describe "Global Object Creation Privilege must be limited to" do
       it "Authorized SIDs: #{allowed_global_privilege_users}" do
         failure_message = "Unauthorized SIDs: #{unauthorized_users}"
         expect(unauthorized_users).to be_empty, failure_message
