@@ -49,7 +49,9 @@ control "V-92995" do
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
 # Test
-  puts disallowed_network_access_users
+  describe disallowed_network_access_users do
+    it { should cmp [nil] }
+  end
 
   if os_type == 'False'
     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
