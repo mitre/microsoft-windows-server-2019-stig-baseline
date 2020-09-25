@@ -36,6 +36,10 @@ control "V-93069" do
   tag 'cci': ["CCI-002235"]
   tag 'nist': ["AC-6 (10)", "Rev_4"]
 
+  active_audit_privilege_users = security_policy.SeAuditPrivilege.entries
+  allowed_audit_privilege_users = input("allowed_audit_privilege_users")
+  disallowed_audit_privilege_users = input("disallowed_audit_privilege_users")
+  unauthorized_users = []
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
@@ -43,11 +47,20 @@ control "V-93069" do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
     end
   else
-    describe security_policy do
-      its('SeAuditPrivilege') { should include "S-1-5-19" }
+    active_audit_privilege_users.each do |user|
+      next if allowed_audit_privilege_users.include?(user)
+      unauthorized_users << user
     end
-    describe security_policy do
-      its('SeAuditPrivilege') { should include "S-1-5-20" }
+    disallowed_audit_privilege_users.each do |user|
+      unless disallowed_audit_privilege_users == [nil] || unauthorized_users.include?(user)
+        unauthorized_users << user
+      end
+    end
+    describe "Security Audit Generation Privilege must be limited" do
+      it "Authorized SIDs: #{allowed_audit_privilege_users}" do
+        failure_message = "Unauthorized SIDs: #{unauthorized_users}"
+        expect(unauthorized_users).to be_empty, failure_message
+      end
     end
   end
 end

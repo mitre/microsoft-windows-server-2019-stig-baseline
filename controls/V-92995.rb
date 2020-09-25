@@ -48,11 +48,6 @@ control "V-92995" do
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
-# Test
-  describe disallowed_network_access_users do
-    it { should cmp [nil] }
-  end
-
   if os_type == 'False'
     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
@@ -68,7 +63,7 @@ control "V-92995" do
           unauthorized_users << user
         end
       end
-      describe "Network Access must be limited" do
+      describe "Network Logon Privilege must be limited" do
         it "Authorized SIDs: #{allowed_network_access_users}" do
           failure_message = "Unauthorized SIDs: #{unauthorized_users}"
           expect(unauthorized_users).to be_empty, failure_message
