@@ -44,7 +44,7 @@ inputs:
     value: 3
 
   - name: allowed_network_access_users
-    desc: "List SIDs of accounts that are authorized to have network logon user right (SeNetworkLogonRight)"
+    desc: "List SIDs of accounts that are authorized to have the network logon user right (SeNetworkLogonRight)"
     type: Array
     value:
       - "S-1-5-32-544"
@@ -52,13 +52,13 @@ inputs:
       - "S-1-5-9"
 
   - name: disallowed_network_access_users
-    desc: "List SIDs of accounts that are not authorized to have network user right (SeNetworkLogonRight)"
+    desc: "List SIDs of accounts that are not authorized to the have network user right (SeNetworkLogonRight)"
     type: Array
     value:
       - 
 
   - name: allowed_global_privilege_users
-    desc: "List SIDs of accounts that are authorized to have create global object user right (SeCreateGlobalPrivilege)"
+    desc: "List SIDs of accounts that are authorized to have the create global object user right (SeCreateGlobalPrivilege)"
     type: Array
     value:
       - "S-1-5-32-544"
@@ -67,7 +67,20 @@ inputs:
       - "S-1-5-20"
 
   - name: disallowed_global_privilege_users
-    desc: "List SIDs of accounts that are not authorized to have create global object user right (SeCreateGlobalPrivilege)"
+    desc: "List SIDs of accounts that are not authorized to have the create global object user right (SeCreateGlobalPrivilege)"
+    type: Array
+    value:
+      -
+
+  - name: allowed_audit_privilege_users
+    desc: "List SIDs of accounts that are authorized to have the generate security audits user right (SeAuditPrivilege)"
+    type: Array
+    value:
+      - "S-1-5-19"
+      - "S-1-5-20"
+
+  - name: disallowed_audit_privilege_users
+    desc: "List SIDs of accounts that are not authorized to have the generate security audits user right (SeAuditPrivilege)"
     type: Array
     value:
       -
