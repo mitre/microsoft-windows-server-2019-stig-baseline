@@ -43,6 +43,20 @@ inputs:
     type: Numeric
     value: 3
 
+  - name: allowed_network_access_users
+    desc: "List SIDs of accounts that are authorized to have network access (SeNetworkLogonRight)"
+    type: Array
+    value:
+      - "S-1-5-32-544"
+      - "S-1-5-11"
+      - "S-1-5-9"
+
+  - name: disallowed_network_access_users
+    desc: "List SIDs of accounts that are not authorized to have network access (SeNetworkLogonRight)"
+    type: Array
+    value:
+      - 
+
   - name: c_perm
     desc: "Permissions on folder and file for C:\\ Directory"
     type: Array
