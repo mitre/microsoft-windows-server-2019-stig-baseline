@@ -1,11 +1,45 @@
-# Windows Server 2019 Security Technical Implementation Guide
+# microsoft-windows-server-2019-stig-baseline
 
-#### Version 1 Release 3
+InSpec profile to validate the secure configuration of Microsoft Windows Server 2019, against [DISA](https://iase.disa.mil/stigs/)'s **Microsoft Windows Server 2019 Security Technical Implementation Guide (STIG) Version 1, Release 3**.
 
-### This is a ***Work in Progress***. We will release the final version in the ***MASTER*** Branch
-### This profile will continue to change until we do a final release
+## Getting Started  
+It is intended and recommended that InSpec run this profile from a __"runner"__ host (such as a DevOps orchestration server, an administrative management system, or a developer's workstation/laptop) against the target remotely over __winrm__.
 
-This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
+__For the best security of the runner, always install on the runner the _latest version_ of InSpec and supporting Ruby language components.__ 
+
+Latest versions and installation options are available at the [InSpec](http://inspec.io/) site.
+
+## Running This Profile
+
+    inspec exec https://github.com/mitre/microsoft-windows-server-2019-stig-baseline/archive/master.tar.gz -t winrm://<hostip> --user '<admin-account>' --password=<password> --reporter cli json:<filename>.json
+
+Runs this profile over winrm to the host at IP address <hostip> as a privileged user account (i.e., an account with administrative privileges), reporting results to both the command line interface (cli) and to a machine-readable JSON file. 
+    
+The following is an example of using this command. 
+
+    inspec exec https://github.com/mitre/microsoft-windows-server-2019-stig-baseline/archive/master.tar.gz -t winrm://$winhostip --user 'Administrator' --password=Pa55w0rd --reporter cli json:win-2019-server-results.json
+
+## Viewing the JSON Results
+
+The JSON results output file can be loaded into __[heimdall-lite](https://mitre.github.io/heimdall-lite/)__ for a user-interactive, graphical view of the InSpec results. 
+
+The JSON InSpec results file may also be loaded into a __full heimdall server__, allowing for additional functionality such as to store and compare multiple profile runs.
+
+## Contributing and Getting Help
+To report a bug or feature request, please open an [issue](https://github.com/mitre/microsoft-windows-server-2019-stig-baseline/issues/new).
+
+For other help, please send a message to [inspec@mitre.org](mailto:inspec@mitre.org).
+
+To contribute, please review the [contribution guidelines](https://github.com/mitre/docs-mitre-inspec/blob/master/CONTRIBUTING.md).
+
+## Authors
+- Jared Burns [burnsjared0415](https://github.com/burnsjared0415)
+- Shivani Karikar [karikarshivani](https://github.com/karikarshivani)
+
+## Special Thanks
+
+- Aaron Lippold [aaronlippold](https://github.com/aaronlippold)
+- Eugene Aronne [ejaronne](https://github.com/ejaronne)
 
 ### NOTICE
 

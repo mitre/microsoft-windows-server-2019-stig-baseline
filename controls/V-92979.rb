@@ -11,13 +11,9 @@ Collecting this data is essential for analyzing the security of information
 assets and detecting signs of suspicious and unexpected behavior.
 
     Security Group Management records events such as creating, deleting, or
-changing security groups, including changes in group members.
-
-
-  "
+changing security groups, including changes in group members."
   desc  "rationale", ""
-  desc  "check", "
-    Security Option \"Audit: Force audit policy subcategory settings (Windows
+  desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
 effective.
@@ -33,25 +29,33 @@ as administrator\").
 
     If the system does not audit the following, this is a finding.
 
-    Account Management >> Security Group Management - Success
-  "
-  desc  "fix", "Configure the policy value for Computer Configuration >>
+    Account Management >> Security Group Management - Success"
+  desc  'fix', "Configure the policy value for Computer Configuration >>
 Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Account Management >> \"Audit Security Group
 Management\" with \"Success\" selected."
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000004-GPOS-00004"
-  tag satisfies: ["SRG-OS-000004-GPOS-00004", "SRG-OS-000239-GPOS-00089",
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000004-GPOS-00004'
+  tag 'satisfies': ["SRG-OS-000004-GPOS-00004", "SRG-OS-000239-GPOS-00089",
 "SRG-OS-000240-GPOS-00090", "SRG-OS-000241-GPOS-00091",
 "SRG-OS-000303-GPOS-00120", "SRG-OS-000476-GPOS-00221"]
-  tag gid: "V-92979"
-  tag rid: "SV-103067r1_rule"
-  tag stig_id: "WN19-AU-000100"
-  tag fix_id: "F-99225r1_fix"
-  tag cci: ["CCI-000018", "CCI-000172", "CCI-001403", "CCI-001404",
+  tag 'gid': 'V-92979'
+  tag 'rid': 'SV-103067r1_rule'
+  tag 'stig_id': 'WN19-AU-000100'
+  tag 'fix_id': 'F-99225r1_fix'
+  tag 'cci': ["CCI-000018", "CCI-000172", "CCI-001403", "CCI-001404",
 "CCI-001405", "CCI-002130"]
-  tag nist: ["AC-2 (4)", "AU-12 c", "AC-2 (4)", "AC-2 (4)", "AC-2 (4)", "AC-2
+  tag 'nist': ["AC-2 (4)", "AU-12 c", "AC-2 (4)", "AC-2 (4)", "AC-2 (4)", "AC-2
 (4)", "Rev_4"]
+
+  describe.one do
+    describe audit_policy do
+      its('Security Group Management') { should eq 'Success' }
+    end
+    describe audit_policy do
+      its('Security Group Management') { should eq 'Success and Failure' }
+    end
+  end
 end
 

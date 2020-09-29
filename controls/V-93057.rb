@@ -8,11 +8,9 @@ administrative, and other high-level capabilities.
 
     The \"Create a token object\" user right allows a process to create an
 access token. This could be used to provide elevated rights and compromise a
-system.
-  "
+system."
   desc  "rationale", ""
-  desc  "check", "
-    Verify the effective setting in Local Group Policy Editor.
+  desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
 
@@ -42,20 +40,31 @@ passwords, such as length (WN19-00-000050) and required frequency of changes
 (WN19-00-000060).
 
     Passwords for application accounts with this user right must be protected
-as highly privileged accounts.
-  "
-  desc  "fix", "Configure the policy value for Computer Configuration >>
+as highly privileged accounts."
+  desc  'fix', "Configure the policy value for Computer Configuration >>
 Windows Settings >> Security Settings >> Local Policies >> User Rights
 Assignment >> \"Create a token object\" to be defined but containing no entries
 (blank)."
   impact 0.7
-  tag severity: nil
-  tag gtitle: "SRG-OS-000324-GPOS-00125"
-  tag gid: "V-93057"
-  tag rid: "SV-103145r1_rule"
-  tag stig_id: "WN19-UR-000060"
-  tag fix_id: "F-99303r1_fix"
-  tag cci: ["CCI-002235"]
-  tag nist: ["AC-6 (10)", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
+  tag 'gid': 'V-93057'
+  tag 'rid': 'SV-103145r1_rule'
+  tag 'stig_id': 'WN19-UR-000060'
+  tag 'fix_id': 'F-99303r1_fix'
+  tag 'cci': ["CCI-002235"]
+  tag 'nist': ["AC-6 (10)", "Rev_4"]
+
+  os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
+
+  if os_type == 'False'
+     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+      skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
+     end
+  else
+    describe security_policy do
+     its('SeCreateTokenPrivilege') { should eq [] }
+  end
+ end
 end
 

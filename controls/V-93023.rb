@@ -9,13 +9,9 @@ and installed applications.
 
     The default permissions are adequate when the Security Option \"Network
 access: Let Everyone permissions apply to anonymous users\" is set to
-\"Disabled\" (WN19-SO-000240).
-
-
-  "
+\"Disabled\" (WN19-SO-000240)."
   desc  "rationale", ""
-  desc  "check", "
-    The default permissions are adequate when the Security Option \"Network
+  desc  'check', "The default permissions are adequate when the Security Option \"Network
 access: Let Everyone permissions apply to anonymous users\" is set to
 \"Disabled\" (WN19-SO-000240).
 
@@ -77,10 +73,8 @@ subfolders, and files
     APPLICATION PACKAGE AUTHORITY\\ALL RESTRICTED APPLICATION PACKAGES:(RX)
     APPLICATION PACKAGE AUTHORITY\\ALL RESTRICTED APPLICATION
 PACKAGES:(OI)(CI)(IO)(GR,GE)
-    Successfully processed 1 files; Failed processing 0 files
-  "
-  desc  "fix", "
-    Maintain the default file ACLs and configure the Security Option \"Network
+    Successfully processed 1 files; Failed processing 0 files"
+  desc  'fix', "Maintain the default file ACLs and configure the Security Option \"Network
 access: Let Everyone permissions apply to anonymous users\" to \"Disabled\"
 (WN19-SO-000240).
 
@@ -100,18 +94,23 @@ access: Let Everyone permissions apply to anonymous users\" to \"Disabled\"
     ALL APPLICATION PACKAGES - Read & execute - This folder, subfolders, and
 files
     ALL RESTRICTED APPLICATION PACKAGES - Read & execute - This folder,
-subfolders, and files
-  "
+subfolders, and files"
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000312-GPOS-00122"
-  tag satisfies: ["SRG-OS-000312-GPOS-00122", "SRG-OS-000312-GPOS-00123",
+  tag 'severity': nil
+  tag 'gtitle': "SRG-OS-000312-GPOS-00122"
+  tag 'satisfies': ["SRG-OS-000312-GPOS-00122", "SRG-OS-000312-GPOS-00123",
 "SRG-OS-000312-GPOS-00124"]
-  tag gid: "V-93023"
-  tag rid: "SV-103111r1_rule"
-  tag stig_id: "WN19-00-000160"
-  tag fix_id: "F-99269r1_fix"
-  tag cci: ["CCI-002165"]
-  tag nist: ["AC-3 (4)", "Rev_4"]
+  tag 'gid': 'V-93023'
+  tag 'rid': 'SV-103111r1_rule'
+  tag 'stig_id': 'WN19-00-000160'
+  tag 'fix_id': 'F-99269r1_fix'
+  tag 'cci': ["CCI-002165"]
+  tag 'nist': ["AC-3 (4)", "Rev_4"]
+
+  c_windows_perm = json( command: "icacls 'C:\\Windows' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("C:\\Windows ", '') }
+    describe "C:\\Windows permissions are set correctly on folder structure" do
+      subject { c_windows_perm.eql? input('c_windows_perm') }
+      it { should eq true }
+    end
 end
 

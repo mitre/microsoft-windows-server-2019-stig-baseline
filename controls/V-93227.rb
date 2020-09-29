@@ -10,8 +10,7 @@ have rights no longer intended.  Valid domain accounts or groups may also show
 up as unresolved SIDs if a connection to the domain cannot be established for
 some reason."
   desc  "rationale", ""
-  desc  "check", "
-    Review the effective User Rights setting in Local Group Policy Editor.
+  desc  'check', "Review the effective User Rights setting in Local Group Policy Editor.
     Run \"gpedit.msc\".
 
     Navigate to Local Computer Policy >> Computer Configuration >> Windows
@@ -48,19 +47,22 @@ groups, this is a finding.
     S-1-5-domain-512 - Domain Admins
     S-1-5-root domain-519 - Enterprise Admins
     S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420 - NT
-Service\\WdiServiceHost
-  "
-  desc  "fix", "Remove any unresolved SIDs found in User Rights assignments and
+Service\\WdiServiceHost"
+  desc  'fix', "Remove any unresolved SIDs found in User Rights assignments and
 determined to not be for currently valid accounts or groups by removing the
 accounts or groups from the appropriate group policy."
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000480-GPOS-00227"
-  tag gid: "V-93227"
-  tag rid: "SV-103315r1_rule"
-  tag stig_id: "WN19-00-000450"
-  tag fix_id: "F-99473r1_fix"
-  tag cci: ["CCI-000366"]
-  tag nist: ["CM-6 b", "Rev_4"]
-end
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
+  tag 'gid': 'V-93227'
+  tag 'rid': 'SV-103315r1_rule'
+  tag 'stig_id': 'WN19-00-000450'
+  tag 'fix_id': 'F-99473r1_fix'
+  tag 'cci': ["CCI-000366"]
+  tag 'nist': ["CM-6 b", "Rev_4"]
+
+  describe "A manual review is required to ensure orphaned security identifiers (SIDs) are removed from user rights on Windows Server 2019" do
+    skip 'A manual review is required to ensure orphaned security identifiers (SIDs) are removed from user rights on Windows Server 2019'
+  end
+ end
 

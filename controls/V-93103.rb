@@ -12,12 +12,9 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Sensitive Privilege Use records events related to use of sensitive
 privileges, such as \"Act as part of the operating system\" or \"Debug
-programs\".
-
-
-  "
+programs\"."
   desc  "rationale", ""
-  desc  "check", "
+  desc  'check', "
     Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -34,22 +31,30 @@ as administrator\").
 
     If the system does not audit the following, this is a finding.
 
-    Privilege Use >> Sensitive Privilege Use - Failure
-  "
-  desc  "fix", "Configure the policy value for Computer Configuration >>
+    Privilege Use >> Sensitive Privilege Use - Failure"
+  desc  'fix', "Configure the policy value for Computer Configuration >>
 Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Privilege Use >> \"Audit Sensitive Privilege Use\"
 with \"Failure\" selected."
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000327-GPOS-00127"
-  tag satisfies: ["SRG-OS-000327-GPOS-00127", "SRG-OS-000064-GPOS-00033",
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
+  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000064-GPOS-00033",
 "SRG-OS-000462-GPOS-00206", "SRG-OS-000466-GPOS-00210"]
-  tag gid: "V-93103"
-  tag rid: "SV-103191r1_rule"
-  tag stig_id: "WN19-AU-000310"
-  tag fix_id: "F-99349r1_fix"
-  tag cci: ["CCI-000172", "CCI-002234"]
-  tag nist: ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag 'gid': 'V-93103'
+  tag 'rid': 'SV-103191r1_rule'
+  tag 'stig_id': 'WN19-AU-000310'
+  tag 'fix_id': 'F-99349r1_fix'
+  tag 'cci': ["CCI-000172", "CCI-002234"]
+  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+
+  describe.one do
+    describe audit_policy do
+      its('Sensitive Privilege Use') { should eq 'Failure' }
+    end
+    describe audit_policy do
+      its('Sensitive Privilege Use') { should eq 'Success and Failure' }
+    end
+  end
 end
 

@@ -7,8 +7,7 @@ must only allow System and Administrators access."
 allow unauthorized users to read, modify, or delete directory data or audit
 trails."
   desc  "rationale", ""
-  desc  "check", "
-    This applies to domain controllers. It is NA for other systems.
+  desc  'check', "This applies to domain controllers. It is NA for other systems.
 
     Run \"Regedit\".
 
@@ -37,25 +36,46 @@ this is a finding:
     BUILTIN\\Administrators:(I)(F)
 
     (I) - permission inherited from parent container
-    (F) - full access
-  "
-  desc  "fix", "
-    Maintain the permissions on NTDS database and log files as follows:
+    (F) - full access"
+  desc  'fix', "Maintain the permissions on NTDS database and log files as follows:
 
     NT AUTHORITY\\SYSTEM:(I)(F)
     BUILTIN\\Administrators:(I)(F)
 
     (I) - permission inherited from parent container
-    (F) - full access
-  "
+    (F) - full access"
   impact 0.7
-  tag severity: nil
-  tag gtitle: "SRG-OS-000324-GPOS-00125"
-  tag gid: "V-93029"
-  tag rid: "SV-103117r1_rule"
-  tag stig_id: "WN19-DC-000070"
-  tag fix_id: "F-99275r1_fix"
-  tag cci: ["CCI-002235"]
-  tag nist: ["AC-6 (10)", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
+  tag 'gid': 'V-93029'
+  tag 'rid': 'SV-103117r1_rule'
+  tag 'stig_id': 'WN19-DC-000070'
+  tag 'fix_id': 'F-99275r1_fix'
+  tag 'cci': ["CCI-002235"]
+  tag 'nist': ["AC-6 (10)", "Rev_4"]
+
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  if domain_role == '4' || domain_role == '5'
+    # Command Gets the Location of the Property Required
+    ntds_database_logs_files_path = json(command: 'Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\NTDS\\Parameters | Select-Object -ExpandProperty "Database log files path" | ConvertTo-Json').params
+    # Command Gets Permissions on Folder Path
+    icacls_permissions_ntds_folder = json(command: "icacls '#{ntds_database_logs_files_path}' | ConvertTo-Json").params.map(&:strip)[0..-3].map { |e| e.gsub("#{ntds_database_logs_files_path} ", '') }
+    # Command Gets the Location of the Property Required
+    ntds_dsa_file_path = json(command: 'Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\NTDS\\Parameters | Select-Object -ExpandProperty "DSA Database file" | ConvertTo-Json').params
+    # Command Gets Permissions on file ntds.dit
+    icacls_permissions_ntds_dsa_file = json(command: "icacls '#{ntds_dsa_file_path}' | ConvertTo-Json").params.map(&:strip)[0..-3].map { |e| e.gsub("#{ntds_dsa_file_path} ", '') }
+    describe 'Permissions on NTDS Database Log Files Path is set to' do
+      subject { (icacls_permissions_ntds_folder - input('ntds_permissions')).empty? }
+      it { should eq true }
+    end
+    describe 'Permissions on NTDS Database DSA File is set to' do
+      subject { (icacls_permissions_ntds_dsa_file - input('ntds_permissions')).empty? }
+      it { should eq true }
+    end
+  else
+    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    end
+   end
 end
 

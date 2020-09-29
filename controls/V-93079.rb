@@ -8,11 +8,9 @@ administrative, and other high-level capabilities.
 
     Accounts with the \"Modify firmware environment values\" user right can
 change hardware configuration environment variables. This could result in
-hardware failures or a denial of service.
-  "
+hardware failures or a denial of service."
   desc  "rationale", ""
-  desc  "check", "
-    Verify the effective setting in Local Group Policy Editor.
+  desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
 
@@ -33,23 +31,32 @@ firmware environment values\" user right, this is a finding:
     If any SIDs other than the following are granted the
 \"SeSystemEnvironmentPrivilege\" user right, this is a finding:
 
-    S-1-5-32-544 (Administrators)
-  "
-  desc  "fix", "
-    Configure the policy value for Computer Configuration >> Windows Settings
+    S-1-5-32-544 (Administrators)"
+  desc  'fix', "Configure the policy value for Computer Configuration >> Windows Settings
 >> Security Settings >> Local Policies >> User Rights Assignment >> \"Modify
 firmware environment values\" to include only the following accounts or groups:
 
-    - Administrators
-  "
+    - Administrators"
   impact 0.5
-  tag severity: nil
-  tag gtitle: "SRG-OS-000324-GPOS-00125"
-  tag gid: "V-93079"
-  tag rid: "SV-103167r1_rule"
-  tag stig_id: "WN19-UR-000180"
-  tag fix_id: "F-99325r1_fix"
-  tag cci: ["CCI-002235"]
-  tag nist: ["AC-6 (10)", "Rev_4"]
+  tag 'severity': nil
+  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
+  tag 'gid': 'V-93079'
+  tag 'rid': 'SV-103167r1_rule'
+  tag 'stig_id': 'WN19-UR-000180'
+  tag 'fix_id': 'F-99325r1_fix'
+  tag 'cci': ["CCI-002235"]
+  tag 'nist': ["AC-6 (10)", "Rev_4"]
+
+  os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
+
+  if os_type == 'False'
+     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+      skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
+     end
+  else
+    describe security_policy do
+     its('SeSystemEnvironmentPrivilege') { should eq ['S-1-5-32-544'] }
+  end
+ end
 end
 
