@@ -7,21 +7,9 @@ control "V-93487" do
   desc  "check", "The certificates and thumbprints referenced below apply to unclassified systems; see PKE documentation for other networks.
     Open \"Windows PowerShell\" as an administrator.
     Execute the following command:
-<<<<<<< HEAD
-
-    Get-ChildItem -Path Cert:Localmachine\
-root | Where Subject -Like \"*DoD*\" | FL Subject, Thumbprint, NotAfter
-
-    If the following certificate \"Subject\" and \"Thumbprint\" information is
-not displayed, this is a finding.
-
-    If an expired certificate (\"NotAfter\" date) is not listed in the results,
-this is not a finding.
-=======
     Get-ChildItem -Path Cert:Localmachine\\root | Where Subject -Like \"*DoD*\" | FL Subject, Thumbprint, NotAfter
     If the following certificate \"Subject\" and \"Thumbprint\" information is not displayed, this is a finding.
     If an expired certificate (\"NotAfter\" date) is not listed in the results, this is not a finding.
->>>>>>> sk-release1ofcontrols
 
     Subject: CN=DoD Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US
     Thumbprint: 8C941B34EA1EA6ED9AE2BC54CF687252B4C9B561
