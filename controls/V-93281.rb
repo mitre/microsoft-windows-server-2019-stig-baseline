@@ -29,6 +29,6 @@ control "V-93281" do
   tag nist: ["CM-6 b", "Rev_4"]
 
   describe security_policy do
-    its('NewAdministratorName') { should eq "Administrator" }
+    its('NewAdministratorName') { should_not eq "Administrator" }
   end
 end
