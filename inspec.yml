@@ -148,7 +148,7 @@ inputs:
     type: Array
     value:
       - NT AUTHORITY\SYSTEM Allow  FullControl
-      - BUILTIN\Administrators Allow  ReadKey, ChangePermissions
+      - BUILTIN\Administrators Allow  ReadPermissions, ChangePermissions
 
   - name: reg_system_perms
     desc: "The required Registry System Permissions Settings"
