@@ -1,0 +1,102 @@
+---
+- hosts: default
+  # - debug: var=domain_role
+  tasks:
+    - name: Get Domain Role
+      register: domain_role_result
+      ansible.windows.win_shell: "wmic computersystem get domainrole | Findstr /v DomainRole"
+    
+    - name: Set Domain Role
+      set_fact:
+        domain_role: "{{ domain_role_result.stdout | trim }}"
+
+    - name: Get Domain
+      register: domain_result
+      ansible.windows.win_shell: "wmic computersystem get domain | FINDSTR /V Domain"
+
+    - name: Set Domain
+      set_fact:
+        domain: "{{ domain_result.stdout | trim }}"
+
+    - name: Inactivity limit must be set to 15 minutes or less #V-92961
+      ansible.windows.win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\
+        name: InactivityTimeoutSecs
+        type: dword
+        data: 900
+    
+    - name: Deny log on through Remote Desktop Services (Domain Controllers) #V-92963
+      when: domain_role == "4" or domain_role == "5"
+      ansible.windows.win_user_right:
+        name: SeDenyRemoteInteractiveLogonRight
+        users:
+        - S-1-5-32-546
+        action: add # Should this be "set"? If so, the InSpec test needs to change to verify existence in an array
+
+    - name: Deny log on through Remote Desktop Services (Member Servers & Standalone Systems) for all systems #V-92965
+      when:
+        - domain_role != "4" or domain_role != "5"
+        - domain == "WORKGROUP"
+      ansible.windows.win_user_right:
+        name: SeDenyRemoteInteractiveLogonRight
+        users:
+        - S-1-5-32-546
+        action: add
+    
+    - name: Deny log on through Remote Desktop Services (Member Servers & Standalone Systems) for domain systems only #V-92965
+      when:
+        - domain_role != "4" or domain_role != "5"
+        - domain != "WORKGROUP"
+      ansible.windows.win_user_right:
+        name: SeDenyRemoteInteractiveLogonRight
+        users:
+        - S-1-5-root domain-519
+        - S-1-5-domain-512
+        - S-1-5-113
+        action: add
+
+    #- name: #V-92967
+
+    #- name: #V-92969
+
+    - name: Remote Desktop Services must require secure Remote Procedure Call (RPC) communications #V-92971
+      ansible.windows.win_regedit:
+        path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\
+        name: fEncryptRPCTraffic
+        type: dword
+        data: 1
+
+    - name: Remote Desktop Services must be configured with the client connection encryption set to High Level #V-92973
+      ansible.windows.win_regedit:
+        path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\
+        name: MinEncryptionLevel
+        type: dword
+        data: 3
+
+    #- name: #V-92975 Nothing to configure for a new image
+
+    #- name: #V-92977 Nothing to configure for a new image
+
+    #- name: #V-92979
+
+    #- name: #V-92981
+
+    #- name: #V-92983
+
+    #- name: #V-92985
+
+    #- name: #V-92987
+
+    #- name: #V-92989
+
+    - name: Limit the caching of logon credentials #V-93275
+      when: domain_role == "3"
+      ansible.windows.win_regedit:
+        path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\
+        name: CachedLogonsCount
+        type: string
+        data: 4
+
+# Convert V numbers to tags
+# Add tags for instance types
+# Better set up of vars
