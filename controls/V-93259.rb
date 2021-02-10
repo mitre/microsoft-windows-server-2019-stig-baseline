@@ -48,23 +48,23 @@ to \"Enabled\" with any option except \"Internet\" selected.
   tag 'nist': ["CM-6 b", "Rev_4"]
 
   describe.one do
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization\Config') do
+      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
         it { should have_property 'DODownloadMode' }
         its('DODownloadMode') { should cmp 0 }
       end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization\Config') do
+      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
         it { should have_property 'DODownloadMode' }
         its('DODownloadMode') { should cmp 1 }
       end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization\Config') do
+      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
         it { should have_property 'DODownloadMode' }
         its('DODownloadMode') { should cmp 2 }
       end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization\Config') do
+      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
         it { should have_property 'DODownloadMode' }
         its('DODownloadMode') { should cmp 99 }
       end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization\Config') do
+      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
         it { should have_property 'DODownloadMode' }
         its('DODownloadMode') { should cmp 100 }
       end

@@ -31,7 +31,7 @@ control "V-93275" do
   if domain_role == '3'
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
       it { should have_property 'CachedLogonsCount' }
-      its('CachedLogonsCount') { should be <= 4 }
+      its('CachedLogonsCount') { should cmp <= 4 }
     end
   else
     impact 0.0
