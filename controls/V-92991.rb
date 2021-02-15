@@ -31,7 +31,7 @@ Partition."
   tag 'cci': ["CCI-000213"]
   tag 'nist': ["AC-3", "Rev_4"]
 
-  get_volumes = command("wmic logicaldisk get FileSystem | findstr /r /v '^$' |Findstr /v 'FileSystem'").stdout.strip.split("\r\n")
+  get_volumes = command("wmic logicaldisk where DriveType=3 get FileSystem | findstr /r /v '^$' |Findstr /v 'FileSystem'").stdout.strip.split("\r\n")
 
   get_volumes.each do |volume|
     volumes = volume.strip
