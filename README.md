@@ -43,7 +43,7 @@ To contribute, please review the [contribution guidelines](https://github.com/mi
 
 ### NOTICE
 
-© 2018-2020 The MITRE Corporation.
+© 2020 The MITRE Corporation.
 
 Approved for Public Release; Distribution Unlimited. Case Number 18-3678.
 
