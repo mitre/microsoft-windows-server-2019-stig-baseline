@@ -73,44 +73,40 @@ on as a batch job\" to include the following:
   tag 'nist': ["AC-3", "Rev_4"]
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
-  os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
-   if domain_role == '4' || domain_role == '5'
-      impact 0.0
-      desc 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
-      describe 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control' do
-        skip 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
-      end
-    elsif os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
-      skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
-    end 
-    if is_domain == 'WORKGROUP'
-        describe security_policy do
-         its('SeDenyBatchLogonRight') { should eq ['S-1-5-32-546'] }
-        end
-    else
-      domain_query = <<-EOH
-              $group = New-Object System.Security.Principal.NTAccount('Domain Admins')
-              $sid = ($group.Translate([security.principal.securityidentifier])).value
-              $sid | ConvertTo-Json
-              EOH
-
-      domain_admin_sid = json(command: domain_query).params
-      enterprise_admin_query = <<-EOH
-              $group = New-Object System.Security.Principal.NTAccount('Enterprise Admins')
-              $sid = ($group.Translate([security.principal.securityidentifier])).value
-              $sid | ConvertTo-Json
-              EOH
-
-      enterprise_admin_sid = json(command: enterprise_admin_query).params
-       describe security_policy do
-          its('SeDenyBatchLogonRight') { should include "#{domain_admin_sid}" }
-       end
-       describe security_policy do
-          its('SeDenyBatchLogonRight') { should include "#{enterprise_admin_sid}" }
-       end
+  case domain_role
+  when '4', '5'
+    impact 0.0
+    desc 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
+    describe 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control' do
+      skip 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
     end
-end
+  when '2'
+    describe security_policy do
+      its('SeDenyBatchLogonRight') { should eq ['S-1-5-32-546'] }
+    end
+  when '3'
+    domain_query = <<-EOH
+            $group = New-Object System.Security.Principal.NTAccount('Domain Admins')
+            $sid = ($group.Translate([security.principal.securityidentifier])).value
+            $sid | ConvertTo-Json
+            EOH
 
+    domain_admin_sid = json(command: domain_query).params
+    enterprise_admin_query = <<-EOH
+            $group = New-Object System.Security.Principal.NTAccount('Enterprise Admins')
+            $sid = ($group.Translate([security.principal.securityidentifier])).value
+            $sid | ConvertTo-Json
+            EOH
+
+    enterprise_admin_sid = json(command: enterprise_admin_query).params
+    describe security_policy do
+      its('SeDenyBatchLogonRight') { should include "#{domain_admin_sid}" }
+    end
+    describe security_policy do
+      its('SeDenyBatchLogonRight') { should include "#{enterprise_admin_sid}" }
+    end
+    describe security_policy do
+      its('SeDenyBatchLogonRight') { should include 'S-1-5-32-546' }
+    end
+  end
+end
