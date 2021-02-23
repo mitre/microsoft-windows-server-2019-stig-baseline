@@ -56,7 +56,7 @@ Assignment >> \"Deny log on as a service\" to include no entries (blank)."
   end
   if domain_role == '4' || domain_role == '5'
     describe security_policy do
-     its('SeDenyBatchLogonRight') { should eq [] }
+     its('SeDenyServiceLogonRight') { should eq [] }
     end
   else
     impact 0.0
