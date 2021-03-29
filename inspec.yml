@@ -417,6 +417,7 @@ inputs:
   
   - name: administrators
     desc: "List of authorized users in the local Administrators group"
+    sensitive: true
     type: Array
     value: 
       -
