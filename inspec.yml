@@ -1,12 +1,11 @@
-name: Windows_Server_2019_STIG
-title: Windows Server 2019 Security Technical Implementation Guide
+name: microsoft-windows-server-2019-stig-baseline
+title: microsoft-windows-server-2019-stig-baseline
 maintainer: The Authors
 copyright: The Authors
 copyright_email: you@example.com
 license: Apache-2.0
-summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
-version: 1.3.9
-
+summary: "Inspec Validation Profile for Microsoft Windows Member Server 2019 STIG"
+version: 1.3.10
 inspec_version: ">= 4.0"
 
 inputs:
@@ -60,6 +59,7 @@ inputs:
 
   - name: allowed_global_privilege_users
     desc: "List SIDs of accounts that are authorized to have the create global object user right (SeCreateGlobalPrivilege)"
+    sensitive: true
     type: Array
     value:
       - "S-1-5-32-544"
@@ -75,6 +75,7 @@ inputs:
 
   - name: allowed_audit_privilege_users
     desc: "List SIDs of accounts that are authorized to have the generate security audits user right (SeAuditPrivilege)"
+    sensitive: true
     type: Array
     value:
       - "S-1-5-19"
@@ -175,12 +176,14 @@ inputs:
 
   - name: local_administrators_member
     desc: "List of authorized users in the local Administrators group"
+    sensitive: true
     type: Array
     value:
       -
     
   - name: local_administrator
     desc: "Local Administrator Account on Windows Server"
+    sensitive: true
     type: String
     value: ""
     
