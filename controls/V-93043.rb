@@ -67,7 +67,7 @@ domain member server administrator group.
     end
   else
     administrators = input('local_administrators_member')
-    administrator_group = command("net localgroup Administrators | Format-List | Findstr /V 'Alias Name Comment Members - command'").stdout.strip.split("\r\n")
+    administrator_group = command("Get-LocalGroupMember -Group \"Administrators\" | select -ExpandProperty Name | ForEach-Object {$_ -replace \"$env:COMPUTERNAME\\\\\" -replace \"\"}").stdout.strip.split("\r\n")
     if administrator_group.empty?
         impact 0.0
         describe 'There are no users with administrative privileges' do
