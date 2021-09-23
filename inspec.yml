@@ -5,20 +5,20 @@ copyright: The Authors
 copyright_email: you@example.com
 license: Apache-2.0
 summary: "Inspec Validation Profile for Microsoft Windows Member Server 2019 STIG"
-version: 1.3.10
+version: 1.3.11
 inspec_version: ">= 4.0"
 
 inputs:
   - name: temp_accounts_domain
     desc: "List of temporary accounts on the domain"
     type: Array
-    value: 
+    value:
       -
 
   - name: temp_accounts_local
     desc: "List of temporary accounts on local system"
     type: Array
-    value: 
+    value:
       -
 
   - name: temporary_account_period
@@ -29,14 +29,14 @@ inputs:
   - name: emergency_accounts_domain
     desc: "List of emergency accounts on the domain"
     type: Array
-    value: 
-      - 
+    value:
+      -
 
   - name: emergency_accounts_local
     desc: "List of emergency accounts on the system"
     type: Array
-    value: 
-      - 
+    value:
+      -
 
   - name: emergency_account_period
     desc: "List the number of days that temporary accounts remain active for"
@@ -55,7 +55,7 @@ inputs:
     desc: "List SIDs of accounts that are not authorized to the have network user right (SeNetworkLogonRight)"
     type: Array
     value:
-      - 
+      -
 
   - name: allowed_global_privilege_users
     desc: "List SIDs of accounts that are authorized to have the create global object user right (SeCreateGlobalPrivilege)"
@@ -115,7 +115,7 @@ inputs:
       - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
       - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(RX)
       - APPLICATION PACKAGE AUTHORITY\ALL RESTRICTED APPLICATION PACKAGES:(OI)(CI)(IO)(GR,GE)
-    
+
   - name: c_windows_perm
     desc: "Permissions on folder and file for C:\\Windows Directory"
     type: Array
@@ -171,7 +171,7 @@ inputs:
   - name: local_administrators_dc
     desc: "List of authorized users in the local Administrators group"
     type: Array
-    value: 
+    value:
       -
 
   - name: local_administrators_member
@@ -180,13 +180,13 @@ inputs:
     type: Array
     value:
       -
-    
+
   - name: local_administrator
     desc: "Local Administrator Account on Windows Server"
     sensitive: true
     type: String
     value: ""
-    
+
   - name: ntds_permissions
     desc: "Permissions on folder and file for NTDS Directory"
     type: Array
@@ -291,26 +291,26 @@ inputs:
   - name: backup_operators
     desc: "List of authorized users in the Backup Operators Group"
     type: Array
-    value: 
+    value:
       -
 
   - name: application_accounts_domain
     desc: "List Application or Service Accounts domain"
     type: Array
-    value: 
-      - 
+    value:
+      -
 
   - name: excluded_accounts_domain
     desc: "List Excluded Accounts domain"
     type: Array
-    value: 
-      - 
+    value:
+      -
 
   - name: application_accounts_local
     desc: "List Application Local Accounts"
     type: Array
-    value: 
-      - 
+    value:
+      -
 
   - name: av_approved_software
     desc: "This is a list of Approved Anti-Virus Software"
@@ -379,7 +379,7 @@ inputs:
   - name: dod_root_certificates
     desc: "List of DoD CA Root Certificates"
     type: Array
-    value: 
+    value:
      - :Subject: "CN=DoD Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US"
        :Thumbprint: "8C941B34EA1EA6ED9AE2BC54CF687252B4C9B561"
        :NotAfter: "Wednesday, December 05, 2029"
@@ -396,7 +396,7 @@ inputs:
   - name: dod_interoperability_certificates
     desc: "List of DoD InterOperability CA Certificates"
     type: Array
-    value: 
+    value:
      - :Subject: "CN=DoD Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US"
        :Issuer: "CN=DoD Interoperability Root CA 1, OU=PKI, OU=DoD, O=U.S. Government, C=US"
        :Thumbprint: "22BBE981F0694D246CC1472ED2B021DC8540A22F"
@@ -409,15 +409,15 @@ inputs:
   - name: dod_cceb_certificates
     desc: "List of CCEB Certificates"
     type: Array
-    value: 
+    value:
      - :Subject: "CN=DoD Root CA 3, OU=PKI, OU=DoD, O=U.S. Government, C=US"
        :Issuer: "CN=US DoD CCEB Interoperability Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US"
        :Thumbprint: "929BF3196896994C0A201DF4A5B71F603FEFBF2E"
        :NotAfter: "Friday, September 27, 2019"
-  
+
   - name: administrators
     desc: "List of authorized users in the local Administrators group"
     sensitive: true
     type: Array
-    value: 
+    value:
       -
