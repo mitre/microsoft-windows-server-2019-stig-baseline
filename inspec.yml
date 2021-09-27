@@ -145,6 +145,21 @@ inputs:
       - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadKey
       - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  ReadKey
 
+  - name: reg_system_perms_dc
+    profile: microsoft-windows-server-2019-stig-baseline
+    value:
+      - CREATOR OWNER Allow  268435456
+      - NT AUTHORITY\SYSTEM Allow  268435456
+      - NT AUTHORITY\SYSTEM Allow  FullControl
+      - BUILTIN\Administrators Allow  268435456
+      - BUILTIN\Administrators Allow  FullControl
+      - BUILTIN\Server Operators Allow ReadKey
+      - BUILTIN\Users Allow  ReadKey
+      - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  ReadKey
+      - APPLICATION PACKAGE AUTHORITY\ALL APPLICATION PACKAGES Allow  -2147483648
+      - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  ReadKey
+      - S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681 Allow  -2147483648
+
   - name: reg_security_perms
     desc: "The required Registry Security Permissions Settings"
     type: Array
