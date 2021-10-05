@@ -63,7 +63,8 @@ control 'V-93187' do
     forest_pdce = powershell('(get-adforest | select-object RootDomain | Get-ADDomain).PDCEmulator').stdout.strip
     if forest_pdce.downcase.include? sys_info.hostname.downcase
       # forest pdc emulator should be uniquely configured.
-      describe w32time_config do
+    get_type = command('W32tm /query /configuration | Findstr Type').stdout.strip
+    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
         its('type') { should cmp 'NTP' }
         its('ntpserver') do
           should be_in input('ntp_servers')
@@ -71,23 +72,23 @@ control 'V-93187' do
       end
     else
       # just a normal domain controller
-      describe w32time_config do
+      describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
         its('type') { should cmp 'NT5DS' }
       end
     end
   elsif domain_role == '3'
     # just a memberserver
     describe.one do
-      describe w32time_config do
+       describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
         its('type') { should cmp 'NT5DS' }
       end
-      describe w32time_config do
+       describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
         its('type') { should cmp 'ALLSYNC' }
       end
     end
   else
     # just a stand alone system
-    describe w32time_config do
+    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
       its('type') { should cmp 'NTP' }
       its('ntpserver') do
         should be_in input('ntp_servers')
