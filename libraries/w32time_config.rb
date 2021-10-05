@@ -3,10 +3,10 @@ class W32timeConfig < Inspec.resource(1)
   supports platform: 'windows'
   desc 'Tests Win32Time configuration on Windows'
   example <<~EXAMPLE
-    describe win32time_config do
-      its("type") { should cmp "NT5DS" }
-    end
-  EXAMPLE
+      describe win32time_config do
+        its("type") { should cmp "NT5DS" }
+      end
+    EXAMPLE
 
   def initialize
     @path = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters'
