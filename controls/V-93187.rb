@@ -94,7 +94,7 @@ control 'V-93187' do
 
   if domain_role == '4' || domain_role == '5'
     forest_pdce = powershell('(get-adforest | select-object RootDomain | Get-ADDomain).PDCEmulator').stdout.strip
-    if sys_info.hostname == forest_pdce
+    if forest_pdce.downcase.include? sys_info.hostname.downcase
       # forest pdc emulator should be uniquely configured.
       describe w32time_config do
         its('type') { should cmp 'NTP' }
