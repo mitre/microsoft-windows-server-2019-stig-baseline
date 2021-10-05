@@ -57,14 +57,46 @@ control 'V-93187' do
   tag 'cci': ['CCI-001891']
   tag 'nist': ['AU-8 (1) (a)', 'Rev_4']
 
+  begin
+        require 'inspec/resource'
+        require 'inspec/resource/registry_key'
+  rescue LoadError
+      end
+
+  class W32timeConfig < Inspec.resource(1)
+    name 'w32time_config'
+    supports platform: 'windows'
+    desc 'Tests Win32Time configuration on Windows'
+    example <<~EXAMPLE
+        describe win32time_config do
+          its("type") { should cmp "NT5DS" }
+        end
+      EXAMPLE
+
+    def initialize
+      @path = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters'
+    end
+
+    def ntpserver
+      inspec.registry_key(@path).NtpServer.split
+    end
+
+    def type
+      inspec.registry_key(@path).type
+    end
+
+    def to_s
+      'w32time_config'
+    end
+  end
+
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
   if domain_role == '4' || domain_role == '5'
     forest_pdce = powershell('(get-adforest | select-object RootDomain | Get-ADDomain).PDCEmulator').stdout.strip
-    if forest_pdce.downcase.include? sys_info.hostname.downcase
+    if sys_info.hostname == forest_pdce
       # forest pdc emulator should be uniquely configured.
-    get_type = command('W32tm /query /configuration | Findstr Type').stdout.strip
-    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
+      describe w32time_config do
         its('type') { should cmp 'NTP' }
         its('ntpserver') do
           should be_in input('ntp_servers')
@@ -72,23 +104,23 @@ control 'V-93187' do
       end
     else
       # just a normal domain controller
-      describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
+      describe w32time_config do
         its('type') { should cmp 'NT5DS' }
       end
     end
   elsif domain_role == '3'
     # just a memberserver
     describe.one do
-       describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
+      describe w32time_config do
         its('type') { should cmp 'NT5DS' }
       end
-       describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
+      describe w32time_config do
         its('type') { should cmp 'ALLSYNC' }
       end
     end
   else
     # just a stand alone system
-    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32time\Parameters') do
+    describe w32time_config do
       its('type') { should cmp 'NTP' }
       its('ntpserver') do
         should be_in input('ntp_servers')
