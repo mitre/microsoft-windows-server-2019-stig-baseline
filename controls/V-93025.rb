@@ -131,7 +131,7 @@ S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4
       end
 
       hklm_system = powershell('(Get-Acl -Path HKLM:System).AccessToString').stdout.lines.collect(&:strip)
-      describe 'Registry Key Security are set correctly on folder structure' do
+      describe 'Registry Key System are set correctly on folder structure' do
         subject { hklm_system.eql? input('reg_system_perms') }
         it { should eq true }
       end
