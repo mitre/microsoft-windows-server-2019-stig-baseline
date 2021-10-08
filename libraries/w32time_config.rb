@@ -2,7 +2,6 @@
 begin
   require 'inspec/resource'
   require 'inspec/resource/registry_key'
-rescue LoadError
 end
 
 class W32timeConfig < Inspec.resource(1)
