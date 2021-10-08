@@ -1,8 +1,6 @@
+require "inspec/resource"
+require "inspec/resource/registry_key"
 
-begin
-  require 'inspec/resource'
-  require 'inspec/resource/registry_key'
-end
 
 class W32timeConfig < Inspec.resource(1)
   name 'w32time_config'
