@@ -1,3 +1,6 @@
+require "inspec/resource"
+require "inspec/resource/registry_key"
+
 class W32timeConfig < Inspec.resource(1)
   name 'w32time_config'
   supports platform: 'windows'
