@@ -58,4 +58,4 @@ jobs:
       - name: Save Test Result JSON
         uses: actions/upload-artifact@v2
         with:
-          path: test/cookbooks/Win2019STIG/*-result.json
+          path: test/cookbooks/Win2019STIG/results/*.json
