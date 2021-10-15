@@ -18,7 +18,7 @@ jobs:
       KITCHEN_YAML: kitchen.vagrant.yml
     strategy:
       matrix:
-        suite: ['Win2019STIG']
+        suite: ['hardened']
       fail-fast: false
     steps:
       - name: Add jq for output formatting
