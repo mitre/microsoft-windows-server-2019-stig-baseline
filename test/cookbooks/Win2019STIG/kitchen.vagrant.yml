@@ -1,6 +1,5 @@
 driver:
   name: vagrant
-  #provision: true
   guest: :windows
   gui: false
   winrm:
@@ -17,11 +16,9 @@ driver:
     usb: "off"
     nictype1: "82540EM"
     clipboard: "disabled"
-    #nestedpaging: "off"
 
 transport:
   name: winrm
-#  elevated: true
 
 provisioner:
   name: chef_zero
@@ -38,40 +35,12 @@ verifier:
     - cli
     - json:results/%{suite}-test-result.json
 
-
 platforms:
   - name: windows-2019
-    #transport:
-    #  name: winrm
-    #  username: vagrant
-    #  password: vagrant
-      #operation_timeout: 360
-      #receive_timeout: 360
     driver:
-      #name: vagrant_winrm
       box: tas50/windows_2019
-    #  gui: false
-    #driver_config:
-    #  guest: windows
-    #  communicator: 'winrm'
-    #  winrm_username: 'vagrant'
-    #  winrm_password: 'vagrant'
-
-  #- name: hardened-dc
-  #  driver:
-  #    box: cdaf/WindowsServerDC
 
 suites:
-  - name: Win2019STIG
-  #- name: default
+  - name: hardened
     run_list:
       - recipe[Win2019STIG::default]
-    #attributes:
-    #  chef_client:
-    #    load_gems:
-    #      chef-handler-updated-resources:
-    #        require_name: "chef/handler/updated_resources"
-    #    config:
-    #      log_level: ":debug"
-    #      ssl_verify_mode: ":verify_peer"
-
