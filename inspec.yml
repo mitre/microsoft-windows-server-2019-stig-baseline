@@ -327,6 +327,12 @@ inputs:
     value:
       -
 
+  - name: excluded_accounts_local
+    desc: "List Local Accounts"
+    type: Array
+    value:
+      -
+
   - name: av_approved_software
     desc: "This is a list of Approved Anti-Virus Software"
     type: Array
