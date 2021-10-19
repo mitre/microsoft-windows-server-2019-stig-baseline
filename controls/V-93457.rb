@@ -52,11 +52,11 @@ control "V-93457" do
 
   if domain_role == '4' || domain_role == '5'
     ad_accounts = json({ command: 'Search-ADAccount -AccountInactive -UsersOnly -Timespan #{age}.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json' }).params
-    
+
     unless ad_accounts.empty?
       case ad_accounts
       when String
-        ( ad_account = [] ) << ad_accounts
+        ( ad_accounts = [] ) << ad_accounts
         untracked_accounts = ad_accounts - application_accounts - excluded_accounts
       when Array
         untracked_accounts = ad_accounts - application_accounts - excluded_accounts
@@ -74,7 +74,7 @@ control "V-93457" do
 
     describe "Inactive account or accounts exists" do
       it 'Server should not have inactive accounts' do
-        failure_message = "User or Users have not logged in to system in #{age} days: #{local_accounts}" 
+        failure_message = "User or Users have not logged in to system in #{age} days: #{local_accounts}"
         expect(local_accounts).to be_empty, failure_message
       end
     end
