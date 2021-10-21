@@ -12,13 +12,13 @@ on:
 jobs:
   my-job:
     name: Validate my profile
-    runs-on: macos-latest
+    runs-on: macos-10.15
     env:
       CHEF_LICENSE: accept-silent
       KITCHEN_YAML: kitchen.vagrant.yml
     strategy:
       matrix:
-        suite: ['Win2019STIG']
+        suite: ['hardened']
       fail-fast: false
     steps:
       - name: Add jq for output formatting
@@ -50,12 +50,12 @@ jobs:
       - name: Display our ${{ matrix.suite }} results summary
         run: |
           cd test/cookbooks/Win2019STIG
-          bundle exec inspec_tools summary -j ${{ matrix.suite }}-test-result.json --json-counts | jq .
+          bundle exec inspec_tools summary -j results/${{ matrix.suite }}-test-result.json --json-counts | jq .
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         run: |
           cd test/cookbooks/Win2019STIG
-          bundle exec inspec_tools compliance -j ${{ matrix.suite }}-test-result.json -f ${{ matrix.suite }}.threshold.yml
+          bundle exec inspec_tools compliance -j results/${{ matrix.suite }}-test-result.json -f ${{ matrix.suite }}.threshold.yml
       - name: Save Test Result JSON
         uses: actions/upload-artifact@v2
         with:
-          path: test/cookbooks/Win2019STIG/*-result.json
+          path: test/cookbooks/Win2019STIG/results/*.json
