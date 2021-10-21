@@ -33,6 +33,9 @@ finding."
       it { should exist }
       it { should have_property 'ProductVersion' }
     end
+    describe windows_feature('Windows-Defender') do
+      it { should be_installed }
+    end
   end
 end
 

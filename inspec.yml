@@ -5,7 +5,7 @@ copyright: The Authors
 copyright_email: you@example.com
 license: Apache-2.0
 summary: "Inspec Validation Profile for Microsoft Windows Member Server 2019 STIG"
-version: 1.3.11
+version: 1.3.19
 inspec_version: ">= 4.0"
 
 inputs:
