@@ -46,7 +46,7 @@ control 'V-93457' do
   application_accounts = input('application_accounts_domain')
   application_accounts_local = input('application_accounts_local')
   excluded_accounts = input('excluded_accounts_domain')
-  excluded_accounts_local = powershell('Get-LocalUser | where {$_.SID -cmatch "S-1-5-*"} | where {$_.SID -clike "*-50*"} | where {$_.SID -cnotlike "*-50*-*"} | select Sid | sort -Property SID -Descending | select -Last 2').stdout.strip
+  excluded_accounts_local = powershell('Get-LocalUser | where {$_.SID -cmatch "S-1-5-*"} | where {$_.SID -clike "*-50*"} | where {$_.SID -cnotlike "*-50*-*"} | select SID, Name | sort -Property SID -Descending | select -Last 2 | select Name').stdout.strip
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   untracked_accounts = []
 
