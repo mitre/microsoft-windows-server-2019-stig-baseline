@@ -1,3 +1,4 @@
+/test/cookbooks/Win2019STIG/results/*.json
 *.gem
 *.rbc
 /.config

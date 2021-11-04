@@ -5,7 +5,7 @@ copyright: The Authors
 copyright_email: you@example.com
 license: Apache-2.0
 summary: "Inspec Validation Profile for Microsoft Windows Member Server 2019 STIG"
-version: 1.3.16
+version: 1.3.17
 inspec_version: ">= 4.0"
 
 inputs:
@@ -323,6 +323,12 @@ inputs:
 
   - name: application_accounts_local
     desc: "List Application Local Accounts"
+    type: Array
+    value:
+      -
+
+  - name: excluded_accounts_local
+    desc: "List Local Accounts"
     type: Array
     value:
       -
