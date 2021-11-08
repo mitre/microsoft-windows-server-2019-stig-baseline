@@ -45,17 +45,17 @@ jobs:
           bundle install
       - name: Run kitchen test
         run: |
-          cd test/cookbooks/Win2019STIG
+          cd spec/puppet/Win2019STIG
           bundle exec kitchen test ${{ matrix.suite }} || true
       - name: Display our ${{ matrix.suite }} results summary
         run: |
-          cd test/cookbooks/Win2019STIG
+          cd spec/puppet/Win2019STIG
           bundle exec inspec_tools summary -j results/${{ matrix.suite }}-test-result.json --json-counts | jq .
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         run: |
-          cd test/cookbooks/Win2019STIG
+          cd spec/puppet/Win2019STIG
           bundle exec inspec_tools compliance -j results/${{ matrix.suite }}-test-result.json -f ${{ matrix.suite }}.threshold.yml
       - name: Save Test Result JSON
         uses: actions/upload-artifact@v2
         with:
-          path: test/cookbooks/Win2019STIG/results/*.json
+          path: spec/puppet/Win2019STIG/results/*.json
