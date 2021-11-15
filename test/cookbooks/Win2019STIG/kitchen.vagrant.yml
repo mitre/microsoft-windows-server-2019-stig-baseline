@@ -43,7 +43,6 @@ platforms:
 suites:
   - name: hardened
     run_list:
-<<<<<<< HEAD
       - recipe[Win2019STIG::default]
     #attributes:
     #  chef_client:
@@ -67,6 +66,3 @@ suites:
     #    config:
     #      log_level: ":debug"
     #      ssl_verify_mode: ":verify_peer"
-=======
-      - recipe[Win2019STIG::default]
->>>>>>> fb9ed3c8b101522bf393942e085680545636e08a
