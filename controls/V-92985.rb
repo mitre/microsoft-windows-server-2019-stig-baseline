@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 control 'V-92985' do
   title "Windows Server 2019 must be configured to audit Account Management -
 Computer Account Management successes."
@@ -50,9 +52,7 @@ CCI-001405 CCI-002130)
 (4)", 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  case domain_role
-  when '4', '5'
-    impact 0.5
+  if domain_role == '4' || domain_role == '5'
     describe.one do
       describe audit_policy do
         its('Computer Account Management') { should eq 'Success' }
@@ -61,11 +61,10 @@ CCI-001405 CCI-002130)
         its('Computer Account Management') { should eq 'Success and Failure' }
       end
     end
-  when '2', '3'
+  else
     impact 0.0
-    desc 'This system is exempt from this control'
-    describe 'This system is exempt from this control' do
-      skip 'This system is exempt from this control'
+    describe 'This system is not a domain controller, therefore this control is not applicable' do
+      skip 'This system is not a domain controller, therefore this control is not applicable'
     end
   end
 end
