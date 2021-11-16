@@ -34,9 +34,9 @@ verifier:
   inspec_tests:
     - name: microsoft-windows-server-2019-stig
       path: ../../../
-  reporter:
-    - cli
-    - json:results/%{suite}-test-result.json
+  # reporter:
+  #   - cli
+  #   - json:results/%{suite}-test-result.json
 
 
 platforms:
