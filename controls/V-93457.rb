@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 control 'V-93457' do
   title 'Windows Server 2019 outdated or unused accounts must be removed or disabled.'
   desc  'Outdated or unused accounts provide penetration points that may go undetected. Inactive accounts must be deleted if no longer necessary or, if still required, disabled until needed.'
@@ -41,50 +43,59 @@ control 'V-93457' do
   tag fix_id: 'F-99701r1_fix'
   tag cci: ['CCI-000795']
   tag nist: ['IA-4 e', 'Rev_4']
-
-  age = input('unused_account_age')
-  application_accounts = input('application_accounts_domain')
-  application_accounts_local = input('application_accounts_local')
-  excluded_accounts = input('excluded_accounts_domain')
-  excluded_accounts_local = input('excluded_accounts_local')
+  
+  
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  age = input('unused_account_age')
   untracked_accounts = []
 
   if domain_role == '4' || domain_role == '5'
-    ad_accounts = json({ command: "Search-ADAccount -AccountInactive -UsersOnly -Timespan #{age}.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json" }).params
 
+    excluded_accounts_domain_check = json(command: 'Get-ADUser -Filter * | Where {($_.SID -like "*-500") -or ($_.SID -like "*-501")} | Select Name | ConvertTo-Json').params
+    excluded_accounts_domain = []
+    excluded_accounts_domain_check.each { |account| excluded_accounts_domain << account["Name"] }
+
+    ad_accounts = json({ command: "Search-ADAccount -AccountInactive -UsersOnly -Timespan #{age}.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json" }).params
     unless ad_accounts.empty?
       case ad_accounts
       when String
         (ad_account = []) << ad_accounts
-        untracked_accounts = ad_accounts - application_accounts - excluded_accounts
+        untracked_accounts = ad_account - input('application_accounts_domain') - excluded_accounts_domain
       when Array
-        untracked_accounts = ad_accounts - application_accounts - excluded_accounts
+        untracked_accounts = ad_accounts - input('application_accounts_domain') - excluded_accounts_domain
       end
     end
 
     describe 'AD Accounts' do
       it "AD should not have any Accounts that are Inactive over #{age} days" do
-        failure_message = "Users that have not logged into in #{age} days #{untracked_accounts}"
+        failure_message = "User(s) that have not logged into system in #{age} days #{untracked_accounts}"
         expect(untracked_accounts).to be_empty, failure_message
       end
     end
+
   else
+
+    excluded_accounts_local_check = json(command: 'Get-LocalUser | Where {($_.SID -like "*-500") -or ($_.SID -like "*-501")} | Select Name | ConvertTo-Json').params
+    excluded_accounts_local = []
+    excluded_accounts_local_check.each do |account|
+      excluded_accounts_local << account["Name"]
+    end
+
     local_accounts = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-#{age}) } | Select -ExpandProperty Name | ConvertTo-Json" }).params
 
     unless local_accounts.empty?
       case local_accounts
       when String
-        (local_accounts = []) << local_accounts
-        untracked_accounts = local_accounts - application_accounts_local - excluded_accounts_local
+        (local_account = []) << local_accounts
+        untracked_accounts = local_account - input('application_accounts_local') - excluded_accounts_local
       when Array
-        untracked_accounts = local_accounts - application_accounts_local - excluded_accounts_local
+        untracked_accounts = local_accounts - input('application_accounts_local') - excluded_accounts_local
       end
     end
 
     describe 'Inactive account or accounts exists' do
       it 'Server should not have inactive accounts' do
-        failure_message = "User or Users have not logged in to system in #{age} days: #{local_accounts}"
+        failure_message = "User(s) that have not logged into system in #{age} days: #{local_accounts}"
         expect(local_accounts).to be_empty, failure_message
       end
     end
