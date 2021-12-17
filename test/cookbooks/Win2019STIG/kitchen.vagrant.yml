@@ -44,3 +44,25 @@ suites:
   - name: hardened
     run_list:
       - recipe[Win2019STIG::default]
+    #attributes:
+    #  chef_client:
+    #    load_gems:
+    #      chef-handler-updated-resources:
+    #        require_name: "chef/handler/updated_resources"
+    #    config:
+    #      log_level: ":debug"
+    #      ssl_verify_mode: ":verify_peer"
+
+  - name: Win2019STIG_DC
+    #- name: default
+    run_list:
+      - recipe[Win2019STIG::default_dc]
+      - recipe[Win2019STIG::default]
+    #attributes:
+    #  chef_client:
+    #    load_gems:
+    #      chef-handler-updated-resources:
+    #        require_name: "chef/handler/updated_resources"
+    #    config:
+    #      log_level: ":debug"
+    #      ssl_verify_mode: ":verify_peer"

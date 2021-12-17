@@ -5,7 +5,7 @@ copyright: The Authors
 copyright_email: you@example.com
 license: Apache-2.0
 summary: "Inspec Validation Profile for Microsoft Windows Member Server 2019 STIG"
-version: 1.3.18
+version: 1.3.19
 inspec_version: ">= 4.0"
 
 inputs:
@@ -396,6 +396,12 @@ inputs:
     desc: "Set the value to true only if the system has the role of an FTP server, this must be documented with the ISSO"
     type: Boolean
     value: false
+
+  - name: ntp_servers
+    desc: ""
+    type: Array
+    value:
+      - 
 
   - name: dod_root_certificates
     desc: "List of DoD CA Root Certificates"
