@@ -53,9 +53,11 @@ control 'V-93475' do
 
     application_accounts = input('application_accounts_local')
 
+    excluded_accounts = input('excluded_accounts_local')
+
     unless local_accounts.empty?
       local_accounts = [local_accounts] if local_accounts.class == String
-      untracked_accounts = local_accounts - application_accounts
+      untracked_accounts = local_accounts - application_accounts - excluded_accounts
     end
 
     describe 'Account or Accounts exists' do
