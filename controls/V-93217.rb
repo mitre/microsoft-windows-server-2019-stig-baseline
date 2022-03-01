@@ -23,6 +23,9 @@ finding."
   tag 'nist': ["CM-6 b", "Rev_4"]
 
   describe.one do
+    describe windows_feature('Windows-Defender') do
+      it { should be_installed }
+    end
     describe registry_key('HKLM\SOFTWARE\Symantec\Symantec Endpoint Protection\CurrentVersion') do
       it { should exist }
     end
@@ -35,4 +38,3 @@ finding."
     end
   end
 end
-
