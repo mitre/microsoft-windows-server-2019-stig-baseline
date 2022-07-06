@@ -1,6 +1,6 @@
 control 'V-93187' do
   title "The Windows Server 2019 time service must synchronize with an
-  appropriate DoD time source."
+  appropriate #{input('org_name')} time source."
   desc "The Windows Time Service controls time synchronization settings. Time
   synchronization is essential for authentication and auditing purposes. If the
   Windows Time Service is used, it must synchronize with a secure, authorized
@@ -24,14 +24,14 @@ control 'V-93187' do
 
       If systems are configured with a \"Type\" of \"NTP\", including standalone
   systems and the domain controller with the PDC Emulator role, and do not have a
-  DoD time server defined for \"NTPServer\", this is a finding.
+  #{input('org_name')} time server defined for \"NTPServer\", this is a finding.
 
       To determine the domain controller with the PDC Emulator role:
 
       Open \"PowerShell\".
 
       Enter \"Get-ADDomain | FT PDCEmulator\"."
-  desc 'fix', "Configure the system to synchronize time with an appropriate DoD time
+  desc 'fix', "Configure the system to synchronize time with an appropriate #{input('org_name')} time
   source.
 
       Domain-joined systems use NT5DS to synchronize time from other systems in
@@ -41,7 +41,7 @@ control 'V-93187' do
   to point to an authorized time server by setting the policy value for Computer
   Configuration >> Administrative Templates >> System >> Windows Time Service >>
   Time Providers >> \"Configure Windows NTP Client\" to \"Enabled\", and
-  configure the \"NtpServer\" field to point to an appropriate DoD time server.
+  configure the \"NtpServer\" field to point to an appropriate #{input('org_name')} time server.
 
       The US Naval Observatory operates stratum 1 time servers, identified at
   http://tycho.usno.navy.mil/ntp.html. Time synchronization will occur through a
