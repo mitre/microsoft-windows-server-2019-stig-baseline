@@ -9,6 +9,11 @@ version: 1.3.21
 inspec_version: ">= 4.0"
 
 inputs:
+  - name: org_name
+    desc: "Name of the organization running this profile"
+    type: String
+    value: "DoD"
+
   - name: temp_accounts_domain
     desc: "List of temporary accounts on the domain"
     type: Array
