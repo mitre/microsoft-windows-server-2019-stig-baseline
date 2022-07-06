@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
 control "V-93489" do
-  title "Windows Server 2019 must have the DoD Interoperability Root Certificate Authority (CA) cross-certificates installed in the Untrusted Certificates Store on unclassified systems."
-  desc  "To ensure users do not experience denial of service when performing certificate-based authentication to DoD websites due to the system chaining to a root other than DoD Root CAs, the DoD Interoperability Root CA cross-certificates must be installed in the Untrusted Certificate Store. This requirement only applies to unclassified systems."
+  title "Windows Server 2019 must have the #{input('org_name')} Interoperability Root Certificate Authority (CA) cross-certificates installed in the Untrusted Certificates Store on unclassified systems."
+  desc  "To ensure users do not experience denial of service when performing certificate-based authentication to #{input('org_name')} websites due to the system chaining to a root other than #{input('org_name')} Root CAs, the #{input('org_name')} Interoperability Root CA cross-certificates must be installed in the Untrusted Certificate Store. This requirement only applies to unclassified systems."
   desc  "rationale", ""
   desc  "check", "This is applicable to unclassified systems. It is NA for others.
     Open \"PowerShell\" as an administrator.
