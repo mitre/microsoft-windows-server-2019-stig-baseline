@@ -11,8 +11,10 @@ inspec_version: ">= 4.0"
 inputs:
   - name: org_name
     desc: "Name of the organization running this profile"
-    type: String
-    value: "DoD"
+    type: Hash
+    value:
+      acronym: "DoD"
+      full_form: "Department of Defense"
 
   - name: temp_accounts_domain
     desc: "List of temporary accounts on the domain"

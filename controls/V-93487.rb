@@ -1,8 +1,8 @@
 # encoding: UTF-8
 
 control "V-93487" do
-  title "Windows Server 2019 must have the #{input('org_name')} Root Certificate Authority (CA) certificates installed in the Trusted Root Store."
-  desc  "To ensure secure #{input('org_name')} websites and #{input('org_name')}-signed code are properly validated, the system must trust the #{input('org_name')} Root CAs. The #{input('org_name')} root certificates will ensure that the trust chain is established for server certificates issued from the #{input('org_name')} CAs."
+  title "Windows Server 2019 must have the #{input('org_name')[:acronym]} Root Certificate Authority (CA) certificates installed in the Trusted Root Store."
+  desc  "To ensure secure #{input('org_name')[:acronym]} websites and #{input('org_name')[:acronym]}-signed code are properly validated, the system must trust the #{input('org_name')[:acronym]} Root CAs. The #{input('org_name')[:acronym]} root certificates will ensure that the trust chain is established for server certificates issued from the #{input('org_name')[:acronym]} CAs."
   desc  "rationale", ""
   desc  "check", "The certificates and thumbprints referenced below apply to unclassified systems; see PKE documentation for other networks.
     Open \"Windows PowerShell\" as an administrator.
