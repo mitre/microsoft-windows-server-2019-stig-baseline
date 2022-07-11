@@ -5,7 +5,7 @@
     desc  "If temporary user accounts remain active when no longer needed or for an excessive period, these accounts may be used to gain unauthorized access. To mitigate this risk, automated termination of all temporary accounts must be set upon account creation.
 
     Temporary accounts are established as part of normal account activation procedures when there is a need for short-term accounts without the demand for immediacy in account activation.
-    If temporary accounts are used, the operating system must be configured to automatically terminate these types of accounts after a DoD-defined time period of 72 hours.
+    If temporary accounts are used, the operating system must be configured to automatically terminate these types of accounts after a #{input('org_name')[:acronym]}-defined time period of 72 hours.
     To address access requirements, many operating systems may be integrated with enterprise-level authentication/access mechanisms that meet or exceed access control policy requirements."
     desc  'rationale', ''
     desc  'check', "Review temporary user accounts for expiration dates.
