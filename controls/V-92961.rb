@@ -36,13 +36,9 @@ excluding \"0\" which is effectively disabled."
   tag 'cci': ["CCI-000056", "CCI-000057", "CCI-000060"]
   tag 'nist': ["AC-11 b", "AC-11 a", "AC-11 (1)", "Rev_4"]
 
-  describe.one do
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
-      its('InactivityTimeoutSecs') { should be <= 900 }
-    end
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
-      its('InactivityTimeoutSecs') { should_not eq 0 }
-    end
+  describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
+    its('InactivityTimeoutSecs') { should be <= 900 }
+    its('InactivityTimeoutSecs') { should_not eq 0 }
   end
 end
 
