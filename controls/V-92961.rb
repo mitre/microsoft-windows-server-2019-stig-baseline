@@ -41,7 +41,7 @@ excluding \"0\" which is effectively disabled."
       its('InactivityTimeoutSecs') { should be <= 900 }
     end
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System') do
-      its('InactivityTimeoutSecs') { should eq 0 }
+      its('InactivityTimeoutSecs') { should_not eq 0 }
     end
   end
 end
