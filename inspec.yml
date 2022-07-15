@@ -33,6 +33,11 @@ inputs:
     type: Numeric
     value: 3
 
+  - name: temporary_account_period_phrase
+    desc: "List the number of hours/days that temporary accounts remain active for"
+    type: String
+    value: "72 hours"
+
   - name: emergency_accounts_domain
     desc: "List of emergency accounts on the domain"
     type: Array
@@ -49,6 +54,11 @@ inputs:
     desc: "List the number of days that temporary accounts remain active for"
     type: Numeric
     value: 3
+
+  - name: emergency_account_period_phrase
+    desc: "List the number of hours/days that temporary accounts remain active for"
+    type: String
+    value: "72 hours"
 
   - name: allowed_network_access_users
     desc: "List SIDs of accounts that are authorized to have the network logon user right (SeNetworkLogonRight)"
