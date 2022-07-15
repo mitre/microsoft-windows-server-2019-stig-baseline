@@ -16,49 +16,54 @@ inputs:
       acronym: "DoD"
       full_form: "Department of Defense"
 
-  - name: temp_accounts_domain
+  - name: temp_accounts_domain # V-92975
     desc: "List of temporary accounts on the domain"
     type: Array
     value:
       -
 
-  - name: temp_accounts_local
+  - name: temp_accounts_local # V-92975
     desc: "List of temporary accounts on local system"
     type: Array
     value:
       -
 
-  - name: temporary_account_period
+  - name: temporary_account_period # V-92975
     desc: "List the number of days that temporary accounts remain active for"
     type: Numeric
     value: 3
 
-  - name: temporary_account_period_phrase
+  - name: temporary_account_period_phrase # V-92975
     desc: "List the number of hours/days that temporary accounts remain active for"
     type: String
     value: "72 hours"
 
-  - name: emergency_accounts_domain
+  - name: emergency_accounts_domain # V-92977
     desc: "List of emergency accounts on the domain"
     type: Array
     value:
       -
 
-  - name: emergency_accounts_local
+  - name: emergency_accounts_local # V-92977
     desc: "List of emergency accounts on the system"
     type: Array
     value:
       -
 
-  - name: emergency_account_period
+  - name: emergency_account_period # V-92977
     desc: "List the number of days that temporary accounts remain active for"
     type: Numeric
     value: 3
 
-  - name: emergency_account_period_phrase
+  - name: emergency_account_period_phrase # V-92977
     desc: "List the number of hours/days that temporary accounts remain active for"
     type: String
     value: "72 hours"
+
+  - name: max_pass_lockout # V-93141
+    desc: "Account lockout threshold is recommended to be 3 or less invalid logon attempts [3]"
+    type: Numeric
+    value: 3
 
   - name: allowed_network_access_users
     desc: "List SIDs of accounts that are authorized to have the network logon user right (SeNetworkLogonRight)"
@@ -240,11 +245,6 @@ inputs:
       - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
       - NT AUTHORITY\SYSTEM:(M,WDAC,WO)
       - CREATOR OWNER:(OI)(CI)(IO)(F)
-
-  - name: max_pass_lockout
-    desc: "Account lockout threshold is recommended to be 3 or less invalid logon attempts [3]"
-    type: Numeric
-    value: 3
 
   - name: pass_lock_time
     desc: "Sets the number of min before a session is locked out [15]"
