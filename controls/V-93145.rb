@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 control "V-93145" do
-  title "Windows Server 2019 account lockout duration must be configured to 15
+  title "Windows Server 2019 account lockout duration must be configured to #{input('pass_lock_duration')}
 minutes or greater."
   desc  "The account lockout feature, when enabled, prevents brute-force
 password attacks on the system. This parameter specifies the period of time
@@ -15,21 +15,21 @@ attempts."
     Navigate to Local Computer Policy >> Computer Configuration >> Windows
 Settings >> Security Settings >> Account Policies >> Account Lockout Policy.
 
-    If the \"Account lockout duration\" is less than \"15\" minutes (excluding
+    If the \"Account lockout duration\" is less than \"#{input('pass_lock_duration')}\" minutes (excluding
 \"0\"), this is a finding.
 
     For server core installations, run the following command:
 
     Secedit /Export /Areas SecurityPolicy /CFG C:\\Path\\FileName.Txt
 
-    If \"LockoutDuration\" is less than \"15\" (excluding \"0\") in the file,
+    If \"LockoutDuration\" is less than \"#{input('pass_lock_duration')}\" (excluding \"0\") in the file,
 this is a finding.
 
     Configuring this to \"0\", requiring an administrator to unlock the
 account, is more restrictive and is not a finding."
   desc  'fix', "Configure the policy value for Computer Configuration >> Windows Settings
 >> Security Settings >> Account Policies >> Account Lockout Policy >> \"Account
-lockout duration\" to \"15\" minutes or greater.
+lockout duration\" to \"#{input('pass_lock_duration')}\" minutes or greater.
 
     A value of \"0\" is also acceptable, requiring an administrator to unlock
 the account."
@@ -46,19 +46,19 @@ the account."
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
   
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
      end
   else
-  pass_lock_duration = input('pass_lock_duration')
-  describe.one do
-    describe security_policy do
-      its('LockoutDuration') { should be >= pass_lock_duration }
-    end
-    describe security_policy do
-      its('LockoutDuration') { should cmp == 0 }
+    pass_lock_duration = input('pass_lock_duration')
+    describe.one do
+      describe security_policy do
+        its('LockoutDuration') { should be >= pass_lock_duration }
+      end
+      describe security_policy do
+        its('LockoutDuration') { should cmp == 0 }
+      end
     end
   end
- end
 end
 

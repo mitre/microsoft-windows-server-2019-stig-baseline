@@ -65,6 +65,16 @@ inputs:
     type: Numeric
     value: 3
 
+  - name: pass_lock_time # V-93143
+    desc: "List the number of minutes before a session is locked out [15]"
+    type: Numeric
+    value: 15
+
+  - name: pass_lock_duration # V-93145
+    desc: "List the number of minutes for account lockout duration"
+    type: Numeric
+    value: 15
+
   - name: allowed_network_access_users
     desc: "List SIDs of accounts that are authorized to have the network logon user right (SeNetworkLogonRight)"
     type: Array
@@ -245,16 +255,6 @@ inputs:
       - NT AUTHORITY\SYSTEM:(OI)(CI)(IO)(F)
       - NT AUTHORITY\SYSTEM:(M,WDAC,WO)
       - CREATOR OWNER:(OI)(CI)(IO)(F)
-
-  - name: pass_lock_time
-    desc: "Sets the number of min before a session is locked out [15]"
-    type: Numeric
-    value: 15
-
-  - name: pass_lock_duration
-    desc: "Account lockout duration must be configured to [15] minutes or greater"
-    type: Numeric
-    value: 15
 
   - name: LegalNoticeText
     type: string
