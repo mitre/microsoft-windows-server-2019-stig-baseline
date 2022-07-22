@@ -75,6 +75,16 @@ inputs:
     type: Numeric
     value: 15
 
+  - name: app_password_age # V-93209
+    desc: "Set the number of days that manually managed application account passwords must be changed"
+    type: Numeric
+    value: 365
+
+  - name: maximum_password_age_machine # V-93285
+    desc: "Set the machine account maximum password age stated by your organiztion"
+    type: Numeric
+    value: 30
+
   - name: maximum_idle_time # V-93509
     desc: "Set the maximum connection idle time stated by your organization"
     type: Numeric
@@ -84,6 +94,41 @@ inputs:
     desc: "Set the maximum connection idle time stated by your organization"
     type: String
     value: "5 minutes"
+
+  - name: unused_account_age # V-93457
+    desc: "Set the maximum age in days for unused accounts stated by your organization"
+    type: Numeric
+    value: 35
+
+  - name: minimum_password_length_manual # V-93461
+    desc: "Set the minimum password length for manually managed applications stated by your organization"
+    type: Numeric
+    value: 15
+
+  - name: minimum_password_length # V-93463
+    desc: "Set the minimum password length stated by your organization"
+    type: Numeric
+    value: 14
+
+  - name: minimum_password_age # V-93471
+    desc: "Set the minimum password age stated by your organization"
+    type: Numeric
+    value: 1
+
+  - name: maximum_password_age # V-93477
+    desc: "Set the computer account maximum password age stated by your organization"
+    type: Numeric
+    value: 60
+
+  - name: password_history_size # V-93479
+    desc: "Set the password history size stated by your organization"
+    type: Numeric
+    value: 24
+
+  - name: enable_password_complexity
+    desc: "If windows should enforce password complexity (0/1) [1]"
+    type: Numeric
+    value: 1
 
   - name: allowed_network_access_users
     desc: "List SIDs of accounts that are authorized to have the network logon user right (SeNetworkLogonRight)"
@@ -373,46 +418,6 @@ inputs:
     desc: "Set it to true if the system is sensitive or classified"
     type: Boolean
     value: false
-
-  - name: unused_account_age
-    desc: "Set the maximum age in days for unused accounts stated by your organization"
-    type: Numeric
-    value: 35
-
-  - name: maximum_password_age_machine
-    desc: "Set the machine account maximum password age stated by your organiztion"
-    type: Numeric
-    value: 30
-
-  - name: maximum_password_age
-    desc: "Set the computer account maximum password age stated by your organization"
-    type: Numeric
-    value: 60
-
-  - name: password_history_size
-    desc: "Set the password history size stated by your organization"
-    type: Numeric
-    value: 24
-
-  - name: minimum_password_age
-    desc: "Set the minimum password age stated by your organization"
-    type: Numeric
-    value: 1
-
-  - name: minimum_password_length
-    desc: "Set the minimum password length stated by your organization"
-    type: Numeric
-    value: 14
-
-  - name: enable_password_complexity
-    desc: "If windows should enforce password complexity (0/1) [1]"
-    type: Numeric
-    value: 1
-
-  - name: app_password_age
-    desc: "Set the number of days that manually managed application account passwords must be changed"
-    type: Numeric
-    value: 365
 
   - name: ftp_server
     desc: "Set the value to true only if the system has the role of an FTP server, this must be documented with the ISSO"

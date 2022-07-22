@@ -7,8 +7,8 @@ control 'V-93457' do
   desc  'check', "Open \"Windows PowerShell\".
 
     Domain Controllers:
-    Enter \"Search-ADAccount -AccountInactive -UsersOnly -TimeSpan 35.00:00:00\"
-    This will return accounts that have not been logged on to for 35 days, along with various attributes such as the Enabled status and LastLogonDate.
+    Enter \"Search-ADAccount -AccountInactive -UsersOnly -TimeSpan #{input('unused_account_age')}.00:00:00\"
+    This will return accounts that have not been logged on to for #{input('unused_account_age')} days, along with various attributes such as the Enabled status and LastLogonDate.
 
     Member servers and standalone systems:
     Copy or enter the lines below to the PowerShell window and enter. (Entering twice may be required. Do not include the quotes at the beginning and end of the query.)
@@ -30,10 +30,10 @@ control 'V-93457' do
     - Built-in guest account (Renamed, Disabled, SID ending in 501)
     - Application accounts
 
-    If any enabled accounts have not been logged on to within the past 35 days, this is a finding.
+    If any enabled accounts have not been logged on to within the past #{input('unused_account_age')} days, this is a finding.
 
     Inactive accounts that have been reviewed and deemed to be required must be documented with the ISSO."
-  desc  'fix', 'Regularly review accounts to determine if they are still active. Remove or disable accounts that have not been used in the last 35 days.'
+  desc  'fix', "Regularly review accounts to determine if they are still active. Remove or disable accounts that have not been used in the last #{input('unused_account_age')} days."
   impact 0.5
   tag severity: nil
   tag gtitle: 'SRG-OS-000118-GPOS-00060'
