@@ -20,7 +20,9 @@ control "V-93461" do
   tag cci: ["CCI-000205"]
   tag nist: ["IA-5 (1) (a)", "Rev_4"]
 
+  mplm = input('minimum_password_length_manual')
+
   describe 'Please Check all Accounts that are used for Services or Applications to validate they meet the Password Length Policy, Control is a Manual Check' do
-    skip "Determine if manually managed application/service accounts exist. If none exist, this is NA. Verify the organization has a policy to ensure passwords for manually managed application/service accounts are at least #{input('minimum_password_length_manual')} characters in length."
+    skip "Determine if manually managed application/service accounts exist. If none exist, this is NA. Verify the organization has a policy to ensure passwords for manually managed application/service accounts are at least #{mplm} characters in length."
   end
 end
