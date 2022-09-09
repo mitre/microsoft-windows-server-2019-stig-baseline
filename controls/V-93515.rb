@@ -22,7 +22,7 @@ control "V-93515" do
   describe "A manual review is required to ensure systems requiring data at rest protections must employ cryptographic
   mechanisms to prevent unauthorized disclosure and modification of the
   information at rest." do
-    skip '"A manual review is required to ensure systems requiring data at rest protections must employ cryptographic
+    skip 'A manual review is required to ensure systems requiring data at rest protections must employ cryptographic
   mechanisms to prevent unauthorized disclosure and modification of the
   information at rest.'
   end

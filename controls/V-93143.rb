@@ -2,7 +2,7 @@
 
 control "V-93143" do
   title "Windows Server 2019 must have the period of time before the bad logon
-counter is reset configured to 15 minutes or greater."
+counter is reset configured to #{input('pass_lock_time')} minutes or greater."
   desc  "The account lockout feature, when enabled, prevents brute-force
 password attacks on the system. This parameter specifies the period of time
 that must pass after failed logon attempts before the counter is reset to
@@ -16,17 +16,17 @@ feature will be in protecting the local system."
     Navigate to Local Computer Policy >> Computer Configuration >> Windows
 Settings >> Security Settings >> Account Policies >> Account Lockout Policy.
 
-    If the \"Reset account lockout counter after\" value is less than \"15\"
+    If the \"Reset account lockout counter after\" value is less than \"#{input('pass_lock_time')}\"
 minutes, this is a finding.
 
     For server core installations, run the following command:
 
     Secedit /Export /Areas SecurityPolicy /CFG C:\\Path\\FileName.Txt
 
-    If \"ResetLockoutCount\" is less than \"15\" in the file, this is a finding."
+    If \"ResetLockoutCount\" is less than \"#{input('pass_lock_time')}\" in the file, this is a finding."
   desc  'fix', "Configure the policy value for Computer Configuration >>
 Windows Settings >> Security Settings >> Account Policies >> Account Lockout
-Policy >> \"Reset account lockout counter after\" to at least \"15\" minutes."
+Policy >> \"Reset account lockout counter after\" to at least \"#{input('pass_lock_time')}\" minutes."
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000021-GPOS-00005'
