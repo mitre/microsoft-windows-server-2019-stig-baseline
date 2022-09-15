@@ -13,7 +13,7 @@ control 'V-93509' do
     (where [host-name] is the computer name of the domain controller).
     At the \"server connections:\" prompt, enter \"q\".
     At the \"ldap policy:\" prompt, enter \"show values\".
-    If the value for MaxConnIdleTime is greater than \"300\" (#{input('maximum_idle_time_phrase')}) or is not specified, this is a finding.
+    If the value for MaxConnIdleTime is greater than \"#{input('maximum_idle_time')}\" (#{input('maximum_idle_time_phrase')}) or is not specified, this is a finding.
     Enter \"q\" at the \"ldap policy:\" and \"ntdsutil:\" prompts to exit.
 
     Alternately, Dsquery can be used to display MaxConnIdleTime:
@@ -22,7 +22,7 @@ control 'V-93509' do
     dsquery * \"cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,dc=[forest-name]\" -attr LDAPAdminLimits
 
     The quotes are required and dc=[forest-name] is the fully qualified LDAP name of the domain being reviewed (e.g., dc=disaost,dc=mil).
-    If the results do not specify a \"MaxConnIdleTime\" or it has a value greater than \"300\" (#{input('maximum_idle_time_phrase')}), this is a finding."
+    If the results do not specify a \"MaxConnIdleTime\" or it has a value greater than \"#{input('maximum_idle_time')}\" (#{input('maximum_idle_time_phrase')}), this is a finding."
   desc  'fix', "Configure the directory service to terminate LDAP-based network connections to the directory server after #{input('maximum_idle_time_phrase')} of inactivity.
     Open an elevated \"Command prompt\" (run as administrator).
     Enter \"ntdsutil\".
@@ -30,7 +30,7 @@ control 'V-93509' do
     At the \"ldap policy:\" prompt, enter \"connections\".
     At the \"server connections:\" prompt, enter \"connect to server [host-name]\" (where [host-name] is the computer name of the domain controller).
     At the \"server connections:\" prompt, enter \"q\".
-    At the \"ldap policy:\" prompt, enter \"Set MaxConnIdleTime to 300\".
+    At the \"ldap policy:\" prompt, enter \"Set MaxConnIdleTime to #{input('maximum_idle_time')}\".
     Enter \"Commit Changes\" to save.
     Enter \"Show values\" to verify changes.
     Enter \"q\" at the \"ldap policy:\" and \"ntdsutil:\" prompts to exit."
