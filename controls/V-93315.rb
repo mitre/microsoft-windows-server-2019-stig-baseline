@@ -45,6 +45,13 @@ control "V-93315" do
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
+  elsif systemcfg.empty?
+    describe "Exploit Protection: the following mitigation" do
+      it "must be set to 'ON' for the System" do
+        failure_message = "Exploit Protection is not set"
+        expect(systemcfg).not_to be_empty, failure_message
+      end
+    end
   else
     describe "Exploit Protection: the following mitigation must be set to 'ON' for the System" do
       subject { systemcfg }
