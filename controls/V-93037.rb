@@ -133,120 +133,127 @@ types.
   tag 'nist': ["AC-6 (10)", "Rev_4"]
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-    if domain_role == '4' || domain_role == '5'
-       distinguishedName = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-Json').params
-       ou_list = json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}' | Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
-       exclude_dc = json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}'  | Where-Object {$_.distinguishedname -like 'OU=Domain Controllers,#{distinguishedName}'} |  Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
-       ou_list.delete(exclude_dc)
-       netbiosname = json(command: 'Get-ADDomain | Select NetBIOSName | ConvertTo-JSON').params['NetBIOSName']
-      ou_list.each do |ou|
-         acl_rules = json(command: "(Get-ACL -Audit -Path AD:'#{ou}').Access | ConvertTo-CSV | ConvertFrom-CSV | ConvertTo-JSON").params
-          describe.one do
-           acl_rules.each do |acl_rule|
-            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-             subject { acl_rule }
-             its(['IdentityReference']) { should cmp "NT AUTHORITY\\ENTERPRISE DOMAIN CONTROLLERS" }
-             its(['ActiveDirectoryRights']) { should cmp "GenericRead"}
-            end
-           end
-         end
-          describe.one do
-           acl_rules.each do |acl_rule|
-            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-             subject { acl_rule }
-             its(['IdentityReference']) { should cmp "NT AUTHORITY\\Authenticated Users" }
-             its(['ActiveDirectoryRights']) { should cmp "GenericRead"}
-            end
-           end
-         end
-          describe.one do
-           acl_rules.each do |acl_rule|
-            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-             subject { acl_rule }
-             its(['IdentityReference']) { should cmp "NT AUTHORITY\\SYSTEM" }
-             its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
-            end
-           end
-         end
-          describe.one do
-           acl_rules.each do |acl_rule|
-            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-             subject { acl_rule }
-             its(['IdentityReference']) { should cmp "BUILTIN\\Administrators" }
-             its(['ActiveDirectoryRights']) { should cmp "CreateChild, Self, WriteProperty, ExtendedRight, Delete, GenericRead, WriteDacl, WriteOwner"}
-            end
-           end
-          end
-          describe.one do
-           acl_rules.each do |acl_rule|
-            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-             subject { acl_rule }
-             its(['IdentityReference']) { should cmp "BUILTIN\\Pre-Windows 2000 Compatible Access" }
-             its(['ActiveDirectoryRights']) { should cmp "ListChildren"}
-            end
-           end
-          end
-          describe.one do
-           acl_rules.each do |acl_rule|
-            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-             subject { acl_rule }
-             its(['IdentityReference']) { should cmp "#{netbiosname}\\Domain Admins" }
-             its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
-            end
-           end
-         end
-          describe.one do
-           acl_rules.each do |acl_rule|
-            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-             subject { acl_rule }
-             its(['IdentityReference']) { should cmp "#{netbiosname}\\Enterprise Admins" }
-             its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
-            end
-           end
-          end
-        describe.one do
-          acl_rules.each do |acl_rule|
-          describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-            subject { acl_rule }
-            its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
-            its(['ActiveDirectoryRights']) { should cmp "ReadProperty, WriteProperty, ExtendedRight"}
-          end
-        end
-      end
-        describe.one do
-         acl_rules.each do |acl_rule|
-          describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-            subject { acl_rule }
-            its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
-            its(['ActiveDirectoryRights']) { should cmp "ReadProperty, WriteProperty"}
-          end
-         end
-       end
-        describe.one do
-         acl_rules.each do |acl_rule|
-          describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-            subject { acl_rule }
-            its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
-            its(['ActiveDirectoryRights']) { should cmp "WriteProperty"}
-          end
-         end
-        end
-        describe.one do
-         acl_rules.each do |acl_rule|
-          describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-            subject { acl_rule }
-            its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
-            its(['ActiveDirectoryRights']) { should cmp "Self"}
-          end
-         end
-        end
+  if domain_role == '4' || domain_role == '5'
+    distinguishedName = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-Json').params
+    ou_list = []
+    ou_list << json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}' | Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
+    exclude_dc = json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}'  | Where-Object {$_.distinguishedname -like 'OU=Domain Controllers,#{distinguishedName}'} |  Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
+    ou_list.delete(exclude_dc)
+    netbiosname = json(command: 'Get-ADDomain | Select NetBIOSName | ConvertTo-JSON').params['NetBIOSName']
+    if ou_list.empty?
+      impact 0.0
+      describe 'This control is not applicable as no OUs were found excluding the Domain Controller OU' do
+        skip 'This control is not applicable as no OUs were found excluding the Domain Controller OU'
       end
     else
-      impact 0.0
-      desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-      describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-     end
+      ou_list.each do |ou|
+        acl_rules = json(command: "(Get-ACL -Audit -Path AD:'#{ou}').Access | ConvertTo-CSV | ConvertFrom-CSV | ConvertTo-JSON").params
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "NT AUTHORITY\\ENTERPRISE DOMAIN CONTROLLERS" }
+              its(['ActiveDirectoryRights']) { should cmp "GenericRead"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "NT AUTHORITY\\Authenticated Users" }
+              its(['ActiveDirectoryRights']) { should cmp "GenericRead"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "NT AUTHORITY\\SYSTEM" }
+              its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "BUILTIN\\Administrators" }
+              its(['ActiveDirectoryRights']) { should cmp "CreateChild, Self, WriteProperty, ExtendedRight, Delete, GenericRead, WriteDacl, WriteOwner"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "BUILTIN\\Pre-Windows 2000 Compatible Access" }
+              its(['ActiveDirectoryRights']) { should cmp "ListChildren"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "#{netbiosname}\\Domain Admins" }
+              its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "#{netbiosname}\\Enterprise Admins" }
+              its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
+              its(['ActiveDirectoryRights']) { should cmp "ReadProperty, WriteProperty, ExtendedRight"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
+              its(['ActiveDirectoryRights']) { should cmp "ReadProperty, WriteProperty"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
+              its(['ActiveDirectoryRights']) { should cmp "WriteProperty"}
+            end
+          end
+        end
+        describe.one do
+          acl_rules.each do |acl_rule|
+            describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+              subject { acl_rule }
+              its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
+              its(['ActiveDirectoryRights']) { should cmp "Self"}
+            end
+          end
+        end
+      end
     end
+  else
+    impact 0.0
+    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    end
+  end
 end
-
