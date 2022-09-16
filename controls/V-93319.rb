@@ -45,6 +45,13 @@ control "V-93319" do
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
+  elsif systemheap.empty?
+    describe "Exploit Protection: the following mitigation" do
+      it "must be set to 'ON' for the System" do
+        failure_message = "Exploit Protection is not set"
+        expect(systemheap).not_to be_empty, failure_message
+      end
+    end
   else
     describe "Exploit Protection: the following mitigation must be set to 'ON' for the System" do
       subject { systemheap }
