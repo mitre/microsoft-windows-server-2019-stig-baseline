@@ -142,8 +142,8 @@ types.
     netbiosname = json(command: 'Get-ADDomain | Select NetBIOSName | ConvertTo-JSON').params['NetBIOSName']
     if ou_list.empty?
       impact 0.0
-      describe 'This control is not applicable as no OUs were found excluding the Domain Controller OU' do
-        skip 'This control is not applicable as no OUs were found excluding the Domain Controller OU'
+      describe 'This control is not applicable as no domain-defined OUs were found (excluding the Domain Controllers OU)' do
+        skip 'This control is not applicable as no domain-defined OUs were found (excluding the Domain Controllers OU)'
       end
     else
       ou_list.each do |ou|
