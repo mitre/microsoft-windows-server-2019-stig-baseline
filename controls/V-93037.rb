@@ -135,8 +135,11 @@ types.
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   if domain_role == '4' || domain_role == '5'
     distinguishedName = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-Json').params
-    ou_list = []
-    ou_list << json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}' | Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
+    ou_list = json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}' | Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
+    if ou_list.is_a?(String)
+      ou_list = []
+      ou_list << json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}' | Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
+    end
     exclude_dc = json(command: "Get-ADOrganizationalUnit -filter * -SearchBase '#{distinguishedName}'  | Where-Object {$_.distinguishedname -like 'OU=Domain Controllers,#{distinguishedName}'} |  Select-Object -ExpandProperty distinguishedname | ConvertTo-Json").params
     ou_list.delete(exclude_dc)
     netbiosname = json(command: 'Get-ADDomain | Select NetBIOSName | ConvertTo-JSON').params['NetBIOSName']
