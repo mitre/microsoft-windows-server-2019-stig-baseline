@@ -14,7 +14,7 @@ control "V-93285" do
     Value Name: MaximumPasswordAge
 
     Value Type: REG_DWORD
-    Value: 0x0000001e (#{input('maximum_password_age_machine')}) (or less, but not 0)"
+    Value: 0x000000#{input('maximum_password_age_machine').to_s(16)} (#{input('maximum_password_age_machine')}) (or less, but not 0)"
   desc  "fix", "This is the default configuration for this setting (#{input('maximum_password_age_machine')} days).
     Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> \"Domain member: Maximum machine account password age\" to \"#{input('maximum_password_age_machine')}\" or less (excluding \"0\", which is unacceptable)."
   impact 0.5
