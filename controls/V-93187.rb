@@ -55,7 +55,7 @@ control 'V-93187' do
   tag 'stig_id': 'WN19-00-000440'
   tag 'fix_id': 'F-99433r1_fix'
   tag 'cci': ['CCI-001891']
-  tag 'nist': ['AU-8 (1) (a)', 'Rev_4']
+  tag 'nist': ['AU-8 (1) (a)', 'Rev_4'] # AU-8 (1) incorporates withdrawn control SC-45(1)
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
