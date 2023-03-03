@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93061" do
+control 'V-93061' do
   title "Windows Server 2019 Create permanent shared objects user right must
 not be assigned to any groups or accounts."
   desc  "Inappropriate granting of user rights can provide system,
@@ -8,7 +6,7 @@ administrative, and other high-level capabilities.
 
     Accounts with the \"Create permanent shared objects\" user right could
 expose sensitive data by creating shared objects."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -38,19 +36,18 @@ no entries (blank)."
   tag 'rid': 'SV-103149r1_rule'
   tag 'stig_id': 'WN19-UR-000080'
   tag 'fix_id': 'F-99307r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag 'cci': ['CCI-002235']
+  tag 'nist': ['AC-6 (10)', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeCreatePermanentPrivilege') { should eq [] }
+      its('SeCreatePermanentPrivilege') { should eq [] }
+    end
   end
- end
 end
-

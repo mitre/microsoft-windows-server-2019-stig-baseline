@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93213" do
+control 'V-93213' do
   title "Windows Server 2019 domain-joined systems must have a Trusted Platform
 Module (TPM) enabled and ready for use."
   desc  "Credential Guard uses virtualization-based security to protect data
@@ -8,7 +6,7 @@ that could be used in credential theft attacks if compromised. A number of
 system requirements must be met in order for Credential Guard to be configured
 and enabled properly. Without a TPM enabled and ready for use, Credential Guard
 keys are stored in a less secure method using software."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "For standalone systems, this is NA.
 
     Current hardware and virtual environments may not support
@@ -41,12 +39,12 @@ the capability to run the Hyper-V feature within a virtual machine.
   tag 'rid': 'SV-103301r1_rule'
   tag 'stig_id': 'WN19-00-000090'
   tag 'fix_id': 'F-99459r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
 
-  if sys_info.manufacturer == "VMware, Inc."
+  if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
     describe 'This System is NA for Control V-93213, This is a VMware Virtual Machine.' do
       skip 'This System is NA for Control V-93213, This is a VMware Virtual Machine.'
@@ -69,4 +67,3 @@ the capability to run the Hyper-V feature within a virtual machine.
     end
   end
 end
-

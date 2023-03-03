@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93169" do
+control 'V-93169' do
   title "Windows Server 2019 must be configured to audit Object Access -
 Removable Storage failures."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Removable Storage auditing under Object Access records events related to
 access attempts on file system objects on removable storage devices."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -46,8 +44,8 @@ System Audit Policies >> Object Access >> \"Audit Removable Storage\" with
   tag 'rid': 'SV-103257r1_rule'
   tag 'stig_id': 'WN19-AU-000250'
   tag 'fix_id': 'F-99415r1_fix'
-  tag 'cci': ["CCI-000172"]
-  tag 'nist': ["AU-12 c", "Rev_4"]
+  tag 'cci': ['CCI-000172']
+  tag 'nist': ['AU-12 c', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -58,4 +56,3 @@ System Audit Policies >> Object Access >> \"Audit Removable Storage\" with
     end
   end
 end
-

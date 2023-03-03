@@ -1,12 +1,10 @@
-# encoding: UTF-8
-
-control "V-93267" do
+control 'V-93267' do
   title "Windows Server 2019 users must be notified if a web-based program
 attempts to install software."
   desc  "Web-based programs may attempt to install malicious software on a
 system. Ensuring users are notified if a web-based program attempts to install
 software allows them to refuse the installation."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "The default behavior is for Internet Explorer to warn users and select
 whether to allow or refuse installation when a web-based program attempts to
 install software on the system.
@@ -39,8 +37,8 @@ scripts\" to \"Not Configured\" or \"Disabled\"."
   tag 'rid': 'SV-103355r1_rule'
   tag 'stig_id': 'WN19-CC-000440'
   tag 'fix_id': 'F-99513r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Installer') do

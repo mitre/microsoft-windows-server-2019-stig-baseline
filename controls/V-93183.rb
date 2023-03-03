@@ -1,12 +1,10 @@
-# encoding: UTF-8
-
-control "V-93183" do
+control 'V-93183' do
   title "Windows Server 2019 audit records must be backed up to a different
 system or media than the system being audited."
   desc  "Protection of log data includes assuring the log data is not
 accidentally lost or deleted. Audit information stored in one location is
 vulnerable to accidental or incidental deletion or alteration."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Determine if a process to back up log data to a different system or media
 than the system being audited has been implemented.
 
@@ -20,11 +18,10 @@ another system or media other than the system being audited."
   tag 'rid': 'SV-103271r1_rule'
   tag 'stig_id': 'WN19-AU-000010'
   tag 'fix_id': 'F-99429r1_fix'
-  tag 'cci': ["CCI-001851"]
-  tag 'nist': ["AU-4 (1)", "Rev_4"]
+  tag 'cci': ['CCI-001851']
+  tag 'nist': ['AU-4 (1)', 'Rev_4']
 
   describe 'A manual review is required to verify audit records are being backed up onto a different system or media than the system being audited' do
     skip 'A manual review is required to verify audit records are being backed up onto a different system or media than the system being audited'
   end
 end
-

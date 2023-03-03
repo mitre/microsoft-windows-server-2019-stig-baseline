@@ -1,7 +1,5 @@
-# encoding: UTF-8
-
-control "V-93171" do
-  title "Windows Server 2019 must be configured to audit logoff successes."
+control 'V-93171' do
+  title 'Windows Server 2019 must be configured to audit logoff successes.'
   desc  "Maintaining an audit trail of system activity logs can help identify
 configuration errors, troubleshoot service disruptions, and analyze compromises
 that have occurred, as well as detect attacks. Audit logs are necessary to
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
     Logoff records user logoffs. If this is an interactive logoff, it is
 recorded on the local system. If it is to a network share, it is recorded on
 the system accessed."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -37,13 +35,13 @@ selected."
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000472-GPOS-00217'
-  tag 'satisfies': ["SRG-OS-000472-GPOS-00217", "SRG-OS-000480-GPOS-00227"]
+  tag 'satisfies': ['SRG-OS-000472-GPOS-00217', 'SRG-OS-000480-GPOS-00227']
   tag 'gid': 'V-93171'
   tag 'rid': 'SV-103259r1_rule'
   tag 'stig_id': 'WN19-AU-000180'
   tag 'fix_id': 'F-99417r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-000366"]
-  tag 'nist': ["AU-12 c", "CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000172', 'CCI-000366']
+  tag 'nist': ['AU-12 c', 'CM-6 b', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -54,4 +52,3 @@ selected."
     end
   end
 end
-

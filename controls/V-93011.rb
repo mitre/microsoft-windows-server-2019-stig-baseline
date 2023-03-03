@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93011" do
+control 'V-93011' do
   title "Windows Server 2019 Deny log on as a batch job user right on
 domain-joined member servers must be configured to prevent access from highly
 privileged domain accounts and from unauthenticated access on all systems."
@@ -16,7 +14,7 @@ privilege escalation from credential theft attacks, which could lead to the
 compromise of an entire domain.
 
     The Guests group must be assigned to prevent unauthenticated access."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to member servers and standalone systems. A separate version
 applies to domain controllers.
 
@@ -69,8 +67,8 @@ on as a batch job\" to include the following:
   tag 'rid': 'SV-103099r1_rule'
   tag 'stig_id': 'WN19-MS-000090'
   tag 'fix_id': 'F-99257r1_fix'
-  tag 'cci': ["CCI-000213"]
-  tag 'nist': ["AC-3", "Rev_4"]
+  tag 'cci': ['CCI-000213']
+  tag 'nist': ['AC-3', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   case domain_role
