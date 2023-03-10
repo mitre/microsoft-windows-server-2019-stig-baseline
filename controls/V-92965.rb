@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-92965" do
+control 'V-92965' do
   title "Windows Server 2019 Deny log on through Remote Desktop Services user
 right on domain-joined member servers must be configured to prevent access from
 highly privileged domain accounts and all local accounts and from
@@ -21,7 +19,7 @@ decrease the risk of lateral movement resulting from credential theft attacks.
 
     The Guests group must be assigned this right to prevent unauthenticated
 access."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to member servers and standalone systems. A separate version
 applies to domain controllers.
 
@@ -81,8 +79,8 @@ on through Remote Desktop Services\" to include the following:
   tag 'rid': 'SV-103053r1_rule'
   tag 'stig_id': 'WN19-MS-000120'
   tag 'fix_id': 'F-99211r1_fix'
-  tag 'cci': ["CCI-002314"]
-  tag 'nist': ["AC-17 (1)", "Rev_4"]
+  tag 'cci': ['CCI-002314']
+  tag 'nist': ['AC-17 (1)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   case domain_role
@@ -115,10 +113,10 @@ on through Remote Desktop Services\" to include the following:
     end
     describe.one do
       describe security_policy do
-          its('SeDenyRemoteInteractiveLogonRight') { should include "S-1-5-113" }
+        its('SeDenyRemoteInteractiveLogonRight') { should include 'S-1-5-113' }
       end
       describe security_policy do
-          its('SeDenyRemoteInteractiveLogonRight') { should include "S-1-5-114" }
+        its('SeDenyRemoteInteractiveLogonRight') { should include 'S-1-5-114' }
       end
     end
     describe security_policy do

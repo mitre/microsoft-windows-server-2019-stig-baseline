@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-93457' do
   title 'Windows Server 2019 outdated or unused accounts must be removed or disabled.'
   desc  'Outdated or unused accounts provide penetration points that may go undetected. Inactive accounts must be deleted if no longer necessary or, if still required, disabled until needed.'
@@ -43,8 +41,7 @@ control 'V-93457' do
   tag fix_id: 'F-99701r1_fix'
   tag cci: ['CCI-000795']
   tag nist: ['IA-4 e', 'Rev_4']
-  
-  
+
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   age = input('unused_account_age')
   untracked_accounts = []
@@ -53,7 +50,7 @@ control 'V-93457' do
 
     excluded_accounts_domain_check = json(command: 'Get-ADUser -Filter * | Where {($_.SID -like "*-500") -or ($_.SID -like "*-501")} | Select Name | ConvertTo-Json').params
     excluded_accounts_domain = []
-    excluded_accounts_domain_check.each { |account| excluded_accounts_domain << account["Name"] }
+    excluded_accounts_domain_check.each { |account| excluded_accounts_domain << account['Name'] }
 
     ad_accounts = json({ command: "Search-ADAccount -AccountInactive -UsersOnly -Timespan #{age}.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json" }).params
     unless ad_accounts.empty?
@@ -78,7 +75,7 @@ control 'V-93457' do
     excluded_accounts_local_check = json(command: 'Get-LocalUser | Where {($_.SID -like "*-500") -or ($_.SID -like "*-501")} | Select Name | ConvertTo-Json').params
     excluded_accounts_local = []
     excluded_accounts_local_check.each do |account|
-      excluded_accounts_local << account["Name"]
+      excluded_accounts_local << account['Name']
     end
 
     local_accounts = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-#{age}) } | Select -ExpandProperty Name | ConvertTo-Json" }).params

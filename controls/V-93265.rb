@@ -1,11 +1,9 @@
-# encoding: UTF-8
-
-control "V-93265" do
+control 'V-93265' do
   title "Windows Server 2019 must prevent attachments from being downloaded
 from RSS feeds."
   desc  "Attachments from RSS feeds may not be secure. This setting will
 prevent attachments from being downloaded from RSS feeds."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If the following registry value does not exist or is not configured as
 specified, this is a finding:
 
@@ -26,12 +24,11 @@ downloading of enclosures\" to \"Enabled\"."
   tag 'rid': 'SV-103353r1_rule'
   tag 'stig_id': 'WN19-CC-000390'
   tag 'fix_id': 'F-99511r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
     it { should have_property 'DisableEnclosureDownload' }
     its('DisableEnclosureDownload') { should cmp 1 }
   end
 end
-

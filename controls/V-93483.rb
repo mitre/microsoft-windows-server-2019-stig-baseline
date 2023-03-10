@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "V-93483" do
+control 'V-93483' do
   title "Windows Server 2019 domain Controller PKI certificates must be issued by the #{input('org_name')[:acronym]} PKI or an approved External Certificate Authority (ECA)."
-  desc  "A PKI implementation depends on the practices established by the Certificate Authority (CA) to ensure the implementation is secure. Without proper practices, the certificates issued by a CA have limited value in authentication functions. The use of multiple CAs from separate PKI implementations results in interoperability issues. If servers and clients do not have a common set of root CA certificates, they are not able to authenticate each other."
-  desc  "rationale", ""
-  desc  "check", "This applies to domain controllers. It is NA for other systems.
+  desc  'A PKI implementation depends on the practices established by the Certificate Authority (CA) to ensure the implementation is secure. Without proper practices, the certificates issued by a CA have limited value in authentication functions. The use of multiple CAs from separate PKI implementations results in interoperability issues. If servers and clients do not have a common set of root CA certificates, they are not able to authenticate each other.'
+  desc  'rationale', ''
+  desc  'check', "This applies to domain controllers. It is NA for other systems.
     Run \"MMC\".
     Select \"Add/Remove Snap-in\" from the \"File\" menu.
     Select \"Certificates\" in the left pane and click the \"Add >\" button.
@@ -22,16 +20,16 @@ control "V-93483" do
 
     #{input('org_name')[:acronym]} Public Key Enablement (PKE) Engineering Support maintains the InstallRoot utility to manage #{input('org_name')[:acronym]} supported root certificates on Windows computers, which includes a list of authorized CAs. The utility package can be downloaded from the PKI and PKE Tools page on IASE:
     http://iase.disa.mil/pki-pke/function_pages/tools.html"
-  desc  "fix", "Obtain a server certificate for the domain controller issued by the #{input('org_name')[:acronym]} PKI or an approved ECA."
+  desc  'fix', "Obtain a server certificate for the domain controller issued by the #{input('org_name')[:acronym]} PKI or an approved ECA."
   impact 0.7
   tag 'severity': nil
-  tag gtitle: "SRG-OS-000066-GPOS-00034"
-  tag gid: "V-93483"
-  tag rid: "SV-103569r1_rule"
-  tag stig_id: "WN19-DC-000290"
-  tag fix_id: "F-99727r1_fix"
-  tag cci: ["CCI-000185"]
-  tag nist: ["IA-5 (2) (a)", "Rev_4"]
+  tag gtitle: 'SRG-OS-000066-GPOS-00034'
+  tag gid: 'V-93483'
+  tag rid: 'SV-103569r1_rule'
+  tag stig_id: 'WN19-DC-000290'
+  tag fix_id: 'F-99727r1_fix'
+  tag cci: ['CCI-000185']
+  tag nist: ['IA-5 (2) (a)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 

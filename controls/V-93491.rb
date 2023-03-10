@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "V-93491" do
+control 'V-93491' do
   title "Windows Server 2019 must have the US #{input('org_name')[:acronym]} CCEB Interoperability Root CA cross-certificates in the Untrusted Certificates Store on unclassified systems."
   desc  "To ensure users do not experience denial of service when performing certificate-based authentication to #{input('org_name')[:acronym]} websites due to the system chaining to a root other than #{input('org_name')[:acronym]} Root CAs, the US #{input('org_name')[:acronym]} CCEB Interoperability Root CA cross-certificates must be installed in the Untrusted Certificate Store. This requirement only applies to unclassified systems."
-  desc  "rationale", ""
-  desc  "check", "This is applicable to unclassified systems. It is NA for others.
+  desc  'rationale', ''
+  desc  'check', "This is applicable to unclassified systems. It is NA for others.
     Open \"PowerShell\" as an administrator.
     Execute the following command:
     Get-ChildItem -Path Cert:Localmachine\\disallowed | Where Issuer -Like \"*CCEB Interoperability*\" | FL Subject, Issuer, Thumbprint, NotAfter
@@ -45,7 +43,7 @@ control "V-93491" do
     Issuer by: US DoD CCEB Interoperability Root CA 2
     Thumbprint: 929BF3196896994C0A201DF4A5B71F603FEFBF2E
     Valid: Friday, September 27, 2019"
-  desc  "fix", "Install the US DoD CCEB Interoperability Root CA cross-certificate on unclassified systems.
+  desc  'fix', "Install the US DoD CCEB Interoperability Root CA cross-certificate on unclassified systems.
 
     Issued To - Issued By - Thumbprint
     DoD Root CA 2 - US DoD CCEB Interoperability Root CA 1 - DA36FAF56B2F6FBA1604F5BE46D864C9FA013BA3
@@ -57,14 +55,14 @@ control "V-93491" do
     The FBCA Cross-Certificate Remover Tool and User Guide are available on IASE at http://iase.disa.mil/pki-pke/Pages/tools.aspx."
   impact 0.5
   tag severity: nil
-  tag gtitle: "SRG-OS-000066-GPOS-00034"
-  tag satisfies: ["SRG-OS-000066-GPOS-00034", "SRG-OS-000403-GPOS-00182"]
-  tag gid: "V-93491"
-  tag rid: "SV-103577r1_rule"
-  tag stig_id: "WN19-PK-000030"
-  tag fix_id: "F-99735r1_fix"
-  tag cci: ["CCI-000185", "CCI-002470"]
-  tag nist: ["IA-5 (2) (a)", "SC-23 (5)", "Rev_4"]
+  tag gtitle: 'SRG-OS-000066-GPOS-00034'
+  tag satisfies: ['SRG-OS-000066-GPOS-00034', 'SRG-OS-000403-GPOS-00182']
+  tag gid: 'V-93491'
+  tag rid: 'SV-103577r1_rule'
+  tag stig_id: 'WN19-PK-000030'
+  tag fix_id: 'F-99735r1_fix'
+  tag cci: ['CCI-000185', 'CCI-002470']
+  tag nist: ['IA-5 (2) (a)', 'SC-23 (5)', 'Rev_4']
 
   if input('sensitive_system') == 'true'
     impact 0.0
@@ -84,21 +82,19 @@ control "V-93491" do
       case query
       when Hash
         query.each do |key, value|
-          if key == "NotAfter"
-            cert_date = Date.parse(value)
-            describe cert_date do
-              it { should be >= Date.today }
-            end
+          next unless key == 'NotAfter'
+          cert_date = Date.parse(value)
+          describe cert_date do
+            it { should be >= Date.today }
           end
         end
       when Array
         query.each do |certs|
           certs.each do |key, value|
-            if key == "NotAfter"
-              cert_date = Date.parse(value)
-              describe cert_date do
-                it { should be >= Date.today }
-              end
+            next unless key == 'NotAfter'
+            cert_date = Date.parse(value)
+            describe cert_date do
+              it { should be >= Date.today }
             end
           end
         end

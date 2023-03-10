@@ -1,11 +1,9 @@
-# encoding: UTF-8
-
-control "V-93261" do
+control 'V-93261' do
   title "Windows Server 2019 Turning off File Explorer heap termination on
 corruption must be disabled."
   desc  "Legacy plug-in applications may continue to function when a File
 Explorer session has become corrupt. Disabling this feature will prevent this."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "The default behavior is for File Explorer heap termination on corruption to
 be enabled.
 
@@ -36,8 +34,8 @@ or \"Disabled\"."
   tag 'rid': 'SV-103349r1_rule'
   tag 'stig_id': 'WN19-CC-000320'
   tag 'fix_id': 'F-99507r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
@@ -53,4 +51,3 @@ or \"Disabled\"."
     end
   end
 end
-

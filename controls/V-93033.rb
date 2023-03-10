@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93033" do
+control 'V-93033' do
   title "Windows Server 2019 Active Directory Group Policy objects must have
 proper access control permissions."
   desc  "When directory service database objects do not have appropriate access
@@ -16,7 +14,7 @@ Policy objects are more likely to have access permissions changed from the
 secure defaults. If inappropriate access permissions are defined for Group
 Policy objects, this could allow an intruder to change the security policy
 applied to all domain client computers (workstations and servers)."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to domain controllers. It is NA for other systems.
 
     Review the permissions on Group Policy objects.
@@ -105,13 +103,11 @@ permission on created Group Policy objects."
   tag 'rid': 'SV-103121r1_rule'
   tag 'stig_id': 'WN19-DC-000090'
   tag 'fix_id': 'F-99279r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag 'cci': ['CCI-002235']
+  tag 'nist': ['AC-6 (10)', 'Rev_4']
 
-  #Checked Code in 2016 and it is not a validate way of checking permissions, Until a command is put together that can get all GPO's in a Domain and then check all permissions, this is manually
+  # Checked Code in 2016 and it is not a validate way of checking permissions, Until a command is put together that can get all GPO's in a Domain and then check all permissions, this is manually
   describe 'A manual review is required to ensure all Group Policies have the correct permisions' do
     skip 'A manual review is required to ensure all Group Policies have the correct permisions'
   end
-
 end
-

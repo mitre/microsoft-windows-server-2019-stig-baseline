@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93245" do
+control 'V-93245' do
   title "Windows Server 2019 virtualization-based security must be enabled with
 the platform security level configured to Secure Boot or Secure Boot with DMA
 Protection."
@@ -9,7 +7,7 @@ additional security features Credential Guard and virtualization-based
 protection of code integrity. Secure Boot is the minimum security level, with
 DMA protection providing additional memory protection. DMA Protection requires
 a CPU that supports input/output memory management unit (IOMMU)."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "For standalone systems, this is NA.
 
     Current hardware and virtual environments may not support
@@ -85,21 +83,21 @@ requirement details, can be found at the following link:
   tag 'rid': 'SV-103333r1_rule'
   tag 'stig_id': 'WN19-CC-000110'
   tag 'fix_id': 'F-99491r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
-   if is_domain == 'WORKGROUP'
+  if is_domain == 'WORKGROUP'
     impact 0.0
     describe 'The system is not a member of a domain, control is NA' do
       skip 'The system is not a member of a domain, control is NA'
     end
-   else
-     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard') do
+  else
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard') do
       it { should have_property 'EnableVirtualizationBasedSecurity' }
       its('EnableVirtualizationBasedSecurity') { should cmp 1 }
-     end
-     describe.one do
+    end
+    describe.one do
       describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard') do
         it { should have_property 'RequirePlatformSecurityFeatures' }
         its('RequirePlatformSecurityFeatures') { should cmp 1 }
@@ -108,7 +106,6 @@ requirement details, can be found at the following link:
         it { should have_property 'RequirePlatformSecurityFeatures' }
         its('RequirePlatformSecurityFeatures') { should cmp 3 }
       end
-     end
     end
+  end
 end
-

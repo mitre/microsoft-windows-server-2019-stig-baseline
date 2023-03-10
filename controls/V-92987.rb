@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-92987" do
+control 'V-92987' do
   title "Windows Server 2019 must be configured to audit Logon/Logoff - Account
 Lockout successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Account Lockout events can be used to identify potentially malicious logon
 attempts."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -37,13 +35,13 @@ System Audit Policies >> Logon/Logoff >> \"Audit Account Lockout\" with
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000240-GPOS-00090'
-  tag 'satisfies': ["SRG-OS-000240-GPOS-00090", "SRG-OS-000470-GPOS-00214"]
+  tag 'satisfies': ['SRG-OS-000240-GPOS-00090', 'SRG-OS-000470-GPOS-00214']
   tag 'gid': 'V-92987'
   tag 'rid': 'SV-103075r1_rule'
   tag 'stig_id': 'WN19-AU-000150'
   tag 'fix_id': 'F-99233r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-001404"]
-  tag 'nist': ["AU-12 c", "AC-2 (4)", "Rev_4"]
+  tag 'cci': ['CCI-000172', 'CCI-001404']
+  tag 'nist': ['AU-12 c', 'AC-2 (4)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -54,4 +52,3 @@ System Audit Policies >> Logon/Logoff >> \"Audit Account Lockout\" with
     end
   end
 end
-

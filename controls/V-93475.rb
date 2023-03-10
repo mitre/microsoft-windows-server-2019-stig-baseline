@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-93475' do
   title 'Windows Server 2019 passwords must be configured to expire.'
   desc  'Passwords that do not expire or are reused increase the exposure of a password with greater probability of being discovered or cracked.'
