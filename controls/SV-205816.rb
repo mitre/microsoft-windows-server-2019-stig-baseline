@@ -1,8 +1,7 @@
 control 'SV-205816' do
   title 'Windows Server 2019 Windows Remote Management (WinRM) client must not allow unencrypted traffic.'
-  desc  'Unencrypted remote access to a system can allow sensitive information to be compromised. Windows remote management connections must be encrypted to prevent this.'
-  desc  'rationale', ''
-  desc  'check', "If the following registry value does not exist or is not configured as specified, this is a finding:
+  desc 'Unencrypted remote access to a system can allow sensitive information to be compromised. Windows remote management connections must be encrypted to prevent this.'
+  desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
     Registry Hive: HKEY_LOCAL_MACHINE
     Registry Path: \\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Client\\
@@ -10,10 +9,9 @@ control 'SV-205816' do
     Value Name: AllowUnencryptedTraffic
 
     Type: REG_DWORD
-    Value: 0x00000000 (0)"
-  desc  'fix', 'Configure the policy value for Computer Configuration >> Administrative Templates >> Windows Components >> Windows Remote Management (WinRM) >> WinRM Client >> "Allow unencrypted traffic" to "Disabled".'
+    Value: 0x00000000 (0)'
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Administrative Templates >> Windows Components >> Windows Remote Management (WinRM) >> WinRM Client >> "Allow unencrypted traffic" to "Disabled".'
   impact 0.5
-  tag severity: nil
   tag gtitle: 'SRG-OS-000393-GPOS-00173'
   tag satisfies: ['SRG-OS-000393-GPOS-00173', 'SRG-OS-000394-GPOS-00174']
   tag gid: 'V-93499'

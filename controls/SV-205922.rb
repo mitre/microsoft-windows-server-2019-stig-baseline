@@ -1,8 +1,7 @@
 control 'SV-205922' do
   title 'Windows Server 2019 session security for NTLM SSP-based servers must be configured to require NTLMv2 session security and 128-bit encryption.'
-  desc  'Microsoft has implemented a variety of security support providers for use with Remote Procedure Call (RPC) sessions. All of the options must be enabled to ensure the maximum security level.'
-  desc  'rationale', ''
-  desc  'check', "If the following registry value does not exist or is not configured as specified, this is a finding:
+  desc 'Microsoft has implemented a variety of security support providers for use with Remote Procedure Call (RPC) sessions. All of the options must be enabled to ensure the maximum security level.'
+  desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
     Registry Hive: HKEY_LOCAL_MACHINE
     Registry Path: \\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0\\
@@ -10,10 +9,9 @@ control 'SV-205922' do
     Value Name: NTLMMinServerSec
 
     Value Type: REG_DWORD
-    Value: 0x20080000 (537395200)"
-  desc  'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Network security: Minimum session security for NTLM SSP based (including secure RPC) servers" to "Require NTLMv2 session security" and "Require 128-bit encryption" (all options selected).'
+    Value: 0x20080000 (537395200)'
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Network security: Minimum session security for NTLM SSP based (including secure RPC) servers" to "Require NTLMv2 session security" and "Require 128-bit encryption" (all options selected).'
   impact 0.5
-  tag severity: nil
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-93307'
   tag rid: 'SV-103395r1_rule'
