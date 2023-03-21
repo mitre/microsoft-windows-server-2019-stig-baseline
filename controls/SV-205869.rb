@@ -1,7 +1,5 @@
-# encoding: UTF-8
-
-control "SV-205869" do
-  title "Windows Server 2019 Telemetry must be configured to Security or Basic."
+control 'SV-205869' do
+  title 'Windows Server 2019 Telemetry must be configured to Security or Basic.'
   desc  "Some features may communicate with the vendor, sending system
 information or downloading data or components for the feature. Limiting this
 capability will prevent potentially sensitive information from being sent
@@ -10,7 +8,7 @@ lowest amount of data, effectively none outside of the Malicious Software
 Removal Tool (MSRT), Defender, and telemetry client settings. \"Basic\" sends
 basic diagnostic and usage data and may be required to support some Microsoft
 services."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If the following registry value does not exist or is not configured as
 specified, this is a finding:
 
@@ -32,8 +30,8 @@ Only]\" or \"1 - Basic\" selected in \"Options\"."
   tag 'rid': 'SV-103345r1_rule'
   tag 'stig_id': 'WN19-CC-000250'
   tag 'fix_id': 'F-99503r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection') do
@@ -46,4 +44,3 @@ Only]\" or \"1 - Basic\" selected in \"Options\"."
     end
   end
 end
-

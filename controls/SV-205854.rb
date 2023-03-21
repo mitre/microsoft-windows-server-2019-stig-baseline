@@ -1,13 +1,11 @@
-# encoding: UTF-8
-
-control "SV-205854" do
+control 'SV-205854' do
   title "Windows Server 2019 FTP servers must be configured to prevent access
 to the system drive."
   desc  "The FTP service allows remote users to access shared files and
 directories that could provide access to system resources and compromise the
 system, especially if the user can gain access to the root directory of the
 boot drive."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If FTP is not installed on the system, this is NA.
 
     Open \"Internet Information Services (IIS) Manager\".
@@ -31,19 +29,18 @@ shared resources. Do not allow access to other areas of the system."
   tag 'rid': 'SV-103313r1_rule'
   tag 'stig_id': 'WN19-00-000430'
   tag 'fix_id': 'F-99471r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   is_ftp_installed = command('Get-WindowsFeature Web-Ftp-Server | Select -Expand Installed').stdout.strip
-   if is_ftp_installed == 'False'
+  if is_ftp_installed == 'False'
     impact 0.0
     describe 'FTP is not installed' do
       skip 'Control not applicable'
     end
-   else
+  else
     describe 'Configure the FTP sites to allow access only to specific FTP shared resources. Do not allow access to other areas of the system.' do
       skip 'Configure the FTP sites to allow access only to specific FTP shared resources. Do not allow access to other areas of the system.'
     end
-   end
+  end
 end
-

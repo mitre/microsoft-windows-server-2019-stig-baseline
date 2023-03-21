@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205756" do
+control 'SV-205756' do
   title "Windows Server 2019 Create symbolic links user right must only be
 assigned to the Administrators group."
   desc  "Inappropriate granting of user rights can provide system,
@@ -8,7 +6,7 @@ administrative, and other high-level capabilities.
 
     Accounts with the \"Create symbolic links\" user right can create pointers
 to other objects, which could expose the system to attack."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -51,19 +49,18 @@ Virtual Machine\\Virtual Machines\". "
   tag 'rid': 'SV-103151r1_rule'
   tag 'stig_id': 'WN19-UR-000090'
   tag 'fix_id': 'F-99309r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag 'cci': ['CCI-002235']
+  tag 'nist': ['AC-6 (10)', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeCreateSymbolicLinkPrivilege') { should eq ['S-1-5-32-544'] }
+      its('SeCreateSymbolicLinkPrivilege') { should eq ['S-1-5-32-544'] }
+    end
   end
- end
 end
-

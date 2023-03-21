@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205773" do
+control 'SV-205773' do
   title "Windows Server 2019 must be configured to audit Policy Change -
 Authentication Policy Change successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Authentication Policy Change records events related to changes in
 authentication policy, including Kerberos policy and Trust changes."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -37,14 +35,14 @@ Change\" with \"Success\" selected."
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000064-GPOS-00033",
-"SRG-OS-000462-GPOS-00206", "SRG-OS-000466-GPOS-00210"]
+  tag 'satisfies': ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000064-GPOS-00033',
+'SRG-OS-000462-GPOS-00206', 'SRG-OS-000466-GPOS-00210']
   tag 'gid': 'V-93097'
   tag 'rid': 'SV-103185r1_rule'
   tag 'stig_id': 'WN19-AU-000280'
   tag 'fix_id': 'F-99343r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag 'cci': ['CCI-000172', 'CCI-002234']
+  tag 'nist': ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -55,4 +53,3 @@ Change\" with \"Success\" selected."
     end
   end
 end
-

@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "SV-205665" do
-  title "Windows Server 2019 Access this computer from the network user right must only be assigned to the Administrators, Authenticated Users, and Enterprise Domain Controllers groups on domain controllers."
+control 'SV-205665' do
+  title 'Windows Server 2019 Access this computer from the network user right must only be assigned to the Administrators, Authenticated Users, and Enterprise Domain Controllers groups on domain controllers.'
   desc  "Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
     Accounts with the \"Access this computer from the network\" right may access resources on the system, and this right must be limited to those requiring it."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to domain controllers. It is NA for other systems.
 
     Verify the effective setting in Local Group Policy Editor.
@@ -38,12 +36,12 @@ control "SV-205665" do
   tag 'rid': 'SV-103083r1_rule'
   tag 'stig_id': 'WN19-DC-000340'
   tag 'fix_id': 'F-99241r1_fix'
-  tag 'cci': ["CCI-000213"]
-  tag 'nist': ["AC-3", "Rev_4"]
+  tag 'cci': ['CCI-000213']
+  tag 'nist': ['AC-3', 'Rev_4']
 
   active_network_access_users = security_policy.SeNetworkLogonRight.entries
-  allowed_network_access_users = input("allowed_network_access_users")
-  disallowed_network_access_users = input("disallowed_network_access_users")
+  allowed_network_access_users = input('allowed_network_access_users')
+  disallowed_network_access_users = input('disallowed_network_access_users')
   unauthorized_users = []
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
@@ -52,28 +50,26 @@ control "SV-205665" do
     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
     end
-  else
-    if domain_role == '4' || domain_role == '5'
-      active_network_access_users.each do |user|
-        next if allowed_network_access_users.include?(user)
+  elsif domain_role == '4' || domain_role == '5'
+    active_network_access_users.each do |user|
+      next if allowed_network_access_users.include?(user)
+      unauthorized_users << user
+    end
+    disallowed_network_access_users.each do |user|
+      unless disallowed_network_access_users == [nil] || unauthorized_users.include?(user)
         unauthorized_users << user
       end
-      disallowed_network_access_users.each do |user|
-        unless disallowed_network_access_users == [nil] || unauthorized_users.include?(user)
-          unauthorized_users << user
-        end
+    end
+    describe 'Network Logon Privilege must be limited to' do
+      it "Authorized SIDs: #{allowed_network_access_users}" do
+        failure_message = "Unauthorized SIDs: #{unauthorized_users}"
+        expect(unauthorized_users).to be_empty, failure_message
       end
-      describe "Network Logon Privilege must be limited to" do
-        it "Authorized SIDs: #{allowed_network_access_users}" do
-          failure_message = "Unauthorized SIDs: #{unauthorized_users}"
-          expect(unauthorized_users).to be_empty, failure_message
-        end
-      end
-    else
-      impact 0.0
-      describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-        skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-      end
+    end
+  else
+    impact 0.0
+    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
 end

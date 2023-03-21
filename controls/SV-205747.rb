@@ -1,13 +1,11 @@
-# encoding: UTF-8
-
-control "SV-205747" do
+control 'SV-205747' do
   title "Windows Server 2019 must restrict remote calls to the Security Account
 Manager (SAM) to Administrators on domain-joined member servers and standalone
 systems."
   desc  "The Windows SAM stores users' passwords. Restricting Remote Procedure
 Call (RPC) connections to the SAM to Administrators helps protect those
 credentials."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to member servers and standalone systems; it is NA for domain
 controllers.
 
@@ -45,8 +43,8 @@ listed (this is the default).
   tag 'rid': 'SV-103133r1_rule'
   tag 'stig_id': 'WN19-MS-000060'
   tag 'fix_id': 'F-99291r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag 'cci': ['CCI-002235']
+  tag 'nist': ['AC-6 (10)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   if domain_role == '4' || domain_role == '5'
@@ -55,10 +53,9 @@ listed (this is the default).
       skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers'
     end
   else
-   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa') do
-    it { should have_property "RestrictRemoteSAM"}
-    its('RestrictRemoteSAM') { should cmp "O:BAG:BAD:(A;;RC;;;BA)" }
-   end
+    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa') do
+      it { should have_property 'RestrictRemoteSAM' }
+      its('RestrictRemoteSAM') { should cmp 'O:BAG:BAD:(A;;RC;;;BA)' }
+    end
   end
 end
-

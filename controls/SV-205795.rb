@@ -1,13 +1,11 @@
-# encoding: UTF-8
-
-control "SV-205795" do
+control 'SV-205795' do
   title "Windows Server 2019 account lockout duration must be configured to #{input('pass_lock_duration')}
 minutes or greater."
   desc  "The account lockout feature, when enabled, prevents brute-force
 password attacks on the system. This parameter specifies the period of time
 that an account will remain locked after the specified number of failed logon
 attempts."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -40,15 +38,15 @@ the account."
   tag rid: 'SV-103233r1_rule'
   tag stig_id: 'WN19-AC-000010'
   tag fix_id: 'F-99391r1_fix'
-  tag cci: ["CCI-002238"]
-  tag nist: ["AC-7 b", "Rev_4"]
+  tag cci: ['CCI-002238']
+  tag nist: ['AC-7 b', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
-  
+
   if os_type == 'False'
     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     pass_lock_duration = input('pass_lock_duration')
     describe.one do
@@ -61,4 +59,3 @@ the account."
     end
   end
 end
-

@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "SV-205813" do
-  title "Windows Server 2019 User Account Control must run all administrators in Admin Approval Mode, enabling UAC."
-  desc  "User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting enables UAC."
-  desc  "rationale", ""
-  desc  "check", "UAC requirements are NA for Server Core installations (this is the default installation option for Windows Server 2019 versus Server with Desktop Experience).
+control 'SV-205813' do
+  title 'Windows Server 2019 User Account Control must run all administrators in Admin Approval Mode, enabling UAC.'
+  desc  'User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting enables UAC.'
+  desc  'rationale', ''
+  desc  'check', "UAC requirements are NA for Server Core installations (this is the default installation option for Windows Server 2019 versus Server with Desktop Experience).
 
     If the following registry value does not exist or is not configured as specified, this is a finding:
 
@@ -15,17 +13,17 @@ control "SV-205813" do
 
     Value Type: REG_DWORD
     Value: 0x00000001 (1)"
-  desc  "fix", "Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> \"User Account Control: Run all administrators in Admin Approval Mode\" to \"Enabled\"."
+  desc  'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "User Account Control: Run all administrators in Admin Approval Mode" to "Enabled".'
   impact 0.5
   tag severity: nil
-  tag gtitle: "SRG-OS-000373-GPOS-00157"
-  tag satisfies: ["SRG-OS-000373-GPOS-00157", "SRG-OS-000373-GPOS-00156"]
-  tag gid: "V-93435"
-  tag rid: "SV-103521r1_rule"
-  tag stig_id: "WN19-SO-000440"
-  tag fix_id: "F-99679r1_fix"
-  tag cci: ["CCI-002038"]
-  tag nist: ["IA-11", "Rev_4"]
+  tag gtitle: 'SRG-OS-000373-GPOS-00157'
+  tag satisfies: ['SRG-OS-000373-GPOS-00157', 'SRG-OS-000373-GPOS-00156']
+  tag gid: 'V-93435'
+  tag rid: 'SV-103521r1_rule'
+  tag stig_id: 'WN19-SO-000440'
+  tag fix_id: 'F-99679r1_fix'
+  tag cci: ['CCI-002038']
+  tag nist: ['IA-11', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 

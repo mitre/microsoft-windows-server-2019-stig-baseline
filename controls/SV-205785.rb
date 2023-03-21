@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205785" do
+control 'SV-205785' do
   title "Windows Server 2019 Active Directory Group Policy objects must be
 configured with proper audit settings."
   desc  "When inappropriate audit settings are configured for directory service
@@ -19,7 +17,7 @@ that impact the confidentiality, integrity, and availability of data and
 systems throughout an AD domain. The lack of proper auditing can result in
 insufficient forensic evidence needed to investigate an incident and prosecute
 the intruder."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to domain controllers. It is NA for other systems.
 
     Review the auditing configuration for all Group Policy objects.
@@ -117,14 +115,14 @@ Write gPLink, one instance - Write gPOptions)
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000458-GPOS-00203",
-"SRG-OS-000463-GPOS-00207", "SRG-OS-000468-GPOS-00212"]
+  tag 'satisfies': ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000458-GPOS-00203',
+'SRG-OS-000463-GPOS-00207', 'SRG-OS-000468-GPOS-00212']
   tag 'gid': 'V-93121'
   tag 'rid': 'SV-103209r1_rule'
   tag 'stig_id': 'WN19-DC-000170'
   tag 'fix_id': 'F-99367r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag 'cci': ['CCI-000172', 'CCI-002234']
+  tag 'nist': ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   if domain_role == '4' || domain_role == '5'
@@ -139,9 +137,9 @@ Write gPLink, one instance - Write gPOptions)
         acl_rules.each do |acl_rule|
           describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
             subject { acl_rule }
-            its(['AuditFlags']) { should cmp "Failure" }
-            its(['IdentityReference']) { should cmp "Everyone" }
-            its(['ActiveDirectoryRights']) { should cmp "GenericAll" }
+            its(['AuditFlags']) { should cmp 'Failure' }
+            its(['IdentityReference']) { should cmp 'Everyone' }
+            its(['ActiveDirectoryRights']) { should cmp 'GenericAll' }
           end
         end
       end
@@ -150,11 +148,11 @@ Write gPLink, one instance - Write gPOptions)
         acl_rules.each do |acl_rule|
           describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
             subject { acl_rule }
-            its(['AuditFlags']) { should cmp "Success" }
-            its(['IdentityReference']) { should cmp "Everyone" }
-            its(['ActiveDirectoryRights']) { should cmp "WriteProperty, WriteDacl" }
-            its(['IsInherited']) { should cmp "True" }
-            its(['InheritanceType']) { should cmp "All" }
+            its(['AuditFlags']) { should cmp 'Success' }
+            its(['IdentityReference']) { should cmp 'Everyone' }
+            its(['ActiveDirectoryRights']) { should cmp 'WriteProperty, WriteDacl' }
+            its(['IsInherited']) { should cmp 'True' }
+            its(['InheritanceType']) { should cmp 'All' }
           end
         end
       end
@@ -163,11 +161,11 @@ Write gPLink, one instance - Write gPOptions)
         acl_rules.each do |acl_rule|
           describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
             subject { acl_rule }
-            its(['AuditFlags']) { should cmp "Success" }
-            its(['IdentityReference']) { should cmp "Everyone" }
-            its(['ActiveDirectoryRights']) { should cmp "WriteProperty" }
-            its(['IsInherited']) { should cmp "True" }
-            its(['InheritanceType']) { should cmp "Descendents" }
+            its(['AuditFlags']) { should cmp 'Success' }
+            its(['IdentityReference']) { should cmp 'Everyone' }
+            its(['ActiveDirectoryRights']) { should cmp 'WriteProperty' }
+            its(['IsInherited']) { should cmp 'True' }
+            its(['InheritanceType']) { should cmp 'Descendents' }
           end
         end
       end
@@ -180,4 +178,3 @@ Write gPLink, one instance - Write gPOptions)
     end
   end
 end
-

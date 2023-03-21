@@ -1,12 +1,10 @@
-# encoding: UTF-8
-
-control "SV-205798" do
+control 'SV-205798' do
   title "Windows Server 2019 System event log size must be configured to 32768
 KB or greater."
   desc  "Inadequate log size will cause the log to fill up quickly. This may
 prevent audit events from being recorded properly and require frequent
 attention by administrative personnel."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If the system is configured to write events directly to an audit server,
 this is NA.
 
@@ -31,12 +29,11 @@ Log Size (KB)\" of \"32768\" or greater."
   tag 'rid': 'SV-103269r1_rule'
   tag 'stig_id': 'WN19-CC-000290'
   tag 'fix_id': 'F-99427r1_fix'
-  tag 'cci': ["CCI-001849"]
-  tag 'nist': ["AU-4", "Rev_4"]
+  tag 'cci': ['CCI-001849']
+  tag 'nist': ['AU-4', 'Rev_4']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\EventLog\System') do
     it { should have_property 'MaxSize' }
     its('MaxSize') { should cmp >= 32768 }
   end
 end
-

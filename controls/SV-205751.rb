@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205751" do
+control 'SV-205751' do
   title "Windows Server 2019 Back up files and directories user right must only
 be assigned to the Administrators group."
   desc  "Inappropriate granting of user rights can provide system,
@@ -9,7 +7,7 @@ administrative, and other high-level capabilities.
     Accounts with the \"Back up files and directories\" user right can
 circumvent file and directory permissions and could allow access to sensitive
 data."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -54,19 +52,18 @@ files and directories\" to include only the following accounts or groups:
   tag 'rid': 'SV-103141r1_rule'
   tag 'stig_id': 'WN19-UR-000040'
   tag 'fix_id': 'F-99299r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag 'cci': ['CCI-002235']
+  tag 'nist': ['AC-6 (10)', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeBackupPrivilege') { should eq ['S-1-5-32-544'] }
+      its('SeBackupPrivilege') { should eq ['S-1-5-32-544'] }
+    end
   end
- end
 end
-
