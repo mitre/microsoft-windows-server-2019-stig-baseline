@@ -1,8 +1,7 @@
 control 'SV-205713' do
   title 'Windows Server 2019 Windows Remote Management (WinRM) service must not use Basic authentication.'
-  desc  'Basic authentication uses plain-text passwords that could be used to compromise a system. Disabling Basic authentication will reduce this potential.'
-  desc  'rationale', ''
-  desc  'check', "If the following registry value does not exist or is not configured as specified, this is a finding:
+  desc 'Basic authentication uses plain-text passwords that could be used to compromise a system. Disabling Basic authentication will reduce this potential.'
+  desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
     Registry Hive: HKEY_LOCAL_MACHINE
     Registry Path: \\SOFTWARE\\Policies\\Microsoft\\Windows\\WinRM\\Service\\
@@ -10,10 +9,9 @@ control 'SV-205713' do
     Value Name: AllowBasic
 
     Type: REG_DWORD
-    Value: 0x00000000 (0)"
-  desc  'fix', 'Configure the policy value for Computer Configuration >> Administrative Templates >> Windows Components >> Windows Remote Management (WinRM) >> WinRM Service >> "Allow Basic authentication" to "Disabled".'
+    Value: 0x00000000 (0)'
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Administrative Templates >> Windows Components >> Windows Remote Management (WinRM) >> WinRM Service >> "Allow Basic authentication" to "Disabled".'
   impact 0.7
-  tag severity: nil
   tag gtitle: 'SRG-OS-000125-GPOS-00065'
   tag gid: 'V-93507'
   tag rid: 'SV-103593r1_rule'

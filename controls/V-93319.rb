@@ -1,33 +1,31 @@
 control 'V-93319' do
   title 'Windows Server 2019 Exploit Protection system-level mitigation, Validate heap integrity, must be on.'
-  desc  'Exploit protection enables mitigations against potential threats at the system and application level.  Several mitigations, including "Validate heap integrity", are enabled by default at the system level. "Validate heap integrity" terminates a process when heap corruption is detected. If this is turned off, Windows may be subject to various exploits.'
-  desc  'rationale', ''
-  desc  'check', "This is applicable to unclassified systems, for other systems this is NA.
+  desc 'Exploit protection enables mitigations against potential threats at the system and application level.  Several mitigations, including "Validate heap integrity", are enabled by default at the system level. "Validate heap integrity" terminates a process when heap corruption is detected. If this is turned off, Windows may be subject to various exploits.'
+  desc 'check', 'This is applicable to unclassified systems, for other systems this is NA.
 
-    The default configuration in Exploit Protection is \"On by default\" which meets this requirement.  The PowerShell query results for this show as \"NOTSET\".
-    Run \"Windows PowerShell\" with elevated privileges (run as administrator).
-    Enter \"Get-ProcessMitigation -System\".
-    If the status of \"Heap: TerminateOnError\" is \"OFF\", this is a finding.
+    The default configuration in Exploit Protection is "On by default" which meets this requirement.  The PowerShell query results for this show as "NOTSET".
+    Run "Windows PowerShell" with elevated privileges (run as administrator).
+    Enter "Get-ProcessMitigation -System".
+    If the status of "Heap: TerminateOnError" is "OFF", this is a finding.
     Values that would not be a finding include:
 
     ON
-    NOTSET (Default configuration)"
-  desc  'fix', "Ensure Exploit Protection system-level mitigation, \"Validate heap integrity\" is turned on. The default configuration in Exploit Protection is \"On by default\" which meets this requirement.
+    NOTSET (Default configuration)'
+  desc 'fix', 'Ensure Exploit Protection system-level mitigation, "Validate heap integrity" is turned on. The default configuration in Exploit Protection is "On by default" which meets this requirement.
 
-    Open \"Windows Defender Security Center\".
-    Select \"App & browser control\".
-    Select \"Exploit protection settings\".
-    Under \"System settings\", configure \"Validate heap integrity\" to \"On by default\" or \"Use default (<On>)\".
+    Open "Windows Defender Security Center".
+    Select "App & browser control".
+    Select "Exploit protection settings".
+    Under "System settings", configure "Validate heap integrity" to "On by default" or "Use default (<On>)".
 
-    The STIG package includes a DoD EP XML file in the \"Supporting Files\" folder for configuring application mitigations defined in the STIG.  This can also be modified to explicitly enforce the system level requirements.  Adding the following to the XML file will explicitly turn Validate heap integrity on (other system level EP requirements can be combined under <SystemConfig>):
+    The STIG package includes a DoD EP XML file in the "Supporting Files" folder for configuring application mitigations defined in the STIG.  This can also be modified to explicitly enforce the system level requirements.  Adding the following to the XML file will explicitly turn Validate heap integrity on (other system level EP requirements can be combined under <SystemConfig>):
 
     <SystemConfig>
-      <Heap TerminateOnError=\"true\"></Heap>
+      <Heap TerminateOnError="true"></Heap>
     </SystemConfig>
 
-    The XML file is applied with the group policy setting Computer Configuration >> Administrative Settings >> Windows Components >> Windows Defender Exploit Guard >> Exploit Protection >> \"Use a common set of exploit protection settings\" configured to \"Enabled\" with file name and location defined under \"Options:\". It is recommended the file be in a read-only network location."
+    The XML file is applied with the group policy setting Computer Configuration >> Administrative Settings >> Windows Components >> Windows Defender Exploit Guard >> Exploit Protection >> "Use a common set of exploit protection settings" configured to "Enabled" with file name and location defined under "Options:". It is recommended the file be in a read-only network location.'
   impact 0.5
-  tag severity: nil
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
   tag gid: 'V-93319'
   tag rid: 'SV-103407r1_rule'

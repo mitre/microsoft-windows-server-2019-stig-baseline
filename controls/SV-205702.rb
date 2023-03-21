@@ -1,20 +1,17 @@
 control 'SV-205702' do
   title 'Windows Server 2019 Kerberos user logon restrictions must be enforced.'
-  desc  'This policy setting determines whether the Kerberos Key Distribution Center (KDC) validates every request for a session ticket against the user rights policy of the target computer. The policy is enabled by default, which is the most secure setting for validating that access to target resources is not circumvented.'
-  desc  'rationale', ''
-  desc  'check', "This applies to domain controllers. It is NA for other systems.
+  desc 'This policy setting determines whether the Kerberos Key Distribution Center (KDC) validates every request for a session ticket against the user rights policy of the target computer. The policy is enabled by default, which is the most secure setting for validating that access to target resources is not circumvented.'
+  desc 'check', 'This applies to domain controllers. It is NA for other systems.
 
     Verify the following is configured in the Default Domain Policy:
-    Open \"Group Policy Management\".
-    Navigate to \"Group Policy Objects\" in the Domain being reviewed (Forest >> Domains >> Domain).
-    Right-click on the \"Default Domain Policy\".
-    Select \"Edit\".
+    Open "Group Policy Management".
+    Navigate to "Group Policy Objects" in the Domain being reviewed (Forest >> Domains >> Domain).
+    Right-click on the "Default Domain Policy".
+    Select "Edit".
     Navigate to Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy.
 
-    If the \"Enforce user logon restrictions\" is not set to \"Enabled\", this is a finding."
-  desc  'fix', 'Configure the policy value in the Default Domain Policy for Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy >> "Enforce user logon restrictions" to "Enabled".'
-  impact 0.5
-  tag severity: nil
+    If the "Enforce user logon restrictions" is not set to "Enabled", this is a finding.'
+  desc 'fix', 'Configure the policy value in the Default Domain Policy for Computer Configuration >> Policies >> Windows Settings >> Security Settings >> Account Policies >> Kerberos Policy >> "Enforce user logon restrictions" to "Enabled".'
   tag gtitle: 'SRG-OS-000112-GPOS-00057'
   tag satisfies: ['SRG-OS-000112-GPOS-00057', 'SRG-OS-000113-GPOS-00058']
   tag gid: 'V-93443'
