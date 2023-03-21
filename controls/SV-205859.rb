@@ -1,11 +1,9 @@
-# encoding: UTF-8
-
-control "SV-205859" do
+control 'SV-205859' do
   title "Windows Server 2019 source routing must be configured to the highest
 protection level to prevent Internet Protocol (IP) source routing."
   desc  "Configuring the system to disable IP source routing protects against
 spoofing."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If the following registry value does not exist or is not configured as
 specified, this is a finding:
 
@@ -32,12 +30,11 @@ templates included with the STIG package. \"MSS-Legacy.admx\" and
   tag 'rid': 'SV-103323r1_rule'
   tag 'stig_id': 'WN19-CC-000040'
   tag 'fix_id': 'F-99481r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters') do
     it { should have_property 'DisableIPSourceRouting' }
-    its('DisableIPSourceRouting') { should cmp 2}
+    its('DisableIPSourceRouting') { should cmp 2 }
   end
 end
-

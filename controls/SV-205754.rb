@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "SV-205754" do
-  title "Windows Server 2019 Create global objects user right must only be assigned to Administrators, Service, Local Service, and Network Service."
+control 'SV-205754' do
+  title 'Windows Server 2019 Create global objects user right must only be assigned to Administrators, Service, Local Service, and Network Service.'
   desc  "Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
     Accounts with the \"Create global objects\" user right can create objects that are available to all sessions, which could affect processes in otherusers' sessions."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
     Run \"gpedit.msc\".
     Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment.
@@ -39,12 +37,12 @@ control "SV-205754" do
   tag 'rid': 'SV-103147r1_rule'
   tag 'stig_id': 'WN19-UR-000070'
   tag 'fix_id': 'F-99305r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag 'cci': ['CCI-002235']
+  tag 'nist': ['AC-6 (10)', 'Rev_4']
 
   active_global_privilege_users = security_policy.SeCreateGlobalPrivilege.entries
-  allowed_global_privilege_users = input("allowed_global_privilege_users")
-  disallowed_global_privilege_users = input("disallowed_global_privilege_users")
+  allowed_global_privilege_users = input('allowed_global_privilege_users')
+  disallowed_global_privilege_users = input('disallowed_global_privilege_users')
   unauthorized_users = []
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
@@ -62,7 +60,7 @@ control "SV-205754" do
         unauthorized_users << user
       end
     end
-    describe "Global Object Creation Privilege must be limited to" do
+    describe 'Global Object Creation Privilege must be limited to' do
       it "Authorized SIDs: #{allowed_global_privilege_users}" do
         failure_message = "Unauthorized SIDs: #{unauthorized_users}"
         expect(unauthorized_users).to be_empty, failure_message

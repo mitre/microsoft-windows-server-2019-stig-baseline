@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205836" do
+control 'SV-205836' do
   title "Windows Server 2019 must be configured to audit Object Access - Other
 Object Access Events successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Auditing for other object access records events related to the management
 of task scheduler jobs and COM+ objects."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -41,8 +39,8 @@ with \"Success\" selected."
   tag 'rid': 'SV-103251r1_rule'
   tag 'stig_id': 'WN19-AU-000220'
   tag 'fix_id': 'F-99409r1_fix'
-  tag 'cci': ["CCI-000172"]
-  tag 'nist': ["AU-12 c", "Rev_4"]
+  tag 'cci': ['CCI-000172']
+  tag 'nist': ['AU-12 c', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -53,4 +51,3 @@ with \"Success\" selected."
     end
   end
 end
-

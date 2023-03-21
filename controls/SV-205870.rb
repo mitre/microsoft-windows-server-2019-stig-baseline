@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205870" do
+control 'SV-205870' do
   title "Windows Server 2019 Windows Update must not obtain updates from other
 PCs on the Internet."
   desc  "Windows Update can obtain updates from additional sources instead of
@@ -8,7 +6,7 @@ Microsoft. In addition to Microsoft, updates can be obtained from and sent to
 PCs on the local network as well as on the Internet. This is part of the
 Windows Update trusted process, however to minimize outside exposure, obtaining
 updates from or sending to systems on the Internet must be prevented."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If the following registry value does not exist or is not configured as
 specified, this is a finding:
 
@@ -44,29 +42,29 @@ to \"Enabled\" with any option except \"Internet\" selected.
   tag 'rid': 'SV-103347r1_rule'
   tag 'stig_id': 'WN19-CC-000260'
   tag 'fix_id': 'F-99505r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   describe.one do
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
-        it { should have_property 'DODownloadMode' }
-        its('DODownloadMode') { should cmp 0 }
-      end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
-        it { should have_property 'DODownloadMode' }
-        its('DODownloadMode') { should cmp 1 }
-      end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
-        it { should have_property 'DODownloadMode' }
-        its('DODownloadMode') { should cmp 2 }
-      end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
-        it { should have_property 'DODownloadMode' }
-        its('DODownloadMode') { should cmp 99 }
-      end
-      describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
-        it { should have_property 'DODownloadMode' }
-        its('DODownloadMode') { should cmp 100 }
-      end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
+      it { should have_property 'DODownloadMode' }
+      its('DODownloadMode') { should cmp 0 }
     end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
+      it { should have_property 'DODownloadMode' }
+      its('DODownloadMode') { should cmp 1 }
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
+      it { should have_property 'DODownloadMode' }
+      its('DODownloadMode') { should cmp 2 }
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
+      it { should have_property 'DODownloadMode' }
+      its('DODownloadMode') { should cmp 99 }
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization') do
+      it { should have_property 'DODownloadMode' }
+      its('DODownloadMode') { should cmp 100 }
+    end
+  end
 end

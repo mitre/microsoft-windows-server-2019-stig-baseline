@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205776" do
+control 'SV-205776' do
   title "Windows Server 2019 must be configured to audit Privilege Use -
 Sensitive Privilege Use failures."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -13,7 +11,7 @@ assets and detecting signs of suspicious and unexpected behavior.
     Sensitive Privilege Use records events related to use of sensitive
 privileges, such as \"Act as part of the operating system\" or \"Debug
 programs\"."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "
     Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
@@ -39,14 +37,14 @@ with \"Failure\" selected."
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000064-GPOS-00033",
-"SRG-OS-000462-GPOS-00206", "SRG-OS-000466-GPOS-00210"]
+  tag 'satisfies': ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000064-GPOS-00033',
+'SRG-OS-000462-GPOS-00206', 'SRG-OS-000466-GPOS-00210']
   tag 'gid': 'V-93103'
   tag 'rid': 'SV-103191r1_rule'
   tag 'stig_id': 'WN19-AU-000310'
   tag 'fix_id': 'F-99349r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag 'cci': ['CCI-000172', 'CCI-002234']
+  tag 'nist': ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -57,4 +55,3 @@ with \"Failure\" selected."
     end
   end
 end
-

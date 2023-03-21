@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "SV-205761" do
-  title "Windows Server 2019 Increase scheduling priority: user right must only be assigned to the Administrators group."
+control 'SV-205761' do
+  title 'Windows Server 2019 Increase scheduling priority: user right must only be assigned to the Administrators group.'
   desc  "Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
     Accounts with the \"Increase scheduling priority\" user right can change a scheduling priority, causing performance issues or a denial of service."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
     Run \"gpedit.msc\".
     Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment.
@@ -30,8 +28,8 @@ control "SV-205761" do
   tag 'rid': 'SV-103161r1_rule'
   tag 'stig_id': 'WN19-UR-000140'
   tag 'fix_id': 'F-99319r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag 'cci': ['CCI-002235']
+  tag 'nist': ['AC-6 (10)', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 

@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205735" do
+control 'SV-205735' do
   title "Windows Server 2019 permissions for program file directories must
 conform to minimum requirements."
   desc  "Changing the system's file and directory permissions allows the
@@ -10,7 +8,7 @@ and installed applications.
     The default permissions are adequate when the Security Option \"Network
 access: Let Everyone permissions apply to anonymous users\" is set to
 \"Disabled\" (WN19-SO-000240)."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "The default permissions are adequate when the Security Option \"Network
 access: Let Everyone permissions apply to anonymous users\" is set to
 \"Disabled\" (WN19-SO-000240).
@@ -101,25 +99,24 @@ subfolders, and files"
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000312-GPOS-00122'
-  tag 'satisfies': ["SRG-OS-000312-GPOS-00122", "SRG-OS-000312-GPOS-00123",
-"SRG-OS-000312-GPOS-00124"]
+  tag 'satisfies': ['SRG-OS-000312-GPOS-00122', 'SRG-OS-000312-GPOS-00123',
+'SRG-OS-000312-GPOS-00124']
   tag 'gid': 'V-93021'
   tag 'rid': 'SV-103109r1_rule'
   tag 'stig_id': 'WN19-00-000150'
   tag 'fix_id': 'F-99267r1_fix'
-  tag 'cci': ["CCI-002165"]
-  tag 'nist': ["AC-3 (4)", "Rev_4"]
+  tag 'cci': ['CCI-002165']
+  tag 'nist': ['AC-3 (4)', 'Rev_4']
 
-  c_program_files_perm = json( command: "icacls 'C:\\Program Files' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("C:\\Program Files ", '') }
-    describe "c:\\Program Files permissions are set correctly on folder structure" do
-      subject { c_program_files_perm.eql? input('c_program_files_perm') }
-      it { should eq true }
-    end
+  c_program_files_perm = json(command: "icacls 'C:\\Program Files' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map { |e| e.gsub('C:\\Program Files ', '') }
+  describe 'c:\\Program Files permissions are set correctly on folder structure' do
+    subject { c_program_files_perm.eql? input('c_program_files_perm') }
+    it { should eq true }
+  end
 
-    c_program_filesx86_perm = json( command: "icacls 'C:\\Program Files (x86)' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("C:\\Program Files (x86) ", '') }
-    describe "c:\\Program Files(x86) permissions are set correctly on folder structure" do
-      subject { c_program_filesx86_perm.eql? input('c_program_files_perm') }
-      it { should eq true }
-    end
+  c_program_filesx86_perm = json(command: "icacls 'C:\\Program Files (x86)' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map { |e| e.gsub('C:\\Program Files (x86) ', '') }
+  describe 'c:\\Program Files(x86) permissions are set correctly on folder structure' do
+    subject { c_program_filesx86_perm.eql? input('c_program_files_perm') }
+    it { should eq true }
+  end
 end
-

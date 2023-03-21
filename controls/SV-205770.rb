@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205770" do
+control 'SV-205770' do
   title "Windows Server 2019 must be configured to audit Detailed Tracking -
 Process Creation successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Process Creation records events related to the creation of a process and
 the source."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -37,13 +35,13 @@ System Audit Policies >> Detailed Tracking >> \"Audit Process Creation\" with
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000471-GPOS-00215"]
+  tag 'satisfies': ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000471-GPOS-00215']
   tag 'gid': 'V-93091'
   tag 'rid': 'SV-103179r1_rule'
   tag 'stig_id': 'WN19-AU-000140'
   tag 'fix_id': 'F-99337r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag 'cci': ['CCI-000172', 'CCI-002234']
+  tag 'nist': ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -54,4 +52,3 @@ System Audit Policies >> Detailed Tracking >> \"Audit Process Creation\" with
     end
   end
 end
-

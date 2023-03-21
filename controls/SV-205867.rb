@@ -1,13 +1,11 @@
-# encoding: UTF-8
-
-control "SV-205867" do
+control 'SV-205867' do
   title "Windows Server 2019 users must be prompted to authenticate when the
 system wakes from sleep (on battery)."
   desc  "A system that does not require authentication when resuming from sleep
 may provide access to unauthorized users. Authentication must always be
 required when accessing a system. This setting ensures users are prompted for a
 password when the system wakes from sleep (on battery)."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If the following registry value does not exist or is not configured as
 specified, this is a finding:
 
@@ -29,8 +27,8 @@ Administrative Templates >> System >> Power Management >> Sleep Settings >>
   tag 'rid': 'SV-103341r1_rule'
   tag 'stig_id': 'WN19-CC-000180'
   tag 'fix_id': 'F-99499r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag 'cci': ['CCI-000366']
+  tag 'nist': ['CM-6 b', 'Rev_4']
 
   if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
@@ -39,9 +37,8 @@ Administrative Templates >> System >> Power Management >> Sleep Settings >>
     end
   else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51') do
-     it { should have_property 'DCSettingIndex' }
-     its('DCSettingIndex') { should cmp 1 }
-   end
+      it { should have_property 'DCSettingIndex' }
+      its('DCSettingIndex') { should cmp 1 }
+    end
   end
 end
-

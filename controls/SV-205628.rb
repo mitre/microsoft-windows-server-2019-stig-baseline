@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'SV-205628' do
   title "Windows Server 2019 must be configured to audit Account Management -
 Computer Account Management successes."

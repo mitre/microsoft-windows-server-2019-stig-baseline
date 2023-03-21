@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "SV-205648" do
+control 'SV-205648' do
   title "Windows Server 2019 must have the #{input('org_name')[:acronym]} Root Certificate Authority (CA) certificates installed in the Trusted Root Store."
   desc  "To ensure secure #{input('org_name')[:acronym]} websites and #{input('org_name')[:acronym]}-signed code are properly validated, the system must trust the #{input('org_name')[:acronym]} Root CAs. The #{input('org_name')[:acronym]} root certificates will ensure that the trust chain is established for server certificates issued from the #{input('org_name')[:acronym]} CAs."
-  desc  "rationale", ""
-  desc  "check", "The certificates and thumbprints referenced below apply to unclassified systems; see PKE documentation for other networks.
+  desc  'rationale', ''
+  desc  'check', "The certificates and thumbprints referenced below apply to unclassified systems; see PKE documentation for other networks.
     Open \"Windows PowerShell\" as an administrator.
     Execute the following command:
     Get-ChildItem -Path Cert:Localmachine\\root | Where Subject -Like \"*DoD*\" | FL Subject, Thumbprint, NotAfter
@@ -57,7 +55,7 @@ control "SV-205648" do
     DoD Root CA 5
     Thumbprint: 4ECB5CC3095670454DA1CBD410FC921F46B8564B
     Valid to: Friday, June 14, 2041"
-  desc  "fix", "Install the DoD Root CA certificates:
+  desc  'fix', "Install the DoD Root CA certificates:
 
     DoD Root CA 2
     DoD Root CA 3
@@ -67,14 +65,14 @@ control "SV-205648" do
     The InstallRoot tool is available on IASE at http://iase.disa.mil/pki-pke/Pages/tools.aspx."
   impact 0.5
   tag severity: nil
-  tag gtitle: "SRG-OS-000066-GPOS-00034"
-  tag satisfies: ["SRG-OS-000066-GPOS-00034", "SRG-OS-000403-GPOS-00182"]
-  tag gid: "V-93487"
-  tag rid: "SV-103573r1_rule"
-  tag stig_id: "WN19-PK-000010"
-  tag fix_id: "F-99731r1_fix"
-  tag cci: ["CCI-000185", "CCI-002470"]
-  tag nist: ["IA-5 (2) (a)", "SC-23 (5)", "Rev_4"]
+  tag gtitle: 'SRG-OS-000066-GPOS-00034'
+  tag satisfies: ['SRG-OS-000066-GPOS-00034', 'SRG-OS-000403-GPOS-00182']
+  tag gid: 'V-93487'
+  tag rid: 'SV-103573r1_rule'
+  tag stig_id: 'WN19-PK-000010'
+  tag fix_id: 'F-99731r1_fix'
+  tag cci: ['CCI-000185', 'CCI-002470']
+  tag nist: ['IA-5 (2) (a)', 'SC-23 (5)', 'Rev_4']
 
   if input('sensitive_system') == true
     impact 0.0
@@ -84,31 +82,29 @@ control "SV-205648" do
   else
     dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
     query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\root  | Where Subject -Like "*DoD*" | Select Subject, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' }).params
- 
+
     describe 'Verify DoD Root Certificate Authority (CA) certificates are installed in the Trusted Root Store.' do
       subject { query }
       it { should be_in dod_interoperability_certificates }
     end
-    
+
     unless query.empty?
       case query
       when Hash
         query.each do |key, value|
-          if key == "NotAfter"
-            cert_date = Date.parse(value)
-            describe cert_date do
-              it { should be >= Date.today }
-            end
+          next unless key == 'NotAfter'
+          cert_date = Date.parse(value)
+          describe cert_date do
+            it { should be >= Date.today }
           end
         end
       when Array
         query.each do |certs|
           certs.each do |key, value|
-            if key == "NotAfter"
-              cert_date = Date.parse(value)
-              describe cert_date do
-                it { should be >= Date.today }
-              end
+            next unless key == 'NotAfter'
+            cert_date = Date.parse(value)
+            describe cert_date do
+              it { should be >= Date.today }
             end
           end
         end

@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205769" do
+control 'SV-205769' do
   title "Windows Server 2019 must be configured to audit Account Management -
 Other Account Management Events successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Other Account Management Events records events such as the access of a
 password hash or the Password Policy Checking API being called."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -37,14 +35,14 @@ Events\" with \"Success\" selected."
   impact 0.5
   tag 'severity': nil
   tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000064-GPOS-00033",
-"SRG-OS-000462-GPOS-00206", "SRG-OS-000466-GPOS-00210"]
+  tag 'satisfies': ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000064-GPOS-00033',
+'SRG-OS-000462-GPOS-00206', 'SRG-OS-000466-GPOS-00210']
   tag 'gid': 'V-93089'
   tag 'rid': 'SV-103177r1_rule'
   tag 'stig_id': 'WN19-AU-000090'
   tag 'fix_id': 'F-99335r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag 'cci': ['CCI-000172', 'CCI-002234']
+  tag 'nist': ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -55,4 +53,3 @@ Events\" with \"Success\" selected."
     end
   end
 end
-

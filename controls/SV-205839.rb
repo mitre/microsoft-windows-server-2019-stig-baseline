@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "SV-205839" do
+control 'SV-205839' do
   title "Windows Server 2019 must be configured to audit Detailed Tracking -
 Plug and Play Events successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Plug and Play activity records events related to the successful connection
 of external devices."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -41,8 +39,8 @@ selected."
   tag 'rid': 'SV-103245r1_rule'
   tag 'stig_id': 'WN19-AU-000130'
   tag 'fix_id': 'F-99403r1_fix'
-  tag 'cci': ["CCI-000172"]
-  tag 'nist': ["AU-12 c", "Rev_4"]
+  tag 'cci': ['CCI-000172']
+  tag 'nist': ['AU-12 c', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -59,4 +57,3 @@ selected."
     end
   end
 end
-
