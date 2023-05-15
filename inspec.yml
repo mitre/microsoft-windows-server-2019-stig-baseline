@@ -30,10 +30,8 @@ inputs:
 
   - name: temporary_account_period # V-92975
     desc: "List the number of days that temporary accounts remain active for"
-    type: Hash
-    value: 
-      hours: 72
-      days: 3
+    type: Numeric
+    value: 3
 
   - name: emergency_accounts_domain # V-92977
     desc: "List of emergency accounts on the domain"
@@ -49,11 +47,8 @@ inputs:
 
   - name: emergency_account_period # V-92977
     desc: "List the number of days that temporary accounts remain active for"
-    type: Hash
-    value: 
-      hours: 72
-      days: 3 
-
+    type: Numeric
+    value: 3
 
 
   - name: max_pass_lockout # V-93141
