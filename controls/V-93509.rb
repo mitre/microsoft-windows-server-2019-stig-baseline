@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 control 'V-93509' do
-  title "Windows Server 2019 directory service must be configured to terminate LDAP-based network connections to the directory server after #{input('maximum_idle_time')/60} minutes of inactivity."
+  title "Windows Server 2019 directory service must be configured to terminate LDAP-based network connections to the directory server after #{input('maximum_idle_time_phrase')} of inactivity."
   desc  'The failure to terminate inactive network connections increases the risk of a successful attack on the directory server. The longer an established session is in progress, the more time an attacker has to hijack the session, implement a means to passively intercept data, or compromise any protections on client access. For example, if an attacker gains control of a client computer, an existing (already authenticated) session with the directory server could allow access to the directory. The lack of confidentiality protection in LDAP-based sessions increases exposure to this vulnerability.'
   desc  'rationale', ''
   desc  'check', "This applies to domain controllers. It is NA for other systems.
@@ -13,7 +13,7 @@ control 'V-93509' do
     (where [host-name] is the computer name of the domain controller).
     At the \"server connections:\" prompt, enter \"q\".
     At the \"ldap policy:\" prompt, enter \"show values\".
-    If the value for MaxConnIdleTime is greater than \"#{input('maximum_idle_time')/60}\" minutes or is not specified, this is a finding.
+    If the value for MaxConnIdleTime is greater than \"#{input('maximum_idle_time')}\" (#{input('maximum_idle_time_phrase')}) or is not specified, this is a finding.
     Enter \"q\" at the \"ldap policy:\" and \"ntdsutil:\" prompts to exit.
 
     Alternately, Dsquery can be used to display MaxConnIdleTime:
@@ -22,8 +22,8 @@ control 'V-93509' do
     dsquery * \"cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,dc=[forest-name]\" -attr LDAPAdminLimits
 
     The quotes are required and dc=[forest-name] is the fully qualified LDAP name of the domain being reviewed (e.g., dc=disaost,dc=mil).
-    If the results do not specify a \"MaxConnIdleTime\" or it has a value greater than \"#{input('maximum_idle_time')/60}\" minutes, this is a finding."
-  desc  'fix', "Configure the directory service to terminate LDAP-based network connections to the directory server after #{input('maximum_idle_time')/60} minutes of inactivity.
+    If the results do not specify a \"MaxConnIdleTime\" or it has a value greater than \"#{input('maximum_idle_time')}\" (#{input('maximum_idle_time_phrase')}), this is a finding."
+  desc  'fix', "Configure the directory service to terminate LDAP-based network connections to the directory server after #{input('maximum_idle_time_phrase')} of inactivity.
     Open an elevated \"Command prompt\" (run as administrator).
     Enter \"ntdsutil\".
     At the \"ntdsutil:\" prompt, enter \"LDAP policies\".
