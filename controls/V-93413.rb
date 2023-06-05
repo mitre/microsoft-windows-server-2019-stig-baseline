@@ -29,13 +29,14 @@ control "V-93413" do
   tag cci: ["CCI-000381"]
   tag nist: ["CM-7 a", "Rev_4"]
 
-  if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds').has_property?('AllowBasicAuthInClear')
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
-    its('AllowBasicAuthInClear') { should cmp 0 }
-    end
-  else
+  describe.one do 
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
       it { should_not have_property 'AllowBasicAuthInClear' }
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
+      it { should have_property 'AllowBasicAuthInClear' }
+      its('AllowBasicAuthInClear') { should_not cmp 1 }
+      its('AllowBasicAuthInClear') { should cmp 0 }
     end
   end
 end
