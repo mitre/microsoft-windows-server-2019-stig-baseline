@@ -76,6 +76,17 @@
       else
         expiring_accounts.each do |expiring_account|
           account_name = expiring_account.fetch('SamAccountName')
+            if expiring_account.fetch("WhenCreated") == nil
+            describe "#{account_name} account's creation date" do
+              subject { expiring_account.fetch("WhenCreated") }
+              it { should_not eq nil}
+            end
+          elsif expiring_account.fetch("AccountExpirationDate") == nil
+            describe "#{account_name} account's expiration date" do
+              subject { expiring_account.fetch("AccountExpirationDate") }
+              it { should_not eq nil}
+            end
+          else  
           creation_date = Date.parse(expiring_account.fetch('WhenCreated'))
           expiration_date = Date.parse(expiring_account.fetch('AccountExpirationDate'))
           date_difference = expiration_date.mjd - creation_date.mjd
@@ -126,6 +137,17 @@
       else
         expiring_users.each do |expiring_account|
           user_name = expiring_account.fetch('Name')
+          if expiring_account.fetch("PasswordLastSet") == nil
+            describe "#{user_name} account's password last set date" do
+              subject { expiring_account.fetch("PasswordLastSet") }
+              it { should_not eq nil}
+            end
+          elsif expiring_account.fetch("AccountExpires") == nil
+            describe "#{user_name} account's expiration date" do
+              subject { expiring_account.fetch("AccountExpires") }
+              it { should_not eq nil}
+            end
+          else
           password_date = Date.parse(expiring_account.fetch('PasswordLastSet'))
           expiration_date = Date.parse(expiring_account.fetch('AccountExpires'))
           date_difference = expiration_date.mjd - password_date.mjd
