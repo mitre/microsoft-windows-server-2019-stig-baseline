@@ -96,8 +96,7 @@
           end
         end
       end
-
-    else
+    end
       expiring_users = []
       temporary_accounts = input('temp_accounts_local')
       unless temporary_accounts == [nil]
@@ -158,4 +157,3 @@
         end
       end
     end
-  end
