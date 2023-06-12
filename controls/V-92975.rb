@@ -155,4 +155,3 @@
             it { should cmp <= input('temporary_account_period') }
           end
         end
-      end
