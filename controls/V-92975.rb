@@ -97,6 +97,7 @@
         end
       end
     end
+  else
       expiring_users = []
       temporary_accounts = input('temp_accounts_local')
       unless temporary_accounts == [nil]
@@ -155,3 +156,5 @@
             it { should cmp <= input('temporary_account_period') }
           end
         end
+      end
+    end
