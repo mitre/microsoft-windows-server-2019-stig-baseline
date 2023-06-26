@@ -57,7 +57,7 @@ other than \"All\" selected."
     end
     describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Policies\EarlyLaunch') do
       it { should have_property 'DriverLoadPolicy' }
-      its('DriverLoadPolicy') { should_not be 7 }
+      its('DriverLoadPolicy') { should be_in [1, 3, 8] }
     end
   end
 end
