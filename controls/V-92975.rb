@@ -130,7 +130,7 @@ control 'V-92975' do
       end
     end
     if expiring_users.empty?
-      # impact 0.0
+      impact 0.0
       describe 'This control is not applicable as no expiring user accounts with password last set date were found' do
         skip 'This control is not applicable as no expiring user accounts with password last set date were found'
       end
