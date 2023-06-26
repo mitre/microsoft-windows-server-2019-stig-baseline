@@ -27,13 +27,14 @@ control "V-93563" do
   tag cci: ["CCI-002824"]
   tag nist: ["SI-16", "Rev_4"]
 
-  if registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer').has_property?('NoDataExecutionPrevention')
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
-    its('NoDataExecutionPrevention') { should cmp 0 }
-    end
-  else
+  describe.one do 
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
       it { should_not have_property 'NoDataExecutionPrevention' }
+    end
+    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
+      it { should have_property 'NoDataExecutionPrevention' }
+      its('NoDataExecutionPrevention') { should_not cmp 1 }
+      its('NoDataExecutionPrevention') { should cmp 0 }
     end
   end
 end
