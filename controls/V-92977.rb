@@ -48,16 +48,27 @@ control "V-92977" do
       end
       emergency_accounts.each do |emergency_account|
         account_name = emergency_account.fetch("SamAccountName")
-        creation_date = Date.parse(emergency_account.fetch("WhenCreated"))
-        expiration_date = Date.parse(emergency_account.fetch("AccountExpirationDate"))
-        date_difference = expiration_date.mjd - creation_date.mjd
-        describe "Account expiration set for #{account_name}" do
-          subject { date_difference }
-          it { should cmp <= input('emergency_account_period')}
+        if emergency_account.fetch("WhenCreated") == nil
+          describe "#{account_name} account's creation date" do
+            subject { emergency_account.fetch("WhenCreated") }
+            it { should_not eq nil}
+          end
+        elsif emergency_account.fetch("AccountExpirationDate") == nil
+          describe "#{account_name} account's expiration date" do
+            subject { emergency_account.fetch("AccountExpirationDate") }
+            it { should_not eq nil}
+          end
+        else
+          creation_date = Date.parse(emergency_account.fetch("WhenCreated"))
+          expiration_date = Date.parse(emergency_account.fetch("AccountExpirationDate"))
+          date_difference = expiration_date.mjd - creation_date.mjd
+          describe "Account expiration set for #{account_name}" do
+            subject { date_difference }
+            it { should cmp <= input('emergency_account_period')}
+          end
         end
       end
     end
-
   else
     emergency_accounts_list = input('emergency_accounts_local')
     if emergency_accounts_list == [nil]
@@ -72,12 +83,24 @@ control "V-92977" do
       end
       emergency_accounts.each do |emergency_account|
         user_name = emergency_account.fetch("Name")
-        password_date = Date.parse(emergency_account.fetch("PasswordLastSet"))
-        expiration_date = Date.parse(emergency_account.fetch("AccountExpires"))
-        date_difference = expiration_date.mjd - password_date.mjd
-        describe "Account expiration set for #{user_name}" do
-          subject { date_difference }
-          it { should cmp <= input('emergency_account_period')}
+        if emergency_account.fetch("PasswordLastSet") == nil
+          describe "#{user_name} account's password last set date" do
+            subject { emergency_account.fetch("PasswordLastSet") }
+            it { should_not eq nil}
+          end
+        elsif emergency_account.fetch("AccountExpires") == nil
+          describe "#{user_name} account's expiration date" do
+            subject { emergency_account.fetch("AccountExpires") }
+            it { should_not eq nil}
+          end
+        else
+          password_date = Date.parse(emergency_account.fetch("PasswordLastSet"))
+          expiration_date = Date.parse(emergency_account.fetch("AccountExpires"))
+          date_difference = expiration_date.mjd - password_date.mjd
+          describe "Account expiration set for #{user_name}" do
+            subject { date_difference }
+            it { should cmp <= input('emergency_account_period')}
+          end
         end
       end
     end
