@@ -29,9 +29,9 @@ inputs:
       -
 
   - name: temporary_account_period # V-92975
-    desc: "List the number of hours that temporary accounts remain active for"
+    desc: "List the number of days that temporary accounts remain active for"
     type: Numeric
-    value: 72
+    value: 3
 
   - name: emergency_accounts_domain # V-92977
     desc: "List of emergency accounts on the domain"
@@ -46,9 +46,9 @@ inputs:
       -
 
   - name: emergency_account_period # V-92977
-    desc: "List the number of hours that emergency accounts remain active for"
+    desc: "List the number of days that emergency accounts remain active for"
     type: Numeric
-    value: 72
+    value: 3
 
   - name: max_pass_lockout # V-93141
     desc: "Account lockout threshold is recommended to be 3 or less invalid logon attempts [3]"
@@ -76,9 +76,9 @@ inputs:
     value: 30
 
   - name: maximum_idle_time # V-93509
-    desc: "Set the maximum connection idle time in minutes stated by your organization"
+    desc: "Set the maximum connection idle time in seconds stated by your organization"
     type: Numeric
-    value: 5
+    value: 300
 
   - name: unused_account_age # V-93457
     desc: "Set the maximum age in days for unused accounts stated by your organization"
