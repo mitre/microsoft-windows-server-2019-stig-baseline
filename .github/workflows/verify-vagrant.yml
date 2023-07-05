@@ -52,10 +52,6 @@ jobs:
         with:
           command_string: 'view summary -i results/${{ matrix.suite }}-test-result.json'
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
-        run: |
-          cd test/cookbooks/Win2019STIG
-          bundle exec inspec_tools compliance -j results/${{ matrix.suite }}-test-result.json -f ${{ matrix.suite }}.threshold.yml
-      - name: Save Test Result JSON
         uses: mitre/saf_action@v1
         with:
           command_string: 'validate threshold -i test/cookbooks/Win2019STIG/results/*.json -F ${{ matrix.suite }}.threshold.yml'        uses: actions/upload-artifact@v2
