@@ -12,7 +12,7 @@ on:
 jobs:
   my-job:
     name: Validate my profile
-    runs-on: macos-10.15
+    runs-on: macos-11
     env:
       CHEF_LICENSE: accept-silent
       KITCHEN_YAML: kitchen.vagrant.yml
