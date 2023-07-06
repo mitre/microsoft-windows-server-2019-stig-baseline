@@ -47,11 +47,15 @@ jobs:
         run: |
           cd test/cookbooks/Win2019STIG
           bundle exec kitchen test ${{ matrix.suite }} || true
+      - name: Save Test Result JSON
+        uses: actions/upload-artifact@v3
+        with:
+          path: test/cookbooks/Win2019STIG/results/*.json
       - name: Display our ${{ matrix.suite }} results summary
         uses: mitre/saf_action@v1
         with:
-          command_string: 'view summary -i results/${{ matrix.suite }}-test-result.json'
+          command_string: 'view summary -i test/cookbooks/Win2019STIG/results/${{ matrix.suite }}-test-result.json'
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
-          command_string: 'validate threshold -i test/cookbooks/Win2019STIG/results/*.json -F ${{ matrix.suite }}.threshold.yml'        uses: actions/upload-artifact@v2
+          command_string: 'validate threshold -i test/cookbooks/Win2019STIG/results/${{ matrix.suite }}-test-result.json -F test/cookbooks/Win2019STIG/${{ matrix.suite }}.threshold.yml'
