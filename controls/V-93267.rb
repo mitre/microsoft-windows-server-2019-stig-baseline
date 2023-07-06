@@ -47,9 +47,8 @@ scripts\" to \"Not Configured\" or \"Disabled\"."
       it { should_not have_property 'SafeForScripting' }
     end
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Installer') do
-      its('SafeForScripting') { should_not be 1 }
-    end
-    describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Installer') do
+      it { should have_property 'SafeForScripting' }
+      its('SafeForScripting') { should_not cmp 1 }
       its('SafeForScripting') { should cmp 0 }
     end
   end

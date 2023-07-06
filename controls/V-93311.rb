@@ -30,13 +30,14 @@ control "V-93311" do
   tag cci: ["CCI-000366"]
   tag nist: ["CM-6 b", "Rev_4"]
 
-  if registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments').has_property?('SaveZoneInformation')
-    describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
-    its('SaveZoneInformation') { should cmp 2 }
-    end
-  else
+  describe.one do
     describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
       it { should_not have_property 'SaveZoneInformation' }
+    end
+    describe registry_key('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments') do
+      it { should have_property 'SaveZoneInformation' }
+      its('SaveZoneInformation') { should_not cmp 1 }
+      its('SaveZoneInformation') { should cmp 2 }
     end
   end
 end
