@@ -48,8 +48,6 @@ control 'V-93241' do
   tag 'nist': ['CM-6 b', 'Rev_4']
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
-  keyvalue_netlogon = '\\\\*\\NETLOGON'
-  keyvalue_sysvol = '\\\\*\\SYSVOL'
 
   if is_domain == 'WORKGROUP'
     impact 0.0
@@ -58,12 +56,12 @@ control 'V-93241' do
     end
   else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths') do
-      it { should have_property keyvalue_sysvol }
-      its(keyvalue_sysvol) { should cmp 'RequireMutualAuthentication=1, RequireIntegrity=1' }
+      it { should have_property '\\\\*\\SYSVOL' }
+      its('\\\\*\\SYSVOL') { should cmp 'RequireMutualAuthentication=1, RequireIntegrity=1' }
     end
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths') do
-      it { should have_property keyvalue_netlogon }
-      its(keyvalue_netlogon) { should cmp 'RequireMutualAuthentication=1, RequireIntegrity=1' }
+      it { should have_property '\\\\*\\NETLOGON' }
+      its('\\\\*\\NETLOGON') { should cmp 'RequireMutualAuthentication=1, RequireIntegrity=1' }
     end
   end
 end
