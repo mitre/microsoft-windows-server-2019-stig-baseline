@@ -12,43 +12,43 @@ The latest versions and installation options are available at the [InSpec](http:
 The following inputs must be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. More information about InSpec inputs can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
 
 ```
-- Set to either the string "true" or "false"
+# Set to either the string "true" or "false"
 sensitive_system: false
 
-- List of temporary accounts on the domain
+# List of temporary accounts on the domain
 temp_accounts_domain: []
 
-- List of temporary accounts on local system
+# List of temporary accounts on local system
 temp_accounts_local: []
 
-- List of emergency accounts on the domain
+# List of emergency accounts on the domain
 emergency_accounts_domain: []
 
-- List of emergency accounts on the system
+# List of emergency accounts on the system
 emergency_accounts_local: []
 
-- List of authorized users in the local Administrators group for a domain controller
+# List of authorized users in the local Administrators group for a domain controller
 local_administrators_dc: []
 
-- List of authorized users in the local Administrators group for a member server
+# List of authorized users in the local Administrators group for a member server
 local_administrators_member: []
 
-- Local Administrator Account on Windows Server
+# Local Administrator Account on Windows Server
 local_administrator: ""
 
-- List of authorized users in the Backup Operators Group
+# List of authorized users in the Backup Operators Group
 backup_operators: []
 
-- List Application or Service Accounts domain
+# List Application or Service Accounts domain
 application_accounts_domain: []
 
-- List Excluded Accounts domain
+# List Excluded Accounts domain
 excluded_accounts_domain: []
 
-- List Application Local Accounts
+# List Application Local Accounts
 application_accounts_local: []
 
-- List of authorized users in the local Administrators group
+# List of authorized users in the local Administrators group
 administrators: []
 
 ```
