@@ -12,7 +12,7 @@ on:
 jobs:
   my-job:
     name: Validate my profile
-    runs-on: macos-latest
+    runs-on: macos-latest-large
     env:
       CHEF_LICENSE: accept-silent
       KITCHEN_YAML: kitchen.vagrant.yml
@@ -23,6 +23,10 @@ jobs:
     steps:
       - name: Add jq for output formatting
         run: brew install jq
+      - name: Add vagrant
+        run: |
+          brew tap hashicorp/tap
+          brew install hashicorp/tap/hashicorp-vagrant
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Setup Ruby
