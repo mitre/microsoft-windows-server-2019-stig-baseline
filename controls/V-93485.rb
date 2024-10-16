@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93485" do
   title "Windows Server 2019 PKI certificates associated with user accounts must be issued by a DoD PKI or an approved External Certificate Authority (ECA)."
   desc  "A PKI implementation depends on the practices established by the Certificate Authority (CA) to ensure the implementation is secure. Without proper practices, the certificates issued by a CA have limited value in authentication functions."

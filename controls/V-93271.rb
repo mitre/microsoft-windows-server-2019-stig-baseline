@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93271" do
   title "Windows Server 2019 directory data (outside the root DSE) of a non-public directory must be configured to prevent anonymous access."
   desc  "To the extent that anonymous access to directory data (outside the root DSE) is permitted, read access control of the data is effectively disabled. If other means of controlling access (such as network restrictions) are compromised, there may be nothing else to protect the confidentiality of sensitive directory data."

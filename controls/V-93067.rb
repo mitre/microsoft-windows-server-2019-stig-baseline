@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93067" do
   title "Windows Server 2019 Force shutdown from a remote system user right
 must only be assigned to the Administrators group."

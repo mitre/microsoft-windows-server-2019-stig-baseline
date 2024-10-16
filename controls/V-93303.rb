@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93303" do
   title "Windows Server 2019 must be configured to at least negotiate signing for LDAP client signing."
   desc  "This setting controls the signing requirements for LDAP clients. This must be set to \"Negotiate signing\" or \"Require signing\", depending on the environment and type of LDAP server in use."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93571" do
   title "Windows Server 2019 must have a host-based firewall installed and enabled."
   desc  "A firewall provides a line of defense against attack, allowing or blocking inbound and outbound connections based on a set of rules."

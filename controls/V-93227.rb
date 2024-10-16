@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93227" do
   title "Windows Server 2019 must have orphaned security identifiers (SIDs)
 removed from user rights."

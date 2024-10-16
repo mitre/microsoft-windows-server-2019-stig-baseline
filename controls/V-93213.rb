@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93213" do
   title "Windows Server 2019 domain-joined systems must have a Trusted Platform
 Module (TPM) enabled and ready for use."

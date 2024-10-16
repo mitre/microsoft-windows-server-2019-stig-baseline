@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93157" do
   title "Windows Server 2019 must be configured to audit Detailed Tracking -
 Plug and Play Events successes."

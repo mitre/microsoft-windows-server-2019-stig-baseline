@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93207" do
   title "Windows Server 2019 members of the Backup Operators group must have
 separate accounts for backup duties and normal operational tasks."

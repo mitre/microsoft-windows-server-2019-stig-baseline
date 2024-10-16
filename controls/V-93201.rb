@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93201" do
   title "Windows Server 2019 must disable the Windows Installer Always install
 with elevated privileges option."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93373" do
   title "Windows Server 2019 Autoplay must be turned off for non-volume devices."
   desc  "Allowing AutoPlay to execute may introduce malicious code to a system. AutoPlay begins reading from a drive as soon as media is inserted into the drive. As a result, the setup file of programs or music on audio media may start. This setting will disable AutoPlay for non-volume devices, such as Media Transfer Protocol (MTP) devices."

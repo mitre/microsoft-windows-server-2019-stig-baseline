@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93209" do
   title "Windows Server 2019 manually managed application account passwords must be changed at least every #{input('app_password_age')} days or when a system administrator with knowledge of the password leaves the organization."
   desc  "Setting application account passwords to expire may cause applications to stop functioning. However, not changing them on a regular basis exposes them to attack. If managed service accounts are used, this alleviates the need to manually change application account passwords."

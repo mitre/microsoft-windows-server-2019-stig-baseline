@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93461" do
   title "Windows Server 2019 manually managed application account passwords must be at least #{input('minimum_password_length_manual')} characters in length."
   desc  "Application/service account passwords must be of sufficient length to prevent being easily cracked. Application/service accounts that are manually managed must have passwords at least #{input('minimum_password_length_manual')} characters in length."

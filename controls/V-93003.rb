@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93003" do
   title "Windows Server 2019 Deny log on as a service user right must be
 configured to include no accounts or groups (blank) on domain controllers."

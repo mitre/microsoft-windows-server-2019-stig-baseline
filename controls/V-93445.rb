@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93445" do
   title "Windows Server 2019 Kerberos service ticket maximum lifetime must be limited to 600 minutes or less."
   desc  "This setting determines the maximum amount of time (in minutes) that a granted session ticket can be used to access a particular service. Session tickets are used only to authenticate new connections with servers. Ongoing operations are not interrupted if the session ticket used to authenticate the connection expires during the connection."

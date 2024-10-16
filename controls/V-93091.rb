@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93091" do
   title "Windows Server 2019 must be configured to audit Detailed Tracking -
 Process Creation successes."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93553" do
   title "Windows Server 2019 must be configured to require a strong session key."
   desc  "A computer connecting to a domain controller will establish a secure channel. The secure channel connection may be subject to compromise, such as hijacking or eavesdropping, if strong session keys are not used to establish the connection. Requiring strong session keys enforces 128-bit encryption between systems."

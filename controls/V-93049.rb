@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93049" do
   title "Windows Server 2019 Access Credential Manager as a trusted caller user
 right must not be assigned to any groups or accounts."

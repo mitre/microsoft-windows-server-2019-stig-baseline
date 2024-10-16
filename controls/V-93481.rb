@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93481" do
   title "Windows Server 2019 domain controllers must have a PKI server certificate."
   desc  "Domain controllers are part of the chain of trust for PKI authentications. Without the appropriate certificate, the authenticity of the domain controller cannot be verified. Domain controllers must have a server certificate to establish authenticity as part of PKI authentications in the domain."

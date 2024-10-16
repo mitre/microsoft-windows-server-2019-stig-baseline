@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93269" do
   title "Windows Server 2019 must disable automatically signing in the last interactive user after a system-initiated restart."
   desc  "Windows can be configured to automatically sign the user back in after a Windows Update restart. Some protections are in place to help ensure this is done in a secure fashion; however, disabling this will prevent the caching of credentials for this purpose and also ensure the user is aware of the restart."

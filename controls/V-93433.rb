@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93433" do
   title "Windows Server 2019 User Account Control must automatically deny standard user requests for elevation."
   desc  "User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting controls the behavior of elevation when requested by a standard user account."

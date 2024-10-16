@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93379" do
   title "Windows Server 2019 must employ a deny-all, permit-by-exception policy to allow the execution of authorized software programs."
   desc  "Using a whitelist provides a configuration management method to allow the execution of only authorized software. Using only authorized software decreases risk by limiting the number of potential vulnerabilities.

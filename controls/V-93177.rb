@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93177" do
   title "Windows Server 2019 Application event log size must be configured to
 32768 KB or greater."

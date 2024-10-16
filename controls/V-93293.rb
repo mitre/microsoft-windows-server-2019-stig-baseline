@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93293" do
   title "Windows Server 2019 must be configured to prevent anonymous users from having the same permissions as the Everyone group."
   desc  "Access by anonymous users must be restricted. If this setting is enabled, anonymous users have the same rights and permissions as the built-in Everyone group. Anonymous users must not have these permissions or rights."

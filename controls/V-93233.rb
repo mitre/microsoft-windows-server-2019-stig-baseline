@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93233" do
   title "Windows Server 2019 Internet Protocol version 6 (IPv6) source routing
 must be configured to the highest protection level to prevent IP source

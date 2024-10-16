@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93279" do
   title "Windows Server 2019 must prevent local accounts with blank passwords from being used from the network."
   desc  "An account without a password can allow unauthorized access to a system as only the username would be required. Password policies should prevent accounts with blank passwords from existing on a system. However, if a local account with a blank password does exist, enabling this setting will prevent network access, limiting the account to local console logon only."

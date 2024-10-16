@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93085" do
   title "Windows Server 2019 Restore files and directories user right must only
 be assigned to the Administrators group."

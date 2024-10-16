@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93429" do
   title "Windows Server 2019 Windows Remote Management (WinRM) service must not store RunAs credentials."
   desc  "Storage of administrative credentials could allow unauthorized access. Disallowing the storage of RunAs credentials for Windows Remote Management will prevent them from being used with plug-ins."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93259" do
   title "Windows Server 2019 Windows Update must not obtain updates from other
 PCs on the Internet."

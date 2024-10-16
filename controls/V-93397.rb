@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93397" do
   title "Windows Server 2019 must not have Windows PowerShell 2.0 installed."
   desc  "Windows PowerShell 5.x added advanced logging features that can provide additional detail when malware has been run on a system. Disabling the Windows PowerShell 2.0 mitigates against a downgrade attack that evades the Windows PowerShell 5.x script block logging feature."

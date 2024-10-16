@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93519" do
   title "Windows Server 2019 local administrator accounts must have their privileged token filtered to prevent elevated privileges from being used over the network on domain-joined member servers."
   desc  "A compromised local administrator account can provide means for an attacker to move laterally between domain systems.

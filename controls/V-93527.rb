@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93527" do
   title "Windows Server 2019 User Account Control (UAC) must only elevate UIAccess applications that are installed in secure locations."
   desc  "UAC is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting configures Windows to only allow applications installed in a secure location on the file system, such as the Program Files or the Windows\\System32 folders, to run with elevated privileges."

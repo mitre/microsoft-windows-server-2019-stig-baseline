@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-93509' do
   title "Windows Server 2019 directory service must be configured to terminate LDAP-based network connections to the directory server after #{input('maximum_idle_time')/60} minutes of inactivity."
   desc  'The failure to terminate inactive network connections increases the risk of a successful attack on the directory server. The longer an established session is in progress, the more time an attacker has to hijack the session, implement a means to passively intercept data, or compromise any protections on client access. For example, if an attacker gains control of a client computer, an existing (already authenticated) session with the directory server could allow access to the directory. The lack of confidentiality protection in LDAP-based sessions increases exposure to this vulnerability.'

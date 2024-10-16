@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93291" do
   title "Windows Server 2019 must not allow anonymous enumeration of Security Account Manager (SAM) accounts."
   desc  "Anonymous enumeration of SAM accounts allows anonymous logon users (null session connections) to list all accounts names, thus providing a list of potential points to attack the system."

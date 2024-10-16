@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93231" do
   title "Windows Server 2019 must have Secure Boot enabled."
   desc  "Secure Boot is a standard that ensures systems boot only to a trusted

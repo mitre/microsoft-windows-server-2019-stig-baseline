@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93547" do
   title "Windows Server 2019 setting Domain member: Digitally encrypt or sign secure channel data (always) must be configured to Enabled."
   desc  "Requests sent on the secure channel are authenticated, and sensitive information (such as passwords) is encrypted, but not all information is encrypted. If this policy is enabled, outgoing secure channel traffic will be encrypted and signed."

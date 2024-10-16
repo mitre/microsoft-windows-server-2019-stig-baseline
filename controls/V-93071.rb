@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93071" do
   title "Windows Server 2019 Impersonate a client after authentication user
 right must only be assigned to Administrators, Service, Local Service, and

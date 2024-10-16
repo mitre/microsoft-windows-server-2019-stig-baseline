@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93229" do
   title "Windows Server 2019 systems must have Unified Extensible Firmware
 Interface (UEFI) firmware and be configured to run in UEFI mode, not Legacy

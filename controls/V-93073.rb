@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93073" do
   title "Windows Server 2019 Increase scheduling priority: user right must only be assigned to the Administrators group."
   desc  "Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.

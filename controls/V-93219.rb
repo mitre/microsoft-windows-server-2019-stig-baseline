@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93219" do
   title "Windows Server 2019 must have a host-based intrusion detection or
 prevention system."

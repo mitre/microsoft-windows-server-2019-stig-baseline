@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93257" do
   title "Windows Server 2019 Telemetry must be configured to Security or Basic."
   desc  "Some features may communicate with the vendor, sending system

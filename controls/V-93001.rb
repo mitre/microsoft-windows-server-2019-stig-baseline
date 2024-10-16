@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93001" do
   title "Windows Server 2019 Deny log on as a batch job user right on domain
 controllers must be configured to prevent unauthenticated access."

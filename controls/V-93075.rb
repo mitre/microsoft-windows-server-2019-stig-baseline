@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93075" do
   title "Windows Server 2019 Load and unload device drivers user right must
 only be assigned to the Administrators group."

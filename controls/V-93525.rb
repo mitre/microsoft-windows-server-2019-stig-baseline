@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93525" do
   title "Windows Server 2019 User Account Control must be configured to detect application installations and prompt for elevation."
   desc  "User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting requires Windows to respond to application installation requests by prompting for credentials."

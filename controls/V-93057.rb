@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93057" do
   title "Windows Server 2019 Create a token object user right must not be
 assigned to any groups or accounts."

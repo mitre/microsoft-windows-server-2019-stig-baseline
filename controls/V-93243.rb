@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93243" do
   title "Windows Server 2019 must be configured to enable Remote host allows
 delegation of non-exportable credentials."

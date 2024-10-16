@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93495" do
   title "Windows Server 2019 Kerberos encryption types must be configured to prevent the use of DES and RC4 encryption suites."
   desc  "Certain encryption types are no longer considered secure. The DES and RC4 encryption suites must not be used for Kerberos encryption.

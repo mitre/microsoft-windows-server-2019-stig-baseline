@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93277" do
   title "Windows Server 2019 must be running Credential Guard on domain-joined member servers."
   desc  "Credential Guard uses virtualization-based security to protect data that could be used in credential theft attacks if compromised. This authentication information, which was stored in the Local Security Authority (LSA) in previous versions of Windows, is isolated from the rest of operating system and can only be accessed by privileged system software."

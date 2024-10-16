@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93283" do
   title "Windows Server 2019 built-in guest account must be renamed."
   desc  "The built-in guest account is a well-known user account on all Windows systems and, as initially installed, does not require a password. This can allow access to system resources by unauthorized users. Renaming this account to an unidentified name improves the protection of this account and the system."

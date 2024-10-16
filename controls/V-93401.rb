@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93401" do
   title "Windows Server 2019 must have WDigest Authentication disabled."
   desc  "When the WDigest Authentication protocol is enabled, plain-text passwords are stored in the Local Security Authority Subsystem Service (LSASS),exposing them to theft. WDigest is disabled by default in Windows Server 2019. This setting ensures this is enforced."

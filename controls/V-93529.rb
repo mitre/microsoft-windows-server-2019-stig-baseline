@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93529" do
   title "Windows Server 2019 User Account Control (UAC) must virtualize file and registry write failures to per-user locations."
   desc  "UAC is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting configures non-UAC-compliant applications to run in virtualized file and registry entries in per-user locations, allowing them to run."

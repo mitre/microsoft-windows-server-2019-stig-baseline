@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93189" do
   title "Windows Server 2019 permissions for the Application event log must
 prevent access by non-privileged accounts."

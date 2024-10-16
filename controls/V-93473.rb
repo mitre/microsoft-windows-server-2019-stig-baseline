@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93473" do
   title "Windows Server 2019 passwords for the built-in Administrator account must be changed at least every 60 days."
   desc  "The longer a password is in use, the greater the opportunity for someone to gain unauthorized knowledge of the password. The built-in Administrator account is not generally used and its password not may be changed as frequently as necessary. Changing the password for the built-in Administrator account on a regular basis will limit its exposure.

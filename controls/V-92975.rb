@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92975' do
   title "Windows Server 2019 must automatically remove or disable temporary user accounts after #{input('temporary_account_period')*24} hours."
   desc  "If temporary user accounts remain active when no longer needed or for an excessive period, these accounts may be used to gain unauthorized access. To mitigate this risk, automated termination of all temporary accounts must be set upon account creation.

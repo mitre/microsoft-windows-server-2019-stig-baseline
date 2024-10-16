@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93129" do
   title "Windows Server 2019 Active Directory AdminSDHolder object must be
 configured with proper audit settings."
@@ -162,7 +160,6 @@ Various Properties selections may also exist by default.
       end
     else
       impact 0.0
-      desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
       describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
        skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
      end

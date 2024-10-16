@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93151" do
   title "Windows Server 2019 must force audit policy subcategory settings to
 override audit policy category settings."

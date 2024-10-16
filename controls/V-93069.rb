@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93069" do
   title "Windows Server 2019 Generate security audits user right must only be assigned to Local Service and Network Service."
   desc  "Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.

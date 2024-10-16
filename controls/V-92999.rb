@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92999" do
   title "Windows Server 2019 Deny access to this computer from the network user
 right on domain controllers must be configured to prevent unauthenticated

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93563" do
   title "Windows Server 2019 Explorer Data Execution Prevention must be enabled."
   desc  "Data Execution Prevention provides additional protection by performing checks on memory to help prevent malicious code from running. This setting will prevent Data Execution Prevention from being turned off for File Explorer."

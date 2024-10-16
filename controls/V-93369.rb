@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93369" do
   title "Windows Server 2019 users with Administrative privileges must have separate accounts for administrative duties and normal operational tasks."
   desc  "Using a privileged account to perform routine functions makes the computer vulnerable to malicious software inadvertently introduced during a session that has been granted full privileges."

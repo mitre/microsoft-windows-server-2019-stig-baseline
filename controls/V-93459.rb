@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93459" do
   title "Windows Server 2019 must have the built-in Windows password complexity policy enabled."
   desc  "The use of complex passwords increases their strength against attack. The built-in Windows password complexity policy requires passwords to contain at least three of the four types of characters (numbers, uppercase and lowercase letters, and special characters) and prevents the inclusion of user names or parts of user names."

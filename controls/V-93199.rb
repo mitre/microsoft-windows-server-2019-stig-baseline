@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93199" do
   title "Windows Server 2019 must prevent users from changing installation
 options."

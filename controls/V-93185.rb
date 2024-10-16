@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93185" do
   title "Windows Server 2019 must, at a minimum, off-load audit records of
 interconnected systems in real time and off-load standalone systems weekly."

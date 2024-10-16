@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93217" do
   title "Windows Server 2019 must use an anti-virus program."
   desc  "Malicious software can establish a base on individual desktops and

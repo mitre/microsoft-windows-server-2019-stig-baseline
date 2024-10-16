@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93413" do
   title "Windows Server 2019 must disable Basic authentication for RSS feeds over HTTP."
   desc  "Basic authentication uses plain-text passwords that could be used to compromise a system. Disabling Basic authentication will reduce this potential."

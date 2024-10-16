@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93391" do
   title "Windows Server 2019 must not the Server Message Block (SMB) v1 protocol installed."
   desc  "SMBv1 is a legacy protocol that uses the MD5 algorithm as part of SMB. MD5 is known to be vulnerable to a number of attacks such as collision and preimage attacks and is not FIPS compliant."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93263" do
   title "Windows Server 2019 File Explorer shell protocol must run in protected
 mode."

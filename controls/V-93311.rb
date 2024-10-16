@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93311" do
   title "Windows Server 2019 must preserve zone information when saving attachments."
   desc  "Attachments from outside sources may contain malicious code. Preserving zone of origin (Internet, intranet, local, restricted) information on file attachments allows Windows to determine risk."

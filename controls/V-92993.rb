@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92993" do
   title "Windows Server 2019 non-administrative accounts or groups must only
 have print permissions on printer shares."

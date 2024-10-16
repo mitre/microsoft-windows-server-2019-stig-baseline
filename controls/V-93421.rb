@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93421" do
   title "Windows Server 2019 must not have the Microsoft FTP service installed unless required by the organization."
   desc  "Unnecessary services increase the attack surface of a system. Some of these services may not support required levels of authentication or encryption."

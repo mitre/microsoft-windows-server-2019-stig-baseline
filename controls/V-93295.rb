@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93295" do
   title "Windows Server 2019 services using Local System that use Negotiate when reverting to NTLM authentication must use the computer identity instead of authenticating anonymously."
   desc  "Services using Local System that use Negotiate when reverting to NTLM authentication may gain unauthorized access if allowed to authenticate anonymously versus using the computer identity."

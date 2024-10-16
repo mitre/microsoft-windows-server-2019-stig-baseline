@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93215" do
   title "Windows Server 2019 must be maintained at a supported servicing level."
   desc  "Systems at unsupported servicing levels will not receive security

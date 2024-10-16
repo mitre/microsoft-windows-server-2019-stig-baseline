@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93403" do
   title "Windows Server 2019 downloading print driver packages over HTTP must be turned off."
   desc  "Some features may communicate with the vendor, sending system information or downloading data or components for the feature. Turning off this capability will prevent potentially sensitive information from being sent outside the enterprise and will prevent uncontrolled updates to the system.

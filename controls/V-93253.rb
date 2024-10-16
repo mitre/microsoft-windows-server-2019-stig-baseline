@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93253" do
   title "Windows Server 2019 users must be prompted to authenticate when the
 system wakes from sleep (on battery)."

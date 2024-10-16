@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93365" do
   title "Windows Server 2019 Exploit Protection mitigations must be configured for wmplayer.exe."
   desc  "Exploit protection provides a means of enabling additional mitigations against potential threats at the system and application level. Without these additional application protections, Windows may be subject to various exploits."

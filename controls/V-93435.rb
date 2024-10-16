@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93435" do
   title "Windows Server 2019 User Account Control must run all administrators in Admin Approval Mode, enabling UAC."
   desc  "User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting enables UAC."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93533" do
   title "Windows Server 2019 Remote Desktop Services must prevent drive redirection."
   desc  "Preventing users from sharing the local drives on their client computers with Remote Session Hosts that they access helps reduce possible exposure of sensitive data."

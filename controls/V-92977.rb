@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92977" do
   title "Windows Server 2019 must automatically remove or disable emergency accounts after the crisis is resolved or within #{input('emergency_account_period')*24} hours."
   desc  "Emergency administrator accounts are privileged accounts established in response to crisis situations where the need for rapid account activation is required. Therefore, emergency account activation may bypass normal account authorization processes. If these accounts are automatically disabled, system maintenance during emergencies may not be possible, thus adversely affecting system availability.

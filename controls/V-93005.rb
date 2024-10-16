@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93005" do
   title "Windows Server 2019 Deny log on locally user right on domain
 controllers must be configured to prevent unauthenticated access."

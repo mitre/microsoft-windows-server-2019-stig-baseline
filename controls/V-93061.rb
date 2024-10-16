@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93061" do
   title "Windows Server 2019 Create permanent shared objects user right must
 not be assigned to any groups or accounts."

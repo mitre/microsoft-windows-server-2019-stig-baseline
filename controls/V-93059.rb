@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93059" do
   title "Windows Server 2019 Create global objects user right must only be assigned to Administrators, Service, Local Service, and Network Service."
   desc  "Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.

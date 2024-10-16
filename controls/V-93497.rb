@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93497" do
   title "Windows Server 2019 must have the built-in guest account disabled."
   desc  "A system faces an increased vulnerability threat if the built-in guest account is not disabled. This is a known account that exists on all Windows systems and cannot be deleted. This account is initialized during the installation of the operating system with no password assigned."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93471" do
   title "Windows Server 2019 minimum password age must be configured to at least one day."
   desc  "Permitting passwords to be changed in immediate succession within the same day allows users to cycle passwords through their history database. This enables users to effectively negate the purpose of mandating periodic password changes."

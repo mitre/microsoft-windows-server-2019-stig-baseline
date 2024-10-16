@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93115" do
   title "Windows Server 2019 must be configured to audit System - Security
 System Extension successes."

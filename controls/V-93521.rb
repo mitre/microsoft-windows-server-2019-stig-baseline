@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93521" do
   title "Windows Server 2019 UIAccess applications must not be allowed to prompt for elevation without using the secure desktop."
   desc  "User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting prevents User Interface Accessibility programs from disabling the secure desktop for elevation prompts."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93315" do
   title "Windows Server 2019 Exploit Protection system-level mitigation, Control flow guard (CFG), must be on."
   desc  "Exploit protection enables mitigations against potential threats at the system and application level.  Several mitigations, including \"Control flow guard (CFG)\", are enabled by default at the system level. CFG ensures flow integrity for indirect calls. If this is turned off, Windows may be subject to various exploits."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93417" do
   title "Windows Server 2019 domain controllers must run on a machine dedicated to that function."
   desc  "Executing application servers on the same host machine with a directory server may substantially weaken the security of the directory server. Web or database server applications usually require the addition of many programs and accounts, increasing the attack surface of the computer.

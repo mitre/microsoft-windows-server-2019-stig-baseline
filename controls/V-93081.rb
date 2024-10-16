@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93081" do
   title "Windows Server 2019 Perform volume maintenance tasks user right must
 only be assigned to the Administrators group."

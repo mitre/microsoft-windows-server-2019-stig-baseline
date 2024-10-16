@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93377" do
   title "Windows Server 2019 AutoPlay must be disabled for all drives."
   desc  "Allowing AutoPlay to execute may introduce malicious code to a system. AutoPlay begins reading from a drive as soon media is inserted into the drive. As a result, the setup file of programs or music on audio media may start. By default, AutoPlay is disabled on removable drives, such as the floppy disk drive (but not the CD-ROM drive) and on network drives. Enabling this policy disables AutoPlay on all drives."

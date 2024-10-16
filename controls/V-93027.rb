@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93027" do
   title "Windows Server 2019 must only allow administrators responsible for the
 domain controller to have Administrator rights on the system."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93149" do
   title "Windows Server 2019 title for legal banner dialog box must be configured with the appropriate text."
   desc  "Failure to display the logon banner prior to a logon attempt will negate legal proceedings resulting from unauthorized access to system resources."

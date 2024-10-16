@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93039" do
   title "Windows Server 2019 Add workstations to domain user right must only be
 assigned to the Administrators group on domain controllers."

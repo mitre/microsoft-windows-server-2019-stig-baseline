@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93415" do
   title "Windows Server 2019 must prevent Indexing of encrypted files."
   desc  "Indexing of encrypted files may expose sensitive data. This setting prevents encrypted files from being indexed."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93101" do
   title "Windows Server 2019 must be configured to audit Privilege Use -
 Sensitive Privilege Use successes."

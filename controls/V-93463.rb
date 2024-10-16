@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93463" do
   title "Windows Server 2019 minimum password length must be configured to #{input('minimum_password_length')} characters."
   desc  "Information systems not protected with strong password schemes (including passwords of minimum length) provide the opportunity for anyone to crack the password, thus gaining access to the system and compromising the device, information, or the local network."

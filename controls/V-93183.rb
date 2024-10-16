@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93183" do
   title "Windows Server 2019 audit records must be backed up to a different
 system or media than the system being audited."

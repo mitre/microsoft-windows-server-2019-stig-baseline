@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93437" do
   title "Windows Server 2019 shared user accounts must not be permitted."
   desc  "Shared accounts (accounts where two or more people log on with the same user identification) do not provide adequate identification and authentication. There is no way to provide for nonrepudiation or individual accountability for system access and resource usage."

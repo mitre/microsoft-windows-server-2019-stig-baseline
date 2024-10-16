@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93477" do
   title "Windows Server 2019 maximum password age must be configured to 60 days or less."
   desc  "The longer a password is in use, the greater the opportunity for someone to gain unauthorized knowledge of the passwords. Scheduled changing of passwords hinders the ability of unauthorized system users to crack passwords and gain access to a system."

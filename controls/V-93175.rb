@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93175" do
   title "Windows Server 2019 PowerShell script block logging must be enabled."
   desc  "Maintaining an audit trail of system activity logs can help identify

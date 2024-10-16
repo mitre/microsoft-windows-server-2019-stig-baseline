@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93469" do
   title "Windows Server 2019 unencrypted passwords must not be sent to third-party Server Message Block (SMB) servers."
   desc  "Some non-Microsoft SMB servers only support unencrypted (plain-text) password authentication. Sending plain-text passwords across the network when authenticating to an SMB server reduces the overall security of the environment. Check with the vendor of the SMB server to determine if there is a way to support encrypted password authentication."

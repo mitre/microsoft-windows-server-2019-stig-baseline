@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93021" do
   title "Windows Server 2019 permissions for program file directories must
 conform to minimum requirements."

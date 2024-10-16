@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93479" do
   title "Windows Server 2019 password history must be configured to #{input('password_history_size')} passwords remembered."
   desc  "A system is more vulnerable to unauthorized access when system users recycle the same password several times without being required to change to a unique password on a regularly scheduled basis. This enables users to effectively negate the purpose of mandating periodic password changes. The default value is \"#{input('password_history_size')}\" for Windows domain systems. #{input('org_name')[:acronym]} has decided this is the appropriate value for all Windows systems."

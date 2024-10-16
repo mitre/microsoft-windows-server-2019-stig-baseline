@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93451" do
   title "Windows Server 2019 computer clock synchronization tolerance must be limited to five minutes or less."
   desc  "This setting determines the maximum time difference (in minutes) that Kerberos will tolerate between the time on a client's clock and the time on a server's clock while still considering the two clocks synchronous. In order to prevent replay attacks, Kerberos uses timestamps as part of its protocol definition. For timestamps to work properly, the clocks of the client and the server need to be in sync as much as possible."

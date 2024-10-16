@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93055" do
   title "Windows Server 2019 Create a pagefile user right must only be assigned
 to the Administrators group."

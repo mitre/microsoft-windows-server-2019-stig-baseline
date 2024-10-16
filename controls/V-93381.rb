@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93381" do
   title "Windows Server 2019 must have the roles and features required by the system documented."
   desc  "Unnecessary roles and features increase the attack surface of a system. Limiting roles and features of a system to only those necessary reduces this potential. The standard installation option (previously called Server Core) further reduces this when selected at installation."

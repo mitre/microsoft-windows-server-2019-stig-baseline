@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93541" do
   title "Windows Server 2019 must be configured to ignore NetBIOS name release requests except from WINS servers."
   desc  "Configuring the system to ignore name release requests, except from WINS servers, prevents a denial of service (DoS) attack. The DoS consists of sending a NetBIOS name release request to the server for each entry in the server's cache, causing a response delay in the normal operation of the server's WINS resolution capability."

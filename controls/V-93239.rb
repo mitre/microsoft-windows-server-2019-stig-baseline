@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93239" do
   title "Windows Server 2019 insecure logons to an SMB server must be disabled."
   desc  "Insecure guest logons allow unauthenticated access to shared folders.

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93235" do
   title "Windows Server 2019 source routing must be configured to the highest
 protection level to prevent Internet Protocol (IP) source routing."

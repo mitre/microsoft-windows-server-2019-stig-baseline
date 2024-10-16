@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93141" do
   title "Windows Server 2019 must have the number of allowed bad logon attempts
 configured to #{input('max_pass_lockout')} or less."

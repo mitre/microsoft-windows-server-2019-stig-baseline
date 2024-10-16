@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93017" do
   title "Windows Server 2019 Allow log on locally user right must only be
 assigned to the Administrators group."

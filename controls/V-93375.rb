@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93375" do
   title "Windows Server 2019 default AutoRun behavior must be configured to prevent AutoRun commands."
   desc  "Allowing AutoRun commands to execute may introduce malicious code to a system. Configuring this setting prevents AutoRun commands from executing."

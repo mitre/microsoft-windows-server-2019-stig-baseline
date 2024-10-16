@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93245" do
   title "Windows Server 2019 virtualization-based security must be enabled with
 the platform security level configured to Secure Boot or Secure Boot with DMA

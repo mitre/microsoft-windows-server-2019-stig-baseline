@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92979" do
   title "Windows Server 2019 must be configured to audit Account Management -
 Security Group Management successes."

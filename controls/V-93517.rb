@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93517" do
   title "Windows Server 2019 administrator accounts must not be enumerated during elevation."
   desc  "Enumeration of administrator accounts when elevating can provide part of the logon information to an unauthorized user. This setting configures the system to always require users to type in a username and password to elevate a running application."

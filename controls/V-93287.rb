@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93287" do
   title "Windows Server 2019 Smart Card removal option must be configured to Force Logoff or Lock Workstation."
   desc  "Unattended systems are susceptible to unauthorized use and must be locked. Configuring a system to lock when a smart card is removed will ensure the system is inaccessible when unattended."

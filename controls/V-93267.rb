@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93267" do
   title "Windows Server 2019 users must be notified if a web-based program
 attempts to install software."

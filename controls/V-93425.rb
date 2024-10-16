@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93425" do
   title "Windows Server 2019 must not save passwords in the Remote Desktop Client."
   desc  "Saving passwords in the Remote Desktop Client could allow an unauthorized user to establish a remote desktop session to another system. The system must be configured to prevent users from saving passwords in the Remote Desktop Client."

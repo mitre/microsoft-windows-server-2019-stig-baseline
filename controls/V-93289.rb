@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93289" do
   title "Windows Server 2019 must not allow anonymous SID/Name translation."
   desc  "Allowing anonymous SID/Name translation can provide sensitive information for accessing a system. Only authorized users must be able to perform such translations."

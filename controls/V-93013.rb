@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93013" do
   title "Windows Server 2019 Deny log on as a service user right on
 domain-joined member servers must be configured to prevent access from highly
@@ -73,7 +71,6 @@ on as a service\" to include the following:
   case domain_role
   when '4', '5'
     impact 0.0
-    desc 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
     describe 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control' do
       skip 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
     end

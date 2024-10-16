@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93037" do
   title "Windows Server 2019 organization created Active Directory
 Organizational Unit (OU) objects must have proper access control permissions."
@@ -254,7 +252,6 @@ types.
     end
   else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end

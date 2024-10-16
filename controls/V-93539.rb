@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93539" do
   title "Windows Server 2019 must restrict anonymous access to Named Pipes and Shares."
   desc  "Allowing anonymous access to named pipes or shares provides the potential for unauthorized system access. This setting restricts access to those defined in \"Network access: Named Pipes that can be accessed anonymously\" and \"Network access: Shares that can be accessed anonymously\", both of which must be blank under other requirements."

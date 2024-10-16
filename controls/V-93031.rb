@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93031" do
   title "Windows Server 2019 Active Directory SYSVOL directory must have the
 proper access control permissions."

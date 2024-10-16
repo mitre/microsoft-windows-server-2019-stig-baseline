@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93203" do
   title "Windows Server 2019 system files must be monitored for unauthorized
 changes."

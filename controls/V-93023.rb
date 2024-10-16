@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93023" do
   title "Windows Server 2019 permissions for the Windows installation directory
 must conform to minimum requirements."

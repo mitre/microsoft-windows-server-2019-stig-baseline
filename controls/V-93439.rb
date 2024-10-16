@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93439" do
   title "Windows Server 2019 accounts must require passwords."
   desc  "The lack of password protection enables anyone to gain access to the information system, which opens a backdoor opportunity for intruders to compromise the system as well as other resources. Accounts on a system must require passwords."

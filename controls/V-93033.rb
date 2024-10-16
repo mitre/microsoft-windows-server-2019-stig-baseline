@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93033" do
   title "Windows Server 2019 Active Directory Group Policy objects must have
 proper access control permissions."

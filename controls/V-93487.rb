@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93487" do
   title "Windows Server 2019 must have the #{input('org_name')[:acronym]} Root Certificate Authority (CA) certificates installed in the Trusted Root Store."
   desc  "To ensure secure #{input('org_name')[:acronym]} websites and #{input('org_name')[:acronym]}-signed code are properly validated, the system must trust the #{input('org_name')[:acronym]} Root CAs. The #{input('org_name')[:acronym]} root certificates will ensure that the trust chain is established for server certificates issued from the #{input('org_name')[:acronym]} CAs."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93195" do
   title "Windows Server 2019 Event Viewer must be protected from unauthorized
 modification and deletion."

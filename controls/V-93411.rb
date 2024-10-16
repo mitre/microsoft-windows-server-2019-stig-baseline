@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93411" do
   title "Windows Server 2019 Windows Defender SmartScreen must be enabled."
   desc  "Windows Defender SmartScreen helps protect systems from programs downloaded from the internet that may be malicious. Enabling SmartScreen can block potentially malicious programs or warn users."

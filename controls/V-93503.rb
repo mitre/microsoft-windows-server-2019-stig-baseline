@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93503" do
   title "Windows Server 2019 Windows Remote Management (WinRM) client must not use Basic authentication."
   desc  "Basic authentication uses plain-text passwords that could be used to compromise a system. Disabling Basic authentication will reduce this potential."

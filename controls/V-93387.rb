@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93387" do
   title "Windows Server 2019 must not have Simple TCP/IP Services installed."
   desc  "Unnecessary services increase the attack surface of a system. Some of these services may not support required levels of authentication or encryption or may provide unauthorized access to the system."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93505" do
   title "Windows Server 2019 Windows Remote Management (WinRM) client must not use Digest authentication."
   desc  "Digest authentication is not as strong as other options and may be subject to man-in-the-middle attacks. Disallowing Digest authentication will reduce this potential."

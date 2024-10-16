@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93249" do
   title "Windows Server 2019 Early Launch Antimalware, Boot-Start Driver
 Initialization Policy must prevent boot drivers identified as bad."

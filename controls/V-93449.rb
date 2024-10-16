@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93449" do
   title "Windows Server 2019 Kerberos policy user ticket renewal maximum lifetime must be limited to seven days or less."
   desc  "This setting determines the period of time (in days) during which a user's Ticket Granting Ticket (TGT) may be renewed. This security configuration limits the amount of time an attacker has to crack the TGT and gain access."

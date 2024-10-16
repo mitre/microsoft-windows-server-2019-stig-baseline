@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93501" do
   title "Windows Server 2019 Windows Remote Management (WinRM) service must not allow unencrypted traffic."
   desc  "Unencrypted remote access to a system can allow sensitive information to be compromised. Windows remote management connections must be encrypted to prevent this."

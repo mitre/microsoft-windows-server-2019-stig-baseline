@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93273" do
   title "Windows Server 2019 domain controllers must be configured to allow reset of machine account passwords."
   desc  "Enabling this setting on all domain controllers in a domain prevents domain members from changing their computer account passwords. If these passwords are weak or compromised, the inability to change them may leave these computers vulnerable."

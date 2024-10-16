@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93143" do
   title "Windows Server 2019 must have the period of time before the bad logon
 counter is reset configured to #{input('pass_lock_time')} minutes or greater."

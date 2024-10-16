@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93043" do
   title "Windows Server 2019 must only allow administrators responsible for the
 member server or standalone system to have Administrator rights on the system."

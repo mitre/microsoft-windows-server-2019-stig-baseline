@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93155" do
   title "Windows Server 2019 must be configured to audit Account Logon -
 Credential Validation failures."

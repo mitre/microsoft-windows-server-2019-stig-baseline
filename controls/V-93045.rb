@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93045" do
   title "Windows Server 2019 must restrict remote calls to the Security Account
 Manager (SAM) to Administrators on domain-joined member servers and standalone

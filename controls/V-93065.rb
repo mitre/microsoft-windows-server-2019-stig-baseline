@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93065" do
   title "Windows Server 2019 Debug programs: user right must only be assigned
 to the Administrators group."

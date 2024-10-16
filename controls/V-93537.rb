@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93537" do
   title "Windows Server 2019 must not allow anonymous enumeration of shares."
   desc  "Allowing anonymous logon users (null session connections) to list all account names and enumerate all shared resources can provide a map of potential points to attack the system."

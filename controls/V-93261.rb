@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93261" do
   title "Windows Server 2019 Turning off File Explorer heap termination on
 corruption must be disabled."

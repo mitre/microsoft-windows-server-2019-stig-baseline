@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93297" do
   title "Windows Server 2019 must prevent NTLM from falling back to a Null session."
   desc  "NTLM sessions that are allowed to fall back to Null (unauthenticated) sessions may gain unauthorized access."

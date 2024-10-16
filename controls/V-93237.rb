@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93237" do
   title "Windows Server 2019 must be configured to prevent Internet Control
 Message Protocol (ICMP) redirects from overriding Open Shortest Path First

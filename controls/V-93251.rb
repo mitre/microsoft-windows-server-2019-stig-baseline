@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93251" do
   title "Windows Server 2019 group policy objects must be reprocessed even if
 they have not changed."

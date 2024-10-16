@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92973" do
   title "Windows Server 2019 Remote Desktop Services must be configured with
 the client connection encryption set to High Level."

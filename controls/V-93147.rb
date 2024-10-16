@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93147" do
   title "Windows Server 2019 required legal notice must be configured to
 display before console logon."

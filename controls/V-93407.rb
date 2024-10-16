@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93407" do
   title "Windows Server 2019 network selection user interface (UI) must not be displayed on the logon screen."
   desc  "Enabling interaction with the network selection UI allows users to change connections to available networks without signing in to Windows."

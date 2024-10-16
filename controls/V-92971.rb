@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92971" do
   title "Windows Server 2019 Remote Desktop Services must require secure Remote
 Procedure Call (RPC) communications."

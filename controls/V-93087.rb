@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93087" do
   title "Windows Server 2019 Take ownership of files or other objects user
 right must only be assigned to the Administrators group."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93443" do
   title "Windows Server 2019 Kerberos user logon restrictions must be enforced."
   desc  "This policy setting determines whether the Kerberos Key Distribution Center (KDC) validates every request for a session ticket against the user rights policy of the target computer. The policy is enabled by default, which is the most secure setting for validating that access to target resources is not circumvented."

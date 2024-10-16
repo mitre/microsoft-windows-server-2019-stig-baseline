@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92969" do
   title "Windows Server 2019 must be configured to audit logon failures."
   desc  "Maintaining an audit trail of system activity logs can help identify

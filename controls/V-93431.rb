@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93431" do
   title "Windows Server 2019 User Account Control approval mode for the built-in Administrator must be enabled."
   desc  "User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting configures the built-in Administrator account so that it runs in Admin Approval Mode."

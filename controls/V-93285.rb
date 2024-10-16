@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93285" do
   title "Windows Server 2019 maximum age for machine account passwords must be configured to #{input('maximum_password_age_machine')} days or less."
   desc  "Computer account passwords are changed automatically on a regular basis. This setting controls the maximum password age that a machine account may have. This must be set to no more than #{input('maximum_password_age_machine')} days, ensuring the machine changes its password monthly."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93317" do
   title "Windows Server 2019 Exploit Protection system-level mitigation, Validate exception chains (SEHOP), must be on."
   desc  "Exploit protection enables mitigations against potential threats at the system and application level.  Several mitigations, including \"Validate exception chains (SEHOP)\", are enabled by default at the system level. SEHOP (structured exception handling overwrite protection) ensures the integrity of an exception chain during exception dispatch. If this is turned off, Windows may be subject to various exploits."

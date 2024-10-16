@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93145" do
   title "Windows Server 2019 account lockout duration must be configured to #{input('pass_lock_duration')}
 minutes or greater."

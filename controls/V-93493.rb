@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93493" do
   title "Windows Server 2019 users must be required to enter a password to access private keys stored on the computer."
   desc  "If the private key is discovered, an attacker can use the key to authenticate as an authorized user and gain access to the network infrastructure.

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93179" do
   title "Windows Server 2019 Security event log size must be configured to
 196608 KB or greater."

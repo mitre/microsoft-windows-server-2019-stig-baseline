@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93511" do
   title "Windows Server 2019 must be configured to use FIPS-compliant algorithms for encryption, hashing, and signing."
   desc  "This setting ensures the system uses algorithms that are FIPS-compliant for encryption, hashing, and signing. FIPS-compliant algorithms meet specific standards established by the U.S. Government and must be the algorithms used for all OS encryption functions."

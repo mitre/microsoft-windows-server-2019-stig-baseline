@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92991" do
   title "Windows Server 2019 local volumes must use a format that supports NTFS
 attributes."

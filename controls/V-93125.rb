@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93125" do
   title "Windows Server 2019 Active Directory Infrastructure object must be
 configured with proper audit settings."
@@ -158,7 +156,6 @@ Change infrastructure master)
       end
     else
       impact 0.0
-      desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
       describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
        skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
      end

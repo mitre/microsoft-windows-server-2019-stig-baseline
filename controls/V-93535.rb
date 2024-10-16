@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93535" do
   title "Windows Server 2019 data files owned by users must be on a different logical partition from the directory server data files."
   desc  "When directory service data files, especially for directories used for identification, authentication, or authorization, reside on the same logical partition as user-owned files, the directory service data may be more vulnerable to unauthorized access or other availability compromises. Directory service and user-owned data files sharing a partition may be configured with less restrictive permissions in order to allow access to the user data.

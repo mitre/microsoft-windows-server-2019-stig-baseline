@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93167" do
   title "Windows Server 2019 must be configured to audit Object Access -
 Removable Storage successes."

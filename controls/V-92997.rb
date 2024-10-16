@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92997" do
   title "Windows Server 2019 Allow log on through Remote Desktop Services user
 right must only be assigned to the Administrators group on domain controllers."

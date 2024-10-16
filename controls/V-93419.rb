@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93419" do
   title "Windows Server 2019 local users on domain-joined member servers must not be enumerated."
   desc  "The username is one part of logon credentials that could be used to gain access to a system. Preventing the enumeration of users limits this information to authorized personnel."

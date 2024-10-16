@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93221" do
   title "Windows Server 2019 must have software certificate installation files
 removed."

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93015" do
   title "Windows Server 2019 Deny log on locally user right on domain-joined
 member servers must be configured to prevent access from highly privileged

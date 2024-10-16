@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93225" do
   title "Windows Server 2019 FTP servers must be configured to prevent access
 to the system drive."

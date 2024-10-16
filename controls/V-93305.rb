@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93305" do
   title "Windows Server 2019 session security for NTLM SSP-based clients must be configured to require NTLMv2 session security and 128-bit encryption."
   desc  "Microsoft has implemented a variety of security support providers for use with Remote Procedure Call (RPC) sessions. All of the options must be enabled to ensure the maximum security level."

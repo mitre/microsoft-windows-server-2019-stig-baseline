@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93171" do
   title "Windows Server 2019 must be configured to audit logoff successes."
   desc  "Maintaining an audit trail of system activity logs can help identify

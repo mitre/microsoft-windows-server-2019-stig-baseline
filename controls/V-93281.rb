@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93281" do
   title "Windows Server 2019 built-in administrator account must be renamed."
   desc  "The built-in administrator account is a well-known account subject to attack. Renaming this account to an unidentified name improves the protection of this account and the system."

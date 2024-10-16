@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93159" do
   title "Windows Server 2019 must be configured to audit Logon/Logoff - Group
 Membership successes."

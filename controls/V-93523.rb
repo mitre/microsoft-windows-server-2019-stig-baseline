@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93523" do
   title "Windows Server 2019 User Account Control must, at a minimum, prompt administrators for consent on the secure desktop."
   desc  "User Account Control (UAC) is a security mechanism for limiting the elevation of privileges, including administrative accounts, unless authorized. This setting configures the elevation requirements for logged-on administrators to complete a task that requires raised privileges."

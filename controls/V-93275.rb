@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93275" do
   title "Windows Server 2019 must limit the caching of logon credentials to four or less on domain-joined member servers."
   desc  "The default Windows configuration caches the last logon credentials for users who log on interactively to a system. This feature is provided for system availability reasons, such as the user's machine being disconnected from the network or domain controllers being unavailable. Even though the credential cache is well protected, if a system is attacked, an unauthorized individual may isolate the password to a domain user account using a password-cracking program and gain access to the domain."

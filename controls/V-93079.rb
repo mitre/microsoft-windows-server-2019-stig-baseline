@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93079" do
   title "Windows Server 2019 Modify firmware environment values user right must
 only be assigned to the Administrators group."

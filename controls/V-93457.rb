@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-93457' do
   title 'Windows Server 2019 outdated or unused accounts must be removed or disabled.'
   desc  'Outdated or unused accounts provide penetration points that may go undetected. Inactive accounts must be deleted if no longer necessary or, if still required, disabled until needed.'

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93319" do
   title "Windows Server 2019 Exploit Protection system-level mitigation, Validate heap integrity, must be on."
   desc  "Exploit protection enables mitigations against potential threats at the system and application level.  Several mitigations, including \"Validate heap integrity\", are enabled by default at the system level. \"Validate heap integrity\" terminates a process when heap corruption is detected. If this is turned off, Windows may be subject to various exploits."

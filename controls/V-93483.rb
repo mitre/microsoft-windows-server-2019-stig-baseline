@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93483" do
   title "Windows Server 2019 domain Controller PKI certificates must be issued by the #{input('org_name')[:acronym]} PKI or an approved External Certificate Authority (ECA)."
   desc  "A PKI implementation depends on the practices established by the Certificate Authority (CA) to ensure the implementation is secure. Without proper practices, the certificates issued by a CA have limited value in authentication functions. The use of multiple CAs from separate PKI implementations results in interoperability issues. If servers and clients do not have a common set of root CA certificates, they are not able to authenticate each other."

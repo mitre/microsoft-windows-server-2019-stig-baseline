@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92995" do
   title "Windows Server 2019 Access this computer from the network user right must only be assigned to the Administrators, Authenticated Users, and Enterprise Domain Controllers groups on domain controllers."
   desc  "Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.

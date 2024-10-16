@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93035" do
   title "Windows Server 2019 Active Directory Domain Controllers Organizational Unit (OU) object must have the proper access control permissions."
   desc  "When Active Directory objects do not have appropriate access control permissions, it may be possible for malicious users to create, read, update, or delete the objects and degrade or destroy the integrity of the data. When the directory service is used for identification, authentication, or authorization functions, a compromise of the database objects could lead to a compromise of all systems that rely on the directory service.
@@ -180,7 +178,6 @@ control "V-93035" do
     end
   else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end

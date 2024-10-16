@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93299" do
   title "Windows Server 2019 must prevent PKU2U authentication using online identities."
   desc  "PKU2U is a peer-to-peer authentication protocol. This setting prevents online identities from authenticating to domain-joined systems. Authentication will be centrally managed with Windows user accounts."

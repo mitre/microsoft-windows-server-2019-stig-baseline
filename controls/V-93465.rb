@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93465" do
   title "Windows Server 2019 reversible password encryption must be disabled."
   desc  "Storing passwords using reversible encryption is essentially the same as storing clear-text versions of the passwords, which are easily compromised. For this reason, this policy must never be enabled."

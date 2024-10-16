@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92987" do
   title "Windows Server 2019 must be configured to audit Logon/Logoff - Account
 Lockout successes."

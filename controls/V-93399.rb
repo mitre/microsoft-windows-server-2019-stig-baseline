@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93399" do
   title "Windows Server 2019 must prevent the display of slide shows on the lock screen."
   desc  "Slide shows that are displayed on the lock screen could display sensitive information to unauthorized personnel. Turning off this feature will limit access to the information to a logged-on user."

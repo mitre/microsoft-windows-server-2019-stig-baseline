@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93051" do
   title "Windows Server 2019 Act as part of the operating system user right
 must not be assigned to any groups or accounts."

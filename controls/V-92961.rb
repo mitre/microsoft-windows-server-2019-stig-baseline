@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-92961" do
   title "Windows Server 2019 machine inactivity limit must be set to 15 minutes
 or less, locking the system with the screen saver."

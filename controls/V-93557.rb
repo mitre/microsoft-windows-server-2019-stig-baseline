@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93557" do
   title "Windows Server 2019 setting Microsoft network client: Digitally sign communications (if server agrees) must be configured to Enabled."
   desc  "The server message block (SMB) protocol provides the basis for many network operations. If this policy is enabled, the SMB client will request packet signing when communicating with an SMB server that is enabled or required to perform SMB packet signing."

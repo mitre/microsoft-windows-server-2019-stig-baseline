@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93491" do
   title "Windows Server 2019 must have the US #{input('org_name')[:acronym]} CCEB Interoperability Root CA cross-certificates in the Untrusted Certificates Store on unclassified systems."
   desc  "To ensure users do not experience denial of service when performing certificate-based authentication to #{input('org_name')[:acronym]} websites due to the system chaining to a root other than #{input('org_name')[:acronym]} Root CAs, the US #{input('org_name')[:acronym]} CCEB Interoperability Root CA cross-certificates must be installed in the Untrusted Certificate Store. This requirement only applies to unclassified systems."

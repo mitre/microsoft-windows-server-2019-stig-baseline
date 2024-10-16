@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control "V-93041" do
   title "Windows Server 2019 Enable computer and user accounts to be trusted
 for delegation user right must only be assigned to the Administrators group on
