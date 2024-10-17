@@ -21,6 +21,8 @@ jobs:
         suite: ['hardened']
       fail-fast: false
     steps:
+      - name: Add Homebrew to path
+        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
       - name: Add jq for output formatting
         run: brew install jq
       - name: Add vagrant
