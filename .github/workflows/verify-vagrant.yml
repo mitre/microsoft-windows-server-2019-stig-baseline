@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Add Homebrew to path
-        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        run: echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
       - name: Add jq for output formatting
         run: brew install jq
       - name: Add vagrant
