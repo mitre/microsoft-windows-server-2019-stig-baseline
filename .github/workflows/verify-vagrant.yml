@@ -48,6 +48,7 @@ jobs:
           gem install bundler
           bundle config path vendor/bundle
           bundle install
+          gem install berkshelf
       - name: Run kitchen test
         run: |
           cd test/cookbooks/Win2019STIG
