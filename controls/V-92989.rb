@@ -64,8 +64,8 @@ CCI-001405 CCI-002130)
     end
   when '2', '3'
     impact 0.0
-    describe 'This system is exempt from this control' do
-      skip 'This system is exempt from this control'
+    describe 'This applies to domain controllers. It is NA for other systems.' do
+      skip 'This applies to domain controllers. It is NA for other systems.'
     end
   end
 end
