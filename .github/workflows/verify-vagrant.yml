@@ -21,14 +21,13 @@ jobs:
         suite: ['hardened']
       fail-fast: false
     steps:
-      - name: Add Homebrew to path
-        run: echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
       - name: Add jq for output formatting
-        run: brew install jq
+        run: sudo apt-get install jq
       - name: Add vagrant
         run: |
-          brew tap hashicorp/tap
-          brew install hashicorp/tap/hashicorp-vagrant
+          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update && sudo apt install vagrant
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Setup Ruby
