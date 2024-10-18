@@ -28,7 +28,7 @@ jobs:
           sudo apt-get -y install jq
 
       - name: Add VirtualBox
-        run: sudo apt install virtualbox-6.0
+        run: sudo apt-get install virtualbox
 
       - name: Add vagrant
         run: |
