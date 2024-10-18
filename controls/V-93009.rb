@@ -95,7 +95,6 @@ failover clustering."
   case domain_role
   when '4', '5'
     impact 0.0
-    desc 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
     describe 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control' do
       skip 'This system is dedicated to the management of Active Directory, therefore this system is exempt from this control'
     end
