@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       CHEF_LICENSE: accept-silent
+      CHEF_LICENSE_KEY: ${{ secrets.SAF_CHEF_LICENSE_KEY }}
       KITCHEN_YAML: kitchen.vagrant.yml
     strategy:
       matrix:
@@ -74,7 +75,7 @@ jobs:
         uses: mitre/saf_action@v1
         with:
           command_string: 'view summary -i test/cookbooks/Win2019STIG/results/${{ matrix.suite }}-test-result.json'
-          
+
       - name: Ensure the scan meets our ${{ matrix.suite }} results threshold
         uses: mitre/saf_action@v1
         with:
