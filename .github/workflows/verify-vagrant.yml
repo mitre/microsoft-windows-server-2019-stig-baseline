@@ -27,6 +27,9 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install jq
 
+      - name: Add VirtualBox
+        run: sudo apt-get install virtualbox-6.0
+        
       - name: Add vagrant
         run: |
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
