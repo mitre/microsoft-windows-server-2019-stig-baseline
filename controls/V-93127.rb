@@ -1,9 +1,7 @@
-# encoding: UTF-8
-
-control "V-93127" do
-  title "Windows Server 2019 Active Directory Domain Controllers Organizational
-Unit (OU) object must be configured with proper audit settings."
-  desc  "When inappropriate audit settings are configured for directory service
+control 'SV-205788' do
+  title 'Windows Server 2019 Active Directory Domain Controllers Organizational
+Unit (OU) object must be configured with proper audit settings.'
+  desc 'When inappropriate audit settings are configured for directory service
 database objects, it may be possible for a user or process to update the data
 without generating any tracking data. The impact of missing audit data is
 related to the type of object. A failure to capture audit data for objects used
@@ -18,25 +16,24 @@ absence of auditing data makes it impossible to identify the source of changes
 that impact the confidentiality, integrity, and availability of data and
 systems throughout an AD domain. The lack of proper auditing can result in
 insufficient forensic evidence needed to investigate an incident and prosecute
-the intruder."
-  desc  "rationale", ""
-  desc  'check', "This applies to domain controllers. It is NA for other systems.
+the intruder.'
+  desc 'check', 'This applies to domain controllers. It is NA for other systems.
 
     Review the auditing configuration for the Domain Controller OU object.
 
-    Open \"Active Directory Users and Computers\" (available from various menus
-or run \"dsa.msc\").
+    Open "Active Directory Users and Computers" (available from various menus
+or run "dsa.msc").
 
-    Ensure \"Advanced Features\" is selected in the \"View\" menu.
+    Ensure "Advanced Features" is selected in the "View" menu.
 
-    Select the \"Domain Controllers OU\" under the domain being reviewed in the
+    Select the "Domain Controllers OU" under the domain being reviewed in the
 left pane.
 
-    Right-click the \"Domain Controllers OU\" object and select \"Properties\".
+    Right-click the "Domain Controllers OU" object and select "Properties".
 
-    Select the \"Security\" tab.
+    Select the "Security" tab.
 
-    Select the \"Advanced\" button and then the \"Auditing\" tab.
+    Select the "Advanced" button and then the "Auditing" tab.
 
     If the audit settings on the Domain Controllers OU object are not at least
 as inclusive as those below, this is a finding:
@@ -70,21 +67,20 @@ Various Properties selections may also exist by default.
     Principal - Everyone
     Access - (blank)
     Inherited from - (CN of domain)
-    Applies to - Descendant Organizational Unit objects"
-  desc  'fix', "
-    Open \"Active Directory Users and Computers\" (available from various menus
-or run \"dsa.msc\").
+    Applies to - Descendant Organizational Unit objects'
+  desc 'fix', 'Open "Active Directory Users and Computers" (available from various menus
+or run "dsa.msc").
 
-    Ensure \"Advanced Features\" is selected in the \"View\" menu.
+    Ensure "Advanced Features" is selected in the "View" menu.
 
-    Select the \"Domain Controllers OU\" under the domain being reviewed in the
+    Select the "Domain Controllers OU" under the domain being reviewed in the
 left pane.
 
-    Right-click the \"Domain Controllers OU\" object and select \"Properties\".
+    Right-click the "Domain Controllers OU" object and select "Properties".
 
-    Select the \"Security\" tab.
+    Select the "Security" tab.
 
-    Select the \"Advanced\" button and then the \"Auditing\" tab.
+    Select the "Advanced" button and then the "Auditing" tab.
 
     Configure the audit settings for Domain Controllers OU object to include
 the following:
@@ -117,18 +113,17 @@ Various Properties selections may also exist by default.
     Principal - Everyone
     Access - (blank)
     Inherited from - (CN of domain)
-    Applies to - Descendant Organizational Unit objects"
-  impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000458-GPOS-00203",
-"SRG-OS-000463-GPOS-00207", "SRG-OS-000468-GPOS-00212"]
-  tag 'gid': 'V-93127'
-  tag 'rid': 'SV-103215r1_rule'
-  tag 'stig_id': 'WN19-DC-000200'
-  tag 'fix_id': 'F-99373r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+    Applies to - Descendant Organizational Unit objects'
+  impact 0.0
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000327-GPOS-00127'
+  tag satisfies: ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000458-GPOS-00203', 'SRG-OS-000463-GPOS-00207', 'SRG-OS-000468-GPOS-00212']
+  tag gid: 'V-93127'
+  tag rid: 'SV-103215r1_rule'
+  tag stig_id: 'WN19-DC-000200'
+  tag fix_id: 'F-99373r1_fix'
+  tag cci: ['CCI-000172', 'CCI-002234']
+  tag nist: ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
     if domain_role == '4' || domain_role == '5'
@@ -194,4 +189,3 @@ Various Properties selections may also exist by default.
      end
     end
 end
-
