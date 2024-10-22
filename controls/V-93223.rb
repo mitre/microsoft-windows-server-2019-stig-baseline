@@ -1,40 +1,36 @@
-control 'SV-205853' do
-  title 'Windows Server 2019 FTP servers must be configured to prevent
-anonymous logons.'
-  desc 'The FTP service allows remote users to access shared files and
-directories. Allowing anonymous FTP connections makes user auditing difficult.
+control 'V-205853' do
+  title 'Windows Server 2019 FTP servers must be configured to prevent anonymous logons.'
+  desc 'The FTP service allows remote users to access shared files and directories. Allowing anonymous FTP connections makes user auditing difficult.
 
-    Using accounts that have administrator privileges to log on to FTP risks
-that the userid and password will be captured on the network and give
-administrator access to an unauthorized user.'
+Using accounts that have administrator privileges to log on to FTP risks that the userid and password will be captured on the network and give administrator access to an unauthorized user.'
   desc 'check', 'If FTP is not installed on the system, this is NA.
 
-    Open "Internet Information Services (IIS) Manager".
+Open "Internet Information Services (IIS) Manager".
 
-    Select the server.
+Select the server.
 
-    Double-click "FTP Authentication".
+Double-click "FTP Authentication".
 
-    If the "Anonymous Authentication" status is "Enabled", this is a
-finding.'
+If the "Anonymous Authentication" status is "Enabled", this is a finding.'
   desc 'fix', 'Configure the FTP service to prevent anonymous logons.
 
-    Open "Internet Information Services (IIS) Manager".
+Open "Internet Information Services (IIS) Manager".
 
-    Select the server.
+Select the server.
 
-    Double-click "FTP Authentication".
+Double-click "FTP Authentication".
 
-    Select "Anonymous Authentication".
+Select "Anonymous Authentication".
 
-    Select "Disabled" under "Actions".'
+Select "Disabled" under "Actions".'
   impact 0.5
-  tag severity: nil
+  ref 'DPMS Target Microsoft Windows Server 2019'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-93223'
-  tag rid: 'SV-103311r1_rule'
+  tag gid: 'V-205853'
+  tag rid: 'SV-205853r991589_rule'
   tag stig_id: 'WN19-00-000420'
-  tag fix_id: 'F-99469r1_fix'
+  tag fix_id: 'F-6118r355922_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b', 'Rev_4']
 

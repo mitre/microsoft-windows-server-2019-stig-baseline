@@ -1,41 +1,32 @@
-control 'SV-205749' do
-  title 'Windows Server 2019 Access Credential Manager as a trusted caller user
-right must not be assigned to any groups or accounts.'
-  desc 'Inappropriate granting of user rights can provide system,
-administrative, and other high-level capabilities.
+control 'V-205749' do
+  title 'Windows Server 2019 Access Credential Manager as a trusted caller user right must not be assigned to any groups or accounts.'
+  desc 'Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
 
-    Accounts with the "Access Credential Manager as a trusted caller" user
-right may be able to retrieve the credentials of other accounts from Credential
-Manager.'
+Accounts with the "Access Credential Manager as a trusted caller" user right may be able to retrieve the credentials of other accounts from Credential Manager.'
   desc 'check', 'Verify the effective setting in Local Group Policy Editor.
 
-    Run "gpedit.msc".
+Run "gpedit.msc".
 
-    Navigate to Local Computer Policy >> Computer Configuration >> Windows
-Settings >> Security Settings >> Local Policies >> User Rights Assignment.
+Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment.
 
-    If any accounts or groups are granted the "Access Credential Manager as a
-trusted caller" user right, this is a finding.
+If any accounts or groups are granted the "Access Credential Manager as a trusted caller" user right, this is a finding.
 
-    For server core installations, run the following command:
+For server core installations, run the following command:
 
-    Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
+Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
 
-    Review the text file.
+Review the text file.
 
-    If any SIDs are granted the "SeTrustedCredManAccessPrivilege" user right,
-this is a finding.'
-  desc 'fix', 'Configure the policy value for Computer Configuration >>
-Windows Settings >> Security Settings >> Local Policies >> User Rights
-Assignment >> "Access Credential Manager as a trusted caller" to be defined
-but containing no entries (blank).'
+If any SIDs are granted the "SeTrustedCredManAccessPrivilege" user right, this is a finding.'
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment >> "Access Credential Manager as a trusted caller" to be defined but containing no entries (blank).'
   impact 0.5
-  tag severity: nil
+  ref 'DPMS Target Microsoft Windows Server 2019'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
-  tag gid: 'V-93049'
-  tag rid: 'SV-103137r1_rule'
+  tag gid: 'V-205749'
+  tag rid: 'SV-205749r958726_rule'
   tag stig_id: 'WN19-UR-000010'
-  tag fix_id: 'F-99295r1_fix'
+  tag fix_id: 'F-6014r355166_fix'
   tag cci: ['CCI-002235']
   tag nist: ['AC-6 (10)', 'Rev_4']
 

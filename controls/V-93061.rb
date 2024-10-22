@@ -1,40 +1,32 @@
-control 'SV-205755' do
-  title 'Windows Server 2019 Create permanent shared objects user right must
-not be assigned to any groups or accounts.'
-  desc 'Inappropriate granting of user rights can provide system,
-administrative, and other high-level capabilities.
+control 'V-205755' do
+  title 'Windows Server 2019 Create permanent shared objects user right must not be assigned to any groups or accounts.'
+  desc 'Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
 
-    Accounts with the "Create permanent shared objects" user right could
-expose sensitive data by creating shared objects.'
+Accounts with the "Create permanent shared objects" user right could expose sensitive data by creating shared objects.'
   desc 'check', 'Verify the effective setting in Local Group Policy Editor.
 
-    Run "gpedit.msc".
+Run "gpedit.msc".
 
-    Navigate to Local Computer Policy >> Computer Configuration >> Windows
-Settings >> Security Settings >> Local Policies >> User Rights Assignment.
+Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment.
 
-    If any accounts or groups are granted the "Create permanent shared
-objects" user right, this is a finding.
+If any accounts or groups are granted the "Create permanent shared objects" user right, this is a finding.
 
-    For server core installations, run the following command:
+For server core installations, run the following command:
 
-    Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
+Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
 
-    Review the text file.
+Review the text file.
 
-    If any SIDs are granted the "SeCreatePermanentPrivilege" user right, this
-is a finding.'
-  desc 'fix', 'Configure the policy value for Computer Configuration >>
-Windows Settings >> Security Settings >> Local Policies >> User Rights
-Assignment >> "Create permanent shared objects" to be defined but containing
-no entries (blank).'
+If any SIDs are granted the "SeCreatePermanentPrivilege" user right, this is a finding.'
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment >> "Create permanent shared objects" to be defined but containing no entries (blank).'
   impact 0.5
-  tag severity: nil
+  ref 'DPMS Target Microsoft Windows Server 2019'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
-  tag gid: 'V-93061'
-  tag rid: 'SV-103149r1_rule'
+  tag gid: 'V-205755'
+  tag rid: 'SV-205755r958726_rule'
   tag stig_id: 'WN19-UR-000080'
-  tag fix_id: 'F-99307r1_fix'
+  tag fix_id: 'F-6020r355184_fix'
   tag cci: ['CCI-002235']
   tag nist: ['AC-6 (10)', 'Rev_4']
 
