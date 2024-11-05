@@ -13,7 +13,7 @@ control 'SV-205645' do
     Select the Certificates entry in the left pane.
     If no certificate for the domain controller exists in the right pane, this is a finding.'
   desc 'fix', 'Obtain a server certificate for the domain controller.'
-  impact 0.0
+  impact 0.5
   tag severity: nil
   tag gtitle: 'SRG-OS-000066-GPOS-00034'
   tag gid: 'V-93481'
