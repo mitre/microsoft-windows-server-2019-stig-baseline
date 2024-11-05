@@ -106,6 +106,48 @@ inputs:
       - <dir-path-2>/*.conf
 ```
 
+For MS Windows 2019 the following minimal inputs should be provided:
+```
+# Set to either the string "true" or "false"
+sensitive_system: false
+
+# List of temporary accounts on the domain
+temp_accounts_domain: []
+
+# List of temporary accounts on local system
+temp_accounts_local: []
+
+# List of emergency accounts on the domain
+emergency_accounts_domain: []
+
+# List of emergency accounts on the system
+emergency_accounts_local: []
+
+# List of authorized users in the local Administrators group for a domain controller
+local_administrators_dc: []
+
+# List of authorized users in the local Administrators group for a member server
+local_administrators_member: []
+
+# Local Administrator Account on Windows Server
+local_administrator: ""
+
+# List of authorized users in the Backup Operators Group
+backup_operators: []
+
+# List Application or Service Accounts domain
+application_accounts_domain: []
+
+# List Excluded Accounts domain
+excluded_accounts_domain: []
+
+# List Application Local Accounts
+application_accounts_local: []
+
+# List of authorized users in the local Administrators group
+administrators: []
+
+```
 [top](#table-of-contents)
 ### Testing the Profile Controls
 The Gemfile provided contains all necessary ruby dependencies for checking the profile controls.
