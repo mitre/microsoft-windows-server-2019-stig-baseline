@@ -1,5 +1,5 @@
 
-control 'V-92985' do
+control 'V-92989' do
   title "Windows Server 2019 must be configured to audit Account Management -
 Computer Account Management successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
