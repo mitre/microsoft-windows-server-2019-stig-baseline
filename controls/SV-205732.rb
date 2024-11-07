@@ -1,47 +1,44 @@
 control 'SV-205732' do
-  title 'Windows Server 2019 Deny log on through Remote Desktop Services user
-right on domain controllers must be configured to prevent unauthenticated
-access.'
-  desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-  desc 'check', 'This applies to domain controllers. A separate version applies to other
-systems.
+  title 'Windows Server 2019 Deny log on through Remote Desktop Services user right on domain controllers must be configured to prevent unauthenticated access.'
+  desc 'Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
 
-    Verify the effective setting in Local Group Policy Editor.
+The "Deny log on through Remote Desktop Services" user right defines the accounts that are prevented from logging on using Remote Desktop Services.
 
-    Run "gpedit.msc".
+The Guests group must be assigned this right to prevent unauthenticated access.'
+  desc 'check', 'This applies to domain controllers. A separate version applies to other systems.
 
-    Navigate to Local Computer Policy >> Computer Configuration >> Windows
-Settings >> Security Settings >> Local Policies >> User Rights Assignment.
+Verify the effective setting in Local Group Policy Editor.
 
-    If the following accounts or groups are not defined for the "Deny log on
-through Remote Desktop Services" user right, this is a finding:
+Run "gpedit.msc".
 
-    - Guests Group
+Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment.
 
-    For server core installations, run the following command:
+If the following accounts or groups are not defined for the "Deny log on through Remote Desktop Services" user right, this is a finding:
 
-    Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
+- Guests Group
 
-    Review the text file.
+For server core installations, run the following command:
 
-    If the following SID(s) are not defined for the
-"SeDenyRemoteInteractiveLogonRight" user right, this is a finding.
+Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
 
-    S-1-5-32-546 (Guests)'
-  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings
->> Security Settings >> Local Policies >> User Rights Assignment >> "Deny log
-on through Remote Desktop Services" to include the following:
+Review the text file.
 
-    - Guests Group'
-  impact 0.0
-  tag severity: nil
+If the following SID(s) are not defined for the "SeDenyRemoteInteractiveLogonRight" user right, this is a finding.
+
+S-1-5-32-546 (Guests)'
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment >> "Deny log on through Remote Desktop Services" to include the following:
+
+- Guests Group'
+  impact 0.5
+  ref 'DPMS Target Microsoft Windows Server 2019'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000297-GPOS-00115'
-  tag gid: 'V-92963'
-  tag rid: 'SV-103051r1_rule'
+  tag gid: 'V-205732'
+  tag rid: 'SV-205732r958672_rule'
   tag stig_id: 'WN19-DC-000410'
-  tag fix_id: 'F-99209r1_fix'
+  tag fix_id: 'F-5997r355115_fix'
   tag cci: ['CCI-002314']
-  tag nist: ['AC-17 (1)', 'Rev_4']
+  tag nist: ['AC-17 (1)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -51,7 +48,6 @@ on through Remote Desktop Services" to include the following:
     end
   else
     impact 0.0
-    desc 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end

@@ -1,48 +1,40 @@
 control 'SV-205758' do
-  title 'Windows Server 2019 Force shutdown from a remote system user right
-must only be assigned to the Administrators group.'
-  desc 'Inappropriate granting of user rights can provide system,
-administrative, and other high-level capabilities.
+  title 'Windows Server 2019 Force shutdown from a remote system user right must only be assigned to the Administrators group.'
+  desc 'Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
 
-    Accounts with the "Force shutdown from a remote system" user right can
-remotely shut down a system, which could result in a denial of service.'
+Accounts with the "Force shutdown from a remote system" user right can remotely shut down a system, which could result in a denial of service.'
   desc 'check', 'Verify the effective setting in Local Group Policy Editor.
 
-    Run "gpedit.msc".
+Run "gpedit.msc".
 
-    Navigate to Local Computer Policy >> Computer Configuration >> Windows
-Settings >> Security Settings >> Local Policies >> User Rights Assignment.
+Navigate to Local Computer Policy >> Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment.
 
-    If any accounts or groups other than the following are granted the "Force
-shutdown from a remote system" user right, this is a finding:
+If any accounts or groups other than the following are granted the "Force shutdown from a remote system" user right, this is a finding:
 
-    - Administrators
+- Administrators
 
-    For server core installations, run the following command:
+For server core installations, run the following command:
 
-    Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
+Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt
 
-    Review the text file.
+Review the text file.
 
-    If any SIDs other than the following are granted the
-"SeRemoteShutdownPrivilege" user right, this is a finding:
+If any SIDs other than the following are granted the "SeRemoteShutdownPrivilege" user right, this is a finding:
 
-    S-1-5-32-544 (Administrators)'
-  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings
->> Security Settings >> Local Policies >> User Rights Assignment >> "Force
-shutdown from a remote system" to include only the following accounts or
-groups:
+S-1-5-32-544 (Administrators)'
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> User Rights Assignment >> "Force shutdown from a remote system" to include only the following accounts or groups:
 
-    - Administrators'
+- Administrators'
   impact 0.5
-  tag severity: nil
+  ref 'DPMS Target Microsoft Windows Server 2019'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000324-GPOS-00125'
-  tag gid: 'V-93067'
-  tag rid: 'SV-103155r1_rule'
+  tag gid: 'V-205758'
+  tag rid: 'SV-205758r958726_rule'
   tag stig_id: 'WN19-UR-000110'
-  tag fix_id: 'F-99313r1_fix'
+  tag fix_id: 'F-6023r355193_fix'
   tag cci: ['CCI-002235']
-  tag nist: ['AC-6 (10)', 'Rev_4']
+  tag nist: ['AC-6 (10)']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 

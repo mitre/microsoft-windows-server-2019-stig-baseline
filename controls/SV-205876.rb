@@ -3,25 +3,26 @@ control 'SV-205876' do
   desc 'Enabling this setting on all domain controllers in a domain prevents domain members from changing their computer account passwords. If these passwords are weak or compromised, the inability to change them may leave these computers vulnerable.'
   desc 'check', 'This applies to domain controllers. It is NA for other systems.
 
-    If the following registry value does not exist or is not configured as specified, this is a finding:
+If the following registry value does not exist or is not configured as specified, this is a finding:
 
-    Registry Hive: HKEY_LOCAL_MACHINE
-    Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\\
+Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\\
 
-    Value Name: RefusePasswordChange
+Value Name: RefusePasswordChange
 
-    Value Type: REG_DWORD
-    Value: 0x00000000 (0)'
+Value Type: REG_DWORD
+Value: 0x00000000 (0)'
   desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Domain controller: Refuse machine account password changes" to "Disabled".'
-  impact 0.0
-  tag severity: nil
+  impact 0.5
+  ref 'DPMS Target Microsoft Windows Server 2019'
+  tag severity: 'medium'
   tag gtitle: 'SRG-OS-000480-GPOS-00227'
-  tag gid: 'V-93273'
-  tag rid: 'SV-103361r1_rule'
+  tag gid: 'V-205876'
+  tag rid: 'SV-205876r991589_rule'
   tag stig_id: 'WN19-DC-000330'
-  tag fix_id: 'F-99519r1_fix'
+  tag fix_id: 'F-6141r355991_fix'
   tag cci: ['CCI-000366']
-  tag nist: ['CM-6 b', 'Rev_4']
+  tag nist: ['CM-6 b']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   
