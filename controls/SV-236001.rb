@@ -40,4 +40,19 @@ Configure the policy value for User Configuration >> Administrative Templates >>
   tag legacy: ['V-102625', 'SV-111575']
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+
+  describe registry_key('HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer') do
+    it { should exist }
+    it { should have_property 'NoPreviewPane' }
+    its('NoPreviewPane') { should cmp 1 }
+  end
+
+  describe registry_key('HKEY_CURRENT_USER\\SOFTWARE\\Policies\\Microsoft\\Windows\\PowerShell\\Transcription') do
+    it { should exist }
+    it { should have_property 'NoReadingPane' }
+    its('NoReadingPane') { should cmp 1 }
+  end
+
+
 end
