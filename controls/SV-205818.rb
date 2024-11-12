@@ -24,7 +24,7 @@ If the classification level of the Windows domain controller is higher than the 
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe "Separate, NSA-approved (Type 1) cryptography must be used to protect
     the directory data in transit for directory service implementations at a
     classified confidentiality level when replication data traverses a network

@@ -27,7 +27,7 @@ If the "Issued By" field of the PKI certificate being used by the domain control
 
 If the certificates in use are issued by a CA authorized by the Component's CIO, this is a CAT II finding.
 
-There are multiple sources from which lists of valid DoD CAs and approved ECAs can be obtained: 
+There are multiple sources from which lists of valid DoD CAs and approved ECAs can be obtained:
 
 The Global Directory Service (GDS) website provides an online source. The address for this site is https://crl.gds.disa.mil.
 
@@ -48,7 +48,7 @@ http://iase.disa.mil/pki-pke/function_pages/tools.html)
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe 'This control needs to be check manually' do
       skip 'Control not executed as this test is manual'
     end

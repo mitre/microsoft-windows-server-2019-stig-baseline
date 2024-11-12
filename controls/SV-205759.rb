@@ -48,8 +48,8 @@ The application account must meet requirements for application account passwords
   tag nist: ['AC-6 (10)']
 
   active_audit_privilege_users = security_policy.SeAuditPrivilege.entries
-  allowed_audit_privilege_users = input("allowed_audit_privilege_users")
-  disallowed_audit_privilege_users = input("disallowed_audit_privilege_users")
+  allowed_audit_privilege_users = input('allowed_audit_privilege_users')
+  disallowed_audit_privilege_users = input('disallowed_audit_privilege_users')
   unauthorized_users = []
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
@@ -60,14 +60,13 @@ The application account must meet requirements for application account passwords
   else
     active_audit_privilege_users.each do |user|
       next if allowed_audit_privilege_users.include?(user)
+
       unauthorized_users << user
     end
     disallowed_audit_privilege_users.each do |user|
-      unless disallowed_audit_privilege_users == [nil] || unauthorized_users.include?(user)
-        unauthorized_users << user
-      end
+      unauthorized_users << user unless disallowed_audit_privilege_users == [nil] || unauthorized_users.include?(user)
     end
-    describe "Security Audit Generation Privilege must be limited to" do
+    describe 'Security Audit Generation Privilege must be limited to' do
       it "Authorized SIDs: #{allowed_audit_privilege_users}" do
         failure_message = "Unauthorized SIDs: #{unauthorized_users}"
         expect(unauthorized_users).to be_empty, failure_message

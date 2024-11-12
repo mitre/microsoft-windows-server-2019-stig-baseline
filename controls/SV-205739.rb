@@ -54,7 +54,7 @@ BUILTIN\\Administrators:(I)(F)
   # Command Gets the Location of the Property Required
   ntds_dsa_working_directory = json(command: 'Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\NTDS\\Parameters | Select-Object -ExpandProperty "DSA Working Directory" | ConvertTo-Json').params
   expected_permissions = input('ntds_permissions')
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     if ntds_database_logs_files_path == ntds_dsa_working_directory
       perms = json(command: "icacls '#{ntds_dsa_working_directory}\\*.*' | convertto-json").params.map(&:strip)[0..-3].map { |e| e.gsub(/^[^\s]*\s/, '') }.reject(&:empty?)
       describe "Permissions on each file in #{ntds_dsa_working_directory} is set" do

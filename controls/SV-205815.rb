@@ -3,7 +3,7 @@ control 'SV-205815' do
   desc 'Computer account passwords are changed automatically on a regular basis. Disabling automatic password changes can make the system more vulnerable to malicious access. Frequent password changes can be a significant safeguard for the system. A new password for the computer account will be generated every 30 days.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\\
 
 Value Name: DisablePasswordChange

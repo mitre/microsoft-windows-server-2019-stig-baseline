@@ -27,7 +27,7 @@ If any standard user accounts or groups have "Allow" permissions greater than "R
 
 Other access permissions that allow the objects to be updated are considered findings unless specifically documented by the ISSO.
 
-The default permissions noted below satisfy this requirement. 
+The default permissions noted below satisfy this requirement.
 
 The permissions shown are at the summary level. More detailed permissions can be viewed by selecting the next "Advanced" button, the desired Permission entry, and the "Edit" button.
 
@@ -70,7 +70,7 @@ The Domain Admins and Enterprise Admins will not have the "Delete all child obje
   tag cci: ['CCI-002235']
   tag nist: ['AC-6 (10)']
 
-  #Checked Code in 2016 and it is not a validate way of checking permissions, Until a command is put together that can get all GPO's in a Domain and then check all permissions, this is manually
+  # Checked Code in 2016 and it is not a validate way of checking permissions, Until a command is put together that can get all GPO's in a Domain and then check all permissions, this is manually
   describe 'A manual review is required to ensure all Group Policies have the correct permisions' do
     skip 'A manual review is required to ensure all Group Policies have the correct permisions'
   end

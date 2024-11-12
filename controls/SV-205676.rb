@@ -44,7 +44,7 @@ The application account must meet requirements for application account passwords
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
 
-    describe security_policy do
-      its('SeInteractiveLogonRight') { should eq ['S-1-5-32-544'] }
-    end
+  describe security_policy do
+    its('SeInteractiveLogonRight') { should eq ['S-1-5-32-544'] }
+  end
 end

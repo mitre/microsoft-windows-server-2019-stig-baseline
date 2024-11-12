@@ -27,6 +27,6 @@ If "NewGuestName" is not something other than "Guest" in the file, this is a fin
   tag nist: ['CM-6 b']
 
   describe security_policy do
-    its('NewGuestName') { should_not eq "Guest" }
+    its('NewGuestName') { should_not eq 'Guest' }
   end
 end

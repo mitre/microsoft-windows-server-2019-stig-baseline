@@ -3,7 +3,7 @@ control 'SV-205631' do
   desc 'Failure to display the logon banner prior to a logon attempt will negate legal proceedings resulting from unauthorized access to system resources.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\
 
 Value Name: LegalNoticeText
@@ -51,7 +51,7 @@ By using this IS (which includes any device attached to this IS), you consent to
   tag cci: ['CCI-000048', 'CCI-000050', 'CCI-001384', 'CCI-001385', 'CCI-001386', 'CCI-001387', 'CCI-001388']
   tag nist: ['AC-8 a', 'AC-8 b', 'AC-8 c 1', 'AC-8 c 2', 'AC-8 c2', 'AC-8 c 3']
 
-describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
+  describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
     it { should have_property 'LegalNoticeText' }
   end
 

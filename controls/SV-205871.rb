@@ -39,6 +39,5 @@ If this needs to be corrected, configure the policy value for Computer Configura
       its('NoHeapTerminationOnCorruption') { should_not be 1 }
       its('NoHeapTerminationOnCorruption') { should cmp 0 }
     end
-    
   end
 end

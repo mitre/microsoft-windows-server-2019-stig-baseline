@@ -29,15 +29,15 @@ If "LockoutBadCount" equals "0" or is greater than "3" in the file, this is a fi
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
-  describe security_policy do
-    its('LockoutBadCount') { should be <= input('max_pass_lockout') }
+    describe security_policy do
+      its('LockoutBadCount') { should be <= input('max_pass_lockout') }
+    end
+    describe security_policy do
+      its('LockoutBadCount') { should be > 0 }
+    end
   end
-  describe security_policy do
-    its('LockoutBadCount') { should be > 0 }
-  end
- end
 end

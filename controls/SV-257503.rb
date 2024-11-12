@@ -35,6 +35,4 @@ Specify the Transcript output directory to point to a Central Log Server or anot
     it { should have_property 'EnableTranscripting' }
     its('EnableTranscripting') { should cmp 1 }
   end
-
-
 end

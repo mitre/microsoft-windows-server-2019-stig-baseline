@@ -99,14 +99,14 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
   tag nist: ['AC-6 (10)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     perm_query = <<-EOH
                     import-module ActiveDirectory
                     Set-Location ad:
                     $distinguishedName = (Get-ADDomain).DistinguishedName
                     $acl_rules = (Get-Acl "OU=Domain Controllers,$distinguishedName").Access
                     $acl_rules | ConvertTo-Csv | ConvertFrom-Csv | ConvertTo-Json
-                    EOH
+    EOH
 
     acl_rules = json(command: perm_query).params
     netbiosname = json(command: 'Get-ADDomain | Select NetBIOSName | ConvertTo-JSON').params['NetBIOSName']
@@ -115,8 +115,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "NT AUTHORITY\\ENTERPRISE DOMAIN CONTROLLERS" }
-          its(['ActiveDirectoryRights']) { should cmp "GenericRead"}
+          its(['IdentityReference']) { should cmp 'NT AUTHORITY\\ENTERPRISE DOMAIN CONTROLLERS' }
+          its(['ActiveDirectoryRights']) { should cmp 'GenericRead' }
         end
       end
     end
@@ -124,8 +124,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "NT AUTHORITY\\Authenticated Users" }
-          its(['ActiveDirectoryRights']) { should cmp "GenericRead"}
+          its(['IdentityReference']) { should cmp 'NT AUTHORITY\\Authenticated Users' }
+          its(['ActiveDirectoryRights']) { should cmp 'GenericRead' }
         end
       end
     end
@@ -133,8 +133,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "NT AUTHORITY\\SYSTEM" }
-          its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
+          its(['IdentityReference']) { should cmp 'NT AUTHORITY\\SYSTEM' }
+          its(['ActiveDirectoryRights']) { should cmp 'GenericAll' }
         end
       end
     end
@@ -142,8 +142,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "NT AUTHORITY\\SYSTEM" }
-          its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
+          its(['IdentityReference']) { should cmp 'NT AUTHORITY\\SYSTEM' }
+          its(['ActiveDirectoryRights']) { should cmp 'GenericAll' }
         end
       end
     end
@@ -152,7 +152,7 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
           its(['IdentityReference']) { should cmp "#{netbiosname}\\Domain Admins" }
-          its(['ActiveDirectoryRights']) { should cmp "CreateChild, Self, WriteProperty, ExtendedRight, GenericRead, WriteDacl, WriteOwner"}
+          its(['ActiveDirectoryRights']) { should cmp 'CreateChild, Self, WriteProperty, ExtendedRight, GenericRead, WriteDacl, WriteOwner' }
         end
       end
     end
@@ -160,8 +160,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "BUILTIN\\Pre-Windows 2000 Compatible Access" }
-          its(['ActiveDirectoryRights']) { should cmp "ReadProperty"}
+          its(['IdentityReference']) { should cmp 'BUILTIN\\Pre-Windows 2000 Compatible Access' }
+          its(['ActiveDirectoryRights']) { should cmp 'ReadProperty' }
         end
       end
     end
@@ -169,8 +169,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
-          its(['ActiveDirectoryRights']) { should cmp "ReadProperty, WriteProperty"}
+          its(['IdentityReference']) { should cmp 'NT AUTHORITY\\SELF' }
+          its(['ActiveDirectoryRights']) { should cmp 'ReadProperty, WriteProperty' }
         end
       end
     end
@@ -178,8 +178,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "NT AUTHORITY\\SELF" }
-          its(['ActiveDirectoryRights']) { should cmp "ReadProperty, WriteProperty, ExtendedRight"}
+          its(['IdentityReference']) { should cmp 'NT AUTHORITY\\SELF' }
+          its(['ActiveDirectoryRights']) { should cmp 'ReadProperty, WriteProperty, ExtendedRight' }
         end
       end
     end
@@ -188,7 +188,7 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
           its(['IdentityReference']) { should cmp "#{netbiosname}\\Enterprise Admins" }
-          its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
+          its(['ActiveDirectoryRights']) { should cmp 'GenericAll' }
         end
       end
     end
@@ -196,8 +196,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "BUILTIN\\Pre-Windows 2000 Compatible Access" }
-          its(['ActiveDirectoryRights']) { should cmp "ListChildren"}
+          its(['IdentityReference']) { should cmp 'BUILTIN\\Pre-Windows 2000 Compatible Access' }
+          its(['ActiveDirectoryRights']) { should cmp 'ListChildren' }
         end
       end
     end
@@ -205,8 +205,8 @@ ENTERPRISE DOMAIN CONTROLLERS - Read, Special permissions'
       acl_rules.each do |acl_rule|
         describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
           subject { acl_rule }
-          its(['IdentityReference']) { should cmp "BUILTIN\\Administrators" }
-          its(['ActiveDirectoryRights']) { should cmp "CreateChild, Self, WriteProperty, ExtendedRight, Delete, GenericRead, WriteDacl, WriteOwner"}
+          its(['IdentityReference']) { should cmp 'BUILTIN\\Administrators' }
+          its(['ActiveDirectoryRights']) { should cmp 'CreateChild, Self, WriteProperty, ExtendedRight, Delete, GenericRead, WriteDacl, WriteOwner' }
         end
       end
     end

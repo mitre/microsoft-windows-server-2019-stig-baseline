@@ -14,7 +14,7 @@ For server core installations, run the following command:
 
 Secedit /export /areas USER_RIGHTS /cfg c:\\path\\UserRights.txt
 
-The results in the file identify user right assignments by SID instead of group name. Review the SIDs for unidentified ones. A list of typical SIDs \\ Groups is below, search Microsoft for articles on well-known SIDs for others. 
+The results in the file identify user right assignments by SID instead of group name. Review the SIDs for unidentified ones. A list of typical SIDs \\ Groups is below, search Microsoft for articles on well-known SIDs for others.
 
 If any unresolved SIDs exist and are not for currently valid accounts or groups, this is a finding.
 
@@ -43,7 +43,7 @@ S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420 - NT Service\\Wdi
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe "A manual review is required to ensure orphaned security identifiers (SIDs) are removed from user rights on Windows Server 2019" do
+  describe 'A manual review is required to ensure orphaned security identifiers (SIDs) are removed from user rights on Windows Server 2019' do
     skip 'A manual review is required to ensure orphaned security identifiers (SIDs) are removed from user rights on Windows Server 2019'
   end
 end

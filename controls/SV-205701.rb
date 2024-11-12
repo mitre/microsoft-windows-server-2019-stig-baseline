@@ -49,11 +49,11 @@ Check "Smart card is required for interactive logon" in the "Account Options" ar
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
-    accounts = json(command: "Get-ADUser -Filter {(Enabled -eq $True) -and (SmartcardLogonRequired -eq $False)} | Select -ExpandProperty Name | ConvertTo-Json").params
+  if ['4', '5'].include?(domain_role)
+    accounts = json(command: 'Get-ADUser -Filter {(Enabled -eq $True) -and (SmartcardLogonRequired -eq $False)} | Select -ExpandProperty Name | ConvertTo-Json').params
     describe 'Accounts without smartcard logon required' do
       it 'Accounts must be configured to require the use of a CAC, PIV or ALT' do
-        failure_message = "#{accounts}"
+        failure_message = accounts.to_s
         expect(accounts).to be_empty, failure_message
       end
     end

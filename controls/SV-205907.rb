@@ -43,7 +43,7 @@ The use of Microsoft Local Administrator Password Solution (LAPS) or similar pro
 ….
 Strict separation of roles and duties. Server administrator credentials cannot be used on Windows 10 desktop to administer it. Documentation of all exceptions should be supplied.
 ….
-Use of a Privileged Access Workstation (PAW) and adherence to the Clean Source principle for administering affected servers. 
+Use of a Privileged Access Workstation (PAW) and adherence to the Clean Source principle for administering affected servers.
 ….
 Boundary Protection that is currently in place to protect from vulnerabilities in the network/servers.
 ….
@@ -64,12 +64,13 @@ The overall number of vulnerabilities that are unmitigated on the network/server
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   security_services = command('Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\\Microsoft\\Windows\\DeviceGuard | Select -ExpandProperty "SecurityServicesRunning"').stdout.strip.split("\r\n")
 
-  if domain_role == '0' || domain_role == '2'
+  case domain_role
+  when '0', '2'
     impact 0.0
     describe 'This is NA for standalone systems' do
       skip 'This is NA for standalone systems'
     end
-  elsif domain_role == '4' || domain_role == '5'
+  when '4', '5'
     impact 0.0
     describe 'This is NA for domain controllers' do
       skip 'This is NA for domain controllers'
@@ -79,9 +80,9 @@ The overall number of vulnerabilities that are unmitigated on the network/server
       it { should have_property 'LsaCfgFlags' }
       its('LsaCfgFlags') { should cmp 1 }
     end
-    describe "Security Services Running should include 1" do
+    describe 'Security Services Running should include 1' do
       subject { security_services }
-      it { should include "1" }
+      it { should include '1' }
     end
   end
 end

@@ -27,6 +27,6 @@ If "MinimumPasswordLength" is less than "14" in the file, this is a finding.'
   tag nist: ['IA-5 (1) (a)', 'IA-5 (1) (h)']
 
   describe security_policy do
-    its('MinimumPasswordLength') { should be >= input('minimum_password_length')}
+    its('MinimumPasswordLength') { should be >= input('minimum_password_length') }
   end
 end

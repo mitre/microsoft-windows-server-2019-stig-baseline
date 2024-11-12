@@ -37,7 +37,7 @@ The more secure option for this setting, "Prompt for credentials on the secure d
   else
     describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
       it { should have_property 'ConsentPromptBehaviorAdmin' }
-      its('ConsentPromptBehaviorAdmin') { should be_between(1,2) }
+      its('ConsentPromptBehaviorAdmin') { should be_between(1, 2) }
     end
   end
 end

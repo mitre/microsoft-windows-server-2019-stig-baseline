@@ -12,7 +12,7 @@ Value Name: RestrictRemoteSAM
 
 Value Type: REG_SZ
 Value: O:BAG:BAD:(A;;RC;;;BA)'
-  desc 'fix', 'Navigate to the policy Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Network access: Restrict clients allowed to make remote calls to SAM". 
+  desc 'fix', 'Navigate to the policy Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Network access: Restrict clients allowed to make remote calls to SAM".
 
 Select "Edit Security" to configure the "Security descriptor:".
 
@@ -37,15 +37,15 @@ The "Security descriptor:" must be populated with "O:BAG:BAD:(A;;RC;;;BA) for th
   tag nist: ['AC-6 (10)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     impact 0.0
     describe 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers' do
       skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers'
     end
   else
-   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa') do
-    it { should have_property "RestrictRemoteSAM"}
-    its('RestrictRemoteSAM') { should cmp "O:BAG:BAD:(A;;RC;;;BA)" }
-   end
+    describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa') do
+      it { should have_property 'RestrictRemoteSAM' }
+      its('RestrictRemoteSAM') { should cmp 'O:BAG:BAD:(A;;RC;;;BA)' }
+    end
   end
 end

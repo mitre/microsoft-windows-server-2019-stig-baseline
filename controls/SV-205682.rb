@@ -43,16 +43,16 @@ Click "Next" and "Remove" as prompted.'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  if powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name SMB1").stdout.strip == "0" && powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10' -Name Start").stdout.strip == "4"
+  if powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters' -Name SMB1").stdout.strip == '0' && powershell("Get-ItemPropertyValue 'HKLM:\\SYSTEM\\CurrentControlSet\\Services\\mrxsmb10' -Name Start").stdout.strip == '4'
     impact 0.0
     describe 'Controls V-93393 and V-93395 configuration successful' do
       skip 'This is NA as the successful configuration of Controls V-93393 (STIG ID# WN19-00-000390) and V-93395 (STIG ID# WN19-00-000400) meets the requirement'
     end
   else
     state = powershell("Get-WindowsFeature -Name FS-SMB1 | Select -ExpandProperty 'InstallState'").stdout.strip
-    describe "Server Message Block (SMB) v1 protocol msut not be installed" do
+    describe 'Server Message Block (SMB) v1 protocol msut not be installed' do
       subject { state }
-      it { should_not eq "Installed" }
+      it { should_not eq 'Installed' }
     end
   end
 end

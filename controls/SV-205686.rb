@@ -1,11 +1,11 @@
 control 'SV-205686' do
   title 'Windows Server 2019 must prevent the display of slide shows on the lock screen.'
   desc 'Slide shows that are displayed on the lock screen could display sensitive information to unauthorized personnel. Turning off this feature will limit access to the information to a logged-on user.'
-  desc 'check', 'Verify the registry value below. 
+  desc 'check', 'Verify the registry value below.
 
 If it does not exist or is not configured as specified, this is a finding.
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization\\
 
 Value Name: NoLockScreenSlideshow

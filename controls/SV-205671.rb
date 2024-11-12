@@ -53,18 +53,18 @@ The application account must meet requirements for application account passwords
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   end
-  if domain_role == '4' || domain_role == '5'
-      impact 0.0
-      describe 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers' do
-       skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers'
-      end
+  if ['4', '5'].include?(domain_role)
+    impact 0.0
+    describe 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers' do
+      skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers'
+    end
   else
     describe security_policy do
-     its('SeNetworkLogonRight') { should eq ['S-1-5-11', 'S-1-5-32-544'] }
+      its('SeNetworkLogonRight') { should eq ['S-1-5-11', 'S-1-5-32-544'] }
+    end
   end
- end
 end

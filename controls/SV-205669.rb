@@ -38,13 +38,13 @@ If any SIDs are granted the "SeDenyServiceLogonRight" user right, this is a find
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   end
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe security_policy do
-     its('SeDenyServiceLogonRight') { should eq [] }
+      its('SeDenyServiceLogonRight') { should eq [] }
     end
   else
     impact 0.0

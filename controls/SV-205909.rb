@@ -27,6 +27,6 @@ If "NewAdministratorName" is not something other than "Administrator" in the fil
   tag nist: ['CM-6 b']
 
   describe security_policy do
-    its('NewAdministratorName') { should_not cmp "Administrator" }
+    its('NewAdministratorName') { should_not cmp 'Administrator' }
   end
 end

@@ -24,10 +24,10 @@ Preview versions must not be used in a production environment.'
   current_build_number = registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion').CurrentBuildNumber
   describe 'Microsoft Windows 2019 needs to be higher that release 1809' do
     subject { releaseid }
-    it { should cmp >= 1809}
+    it { should cmp >= 1809 }
   end
   describe 'Microsoft Windows 2019 needs to be higher that build number 17763' do
     subject { current_build_number }
-    it { should cmp >= 17763}
+    it { should cmp >= 17_763 }
   end
 end

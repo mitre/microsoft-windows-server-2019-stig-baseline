@@ -37,14 +37,14 @@ Uncheck "Password never expires" for all enabled user accounts in Active Directo
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   untracked_accounts = []
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     ad_accounts = json({ command: "Search-ADAccount -PasswordNeverExpires -UsersOnly | Where-Object {$_.PasswordNeverExpires -eq 'True' -and $_.Enabled -eq 'True'} | Select -ExpandProperty Name | ConvertTo-Json" }).params
 
     application_accounts = input('application_accounts_domain')
     excluded_accounts = input('excluded_accounts_domain')
 
     unless ad_accounts.empty?
-      ad_accounts = [ad_accounts] if ad_accounts.class == String
+      ad_accounts = [ad_accounts] if ad_accounts.instance_of?(String)
       untracked_accounts = ad_accounts - application_accounts - excluded_accounts
     end
 
@@ -62,7 +62,7 @@ Uncheck "Password never expires" for all enabled user accounts in Active Directo
     excluded_accounts = input('excluded_accounts_local')
 
     unless local_accounts.empty?
-      local_accounts = [local_accounts] if local_accounts.class == String
+      local_accounts = [local_accounts] if local_accounts.instance_of?(String)
       untracked_accounts = local_accounts - application_accounts - excluded_accounts
     end
 

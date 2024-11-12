@@ -25,5 +25,5 @@ Value: 0x00000000 (0)'
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0') do
     it { should have_property 'allownullsessionfallback' }
     its('allownullsessionfallback') { should cmp == 0 }
-  end 
+  end
 end

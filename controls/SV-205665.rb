@@ -1,5 +1,5 @@
 control 'SV-205665' do
-  title 'Windows Server 2019 Access this computer from the network user right must only be assigned to the Administrators, Authenticated Users, and 
+  title 'Windows Server 2019 Access this computer from the network user right must only be assigned to the Administrators, Authenticated Users, and
 Enterprise Domain Controllers groups on domain controllers.'
   desc 'Inappropriate granting of user rights can provide system, administrative, and other high-level capabilities.
 
@@ -54,8 +54,8 @@ The application account must meet requirements for application account passwords
   tag nist: ['AC-3']
 
   active_network_access_users = security_policy.SeNetworkLogonRight.entries
-  allowed_network_access_users = input("allowed_network_access_users")
-  disallowed_network_access_users = input("disallowed_network_access_users")
+  allowed_network_access_users = input('allowed_network_access_users')
+  disallowed_network_access_users = input('disallowed_network_access_users')
   unauthorized_users = []
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
@@ -64,28 +64,25 @@ The application account must meet requirements for application account passwords
     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
     end
+  elsif ['4', '5'].include?(domain_role)
+    active_network_access_users.each do |user|
+      next if allowed_network_access_users.include?(user)
+
+      unauthorized_users << user
+    end
+    disallowed_network_access_users.each do |user|
+      unauthorized_users << user unless disallowed_network_access_users == [nil] || unauthorized_users.include?(user)
+    end
+    describe 'Network Logon Privilege must be limited to' do
+      it "Authorized SIDs: #{allowed_network_access_users}" do
+        failure_message = "Unauthorized SIDs: #{unauthorized_users}"
+        expect(unauthorized_users).to be_empty, failure_message
+      end
+    end
   else
-    if domain_role == '4' || domain_role == '5'
-      active_network_access_users.each do |user|
-        next if allowed_network_access_users.include?(user)
-        unauthorized_users << user
-      end
-      disallowed_network_access_users.each do |user|
-        unless disallowed_network_access_users == [nil] || unauthorized_users.include?(user)
-          unauthorized_users << user
-        end
-      end
-      describe "Network Logon Privilege must be limited to" do
-        it "Authorized SIDs: #{allowed_network_access_users}" do
-          failure_message = "Unauthorized SIDs: #{unauthorized_users}"
-          expect(unauthorized_users).to be_empty, failure_message
-        end
-      end
-    else
-      impact 0.0
-      describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-        skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-      end
+    impact 0.0
+    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
     end
   end
 end

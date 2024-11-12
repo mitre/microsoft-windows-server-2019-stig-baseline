@@ -26,6 +26,6 @@ This policy setting requires the installation of the MSS-Legacy custom templates
 
   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters') do
     it { should have_property 'DisableIPSourceRouting' }
-    its('DisableIPSourceRouting') { should cmp 2}
+    its('DisableIPSourceRouting') { should cmp 2 }
   end
 end

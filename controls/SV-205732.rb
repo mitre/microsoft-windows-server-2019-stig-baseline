@@ -42,7 +42,7 @@ S-1-5-32-546 (Guests)'
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe security_policy do
       its('SeDenyRemoteInteractiveLogonRight') { should eq ['S-1-5-32-546'] }
     end

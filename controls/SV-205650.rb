@@ -9,12 +9,12 @@ Execute the following command:
 
 Get-ChildItem -Path Cert:Localmachine\\disallowed | Where Issuer -Like "*CCEB Interoperability*" | FL Subject, Issuer, Thumbprint, NotAfter
 
-If the following certificate "Subject", "Issuer", and "Thumbprint" information is not displayed, this is a finding. 
+If the following certificate "Subject", "Issuer", and "Thumbprint" information is not displayed, this is a finding.
 
 Subject: CN=DoD Root CA 3, OU=PKI, OU=DoD, O=U.S. Government, C=US
 Issuer: CN=US DoD CCEB Interoperability Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US
 Thumbprint: 9B74964506C7ED9138070D08D5F8B969866560C8
-NotAfter: 7/18/2025 9:56:22 AM                                                                                                                                                                                                                                                     
+NotAfter: 7/18/2025 9:56:22 AM
 Alternately, use the Certificates MMC snap-in:
 
 Run "MMC".
@@ -84,21 +84,21 @@ The FBCA Cross-Certificate Remover Tool and User Guide are available on Cyber Ex
       case query
       when Hash
         query.each do |key, value|
-          if key == "NotAfter"
-            cert_date = Date.parse(value)
-            describe cert_date do
-              it { should be >= Date.today }
-            end
+          next unless key == 'NotAfter'
+
+          cert_date = Date.parse(value)
+          describe cert_date do
+            it { should be >= Date.today }
           end
         end
       when Array
         query.each do |certs|
           certs.each do |key, value|
-            if key == "NotAfter"
-              cert_date = Date.parse(value)
-              describe cert_date do
-                it { should be >= Date.today }
-              end
+            next unless key == 'NotAfter'
+
+            cert_date = Date.parse(value)
+            describe cert_date do
+              it { should be >= Date.today }
             end
           end
         end

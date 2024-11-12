@@ -3,7 +3,7 @@ control 'SV-205632' do
   desc 'Failure to display the logon banner prior to a logon attempt will negate legal proceedings resulting from unauthorized access to system resources.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\
 
 Value Name: LegalNoticeCaption
@@ -11,12 +11,12 @@ Value Name: LegalNoticeCaption
 Value Type: REG_SZ
 Value: Refer to message title options below
 
-"DoD Notice and Consent Banner", "US Department of Defense Warning Statement", or an organization-defined equivalent. 
+"DoD Notice and Consent Banner", "US Department of Defense Warning Statement", or an organization-defined equivalent.
 
 If an organization-defined title is used, it can in no case contravene or modify the language of the banner text required in WN19-SO-000130.
 
 Automated tools may only search for the titles defined above. If an organization-defined title is used, a manual review will be required.'
-  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Interactive Logon: Message title for users attempting to log on" to "DoD Notice and Consent Banner", "US Department of Defense Warning Statement", or an organization-defined equivalent. 
+  desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Interactive Logon: Message title for users attempting to log on" to "DoD Notice and Consent Banner", "US Department of Defense Warning Statement", or an organization-defined equivalent.
 
 If an organization-defined title is used, it can in no case contravene or modify the language of the message text required in WN19-SO-000130.'
   impact 0.3

@@ -5,7 +5,7 @@ control 'SV-205911' do
 
 If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\\
 
 Value Name: MaximumPasswordAge
@@ -28,6 +28,6 @@ Configure the policy value for Computer Configuration >> Windows Settings >> Sec
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
     it { should have_property 'MaximumPasswordAge' }
-    its('MaximumPasswordAge') { should be_between(1,input('maximum_password_age_machine')) }
+    its('MaximumPasswordAge') { should be_between(1, input('maximum_password_age_machine')) }
   end
 end

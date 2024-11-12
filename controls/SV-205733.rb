@@ -78,28 +78,28 @@ Note: "Local account" is referring to the Windows built-in security group.'
             $group = New-Object System.Security.Principal.NTAccount('Domain Admins')
             $sid = ($group.Translate([security.principal.securityidentifier])).value
             $sid | ConvertTo-Json
-            EOH
+    EOH
 
     domain_admin_sid = json(command: domain_query).params
     enterprise_admin_query = <<-EOH
             $group = New-Object System.Security.Principal.NTAccount('Enterprise Admins')
             $sid = ($group.Translate([security.principal.securityidentifier])).value
             $sid | ConvertTo-Json
-            EOH
+    EOH
 
     enterprise_admin_sid = json(command: enterprise_admin_query).params
     describe security_policy do
-      its('SeDenyRemoteInteractiveLogonRight') { should include "#{domain_admin_sid}" }
+      its('SeDenyRemoteInteractiveLogonRight') { should include domain_admin_sid.to_s }
     end
     describe security_policy do
-      its('SeDenyRemoteInteractiveLogonRight') { should include "#{enterprise_admin_sid}" }
+      its('SeDenyRemoteInteractiveLogonRight') { should include enterprise_admin_sid.to_s }
     end
     describe.one do
       describe security_policy do
-          its('SeDenyRemoteInteractiveLogonRight') { should include "S-1-5-113" }
+        its('SeDenyRemoteInteractiveLogonRight') { should include 'S-1-5-113' }
       end
       describe security_policy do
-          its('SeDenyRemoteInteractiveLogonRight') { should include "S-1-5-114" }
+        its('SeDenyRemoteInteractiveLogonRight') { should include 'S-1-5-114' }
       end
     end
     describe security_policy do

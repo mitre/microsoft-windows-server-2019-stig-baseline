@@ -20,9 +20,9 @@ Under "System Summary", if "BIOS Mode" does not display "UEFI", this is a findin
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  uefi_boot = json( command: 'Confirm-SecureBootUEFI | ConvertTo-Json').params
-    describe 'Confirm-Secure Boot UEFI is required to be enabled on System' do
-     subject { uefi_boot }
-     it { should_not eq 'False' }
-    end
+  uefi_boot = json(command: 'Confirm-SecureBootUEFI | ConvertTo-Json').params
+  describe 'Confirm-Secure Boot UEFI is required to be enabled on System' do
+    subject { uefi_boot }
+    it { should_not eq 'False' }
+  end
 end

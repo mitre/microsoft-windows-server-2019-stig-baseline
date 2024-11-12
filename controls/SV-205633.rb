@@ -3,7 +3,7 @@ control 'SV-205633' do
   desc 'Unattended systems are susceptible to unauthorized use and should be locked when unattended. The screen saver should be set at a maximum of 15 minutes and be password protected. This protects critical and sensitive data from exposure to unauthorized personnel with physical access to the computer.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\
 
 Value Name: InactivityTimeoutSecs

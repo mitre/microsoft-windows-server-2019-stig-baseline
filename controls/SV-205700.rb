@@ -36,19 +36,19 @@ The password required flag can be set by entering the following on a command lin
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
-    ad_accounts = json({ command: "Get-ADUser -Filter \"(Enabled -eq $true) -And (PasswordNotRequired -eq $true)\" | Select -ExpandProperty Name | ConvertTo-Json" }).params
+  if ['4', '5'].include?(domain_role)
+    ad_accounts = json({ command: 'Get-ADUser -Filter "(Enabled -eq $true) -And (PasswordNotRequired -eq $true)" | Select -ExpandProperty Name | ConvertTo-Json' }).params
     describe 'AD Accounts' do
       it 'AD should not have any Accounts that have Password Not Required' do
-      failure_message = "Users that have Password Not Required: #{ad_accounts}"
-      expect(ad_accounts).to be_empty, failure_message
+        failure_message = "Users that have Password Not Required: #{ad_accounts}"
+        expect(ad_accounts).to be_empty, failure_message
       end
     end
   else
     local_accounts = json({ command: "Get-CimInstance -Class Win32_Useraccount -Filter 'PasswordRequired=False and LocalAccount=True and Disabled=False' | Select -ExpandProperty Name | ConvertTo-Json" }).params
-    describe "Account or Accounts exists" do
+    describe 'Account or Accounts exists' do
       it 'Server should not have Accounts with No Password Set' do
-        failure_message = "User or Users that have no Password Set: #{local_accounts}" 
+        failure_message = "User or Users that have no Password Set: #{local_accounts}"
         expect(local_accounts).to be_empty, failure_message
       end
     end

@@ -25,14 +25,14 @@ If the site includes any system areas such as root of the drive, Program Files, 
   tag nist: ['CM-6 b']
 
   is_ftp_installed = command('Get-WindowsFeature Web-Ftp-Server | Select -Expand Installed').stdout.strip
-   if is_ftp_installed == 'False'
+  if is_ftp_installed == 'False'
     impact 0.0
     describe 'FTP is not installed' do
       skip 'Control not applicable'
     end
-   else
+  else
     describe 'Configure the FTP sites to allow access only to specific FTP shared resources. Do not allow access to other areas of the system.' do
       skip 'Configure the FTP sites to allow access only to specific FTP shared resources. Do not allow access to other areas of the system.'
     end
-   end
+  end
 end

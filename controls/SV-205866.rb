@@ -22,8 +22,8 @@ Value: 0x00000000 (0)'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}') do
-      it { should have_property 'NoGPOListChanges' }
-      its('NoGPOListChanges') { should cmp 0 }
-     end
+  describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}') do
+    it { should have_property 'NoGPOListChanges' }
+    its('NoGPOListChanges') { should cmp 0 }
+  end
 end

@@ -56,21 +56,21 @@ The application account must meet requirements for application account passwords
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeImpersonatePrivilege') { should include "S-1-5-32-544" }
+      its('SeImpersonatePrivilege') { should include 'S-1-5-32-544' }
     end
     describe security_policy do
-     its('SeImpersonatePrivilege') { should include "S-1-5-6" }
+      its('SeImpersonatePrivilege') { should include 'S-1-5-6' }
     end
     describe security_policy do
-     its('SeImpersonatePrivilege') { should include "S-1-5-19" }
+      its('SeImpersonatePrivilege') { should include 'S-1-5-19' }
     end
     describe security_policy do
-     its('SeImpersonatePrivilege') { should include "S-1-5-20" }
+      its('SeImpersonatePrivilege') { should include 'S-1-5-20' }
     end
- end
+  end
 end

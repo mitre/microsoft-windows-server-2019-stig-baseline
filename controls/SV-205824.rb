@@ -3,14 +3,14 @@ control 'SV-205824' do
   desc 'A computer connecting to a domain controller will establish a secure channel. The secure channel connection may be subject to compromise, such as hijacking or eavesdropping, if strong session keys are not used to establish the connection. Requiring strong session keys enforces 128-bit encryption between systems.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\\
 
 Value Name: RequireStrongKey
 
 Value Type: REG_DWORD
 Value: 0x00000001 (1)
- 
+
 This setting may prevent a system from being joined to a domain if not configured consistently between systems.'
   desc 'fix', 'Configure the policy value for Computer Configuration >> Windows Settings >> Security Settings >> Local Policies >> Security Options >> "Domain member: Require strong (Windows 2000 or Later) session key" to "Enabled".'
   impact 0.5

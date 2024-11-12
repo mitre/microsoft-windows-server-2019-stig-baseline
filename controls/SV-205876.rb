@@ -5,7 +5,7 @@ control 'SV-205876' do
 
 If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\Netlogon\\Parameters\\
 
 Value Name: RefusePasswordChange
@@ -25,8 +25,8 @@ Value: 0x00000000 (0)'
   tag nist: ['CM-6 b']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  
-  if domain_role == '4' || domain_role == '5'
+
+  if ['4', '5'].include?(domain_role)
     describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\Netlogon\\Parameters') do
       it { should have_property 'RefusePasswordChange' }
       its('RefusePasswordChange') { should cmp 0 }

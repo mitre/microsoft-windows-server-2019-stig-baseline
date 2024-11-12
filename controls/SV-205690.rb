@@ -3,7 +3,7 @@ control 'SV-205690' do
   desc 'Enabling interaction with the network selection UI allows users to change connections to available networks without signing in to Windows.'
   desc 'check', 'Verify the registry value below. If it does not exist or is not configured as specified, this is a finding.
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SOFTWARE\\Policies\\Microsoft\\Windows\\System\\
 
 Value Name: DontDisplayNetworkSelectionUI

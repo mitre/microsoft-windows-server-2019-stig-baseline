@@ -24,6 +24,6 @@ Value: 0x00000000 (0)'
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\LanmanWorkstation') do
     it { should have_property 'AllowInsecureGuestAuth' }
-    its('AllowInsecureGuestAuth') { should cmp 0}
+    its('AllowInsecureGuestAuth') { should cmp 0 }
   end
 end

@@ -5,7 +5,7 @@ control 'SV-205792' do
 Audit Directory Service Access records events related to users accessing an Active Directory object.'
   desc 'check', 'This applies to domain controllers. It is NA for other systems.
 
-Security Option "Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings" must be set to "Enabled" (WN19-SO-000050) for the detailed auditing subcategories to be effective. 
+Security Option "Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings" must be set to "Enabled" (WN19-SO-000050) for the detailed auditing subcategories to be effective.
 
 Use the "AuditPol" tool to review the current Audit Policy configuration:
 
@@ -32,18 +32,18 @@ DS Access >> Directory Service Access - Failure'
   tag nist: ['AU-12 c', 'AC-6 (9)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5'
-  describe.one do
-   describe audit_policy do
-    its('Directory Service Access') { should eq 'Failure' }
-   end
-   describe audit_policy do
-    its('Directory Service Access') { should eq 'Success and Failure' }
-   end
+  if ['4', '5'].include?(domain_role)
+    describe.one do
+      describe audit_policy do
+        its('Directory Service Access') { should eq 'Failure' }
+      end
+      describe audit_policy do
+        its('Directory Service Access') { should eq 'Success and Failure' }
+      end
+    end
+  else
+    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    end
   end
- else
-  describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-    skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-  end
- end
 end

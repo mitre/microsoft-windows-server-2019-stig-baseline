@@ -29,8 +29,8 @@ Value: 0x00000001 (1)'
     end
   else
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51') do
-     it { should have_property 'ACSettingIndex' }
-     its('ACSettingIndex') { should cmp 1 }
-   end
+      it { should have_property 'ACSettingIndex' }
+      its('ACSettingIndex') { should cmp 1 }
+    end
   end
 end

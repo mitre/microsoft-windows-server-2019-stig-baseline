@@ -20,7 +20,7 @@ Note: This does not apply to server-based applications that have a requirement f
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-   describe command('where /R c: *.p12 *.pfx') do
+  describe command('where /R c: *.p12 *.pfx') do
     its('stdout') { should eq '' }
-   end
+  end
 end

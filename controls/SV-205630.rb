@@ -28,14 +28,14 @@ If "ResetLockoutCount" is less than "15" in the file, this is a finding.'
   tag nist: ['AC-7 a', 'AC-7 b']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
-  
+
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
-  describe security_policy do
-    its('ResetLockoutCount') { should be >= input('pass_lock_time') }
+    describe security_policy do
+      its('ResetLockoutCount') { should be >= input('pass_lock_time') }
+    end
   end
- end
 end

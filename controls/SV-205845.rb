@@ -26,7 +26,7 @@ The organization may use technical means such as whitelisting to prevent the use
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe "A manual review is required to verify that administrative accounts are not being used with applications that access the Internet, such as web browsers, or with potential Internet sources, such as email" do
-    skip "A manual review is required to verify that administrative accounts are not being used with applications that access the Internet, such as web browsers, or with potential Internet sources, such as email"
+  describe 'A manual review is required to verify that administrative accounts are not being used with applications that access the Internet, such as web browsers, or with potential Internet sources, such as email' do
+    skip 'A manual review is required to verify that administrative accounts are not being used with applications that access the Internet, such as web browsers, or with potential Internet sources, such as email'
   end
 end

@@ -28,7 +28,7 @@ This policy setting requires the installation of the SecGuide custom templates i
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  if powershell("Get-WindowsFeature -Name FS-SMB1 | Select -ExpandProperty 'InstallState'").stdout.strip == "Installed"
+  if powershell("Get-WindowsFeature -Name FS-SMB1 | Select -ExpandProperty 'InstallState'").stdout.strip == 'Installed'
     describe registry_key('HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters') do
       it { should have_property 'SMB1' }
       its('SMB1') { should cmp == 0 }

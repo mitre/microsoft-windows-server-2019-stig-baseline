@@ -3,7 +3,7 @@ control 'SV-205724' do
   desc 'Allowing anonymous logon users (null session connections) to list all account names and enumerate all shared resources can provide a map of potential points to attack the system.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Control\\Lsa\\
 
 Value Name: RestrictAnonymous

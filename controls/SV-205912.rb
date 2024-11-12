@@ -3,9 +3,9 @@ control 'SV-205912' do
   desc 'Unattended systems are susceptible to unauthorized use and must be locked. Configuring a system to lock when a smart card is removed will ensure the system is inaccessible when unattended.'
   desc 'check', "If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\
- 
+
 Value Name: scremoveoption
 
 Value Type: REG_SZ
@@ -26,6 +26,6 @@ If configuring this on servers causes issues, such as terminating users' remote 
 
   describe registry_key('HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon') do
     it { should have_property 'scremoveoption' }
-    its('scremoveoption') { should be_between("1", "2") }
+    its('scremoveoption') { should be_between('1', '2') }
   end
 end

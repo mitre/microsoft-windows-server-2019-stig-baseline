@@ -54,8 +54,8 @@ The application account must meet requirements for application account passwords
   tag nist: ['AC-6 (10)']
 
   active_global_privilege_users = security_policy.SeCreateGlobalPrivilege.entries
-  allowed_global_privilege_users = input("allowed_global_privilege_users")
-  disallowed_global_privilege_users = input("disallowed_global_privilege_users")
+  allowed_global_privilege_users = input('allowed_global_privilege_users')
+  disallowed_global_privilege_users = input('disallowed_global_privilege_users')
   unauthorized_users = []
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
@@ -66,14 +66,13 @@ The application account must meet requirements for application account passwords
   else
     active_global_privilege_users.each do |user|
       next if allowed_global_privilege_users.include?(user)
+
       unauthorized_users << user
     end
     disallowed_global_privilege_users.each do |user|
-      unless disallowed_global_privilege_users == [nil] || unauthorized_users.include?(user)
-        unauthorized_users << user
-      end
+      unauthorized_users << user unless disallowed_global_privilege_users == [nil] || unauthorized_users.include?(user)
     end
-    describe "Global Object Creation Privilege must be limited to" do
+    describe 'Global Object Creation Privilege must be limited to' do
       it "Authorized SIDs: #{allowed_global_privilege_users}" do
         failure_message = "Unauthorized SIDs: #{unauthorized_users}"
         expect(unauthorized_users).to be_empty, failure_message

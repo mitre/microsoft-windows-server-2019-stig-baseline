@@ -43,8 +43,8 @@ Local accounts can be configured to expire with the command "Net user [username]
   tag nist: ['AC-2 (2)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  
-  if domain_role == '4' || domain_role == '5'
+
+  if ['4', '5'].include?(domain_role)
     emergency_accounts_list = input('emergency_accounts_domain')
     if emergency_accounts_list == [nil]
       impact 0.0
@@ -54,27 +54,27 @@ Local accounts can be configured to expire with the command "Net user [username]
     else
       emergency_accounts = []
       emergency_accounts_list.each do |emergency_account|
-        emergency_accounts << json({ command: "Get-ADUser -Identity #{emergency_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name='WhenCreated';Expression={$_.WhenCreated.ToString('yyyy-MM-dd')}}, @{Name='AccountExpirationDate';Expression={$_.AccountExpirationDate.ToString('yyyy-MM-dd')}}| ConvertTo-Json"}).params
+        emergency_accounts << json({ command: "Get-ADUser -Identity #{emergency_account} -Properties WhenCreated, AccountExpirationDate | Select-Object -Property SamAccountName, @{Name='WhenCreated';Expression={$_.WhenCreated.ToString('yyyy-MM-dd')}}, @{Name='AccountExpirationDate';Expression={$_.AccountExpirationDate.ToString('yyyy-MM-dd')}}| ConvertTo-Json" }).params
       end
       emergency_accounts.each do |emergency_account|
-        account_name = emergency_account.fetch("SamAccountName")
-        if emergency_account.fetch("WhenCreated") == nil
+        account_name = emergency_account.fetch('SamAccountName')
+        if emergency_account.fetch('WhenCreated').nil?
           describe "#{account_name} account's creation date" do
-            subject { emergency_account.fetch("WhenCreated") }
-            it { should_not eq nil}
+            subject { emergency_account.fetch('WhenCreated') }
+            it { should_not eq nil }
           end
-        elsif emergency_account.fetch("AccountExpirationDate") == nil
+        elsif emergency_account.fetch('AccountExpirationDate').nil?
           describe "#{account_name} account's expiration date" do
-            subject { emergency_account.fetch("AccountExpirationDate") }
-            it { should_not eq nil}
+            subject { emergency_account.fetch('AccountExpirationDate') }
+            it { should_not eq nil }
           end
         else
-          creation_date = Date.parse(emergency_account.fetch("WhenCreated"))
-          expiration_date = Date.parse(emergency_account.fetch("AccountExpirationDate"))
+          creation_date = Date.parse(emergency_account.fetch('WhenCreated'))
+          expiration_date = Date.parse(emergency_account.fetch('AccountExpirationDate'))
           date_difference = expiration_date.mjd - creation_date.mjd
           describe "Account expiration set for #{account_name}" do
             subject { date_difference }
-            it { should cmp <= input('emergency_account_period')}
+            it { should cmp <= input('emergency_account_period') }
           end
         end
       end
@@ -89,27 +89,27 @@ Local accounts can be configured to expire with the command "Net user [username]
     else
       emergency_accounts = []
       emergency_accounts_list.each do |emergency_account|
-        emergency_accounts << json({ command: "Get-LocalUser -Name #{emergency_account} | Select-Object -Property Name, @{Name='PasswordLastSet';Expression={$_.PasswordLastSet.ToString('yyyy-MM-dd')}}, @{Name='AccountExpires';Expression={$_.AccountExpires.ToString('yyyy-MM-dd')}} | ConvertTo-Json"}).params
+        emergency_accounts << json({ command: "Get-LocalUser -Name #{emergency_account} | Select-Object -Property Name, @{Name='PasswordLastSet';Expression={$_.PasswordLastSet.ToString('yyyy-MM-dd')}}, @{Name='AccountExpires';Expression={$_.AccountExpires.ToString('yyyy-MM-dd')}} | ConvertTo-Json" }).params
       end
       emergency_accounts.each do |emergency_account|
-        user_name = emergency_account.fetch("Name")
-        if emergency_account.fetch("PasswordLastSet") == nil
+        user_name = emergency_account.fetch('Name')
+        if emergency_account.fetch('PasswordLastSet').nil?
           describe "#{user_name} account's password last set date" do
-            subject { emergency_account.fetch("PasswordLastSet") }
-            it { should_not eq nil}
+            subject { emergency_account.fetch('PasswordLastSet') }
+            it { should_not eq nil }
           end
-        elsif emergency_account.fetch("AccountExpires") == nil
+        elsif emergency_account.fetch('AccountExpires').nil?
           describe "#{user_name} account's expiration date" do
-            subject { emergency_account.fetch("AccountExpires") }
-            it { should_not eq nil}
+            subject { emergency_account.fetch('AccountExpires') }
+            it { should_not eq nil }
           end
         else
-          password_date = Date.parse(emergency_account.fetch("PasswordLastSet"))
-          expiration_date = Date.parse(emergency_account.fetch("AccountExpires"))
+          password_date = Date.parse(emergency_account.fetch('PasswordLastSet'))
+          expiration_date = Date.parse(emergency_account.fetch('AccountExpires'))
           date_difference = expiration_date.mjd - password_date.mjd
           describe "Account expiration set for #{user_name}" do
             subject { date_difference }
-            it { should cmp <= input('emergency_account_period')}
+            it { should cmp <= input('emergency_account_period') }
           end
         end
       end

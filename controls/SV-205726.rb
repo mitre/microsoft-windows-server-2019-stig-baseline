@@ -16,7 +16,7 @@ At the "server connections:" prompt, enter "connect to server [host-name]"
 
 At the "server connections:" prompt, enter "q".
 
-At the "ldap policy:" prompt, enter "show values". 
+At the "ldap policy:" prompt, enter "show values".
 
 If the value for MaxConnIdleTime is greater than "300" (5 minutes) or is not specified, this is a finding.
 
@@ -27,7 +27,7 @@ Alternately, Dsquery can be used to display MaxConnIdleTime:
 Open "Command Prompt (Admin)".
 Enter the following command (on a single line).
 
-dsquery * "cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,dc=[forest-name]" -attr LDAPAdminLimits 
+dsquery * "cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,dc=[forest-name]" -attr LDAPAdminLimits
 
 The quotes are required and dc=[forest-name] is the fully qualified LDAP name of the domain being reviewed (e.g., dc=disaost,dc=mil).
 
@@ -66,17 +66,17 @@ Enter "q" at the "ldap policy:" and "ntdsutil:" prompts to exit.'
 
   forest_name = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-Json').params
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  
-  if domain_role == '4' || domain_role == '5'
-    query = command("dsquery * 'cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,#{forest_name}' -attr LDAPAdminLimits").stdout    
+
+  if ['4', '5'].include?(domain_role)
+    query = command("dsquery * 'cn=Default Query Policy,cn=Query-Policies,cn=Directory Service, cn=Windows NT,cn=Services,cn=Configuration,#{forest_name}' -attr LDAPAdminLimits").stdout
     ldap_admin_limits = parse_config(query.gsub(/;/, "\n")).params
-    describe "MaxConnIdleTime is configured" do
+    describe 'MaxConnIdleTime is configured' do
       subject { ldap_admin_limits }
       it { should include 'MaxConnIdleTime' }
     end
-    describe "The MaxConnIdleTime" do
+    describe 'The MaxConnIdleTime' do
       subject { ldap_admin_limits['MaxConnIdleTime'] }
-      it { should cmp <= input("maximum_idle_time") }
+      it { should cmp <= input('maximum_idle_time') }
     end
   else
     impact 0.0

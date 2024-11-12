@@ -13,7 +13,7 @@ Make note of the directory location of the SYSVOL share.
 
 By default, this will be \\Windows\\SYSVOL\\sysvol. For this requirement, permissions will be verified at the first SYSVOL directory level.
 
-If any standard user accounts or groups have greater than "Read & execute" permissions, this is a finding. 
+If any standard user accounts or groups have greater than "Read & execute" permissions, this is a finding.
 
 The default permissions noted below meet this requirement:
 
@@ -33,7 +33,7 @@ NT AUTHORITY\\SYSTEM:(F)
 NT AUTHORITY\\SYSTEM:(OI)(CI)(IO)(F)
 CREATOR OWNER:(OI)(CI)(IO)(F)
 
-(RX) - Read & execute 
+(RX) - Read & execute
 
 Run "icacls /help" to view definitions of other permission codes.'
   desc 'fix', 'Maintain the permissions on the SYSVOL directory. Do not allow greater than "Read & execute" permissions for standard user accounts or groups. The defaults below meet this requirement:
@@ -62,10 +62,10 @@ SYSTEM - Full control - This folder, subfolders, and files'
   tag nist: ['AC-6 (10)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5'
-   sysvol_perm = json( command: "icacls 'c:\\Windows\\SYSVOL' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("c:\\Windows\\SYSVOL ", '') }
-   
-    describe "c:\\ permissions are set correctly on folder structure" do
+  if ['4', '5'].include?(domain_role)
+    sysvol_perm = json(command: "icacls 'c:\\Windows\\SYSVOL' | ConvertTo-Json").params.map(&:strip)[0..-3].map { |e| e.gsub('c:\\Windows\\SYSVOL ', '') }
+
+    describe 'c:\\ permissions are set correctly on folder structure' do
       subject { sysvol_perm.eql? input('c_windows_sysvol_perm') }
       it { should eq true }
     end

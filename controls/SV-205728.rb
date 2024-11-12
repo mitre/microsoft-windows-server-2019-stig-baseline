@@ -20,7 +20,7 @@ Note: Example of documentation can be a copy of the site's CCB approved Software
 
   org_name = input('org_name')
 
-  describe "A manual review is required to verify #{org_name[:acronym]} approved HBSS software is installed, configured, and properly operating. Ask the operator to document the HBSS software installation and configuration. If the operator is not able to provide a documented configuration for an installed HBSS or if the HBSS software is not properly configured maintained, or used, this is a finding." do	
-    skip "A manual review is required to verify #{org_name[:acronym]} approved HBSS software is installed, configured, and properly operating. Ask the operator to document the HBSS software installation and configuration. If the operator is not able to provide a documented configuration for an installed HBSS or if the HBSS software is not properly configured maintained, or used, this is a finding."	
+  describe "A manual review is required to verify #{org_name[:acronym]} approved HBSS software is installed, configured, and properly operating. Ask the operator to document the HBSS software installation and configuration. If the operator is not able to provide a documented configuration for an installed HBSS or if the HBSS software is not properly configured maintained, or used, this is a finding." do
+    skip "A manual review is required to verify #{org_name[:acronym]} approved HBSS software is installed, configured, and properly operating. Ask the operator to document the HBSS software installation and configuration. If the operator is not able to provide a documented configuration for an installed HBSS or if the HBSS software is not properly configured maintained, or used, this is a finding."
   end
 end

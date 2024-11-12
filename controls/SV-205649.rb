@@ -9,7 +9,7 @@ Execute the following command:
 
 Get-ChildItem -Path Cert:Localmachine\\disallowed | Where {$_.Issuer -Like "*DoD Interoperability*" -and $_.Subject -Like "*DoD*"} | FL Subject, Issuer, Thumbprint, NotAfter
 
-If the following certificate "Subject", "Issuer", and "Thumbprint" information is not displayed, this is a finding. 
+If the following certificate "Subject", "Issuer", and "Thumbprint" information is not displayed, this is a finding.
 
 Subject: CN=DoD Root CA 3, OU=PKI, OU=DoD, O=U.S. Government, C=US
 Issuer: CN=DoD Interoperability Root CA 2, OU=PKI, OU=DoD, O=U.S. Government, C=US
@@ -40,7 +40,7 @@ Select the "Details" tab.
 
 Scroll to the bottom and select "Thumbprint".
 
-If the certificate below is not listed or the value for the "Thumbprint" field is not as noted, this is a finding. 
+If the certificate below is not listed or the value for the "Thumbprint" field is not as noted, this is a finding.
 
 Issued to: DoD Root CA 3
 Issued By: DoD Interoperability Root CA 2
@@ -72,10 +72,10 @@ The FBCA Cross-Certificate Remover Tool and User Guide are available on Cyber Ex
     describe 'This Control is Not Applicable to sensitive systems.' do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
-  else 
+  else
     dod_interoperability_certificates = JSON.parse(input('dod_interoperability_certificates').to_json)
     query = json({ command: 'Get-ChildItem -Path Cert:Localmachine\\\\disallowed  | Where {$_.Issuer -Like "*DoD Interoperability*" -and $_.Subject -Like "*DoD*"} | Select Subject, Issuer, Thumbprint, @{Name=\'NotAfter\';Expression={"{0:dddd, MMMM dd, yyyy}" -f [datetime]$_.NotAfter}} | ConvertTo-Json' }).params
- 
+
     describe 'Verify the DoD Interoperability cross-certificates are installed on unclassified systems as Untrusted Certificates.' do
       subject { query }
       it { should_not be_empty }
@@ -86,21 +86,21 @@ The FBCA Cross-Certificate Remover Tool and User Guide are available on Cyber Ex
       case query
       when Hash
         query.each do |key, value|
-          if key == "NotAfter"
-            cert_date = Date.parse(value)
-            describe cert_date do
-              it { should be >= Date.today }
-            end
+          next unless key == 'NotAfter'
+
+          cert_date = Date.parse(value)
+          describe cert_date do
+            it { should be >= Date.today }
           end
         end
       when Array
         query.each do |certs|
           certs.each do |key, value|
-            if key == "NotAfter"
-              cert_date = Date.parse(value)
-              describe cert_date do
-                it { should be >= Date.today }
-              end
+            next unless key == 'NotAfter'
+
+            cert_date = Date.parse(value)
+            describe cert_date do
+              it { should be >= Date.today }
             end
           end
         end

@@ -1,6 +1,6 @@
 control 'SV-205787' do
   title 'Windows Server 2019 Active Directory Infrastructure object must be configured with proper audit settings.'
-  desc 'When inappropriate audit settings are configured for directory service database objects, it may be possible for a user or process to update the data without generating any tracking data. The impact of missing audit data is related to the type of object. A failure to capture audit data for objects used by identification, authentication, or authorization functions could degrade or eliminate the ability to track changes to access policy for systems or data. 
+  desc 'When inappropriate audit settings are configured for directory service database objects, it may be possible for a user or process to update the data without generating any tracking data. The impact of missing audit data is related to the type of object. A failure to capture audit data for objects used by identification, authentication, or authorization functions could degrade or eliminate the ability to track changes to access policy for systems or data.
 
 For Active Directory (AD), there are a number of critical object types in the domain naming context of the AD database for which auditing is essential. This includes the Infrastructure object. Because changes to these objects can significantly impact access controls or the availability of systems, the absence of auditing data makes it impossible to identify the source of changes that impact the confidentiality, integrity, and availability of data and systems throughout an AD domain. The lack of proper auditing can result in insufficient forensic evidence needed to investigate an incident and prosecute the intruder.'
   desc 'check', 'This applies to domain controllers. It is NA for other systems.
@@ -86,51 +86,50 @@ Inherited from - (CN of domain)'
   tag nist: ['AU-12 c', 'AC-6 (9)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-    if domain_role == '4' || domain_role == '5'
-     distinguishedName = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-JSON').params
-     acl_rules = json(command: "(Get-ACL -Audit -Path AD:'CN=Infrastructure,#{distinguishedName}').Audit | ConvertTo-CSV | ConvertFrom-CSV | ConvertTo-JSON").params
-    
-     describe.one do
-        acl_rules.each do |acl_rule|
-          describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-            subject { acl_rule }
-            its(['AuditFlags']) { should cmp "Failure" }
-            its(['IdentityReference']) { should cmp "Everyone" }
-            its(['ActiveDirectoryRights']) { should cmp "GenericAll"}
-          end
+  if ['4', '5'].include?(domain_role)
+    distinguishedName = json(command: '(Get-ADDomain).DistinguishedName | ConvertTo-JSON').params
+    acl_rules = json(command: "(Get-ACL -Audit -Path AD:'CN=Infrastructure,#{distinguishedName}').Audit | ConvertTo-CSV | ConvertFrom-CSV | ConvertTo-JSON").params
+
+    describe.one do
+      acl_rules.each do |acl_rule|
+        describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+          subject { acl_rule }
+          its(['AuditFlags']) { should cmp 'Failure' }
+          its(['IdentityReference']) { should cmp 'Everyone' }
+          its(['ActiveDirectoryRights']) { should cmp 'GenericAll' }
         end
       end
-
-      describe.one do
-        acl_rules.each do |acl_rule|
-          describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-            subject { acl_rule }
-            its(['AuditFlags']) { should cmp "Success" }
-            its(['IdentityReference']) { should cmp "Everyone" }
-            its(['ActiveDirectoryRights']) { should cmp "WriteProperty, ExtendedRight"}
-            its(['IsInherited']) { should cmp "False" }
-            its(['InheritanceType']) { should cmp "None" }
-          end
-        end
-      end
-
-
-      describe.one do
-        acl_rules.each do |acl_rule|
-          describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
-            subject { acl_rule }
-            its(['AuditFlags']) { should cmp "Success" }
-            its(['IdentityReference']) { should cmp "Everyone" }
-            its(['ActiveDirectoryRights']) { should cmp "WriteProperty"}
-            its(['IsInherited']) { should cmp "True" }
-            its(['InheritanceType']) { should cmp "Descendents" }
-          end
-        end
-      end
-    else
-      impact 0.0
-      describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
-       skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
-     end
     end
+
+    describe.one do
+      acl_rules.each do |acl_rule|
+        describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+          subject { acl_rule }
+          its(['AuditFlags']) { should cmp 'Success' }
+          its(['IdentityReference']) { should cmp 'Everyone' }
+          its(['ActiveDirectoryRights']) { should cmp 'WriteProperty, ExtendedRight' }
+          its(['IsInherited']) { should cmp 'False' }
+          its(['InheritanceType']) { should cmp 'None' }
+        end
+      end
+    end
+
+    describe.one do
+      acl_rules.each do |acl_rule|
+        describe "Audit rule property for principal: #{acl_rule['IdentityReference']}" do
+          subject { acl_rule }
+          its(['AuditFlags']) { should cmp 'Success' }
+          its(['IdentityReference']) { should cmp 'Everyone' }
+          its(['ActiveDirectoryRights']) { should cmp 'WriteProperty' }
+          its(['IsInherited']) { should cmp 'True' }
+          its(['InheritanceType']) { should cmp 'Descendents' }
+        end
+      end
+    end
+  else
+    impact 0.0
+    describe 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers' do
+      skip 'This system is not a domain controller, therefore this control is not applicable as it only applies to domain controllers'
+    end
+  end
 end

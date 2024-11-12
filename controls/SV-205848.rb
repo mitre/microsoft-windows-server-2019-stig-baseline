@@ -32,7 +32,7 @@ Run "tpm.msc" for configuration options in Windows.'
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
 
-  if sys_info.manufacturer == "VMware, Inc."
+  if sys_info.manufacturer == 'VMware, Inc.'
     impact 0.0
     describe 'This System is NA for Control V-93213, This is a VMware Virtual Machine.' do
       skip 'This System is NA for Control V-93213, This is a VMware Virtual Machine.'

@@ -1,15 +1,15 @@
 include_recipe 'windows::default'
 
-powershell_package "PowerShellGet" do
-  version "1.6.6"
+powershell_package 'PowerShellGet' do
+  version '1.6.6'
   source node['Win2019STIG']['powershell_package_Source']
 end
-powershell_package "AuditPolicyDsc" do
-  version "1.2.0.0"
+powershell_package 'AuditPolicyDsc' do
+  version '1.2.0.0'
   source node['Win2019STIG']['powershell_package_Source']
 end
-powershell_package "SecurityPolicyDsc" do
-  version "2.4.0.0"
+powershell_package 'SecurityPolicyDsc' do
+  version '2.4.0.0'
   source node['Win2019STIG']['powershell_package_Source']
 end
 if node['Win2019STIG']['stigrule_103049']['Manage']
@@ -1973,6 +1973,6 @@ if node['Win2019STIG']['XCCDF_result']['Manage']
   end
   chef_handler 'Chef::Handler::StigXml' do
     source "#{Chef::Config[:file_cache_path]}/stig_xml.rb"
-    arguments :stigName => 'U_MS_Windows_Server_2019_STIG_V1R3_Manual-xccdf.xml'
+    arguments stigName: 'U_MS_Windows_Server_2019_STIG_V1R3_Manual-xccdf.xml'
   end
 end

@@ -30,7 +30,7 @@ If this needs to be corrected, configure the policy value for Computer Configura
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  describe.one do 
+  describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Feeds') do
       it { should_not have_property 'AllowBasicAuthInClear' }
     end

@@ -23,7 +23,7 @@ Value Type: REG_DWORD
 
 Value: 1'
   desc 'fix', 'Ensure the following settings are configured for Windows Server 2019 locally or applied through group policy.
- 
+
 Configure the policy value for User Configuration >> Administrative Templates >> Windows Components >> File Explorer >> Explorer Frame Pane "Turn off Preview Pane" to "Enabled".
 
 Configure the policy value for User Configuration >> Administrative Templates >> Windows Components >> File Explorer >> Explorer Frame Pane "Turn on or off details pane" to "Enabled" and "Configure details pane" to "Always hide".'
@@ -41,7 +41,6 @@ Configure the policy value for User Configuration >> Administrative Templates >>
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-
   describe registry_key('HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer') do
     it { should exist }
     it { should have_property 'NoPreviewPane' }
@@ -53,6 +52,4 @@ Configure the policy value for User Configuration >> Administrative Templates >>
     it { should have_property 'NoReadingPane' }
     its('NoReadingPane') { should cmp 1 }
   end
-
-
 end

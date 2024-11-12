@@ -26,7 +26,7 @@ If accounts that do not have responsibility for administration of the system are
 If the built-in Administrator account or other required administrative accounts are found on the system, this is not a finding.'
   desc 'fix', 'Configure the local "Administrators" group to include only administrator groups or accounts responsible for administration of the system.
 
-For domain-joined member servers, replace the Domain Admins group with a domain member server administrator group. 
+For domain-joined member servers, replace the Domain Admins group with a domain member server administrator group.
 
 Remove any standard user accounts.'
   impact 0.7
@@ -42,25 +42,25 @@ Remove any standard user accounts.'
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     impact 0.0
     describe 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers' do
       skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers'
     end
   else
     administrators = input('local_administrators_member')
-    administrator_group = command("Get-LocalGroupMember -Group \"Administrators\" | select -ExpandProperty Name | ForEach-Object {$_ -replace \"$env:COMPUTERNAME\\\\\" -replace \"\"}").stdout.strip.split("\r\n")
+    administrator_group = command('Get-LocalGroupMember -Group "Administrators" | select -ExpandProperty Name | ForEach-Object {$_ -replace "$env:COMPUTERNAME\\" -replace ""}').stdout.strip.split("\r\n")
     if administrator_group.empty?
-        impact 0.0
-        describe 'There are no users with administrative privileges' do
-         skip 'This control is not applicable'
-        end
-    else
-     administrator_group.each do |user|
-      describe user.to_s do
-       it { should be_in administrators }
+      impact 0.0
+      describe 'There are no users with administrative privileges' do
+        skip 'This control is not applicable'
       end
-     end
+    else
+      administrator_group.each do |user|
+        describe user.to_s do
+          it { should be_in administrators }
+        end
+      end
     end
   end
 end

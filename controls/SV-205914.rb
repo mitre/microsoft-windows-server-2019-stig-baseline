@@ -3,7 +3,7 @@ control 'SV-205914' do
   desc 'Anonymous enumeration of SAM accounts allows anonymous logon users (null session connections) to list all accounts names, thus providing a list of potential points to attack the system.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Control\\Lsa\\
 
 Value Name: RestrictAnonymousSAM
@@ -25,5 +25,5 @@ Value: 0x00000001 (1)'
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa') do
     it { should have_property 'RestrictAnonymousSAM' }
     its('RestrictAnonymousSAM') { should cmp == 1 }
-  end  
+  end
 end

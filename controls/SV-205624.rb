@@ -46,7 +46,7 @@ Delete any temporary user accounts that are no longer necessary.'
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     expiring_accounts = []
     temporary_accounts = input('temp_accounts_domain')
     unless temporary_accounts == [nil]
@@ -74,6 +74,7 @@ Delete any temporary user accounts that are no longer necessary.'
       when Array # Multiple user accounts
         ad_accounts.each do |ad_account|
           next if ad_account.fetch('AccountExpirationDate').nil?
+
           expiring_accounts << ad_account unless expiring_accounts.any? { |h| h['SamAccountName'] == ad_account.fetch('SamAccountName') }
         end
       end
@@ -86,17 +87,17 @@ Delete any temporary user accounts that are no longer necessary.'
     else
       expiring_accounts.each do |expiring_account|
         account_name = expiring_account.fetch('SamAccountName')
-        if expiring_account.fetch("WhenCreated") == nil
+        if expiring_account.fetch('WhenCreated').nil?
           describe "#{account_name} account's creation date" do
-            subject { expiring_account.fetch("WhenCreated") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('WhenCreated') }
+            it { should_not eq nil }
           end
-        elsif expiring_account.fetch("AccountExpirationDate") == nil
+        elsif expiring_account.fetch('AccountExpirationDate').nil?
           describe "#{account_name} account's expiration date" do
-            subject { expiring_account.fetch("AccountExpirationDate") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('AccountExpirationDate') }
+            it { should_not eq nil }
           end
-        else  
+        else
           creation_date = Date.parse(expiring_account.fetch('WhenCreated'))
           expiration_date = Date.parse(expiring_account.fetch('AccountExpirationDate'))
           date_difference = expiration_date.mjd - creation_date.mjd
@@ -135,6 +136,7 @@ Delete any temporary user accounts that are no longer necessary.'
       when Array # Multiple user accounts
         local_users.each do |local_user|
           next if local_user.fetch('AccountExpires').nil? || local_user.fetch('PasswordLastSet').nil?
+
           expiring_users << local_user unless expiring_users.any? { |h| h['Name'] == local_user.fetch('Name') }
         end
       end
@@ -147,15 +149,15 @@ Delete any temporary user accounts that are no longer necessary.'
     else
       expiring_users.each do |expiring_account|
         user_name = expiring_account.fetch('Name')
-        if expiring_account.fetch("PasswordLastSet") == nil
+        if expiring_account.fetch('PasswordLastSet').nil?
           describe "#{user_name} account's password last set date" do
-            subject { expiring_account.fetch("PasswordLastSet") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('PasswordLastSet') }
+            it { should_not eq nil }
           end
-        elsif expiring_account.fetch("AccountExpires") == nil
+        elsif expiring_account.fetch('AccountExpires').nil?
           describe "#{user_name} account's expiration date" do
-            subject { expiring_account.fetch("AccountExpires") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('AccountExpires') }
+            it { should_not eq nil }
           end
         else
           password_date = Date.parse(expiring_account.fetch('PasswordLastSet'))

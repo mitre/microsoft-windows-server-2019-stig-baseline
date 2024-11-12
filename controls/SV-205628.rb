@@ -5,7 +5,7 @@ control 'SV-205628' do
 Computer Account Management records events such as creating, changing, deleting, renaming, disabling, or enabling computer accounts.'
   desc 'check', 'This applies to domain controllers. It is NA for other systems.
 
-Security Option "Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings" must be set to "Enabled" (WN19-SO-000050) for the detailed auditing subcategories to be effective. 
+Security Option "Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings" must be set to "Enabled" (WN19-SO-000050) for the detailed auditing subcategories to be effective.
 
 Use the "AuditPol" tool to review the current Audit Policy configuration:
 
@@ -32,7 +32,7 @@ Account Management >> Computer Account Management - Success'
   tag nist: ['AC-2 (4)', 'AU-12 c', 'AC-2(4)']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe.one do
       describe audit_policy do
         its('Computer Account Management') { should eq 'Success' }

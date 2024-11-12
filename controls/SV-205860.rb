@@ -3,7 +3,7 @@ control 'SV-205860' do
   desc 'Allowing ICMP redirect of routes can lead to traffic not being routed properly. When disabled, this forces ICMP to be routed via the shortest path first.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\
 
 Value Name: EnableICMPRedirect
@@ -26,6 +26,6 @@ This policy setting requires the installation of the MSS-Legacy custom templates
 
   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters') do
     it { should have_property 'EnableICMPRedirect' }
-    its('EnableICMPRedirect') { should cmp 0}
+    its('EnableICMPRedirect') { should cmp 0 }
   end
 end

@@ -29,6 +29,6 @@ If "MaximumPasswordAge" is greater than "60" or equal to "0" in the file, this i
   tag nist: ['IA-5 (1) (d)', 'IA-5 (1) (h)']
 
   describe security_policy do
-    its('MaximumPasswordAge') { should be_between(1,input('maximum_password_age')) }
+    its('MaximumPasswordAge') { should be_between(1, input('maximum_password_age')) }
   end
 end

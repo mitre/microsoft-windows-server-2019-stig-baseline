@@ -36,8 +36,8 @@ If no certificate for the domain controller exists in the right pane, this is a 
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
-    certs = command("Get-ChildItem -Path Cert:\\LocalMachine\\My | ConvertTo-JSON").stdout
+  if ['4', '5'].include?(domain_role)
+    certs = command('Get-ChildItem -Path Cert:\\LocalMachine\\My | ConvertTo-JSON').stdout
     describe 'Verify that the domain controller has a PKI server certificate.' do
       subject { certs }
       it { should_not be_empty }

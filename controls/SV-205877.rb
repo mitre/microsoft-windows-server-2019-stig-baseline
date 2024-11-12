@@ -3,7 +3,7 @@ control 'SV-205877' do
   desc 'The krbtgt account acts as a service account for the Kerberos Key Distribution Center (KDC) service.  The account and password are created when a domain is created and the password is typically not changed.  If the krbtgt account is compromised, attackers can create valid Kerberos Ticket Granting Tickets (TGT).
 
 The password must be changed twice to effectively remove the password history. Changing once, waiting for replication to complete and the amount of time equal to or greater than the maximum Kerberos ticket lifetime, and changing again reduces the risk of issues.'
-  desc 'check', 'This requirement is applicable to domain controllers; it is NA for other systems. 
+  desc 'check', 'This requirement is applicable to domain controllers; it is NA for other systems.
 
 Open "Windows PowerShell".
 
@@ -44,7 +44,7 @@ The system will automatically change this to a system-generated complex password
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     password_set_date = json(command: 'New-TimeSpan -Start (Get-ADUser krbtgt -Property PasswordLastSet).PAsswordLastSet | where -filter { $_.Days -gt 180 } | ConvertTo-JSON').params
     date = password_set_date['Days']
     if date.nil?

@@ -31,7 +31,7 @@ If the value for "Maximum lifetime for user ticket" is "0" or greater than "10" 
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe security_policy do
       its('MaxTicketAge') { should be_between(1, 10) }
     end

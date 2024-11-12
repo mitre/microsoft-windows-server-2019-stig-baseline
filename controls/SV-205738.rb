@@ -2,7 +2,7 @@ control 'SV-205738' do
   title 'Windows Server 2019 must only allow administrators responsible for the domain controller to have Administrator rights on the system.'
   desc 'An account that does not have Administrator duties must not have Administrator rights. Such rights would allow the account to bypass or modify required security restrictions on that machine and make it vulnerable to attack.
 
-System administrators must log on to systems using only accounts with the minimum level of authority necessary. 
+System administrators must log on to systems using only accounts with the minimum level of authority necessary.
 
 Standard user accounts must not be members of the built-in Administrators group.'
   desc 'check', 'This applies to domain controllers. A separate version applies to other systems.
@@ -28,22 +28,22 @@ Remove any standard user accounts.'
   tag cci: ['CCI-002235']
   tag nist: ['AC-6 (10)']
 
- domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
-  administrators = input('local_administrators_dc')
-  administrator_group = command("net localgroup Administrators | Format-List | Findstr /V 'Alias Name Comment Members - command'").stdout.strip.split("\r\n")
+  if ['4', '5'].include?(domain_role)
+    administrators = input('local_administrators_dc')
+    administrator_group = command("net localgroup Administrators | Format-List | Findstr /V 'Alias Name Comment Members - command'").stdout.strip.split("\r\n")
     if administrator_group.empty?
-        impact 0.0
-        describe 'There are no users with administrative privileges' do
-         skip 'This control is not applicable'
-        end
-    else
-     administrator_group.each do |user|
-      describe user.to_s do
-       it { should be_in administrators }
+      impact 0.0
+      describe 'There are no users with administrative privileges' do
+        skip 'This control is not applicable'
       end
-     end
+    else
+      administrator_group.each do |user|
+        describe user.to_s do
+          it { should be_in administrators }
+        end
+      end
     end
   else
     impact 0.0

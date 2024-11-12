@@ -7,11 +7,11 @@ If there are no printers configured, this is NA. (Exclude Microsoft Print to PDF
 
 For each printer:
 
-Select the printer and "Manage". 
+Select the printer and "Manage".
 
-Select "Printer Properties". 
+Select "Printer Properties".
 
-Select the "Sharing" tab. 
+Select the "Sharing" tab.
 
 If "Share this printer" is checked, select the "Security" tab.
 
@@ -32,9 +32,9 @@ The default is for the "Everyone" group to be given "Print" permission.
   tag cci: ['CCI-000213']
   tag nist: ['AC-3']
 
-    describe "A manual review is required to verify that Non Administrative user accounts or groups only have print
+  describe "A manual review is required to verify that Non Administrative user accounts or groups only have print
     permissions on printer shares" do
-      skip 'A manual review is required to verify that Non Administrative user accounts or groups only have print
+    skip 'A manual review is required to verify that Non Administrative user accounts or groups only have print
     permissions on printer shares'
-    end
+  end
 end

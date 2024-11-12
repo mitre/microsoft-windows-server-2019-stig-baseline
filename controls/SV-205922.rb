@@ -3,7 +3,7 @@ control 'SV-205922' do
   desc 'Microsoft has implemented a variety of security support providers for use with Remote Procedure Call (RPC) sessions. All of the options must be enabled to ensure the maximum security level.'
   desc 'check', 'If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Control\\Lsa\\MSV1_0\\
 
 Value Name: NTLMMinServerSec
@@ -24,6 +24,6 @@ Value: 0x20080000 (537395200)'
 
   describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Lsa\\MSV1_0') do
     it { should have_property 'NTLMMinServerSec' }
-    its('NTLMMinServerSec') { should cmp == 537395200 }
+    its('NTLMMinServerSec') { should cmp == 537_395_200 }
   end
 end

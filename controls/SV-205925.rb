@@ -3,7 +3,7 @@ control 'SV-205925' do
   desc 'Windows can be configured to automatically sign the user back in after a Windows Update restart. Some protections are in place to help ensure this is done in a secure fashion; however, disabling this will prevent the caching of credentials for this purpose and also ensure the user is aware of the restart.'
   desc 'check', 'Verify the registry value below. If it does not exist or is not configured as specified, this is a finding.
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\
 
 Value Name: DisableAutomaticRestartSignOn

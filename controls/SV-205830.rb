@@ -30,7 +30,7 @@ If this needs to be corrected, configure the policy value for Computer Configura
   tag cci: ['CCI-002824']
   tag nist: ['SI-16']
 
-  describe.one do 
+  describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
       it { should_not have_property 'NoDataExecutionPrevention' }
     end

@@ -24,7 +24,7 @@ Value: 0x00000003 (3)'
   tag nist: ['AC-17 (2)']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services') do
-    it { should have_property "MinEncryptionLevel"}
-    its("MinEncryptionLevel") { should cmp 3 }
+    it { should have_property 'MinEncryptionLevel' }
+    its('MinEncryptionLevel') { should cmp 3 }
   end
 end

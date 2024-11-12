@@ -20,7 +20,7 @@ Copy or enter the lines below to the PowerShell window and enter. (Entering twic
  if ($lastLogin -eq $null) {
  $lastLogin = 'Never'
  }
- Write-Host $user.Name $lastLogin $enabled 
+ Write-Host $user.Name $lastLogin $enabled
 }"
 
 This will return a list of local accounts with the account name, last logon, and if the account is enabled (True/False).
@@ -53,11 +53,11 @@ Inactive accounts that have been reviewed and deemed to be required must be docu
   age = input('unused_account_age')
   untracked_accounts = []
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
 
     excluded_accounts_domain_check = json(command: 'Get-ADUser -Filter * | Where {($_.SID -like "*-500") -or ($_.SID -like "*-501")} | Select Name | ConvertTo-Json').params
     excluded_accounts_domain = []
-    excluded_accounts_domain_check.each { |account| excluded_accounts_domain << account["Name"] }
+    excluded_accounts_domain_check.each { |account| excluded_accounts_domain << account['Name'] }
 
     ad_accounts = json({ command: "Search-ADAccount -AccountInactive -UsersOnly -Timespan #{age}.00:00:00 | Where -Property Enabled -eq $True | Select -ExpandProperty Name | ConvertTo-Json" }).params
     unless ad_accounts.empty?
@@ -82,7 +82,7 @@ Inactive accounts that have been reviewed and deemed to be required must be docu
     excluded_accounts_local_check = json(command: 'Get-LocalUser | Where {($_.SID -like "*-500") -or ($_.SID -like "*-501")} | Select Name | ConvertTo-Json').params
     excluded_accounts_local = []
     excluded_accounts_local_check.each do |account|
-      excluded_accounts_local << account["Name"]
+      excluded_accounts_local << account['Name']
     end
 
     local_accounts = json({ command: "Get-LocalUser | Where-Object {$_.Enabled -eq 'True' -and $_.Lastlogon -le (Get-Date).AddDays(-#{age}) } | Select -ExpandProperty Name | ConvertTo-Json" }).params

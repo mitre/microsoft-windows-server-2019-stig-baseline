@@ -31,5 +31,5 @@ Value:  0x00000002 (2)'
   describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Cryptography') do
     it { should have_property 'ForceKeyProtection' }
     its('ForceKeyProtection') { should cmp == 2 }
-  end 
+  end
 end

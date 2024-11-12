@@ -26,6 +26,6 @@ Value: 0x00030000 (196608) (or greater)'
 
   describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\EventLog\Security') do
     it { should have_property 'MaxSize' }
-    its('MaxSize') { should cmp >= 196608 }
+    its('MaxSize') { should cmp >= 196_608 }
   end
 end

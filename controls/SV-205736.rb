@@ -86,9 +86,9 @@ ALL RESTRICTED APPLICATION PACKAGES - Read & execute - This folder, subfolders, 
   tag cci: ['CCI-002165']
   tag nist: ['AC-3 (4)']
 
-  c_windows_perm = json( command: "icacls 'C:\\Windows' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("C:\\Windows ", '') }
-    describe "C:\\Windows permissions are set correctly on folder structure" do
-      subject { c_windows_perm.eql? input('c_windows_perm') }
-      it { should eq true }
-    end
+  c_windows_perm = json(command: "icacls 'C:\\Windows' | ConvertTo-Json").params.map(&:strip)[0..-3].map { |e| e.gsub('C:\\Windows ', '') }
+  describe 'C:\\Windows permissions are set correctly on folder structure' do
+    subject { c_windows_perm.eql? input('c_windows_perm') }
+    it { should eq true }
+  end
 end

@@ -44,7 +44,7 @@ It is recommended that system-managed service accounts be used whenever possible
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     if application_accounts_domain.empty?
       impact 0.0
       describe 'There are no application accounts are listed for this control' do
@@ -62,21 +62,19 @@ It is recommended that system-managed service accounts be used whenever possible
         end
       end
     end
+  elsif application_accounts_local.empty?
+    impact 0.0
+    describe 'There are no application accounts are listed for this control' do
+      skip 'This is not applicable since no application accounts are listed for this control'
+    end
   else
-    if application_accounts_local.empty?
-      impact 0.0
-      describe 'There are no application accounts are listed for this control' do
-        skip 'This is not applicable since no application accounts are listed for this control'
-      end
-    else
-      application_accounts_local.each do |user|
-        local_password_set_date = json({ command: "Get-LocalUser -name #{user} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-#{app_password_age})} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" }).params
-        date = local_password_set_date['DateTime']
-        describe 'Password Last Set' do
-          it "Date should not be more that #{app_password_age} days for Application Account: #{user} " do
-            failure_message = "Password Date is: #{date}"
-            expect(date).to be_nil, failure_message
-          end
+    application_accounts_local.each do |user|
+      local_password_set_date = json({ command: "Get-LocalUser -name #{user} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-#{app_password_age})} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" }).params
+      date = local_password_set_date['DateTime']
+      describe 'Password Last Set' do
+        it "Date should not be more that #{app_password_age} days for Application Account: #{user} " do
+          failure_message = "Password Date is: #{date}"
+          expect(date).to be_nil, failure_message
         end
       end
     end

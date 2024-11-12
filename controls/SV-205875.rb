@@ -30,7 +30,7 @@ If attribute data is displayed, anonymous access is enabled to the domain naming
 
 The following network controls allow the finding severity to be downgraded to a CAT II since these measures lower the risk associated with anonymous access.
 
-Network hardware ports at the site are subject to 802.1x authentication or MAC address restrictions. 
+Network hardware ports at the site are subject to 802.1x authentication or MAC address restrictions.
 
 Premise firewall or host restrictions prevent access to ports 389, 636, 3268, and 3269 from client hosts not explicitly identified by domain (.mil) or IP address.)
   desc 'fix', 'Configure directory data (outside the root DSE) of a non-public directory to prevent anonymous access.
@@ -53,7 +53,7 @@ The dsHeuristics option is used. This is addressed in check V-8555 in the AD For
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe 'Directory data (outside the root DSE) of a non-public directory must be configured to prevent anonymous access.' do
       skip 'Directory data (outside the root DSE) of a non-public directory must be configured to prevent anonymous access is a manual control'
     end

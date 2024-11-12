@@ -33,12 +33,12 @@ If any SIDs are granted the "SeCreatePermanentPrivilege" user right, this is a f
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeCreatePermanentPrivilege') { should eq [] }
+      its('SeCreatePermanentPrivilege') { should eq [] }
+    end
   end
- end
 end

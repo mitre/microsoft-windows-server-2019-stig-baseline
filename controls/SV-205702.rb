@@ -7,7 +7,7 @@ Verify the following is configured in the Default Domain Policy:
 
 Open "Group Policy Management".
 
-Navigate to "Group Policy Objects" in the Domain being reviewed (Forest >> Domains >> Domain). 
+Navigate to "Group Policy Objects" in the Domain being reviewed (Forest >> Domains >> Domain).
 
 Right-click on the "Default Domain Policy".
 
@@ -31,7 +31,7 @@ If the "Enforce user logon restrictions" is not set to "Enabled", this is a find
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe security_policy do
       its('TicketValidateClient') { should eq 1 }
     end

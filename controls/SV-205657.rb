@@ -15,14 +15,14 @@ Enter "Get-LocalUser -Name * | Select-Object *".
 
 If the "PasswordLastSet" date is greater than "60" days old for the local Administrator account for administering the computer/domain, this is a finding.
 
-Verify LAPS is configured and operational. 
+Verify LAPS is configured and operational.
 
-Navigate to Local Computer Policy >> Computer Configuration >> Administrative Templates >> System >> LAPS >> Password Settings >> Set to enabled. Password Complexity, large letters + small letters + numbers + special, Password Length 14, Password Age 60. If not configured as shown, this is a finding. 
+Navigate to Local Computer Policy >> Computer Configuration >> Administrative Templates >> System >> LAPS >> Password Settings >> Set to enabled. Password Complexity, large letters + small letters + numbers + special, Password Length 14, Password Age 60. If not configured as shown, this is a finding.
 
-Navigate to Local Computer Policy >> Computer Configuration >> Administrative Templates >> System >> LAPS >> Password Settings >> Name of administrator Account to manage >> Set to enabled >> Administrator account name is populated. If it is not, this is a finding. 
+Navigate to Local Computer Policy >> Computer Configuration >> Administrative Templates >> System >> LAPS >> Password Settings >> Name of administrator Account to manage >> Set to enabled >> Administrator account name is populated. If it is not, this is a finding.
 
 Verify LAPS Operational logs >> Event Viewer >> Applications and Services Logs >> Microsoft >> Windows >> LAPS >> Operational. Verify LAPS policy process is completing. If it is not, this is a finding.'
-  desc 'fix', 'Change the enabled local Administrator account password at least every 60 days. Windows LAPS must be used to change the built-in Administrator account password. Domain-joined systems can configure this to occur more frequently. LAPS will change the password every 30 days by default. 
+  desc 'fix', 'Change the enabled local Administrator account password at least every 60 days. Windows LAPS must be used to change the built-in Administrator account password. Domain-joined systems can configure this to occur more frequently. LAPS will change the password every 30 days by default.
 
 More information is available at:
 https://techcommunity.microsoft.com/t5/windows-it-pro-blog/by-popular-demand-windows-laps-available-now/ba-p/3788747
@@ -41,27 +41,27 @@ https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-overview#win
   administrator = input('local_administrator')
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     password_set_date = json({ command: "Get-ADUser -Filter * -Properties SID, PasswordLastSet | Where-Object {$_.SID -like '*-500' -and $_.PasswordLastSet -lt ((Get-Date).AddDays(-60))} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
-    date = password_set_date["DateTime"]
-    describe "Password Last Set Date" do
-      it "The built-in Administrator account must be changed at least every 60 days." do
+    date = password_set_date['DateTime']
+    describe 'Password Last Set Date' do
+      it 'The built-in Administrator account must be changed at least every 60 days.' do
         expect(date).to be_nil
       end
     end
   else
-    if administrator == "Administrator"
+    if administrator == 'Administrator'
       describe 'The name of the built-in Administrator account:' do
         it 'It must be changed to something other than "Administrator" per STIG requirements' do
           failure_message = "Change the built-in Administrator account name to something other than: #{administrator}"
-          expect(administrator).not_to eq("Administrator"), failure_message
+          expect(administrator).not_to eq('Administrator'), failure_message
         end
       end
     end
-    local_password_set_date = json({ command: "Get-LocalUser -name #{administrator} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-60)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json"})
-    local_date =  local_password_set_date["DateTime"]
-    describe "Password Last Set Date" do
-      it "The built-in Administrator account must be changed at least every 60 days." do
+    local_password_set_date = json({ command: "Get-LocalUser -name #{administrator} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-60)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
+    local_date = local_password_set_date['DateTime']
+    describe 'Password Last Set Date' do
+      it 'The built-in Administrator account must be changed at least every 60 days.' do
         expect(local_date).to be_nil
       end
     end

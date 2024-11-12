@@ -5,7 +5,7 @@ control 'SV-205820' do
 
 If the following registry value does not exist or is not configured as specified, this is a finding:
 
-Registry Hive: HKEY_LOCAL_MACHINE 
+Registry Hive: HKEY_LOCAL_MACHINE
 Registry Path: \\SYSTEM\\CurrentControlSet\\Services\\NTDS\\Parameters\\
 
 Value Name: LDAPServerIntegrity
@@ -27,7 +27,7 @@ Value: 0x00000002 (2)'
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe registry_key('HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\NTDS\\Parameters') do
       it { should have_property 'LDAPServerIntegrity' }
       its('LDAPServerIntegrity') { should cmp 2 }
