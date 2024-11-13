@@ -35,8 +35,7 @@ Logon: Message text for users attempting to log on\" to the following:
   tag 'fix_id': 'F-99393r1_fix'
   tag 'cci': ["CCI-000048", "CCI-000050", "CCI-001384", "CCI-001385",
 "CCI-001386", "CCI-001387", "CCI-001388"]
-  tag 'nist': ["AC-8 a", "AC-8 b", "AC-8 c 1", "AC-8 c 2", "AC-8 c 2", "AC-8 c
-2", "AC-8 c 3", "Rev_4"]
+  tag 'nist': ["AC-8 a", "AC-8 b", "AC-8 c 1", "AC-8 c 2", "AC-8 c 2", "AC-8 c2", "AC-8 c 3", "Rev_4"]
 
 describe registry_key('HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System') do
     it { should have_property 'LegalNoticeText' }

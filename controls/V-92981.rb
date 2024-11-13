@@ -46,8 +46,7 @@ Management\" with \"Success\" selected."
   tag 'fix_id': 'F-99227r1_fix'
   tag 'cci': ["CCI-000018", "CCI-000172", "CCI-001403", "CCI-001404",
 "CCI-001405", "CCI-002130"]
-  tag 'nist': ["AC-2 (4)", "AU-12 c", "AC-2 (4)", "AC-2 (4)", "AC-2 (4)", "AC-2
-(4)", "Rev_4"]
+  tag 'nist': ["AC-2 (4)", "AU-12 c", "AC-2 (4)", "AC-2 (4)", "AC-2 (4)", "AC-2(4)", "Rev_4"]
 
   describe.one do
     describe audit_policy do

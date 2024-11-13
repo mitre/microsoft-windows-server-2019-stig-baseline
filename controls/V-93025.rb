@@ -1,4 +1,4 @@
-  control 'V-93025' do
+control 'V-93025' do
     title "Windows Server 2019 default permissions for the HKEY_LOCAL_MACHINE
 registry hive must be maintained."
     desc  "The registry is integral to the function, security, and stability of

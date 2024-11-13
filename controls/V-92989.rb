@@ -1,5 +1,5 @@
 
-control 'V-92985' do
+control 'V-92989' do
   title "Windows Server 2019 must be configured to audit Account Management -
 Computer Account Management successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -47,8 +47,7 @@ SRG-OS-000303-GPOS-00120 SRG-OS-000476-GPOS-00221)
   tag 'fix_id': 'F-99231r1_fix'
   tag 'cci': %w(CCI-000018 CCI-000172 CCI-001403 CCI-001404
 CCI-001405 CCI-002130)
-  tag 'nist': ['AC-2 (4)', 'AU-12 c', 'AC-2 (4)', 'AC-2 (4)', 'AC-2 (4)', "AC-2
-(4)", 'Rev_4']
+  tag 'nist': ['AC-2 (4)', 'AU-12 c', 'AC-2 (4)', 'AC-2 (4)', 'AC-2 (4)', "AC-2(4)", 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   case domain_role
@@ -64,9 +63,8 @@ CCI-001405 CCI-002130)
     end
   when '2', '3'
     impact 0.0
-    desc 'This system is exempt from this control'
-    describe 'This system is exempt from this control' do
-      skip 'This system is exempt from this control'
+    describe 'This applies to domain controllers. It is NA for other systems.' do
+      skip 'This applies to domain controllers. It is NA for other systems.'
     end
   end
 end

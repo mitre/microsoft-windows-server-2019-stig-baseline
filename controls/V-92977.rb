@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 control "V-92977" do
-  title "Windows Server 2019 must automatically remove or disable emergency accounts after the crisis is resolved or within #{input('emergency_account_period_phrase')}."
+  title "Windows Server 2019 must automatically remove or disable emergency accounts after the crisis is resolved or within #{input('emergency_account_period')*24} hours."
   desc  "Emergency administrator accounts are privileged accounts established in response to crisis situations where the need for rapid account activation is required. Therefore, emergency account activation may bypass normal account authorization processes. If these accounts are automatically disabled, system maintenance during emergencies may not be possible, thus adversely affecting system availability.
     Emergency administrator accounts are different from infrequently used accounts (i.e., local logon accounts used by system administrators when network or normal logon/access is not available). Infrequently used accounts are not subject to automatic termination dates. Emergency accounts are accounts created in response to crisis situations, usually for use by maintenance personnel. The automatic expiration or disabling time period may be extended as needed until the crisis is resolved; however, it must not be extended indefinitely. A permanent account should be established for privileged users who need long-term maintenance accounts.
     To address access requirements, many operating systems can be integrated with enterprise-level authentication/access mechanisms that meet or exceed access control policy requirements."
@@ -13,13 +13,13 @@ control "V-92977" do
     Domain Controllers:
     Open \"PowerShell\".
     Enter \"Search-ADAccount -AccountExpiring | FT Name, AccountExpirationDate\".
-    If \"AccountExpirationDate\" has been defined and is not within #{input('emergency_account_period_phrase')} for an emergency administrator account, this is a finding.
+    If \"AccountExpirationDate\" has been defined and is not within #{input('emergency_account_period')*24} hours for an emergency administrator account, this is a finding.
 
     Member servers and standalone systems:
     Open \"Command Prompt\".
     Run \"Net user [username]\", where [username] is the name of the emergency account.
-    If \"Account expires\" has been defined and is not within #{input('emergency_account_period_phrase')} for an emergency administrator account, this is a finding."
-  desc  'fix', "Remove emergency administrator accounts after a crisis has been resolved or configure the accounts to automatically expire within #{input('emergency_account_period_phrase')}.
+    If \"Account expires\" has been defined and is not within #{input('emergency_account_period')*24} hours for an emergency administrator account, this is a finding."
+  desc  'fix', "Remove emergency administrator accounts after a crisis has been resolved or configure the accounts to automatically expire within #{input('emergency_account_period')*24} hours.
     Domain accounts can be configured with an account expiration date, under \"Account\" properties.
     Local accounts can be configured to expire with the command \"Net user [username] /expires:[mm/dd/yyyy]\", where username is the name of the temporary user account."
   impact 0.5
@@ -48,16 +48,27 @@ control "V-92977" do
       end
       emergency_accounts.each do |emergency_account|
         account_name = emergency_account.fetch("SamAccountName")
-        creation_date = Date.parse(emergency_account.fetch("WhenCreated"))
-        expiration_date = Date.parse(emergency_account.fetch("AccountExpirationDate"))
-        date_difference = expiration_date.mjd - creation_date.mjd
-        describe "Account expiration set for #{account_name}" do
-          subject { date_difference }
-          it { should cmp <= input('emergency_account_period')}
+        if emergency_account.fetch("WhenCreated") == nil
+          describe "#{account_name} account's creation date" do
+            subject { emergency_account.fetch("WhenCreated") }
+            it { should_not eq nil}
+          end
+        elsif emergency_account.fetch("AccountExpirationDate") == nil
+          describe "#{account_name} account's expiration date" do
+            subject { emergency_account.fetch("AccountExpirationDate") }
+            it { should_not eq nil}
+          end
+        else
+          creation_date = Date.parse(emergency_account.fetch("WhenCreated"))
+          expiration_date = Date.parse(emergency_account.fetch("AccountExpirationDate"))
+          date_difference = expiration_date.mjd - creation_date.mjd
+          describe "Account expiration set for #{account_name}" do
+            subject { date_difference }
+            it { should cmp <= input('emergency_account_period')}
+          end
         end
       end
     end
-
   else
     emergency_accounts_list = input('emergency_accounts_local')
     if emergency_accounts_list == [nil]
@@ -72,12 +83,24 @@ control "V-92977" do
       end
       emergency_accounts.each do |emergency_account|
         user_name = emergency_account.fetch("Name")
-        password_date = Date.parse(emergency_account.fetch("PasswordLastSet"))
-        expiration_date = Date.parse(emergency_account.fetch("AccountExpires"))
-        date_difference = expiration_date.mjd - password_date.mjd
-        describe "Account expiration set for #{user_name}" do
-          subject { date_difference }
-          it { should cmp <= input('emergency_account_period')}
+        if emergency_account.fetch("PasswordLastSet") == nil
+          describe "#{user_name} account's password last set date" do
+            subject { emergency_account.fetch("PasswordLastSet") }
+            it { should_not eq nil}
+          end
+        elsif emergency_account.fetch("AccountExpires") == nil
+          describe "#{user_name} account's expiration date" do
+            subject { emergency_account.fetch("AccountExpires") }
+            it { should_not eq nil}
+          end
+        else
+          password_date = Date.parse(emergency_account.fetch("PasswordLastSet"))
+          expiration_date = Date.parse(emergency_account.fetch("AccountExpires"))
+          date_difference = expiration_date.mjd - password_date.mjd
+          describe "Account expiration set for #{user_name}" do
+            subject { date_difference }
+            it { should cmp <= input('emergency_account_period')}
+          end
         end
       end
     end
