@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93043" do
+control 'V-93043' do
   title "Windows Server 2019 must only allow administrators responsible for the
 member server or standalone system to have Administrator rights on the system."
   desc  "An account that does not have Administrator duties must not have
@@ -18,7 +16,7 @@ from credential theft attacks.
 
     Standard user accounts must not be members of the built-in Administrators
 group."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to member servers and standalone systems. A separate version
 applies to domain controllers.
 
@@ -49,36 +47,36 @@ domain member server administrator group.
 
     Remove any standard user accounts."
   impact 0.7
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
-  tag 'gid': 'V-93043'
-  tag 'rid': 'SV-103131r1_rule'
-  tag 'stig_id': 'WN19-MS-000010'
-  tag 'fix_id': 'F-99289r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000324-GPOS-00125'
+  tag gid: 'V-93043'
+  tag rid: 'SV-103131r1_rule'
+  tag stig_id: 'WN19-MS-000010'
+  tag fix_id: 'F-99289r1_fix'
+  tag cci: ['CCI-002235']
+  tag nist: ['AC-6 (10)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     impact 0.0
     describe 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers' do
       skip 'This system is a domain controller, therefore this control is not applicable as it only applies to member servers'
     end
   else
     administrators = input('local_administrators_member')
-    administrator_group = command("Get-LocalGroupMember -Group \"Administrators\" | select -ExpandProperty Name | ForEach-Object {$_ -replace \"$env:COMPUTERNAME\\\\\" -replace \"\"}").stdout.strip.split("\r\n")
+    administrator_group = command('Get-LocalGroupMember -Group "Administrators" | select -ExpandProperty Name | ForEach-Object {$_ -replace "$env:COMPUTERNAME\\" -replace ""}').stdout.strip.split("\r\n")
     if administrator_group.empty?
-        impact 0.0
-        describe 'There are no users with administrative privileges' do
-         skip 'This control is not applicable'
-        end
-    else
-     administrator_group.each do |user|
-      describe user.to_s do
-       it { should be_in administrators }
+      impact 0.0
+      describe 'There are no users with administrative privileges' do
+        skip 'This control is not applicable'
       end
-     end
+    else
+      administrator_group.each do |user|
+        describe user.to_s do
+          it { should be_in administrators }
+        end
+      end
     end
   end
 end

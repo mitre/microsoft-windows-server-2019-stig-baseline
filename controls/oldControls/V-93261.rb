@@ -1,11 +1,9 @@
-# encoding: UTF-8
-
-control "V-93261" do
+control 'V-93261' do
   title "Windows Server 2019 Turning off File Explorer heap termination on
 corruption must be disabled."
   desc  "Legacy plug-in applications may continue to function when a File
 Explorer session has become corrupt. Disabling this feature will prevent this."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "The default behavior is for File Explorer heap termination on corruption to
 be enabled.
 
@@ -30,14 +28,14 @@ Configuration >> Administrative Templates >> Windows Components >> File
 Explorer >> \"Turn off heap termination on corruption\" to \"Not Configured\"
 or \"Disabled\"."
   impact 0.3
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
-  tag 'gid': 'V-93261'
-  tag 'rid': 'SV-103349r1_rule'
-  tag 'stig_id': 'WN19-CC-000320'
-  tag 'fix_id': 'F-99507r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-93261'
+  tag rid: 'SV-103349r1_rule'
+  tag stig_id: 'WN19-CC-000320'
+  tag fix_id: 'F-99507r1_fix'
+  tag cci: ['CCI-000366']
+  tag nist: ['CM-6 b', 'Rev_4']
 
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer') do
@@ -48,7 +46,5 @@ or \"Disabled\"."
       its('NoHeapTerminationOnCorruption') { should_not be 1 }
       its('NoHeapTerminationOnCorruption') { should cmp 0 }
     end
-    
   end
 end
-

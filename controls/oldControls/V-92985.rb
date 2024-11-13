@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92985' do
   title "Windows Server 2019 must be configured to audit Account Management -
 Computer Account Management successes."
@@ -37,21 +35,21 @@ Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Account Management >> \"Audit Computer Account
 Management\" with \"Success\" selected."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000004-GPOS-00004'
-  tag 'satisfies': %w(SRG-OS-000004-GPOS-00004 SRG-OS-000239-GPOS-00089
-SRG-OS-000240-GPOS-00090 SRG-OS-000241-GPOS-00091
-SRG-OS-000303-GPOS-00120 SRG-OS-000476-GPOS-00221)
-  tag 'gid': 'V-92985'
-  tag 'rid': 'SV-103073r1_rule'
-  tag 'stig_id': 'WN19-DC-000230'
-  tag 'fix_id': 'F-99231r1_fix'
-  tag 'cci': %w(CCI-000018 CCI-000172 CCI-001403 CCI-001404
-CCI-001405 CCI-002130)
-  tag 'nist': ['AC-2 (4)', 'AU-12 c', 'AC-2 (4)', 'AC-2 (4)', 'AC-2 (4)', "AC-2(4)", 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000004-GPOS-00004'
+  tag satisfies: %w[SRG-OS-000004-GPOS-00004 SRG-OS-000239-GPOS-00089
+                    SRG-OS-000240-GPOS-00090 SRG-OS-000241-GPOS-00091
+                    SRG-OS-000303-GPOS-00120 SRG-OS-000476-GPOS-00221]
+  tag gid: 'V-92985'
+  tag rid: 'SV-103073r1_rule'
+  tag stig_id: 'WN19-DC-000230'
+  tag fix_id: 'F-99231r1_fix'
+  tag cci: %w[CCI-000018 CCI-000172 CCI-001403 CCI-001404
+              CCI-001405 CCI-002130]
+  tag nist: ['AC-2 (4)', 'AU-12 c', 'AC-2 (4)', 'AC-2 (4)', 'AC-2 (4)', 'AC-2(4)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe.one do
       describe audit_policy do
         its('Computer Account Management') { should eq 'Success' }

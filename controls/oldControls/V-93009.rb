@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93009" do
+control 'V-93009' do
   title "Windows Server 2019 Deny access to this computer from the network user
 right on domain-joined member servers must be configured to prevent access from
 highly privileged domain accounts and local accounts and from unauthenticated
@@ -21,7 +19,7 @@ decrease the risk of lateral movement resulting from credential theft attacks.
 
     The Guests group must be assigned this right to prevent unauthenticated
 access."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to member servers and standalone systems. A separate version
 applies to domain controllers.
 
@@ -65,7 +63,7 @@ S-1-5-113 (\"Local account\")
     Note: These are built-in security groups. \"Local account\" is more
 restrictive but may cause issues on servers such as systems that provide
 failover clustering."
-  desc  "fix", "Configure the policy value for Computer Configuration >> Windows Settings
+  desc  'fix', "Configure the policy value for Computer Configuration >> Windows Settings
 >> Security Settings >> Local Policies >> User Rights Assignment >> \"Deny
 access to this computer from the network\" to include the following:
 
@@ -82,14 +80,14 @@ access to this computer from the network\" to include the following:
 restrictive but may cause issues on servers such as systems that provide
 failover clustering."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000080-GPOS-00048'
-  tag 'gid': 'V-93009'
-  tag 'rid': 'SV-103097r1_rule'
-  tag 'stig_id': 'WN19-MS-000080'
-  tag 'fix_id': 'F-99255r1_fix'
-  tag 'cci': ["CCI-000213"]
-  tag 'nist': ["AC-3", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000080-GPOS-00048'
+  tag gid: 'V-93009'
+  tag rid: 'SV-103097r1_rule'
+  tag stig_id: 'WN19-MS-000080'
+  tag fix_id: 'F-99255r1_fix'
+  tag cci: ['CCI-000213']
+  tag nist: ['AC-3', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   case domain_role
@@ -103,28 +101,28 @@ failover clustering."
             $group = New-Object System.Security.Principal.NTAccount('Domain Admins')
             $sid = ($group.Translate([security.principal.securityidentifier])).value
             $sid | ConvertTo-Json
-            EOH
+    EOH
 
     domain_admin_sid = json(command: domain_query).params
     enterprise_admin_query = <<-EOH
             $group = New-Object System.Security.Principal.NTAccount('Enterprise Admins')
             $sid = ($group.Translate([security.principal.securityidentifier])).value
             $sid | ConvertTo-Json
-            EOH
+    EOH
 
     enterprise_admin_sid = json(command: enterprise_admin_query).params
     describe security_policy do
-      its('SeDenyNetworkLogonRight') { should include "#{domain_admin_sid}" }
+      its('SeDenyNetworkLogonRight') { should include domain_admin_sid.to_s }
     end
     describe security_policy do
-      its('SeDenyNetworkLogonRight') { should include "#{enterprise_admin_sid}" }
+      its('SeDenyNetworkLogonRight') { should include enterprise_admin_sid.to_s }
     end
     describe.one do
       describe security_policy do
-          its('SeDenyNetworkLogonRight') { should include "S-1-5-113" }
+        its('SeDenyNetworkLogonRight') { should include 'S-1-5-113' }
       end
       describe security_policy do
-          its('SeDenyNetworkLogonRight') { should include "S-1-5-114" }
+        its('SeDenyNetworkLogonRight') { should include 'S-1-5-114' }
       end
     end
     describe security_policy do

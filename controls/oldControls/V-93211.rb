@@ -37,18 +37,18 @@ selected.
     The system will automatically change this to a system-generated complex
 password."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
-  tag 'gid': 'V-93211'
-  tag 'rid': 'SV-103299r3_rule'
-  tag 'stig_id': 'WN19-DC-000430'
-  tag 'fix_id': 'F-99457r1_fix'
-  tag 'cci': ['CCI-000366']
-  tag 'nist': ['CM-6 b', 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-93211'
+  tag rid: 'SV-103299r3_rule'
+  tag stig_id: 'WN19-DC-000430'
+  tag fix_id: 'F-99457r1_fix'
+  tag cci: ['CCI-000366']
+  tag nist: ['CM-6 b', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     password_set_date = json(command: 'New-TimeSpan -Start (Get-ADUser krbtgt -Property PasswordLastSet).PAsswordLastSet | where -filter { $_.Days -gt 180 } | ConvertTo-JSON').params
     date = password_set_date['Days']
     if date.nil?

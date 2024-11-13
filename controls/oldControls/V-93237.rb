@@ -1,13 +1,11 @@
-# encoding: UTF-8
-
-control "V-93237" do
+control 'V-93237' do
   title "Windows Server 2019 must be configured to prevent Internet Control
 Message Protocol (ICMP) redirects from overriding Open Shortest Path First
 (OSPF)-generated routes."
   desc  "Allowing ICMP redirect of routes can lead to traffic not being routed
 properly. When disabled, this forces ICMP to be routed via the shortest path
 first."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "If the following registry value does not exist or is not configured as
 specified, this is a finding:
 
@@ -33,12 +31,11 @@ templates included with the STIG package. \"MSS-Legacy.admx\" and
   tag rid: 'SV-103325r1_rule'
   tag stig_id: 'WN19-CC-000050'
   tag fix_id: 'F-99483r1_fix'
-  tag cci: ["CCI-000366"]
-  tag nist: ["CM-6 b", "Rev_4"]
+  tag cci: ['CCI-000366']
+  tag nist: ['CM-6 b', 'Rev_4']
 
   describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters') do
     it { should have_property 'EnableICMPRedirect' }
-    its('EnableICMPRedirect') { should cmp 0}
+    its('EnableICMPRedirect') { should cmp 0 }
   end
 end
-

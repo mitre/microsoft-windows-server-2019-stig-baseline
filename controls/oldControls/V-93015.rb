@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93015" do
+control 'V-93015' do
   title "Windows Server 2019 Deny log on locally user right on domain-joined
 member servers must be configured to prevent access from highly privileged
 domain accounts and from unauthenticated access on all systems."
@@ -17,7 +15,7 @@ compromise of an entire domain.
 
     The Guests group must be assigned this right to prevent unauthenticated
 access."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "This applies to member servers and standalone systems. A separate version
 applies to domain controllers.
 
@@ -64,14 +62,14 @@ on locally\" to include the following:
     All Systems:
     - Guests Group"
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000080-GPOS-00048'
-  tag 'gid': 'V-93015'
-  tag 'rid': 'SV-103103r1_rule'
-  tag 'stig_id': 'WN19-MS-000110'
-  tag 'fix_id': 'F-99261r1_fix'
-  tag 'cci': ["CCI-000213"]
-  tag 'nist': ["AC-3", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000080-GPOS-00048'
+  tag gid: 'V-93015'
+  tag rid: 'SV-103103r1_rule'
+  tag stig_id: 'WN19-MS-000110'
+  tag fix_id: 'F-99261r1_fix'
+  tag cci: ['CCI-000213']
+  tag nist: ['AC-3', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
   case domain_role
@@ -89,21 +87,21 @@ on locally\" to include the following:
             $group = New-Object System.Security.Principal.NTAccount('Domain Admins')
             $sid = ($group.Translate([security.principal.securityidentifier])).value
             $sid | ConvertTo-Json
-            EOH
+    EOH
 
     domain_admin_sid = json(command: domain_query).params
     enterprise_admin_query = <<-EOH
             $group = New-Object System.Security.Principal.NTAccount('Enterprise Admins')
             $sid = ($group.Translate([security.principal.securityidentifier])).value
             $sid | ConvertTo-Json
-            EOH
+    EOH
 
     enterprise_admin_sid = json(command: enterprise_admin_query).params
     describe security_policy do
-      its('SeDenyInteractiveLogonRight') { should include "#{domain_admin_sid}" }
+      its('SeDenyInteractiveLogonRight') { should include domain_admin_sid.to_s }
     end
     describe security_policy do
-      its('SeDenyInteractiveLogonRight') { should include "#{enterprise_admin_sid}" }
+      its('SeDenyInteractiveLogonRight') { should include enterprise_admin_sid.to_s }
     end
     describe security_policy do
       its('SeDenyInteractiveLogonRight') { should include 'S-1-5-32-546' }

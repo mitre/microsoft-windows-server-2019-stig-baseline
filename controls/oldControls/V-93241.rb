@@ -1,5 +1,3 @@
-
-
 control 'V-93241' do
   title "Windows Server 2019 hardened Universal Naming Convention (UNC) paths
     must be defined to require mutual authentication and integrity for at least the
@@ -38,14 +36,14 @@ control 'V-93241' do
         Value Name: \\\\*\\NETLOGON
         Value: RequireMutualAuthentication=1, RequireIntegrity=1"
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
-  tag 'gid': 'V-93241'
-  tag 'rid': 'SV-103329r1_rule'
-  tag 'stig_id': 'WN19-CC-000080'
-  tag 'fix_id': 'F-99487r1_fix'
-  tag 'cci': ['CCI-000366']
-  tag 'nist': ['CM-6 b', 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-93241'
+  tag rid: 'SV-103329r1_rule'
+  tag stig_id: 'WN19-CC-000080'
+  tag fix_id: 'F-99487r1_fix'
+  tag cci: ['CCI-000366']
+  tag nist: ['CM-6 b', 'Rev_4']
 
   is_domain = command('wmic computersystem get domain | FINDSTR /V Domain').stdout.strip
 

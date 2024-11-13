@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92963' do
   title "Windows Server 2019 Deny log on through Remote Desktop Services user
 right on domain controllers must be configured to prevent unauthenticated
@@ -44,18 +42,18 @@ on through Remote Desktop Services\" to include the following:
 
     - Guests Group"
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000297-GPOS-00115'
-  tag 'gid': 'V-92963'
-  tag 'rid': 'SV-103051r1_rule'
-  tag 'stig_id': 'WN19-DC-000410'
-  tag 'fix_id': 'F-99209r1_fix'
-  tag 'cci': ['CCI-002314']
-  tag 'nist': ['AC-17 (1)', 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000297-GPOS-00115'
+  tag gid: 'V-92963'
+  tag rid: 'SV-103051r1_rule'
+  tag stig_id: 'WN19-DC-000410'
+  tag fix_id: 'F-99209r1_fix'
+  tag cci: ['CCI-002314']
+  tag nist: ['AC-17 (1)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     describe security_policy do
       its('SeDenyRemoteInteractiveLogonRight') { should eq ['S-1-5-32-546'] }
     end

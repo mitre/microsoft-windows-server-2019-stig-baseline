@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93107" do
+control 'V-93107' do
   title "Windows Server 2019 must be configured to audit System - IPsec Driver
 failures."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     IPsec Driver records events related to the IPsec Driver, such as dropped
 packets."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -35,16 +33,16 @@ Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> System >> \"Audit IPsec Driver\" with \"Failure\"
 selected."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000458-GPOS-00203",
-"SRG-OS-000463-GPOS-00207", "SRG-OS-000468-GPOS-00212"]
-  tag 'gid': 'V-93107'
-  tag 'rid': 'SV-103195r1_rule'
-  tag 'stig_id': 'WN19-AU-000330'
-  tag 'fix_id': 'F-99353r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000327-GPOS-00127'
+  tag satisfies: ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000458-GPOS-00203',
+                  'SRG-OS-000463-GPOS-00207', 'SRG-OS-000468-GPOS-00212']
+  tag gid: 'V-93107'
+  tag rid: 'SV-103195r1_rule'
+  tag stig_id: 'WN19-AU-000330'
+  tag fix_id: 'F-99353r1_fix'
+  tag cci: ['CCI-000172', 'CCI-002234']
+  tag nist: ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -55,4 +53,3 @@ selected."
     end
   end
 end
-

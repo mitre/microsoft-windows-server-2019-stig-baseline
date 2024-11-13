@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93065" do
+control 'V-93065' do
   title "Windows Server 2019 Debug programs: user right must only be assigned
 to the Administrators group."
   desc  "Inappropriate granting of user rights can provide system,
@@ -10,7 +8,7 @@ administrative, and other high-level capabilities.
 any process or to the kernel, providing complete access to sensitive and
 critical operating system components. This right is given to Administrators in
 the default configuration."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -52,25 +50,24 @@ programs\" to include only the following accounts or groups:
 
     - Administrators"
   impact 0.7
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
-  tag 'gid': 'V-93065'
-  tag 'rid': 'SV-103153r1_rule'
-  tag 'stig_id': 'WN19-UR-000100'
-  tag 'fix_id': 'F-99311r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000324-GPOS-00125'
+  tag gid: 'V-93065'
+  tag rid: 'SV-103153r1_rule'
+  tag stig_id: 'WN19-UR-000100'
+  tag fix_id: 'F-99311r1_fix'
+  tag cci: ['CCI-002235']
+  tag nist: ['AC-6 (10)', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeDebugPrivilege') { should eq ['S-1-5-32-544'] }
+      its('SeDebugPrivilege') { should eq ['S-1-5-32-544'] }
+    end
   end
- end
 end
-

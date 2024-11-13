@@ -48,18 +48,19 @@ control 'V-93187' do
   hierarchy of time servers down to the local level. Clients and lower-level
   servers will synchronize with an authorized time server in the hierarchy."
   impact 0.3
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000355-GPOS-00143'
-  tag 'gid': 'V-93187'
-  tag 'rid': 'SV-103275r1_rule'
-  tag 'stig_id': 'WN19-00-000440'
-  tag 'fix_id': 'F-99433r1_fix'
-  tag 'cci': ['CCI-001891']
-  tag 'nist': ['AU-8 (1) (a)', 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000355-GPOS-00143'
+  tag gid: 'V-93187'
+  tag rid: 'SV-103275r1_rule'
+  tag stig_id: 'WN19-00-000440'
+  tag fix_id: 'F-99433r1_fix'
+  tag cci: ['CCI-001891']
+  tag nist: ['AU-8 (1) (a)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  case domain_role
+  when '4', '5'
     forest_pdce = powershell('(Get-ADDomain).PDCEmulator').stdout.strip
     if forest_pdce.downcase.include? sys_info.hostname.downcase
       # forest pdc emulator should be uniquely configured.
@@ -75,7 +76,7 @@ control 'V-93187' do
         its('type') { should cmp 'NT5DS' }
       end
     end
-  elsif domain_role == '3'
+  when '3'
     # just a memberserver
     describe.one do
       describe w32time_config do

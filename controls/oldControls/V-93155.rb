@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93155" do
+control 'V-93155' do
   title "Windows Server 2019 must be configured to audit Account Logon -
 Credential Validation failures."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Credential Validation records events related to validation tests on
 credentials for a user account logon."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -35,14 +33,14 @@ Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Account Logon >> \"Audit Credential Validation\" with
 \"Failure\" selected."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000470-GPOS-00214'
-  tag 'gid': 'V-93155'
-  tag 'rid': 'SV-103243r1_rule'
-  tag 'stig_id': 'WN19-AU-000080'
-  tag 'fix_id': 'F-99401r1_fix'
-  tag 'cci': ["CCI-000172"]
-  tag 'nist': ["AU-12 c", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000470-GPOS-00214'
+  tag gid: 'V-93155'
+  tag rid: 'SV-103243r1_rule'
+  tag stig_id: 'WN19-AU-000080'
+  tag fix_id: 'F-99401r1_fix'
+  tag cci: ['CCI-000172']
+  tag nist: ['AU-12 c', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -52,6 +50,4 @@ System Audit Policies >> Account Logon >> \"Audit Credential Validation\" with
       its('Credential Validation') { should eq 'Success and Failure' }
     end
   end
-
 end
-

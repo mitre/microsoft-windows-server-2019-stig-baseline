@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93017" do
+control 'V-93017' do
   title "Windows Server 2019 Allow log on locally user right must only be
 assigned to the Administrators group."
   desc  "Inappropriate granting of user rights can provide system,
@@ -8,7 +6,7 @@ administrative, and other high-level capabilities.
 
     Accounts with the \"Allow log on locally\" user right can log on
 interactively to a system."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc 'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -47,17 +45,16 @@ on locally\" to include only the following accounts or groups:
 
     - Administrators"
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000080-GPOS-00048'
-  tag 'gid': 'V-93017'
-  tag 'rid': 'SV-103105r1_rule'
-  tag 'stig_id': 'WN19-UR-000030'
-  tag 'fix_id': 'F-99263r1_fix'
-  tag 'cci': ["CCI-000213"]
-  tag 'nist': ["AC-3", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000080-GPOS-00048'
+  tag gid: 'V-93017'
+  tag rid: 'SV-103105r1_rule'
+  tag stig_id: 'WN19-UR-000030'
+  tag fix_id: 'F-99263r1_fix'
+  tag cci: ['CCI-000213']
+  tag nist: ['AC-3', 'Rev_4']
 
-    describe security_policy do
-      its('SeInteractiveLogonRight') { should eq ['S-1-5-32-544'] }
-    end
+  describe security_policy do
+    its('SeInteractiveLogonRight') { should eq ['S-1-5-32-544'] }
+  end
 end
-

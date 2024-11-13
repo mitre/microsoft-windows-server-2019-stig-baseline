@@ -1,11 +1,9 @@
-# encoding: UTF-8
-
 control 'V-92975' do
-  title "Windows Server 2019 must automatically remove or disable temporary user accounts after #{input('temporary_account_period')*24} hours."
+  title "Windows Server 2019 must automatically remove or disable temporary user accounts after #{input('temporary_account_period') * 24} hours."
   desc  "If temporary user accounts remain active when no longer needed or for an excessive period, these accounts may be used to gain unauthorized access. To mitigate this risk, automated termination of all temporary accounts must be set upon account creation.
 
   Temporary accounts are established as part of normal account activation procedures when there is a need for short-term accounts without the demand for immediacy in account activation.
-  If temporary accounts are used, the operating system must be configured to automatically terminate these types of accounts after a #{input('org_name')[:acronym]}-defined time period of #{input('temporary_account_period')*24} hours.
+  If temporary accounts are used, the operating system must be configured to automatically terminate these types of accounts after a #{input('org_name')[:acronym]}-defined time period of #{input('temporary_account_period') * 24} hours.
   To address access requirements, many operating systems may be integrated with enterprise-level authentication/access mechanisms that meet or exceed access control policy requirements."
   desc  'rationale', ''
   desc  'check', "Review temporary user accounts for expiration dates.
@@ -14,29 +12,29 @@ control 'V-92975' do
   Domain Controllers:
   Open \"PowerShell\".
   Enter \"Search-ADAccount -AccountExpiring | FT Name, AccountExpirationDate\".
-  If \"AccountExpirationDate\" has not been defined within #{input('temporary_account_period')*24} hours for any temporary user account, this is a finding.
+  If \"AccountExpirationDate\" has not been defined within #{input('temporary_account_period') * 24} hours for any temporary user account, this is a finding.
 
   Member servers and standalone systems:
   Open \"Command Prompt\".
   Run \"Net user [username]\", where [username] is the name of the temporary user account.
-  If \"Account expires\" has not been defined within #{input('temporary_account_period')*24} hours for any temporary user account, this is a finding."
-  desc 'fix', "Configure temporary user accounts to automatically expire within #{input('temporary_account_period')*24} hours.
+  If \"Account expires\" has not been defined within #{input('temporary_account_period') * 24} hours for any temporary user account, this is a finding."
+  desc 'fix', "Configure temporary user accounts to automatically expire within #{input('temporary_account_period') * 24} hours.
   Domain accounts can be configured with an account expiration date, under \"Account\" properties.
   Local accounts can be configured to expire with the command \"Net user [username] /expires:[mm/dd/yyyy]\", where username is the name of the temporary user account.
   Delete any temporary user accounts that are no longer necessary."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000002-GPOS-00002'
-  tag 'gid': 'V-92975'
-  tag 'rid': 'SV-103063r1_rule'
-  tag 'stig_id': 'WN19-00-000300'
-  tag 'fix_id': 'F-99221r1_fix'
-  tag 'cci': ['CCI-000016']
-  tag 'nist': ['AC-2 (2)', 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000002-GPOS-00002'
+  tag gid: 'V-92975'
+  tag rid: 'SV-103063r1_rule'
+  tag stig_id: 'WN19-00-000300'
+  tag fix_id: 'F-99221r1_fix'
+  tag cci: ['CCI-000016']
+  tag nist: ['AC-2 (2)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     expiring_accounts = []
     temporary_accounts = input('temp_accounts_domain')
     unless temporary_accounts == [nil]
@@ -64,6 +62,7 @@ control 'V-92975' do
       when Array # Multiple user accounts
         ad_accounts.each do |ad_account|
           next if ad_account.fetch('AccountExpirationDate').nil?
+
           expiring_accounts << ad_account unless expiring_accounts.any? { |h| h['SamAccountName'] == ad_account.fetch('SamAccountName') }
         end
       end
@@ -76,17 +75,17 @@ control 'V-92975' do
     else
       expiring_accounts.each do |expiring_account|
         account_name = expiring_account.fetch('SamAccountName')
-        if expiring_account.fetch("WhenCreated") == nil
+        if expiring_account.fetch('WhenCreated').nil?
           describe "#{account_name} account's creation date" do
-            subject { expiring_account.fetch("WhenCreated") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('WhenCreated') }
+            it { should_not eq nil }
           end
-        elsif expiring_account.fetch("AccountExpirationDate") == nil
+        elsif expiring_account.fetch('AccountExpirationDate').nil?
           describe "#{account_name} account's expiration date" do
-            subject { expiring_account.fetch("AccountExpirationDate") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('AccountExpirationDate') }
+            it { should_not eq nil }
           end
-        else  
+        else
           creation_date = Date.parse(expiring_account.fetch('WhenCreated'))
           expiration_date = Date.parse(expiring_account.fetch('AccountExpirationDate'))
           date_difference = expiration_date.mjd - creation_date.mjd
@@ -125,6 +124,7 @@ control 'V-92975' do
       when Array # Multiple user accounts
         local_users.each do |local_user|
           next if local_user.fetch('AccountExpires').nil? || local_user.fetch('PasswordLastSet').nil?
+
           expiring_users << local_user unless expiring_users.any? { |h| h['Name'] == local_user.fetch('Name') }
         end
       end
@@ -137,15 +137,15 @@ control 'V-92975' do
     else
       expiring_users.each do |expiring_account|
         user_name = expiring_account.fetch('Name')
-        if expiring_account.fetch("PasswordLastSet") == nil
+        if expiring_account.fetch('PasswordLastSet').nil?
           describe "#{user_name} account's password last set date" do
-            subject { expiring_account.fetch("PasswordLastSet") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('PasswordLastSet') }
+            it { should_not eq nil }
           end
-        elsif expiring_account.fetch("AccountExpires") == nil
+        elsif expiring_account.fetch('AccountExpires').nil?
           describe "#{user_name} account's expiration date" do
-            subject { expiring_account.fetch("AccountExpires") }
-            it { should_not eq nil}
+            subject { expiring_account.fetch('AccountExpires') }
+            it { should_not eq nil }
           end
         else
           password_date = Date.parse(expiring_account.fetch('PasswordLastSet'))

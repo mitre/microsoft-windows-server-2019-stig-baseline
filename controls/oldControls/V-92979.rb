@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-92979" do
+control 'V-92979' do
   title "Windows Server 2019 must be configured to audit Account Management -
 Security Group Management successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Security Group Management records events such as creating, deleting, or
 changing security groups, including changes in group members."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -35,18 +33,18 @@ Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Account Management >> \"Audit Security Group
 Management\" with \"Success\" selected."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000004-GPOS-00004'
-  tag 'satisfies': ["SRG-OS-000004-GPOS-00004", "SRG-OS-000239-GPOS-00089",
-"SRG-OS-000240-GPOS-00090", "SRG-OS-000241-GPOS-00091",
-"SRG-OS-000303-GPOS-00120", "SRG-OS-000476-GPOS-00221"]
-  tag 'gid': 'V-92979'
-  tag 'rid': 'SV-103067r1_rule'
-  tag 'stig_id': 'WN19-AU-000100'
-  tag 'fix_id': 'F-99225r1_fix'
-  tag 'cci': ["CCI-000018", "CCI-000172", "CCI-001403", "CCI-001404",
-"CCI-001405", "CCI-002130"]
-  tag 'nist': ["AC-2 (4)", "AU-12 c", "AC-2 (4)", "AC-2 (4)", "AC-2 (4)", "AC-2(4)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000004-GPOS-00004'
+  tag satisfies: ['SRG-OS-000004-GPOS-00004', 'SRG-OS-000239-GPOS-00089',
+                  'SRG-OS-000240-GPOS-00090', 'SRG-OS-000241-GPOS-00091',
+                  'SRG-OS-000303-GPOS-00120', 'SRG-OS-000476-GPOS-00221']
+  tag gid: 'V-92979'
+  tag rid: 'SV-103067r1_rule'
+  tag stig_id: 'WN19-AU-000100'
+  tag fix_id: 'F-99225r1_fix'
+  tag cci: ['CCI-000018', 'CCI-000172', 'CCI-001403', 'CCI-001404',
+            'CCI-001405', 'CCI-002130']
+  tag nist: ['AC-2 (4)', 'AU-12 c', 'AC-2 (4)', 'AC-2 (4)', 'AC-2 (4)', 'AC-2(4)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -57,4 +55,3 @@ Management\" with \"Success\" selected."
     end
   end
 end
-

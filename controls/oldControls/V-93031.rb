@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93031" do
+control 'V-93031' do
   title "Windows Server 2019 Active Directory SYSVOL directory must have the
 proper access control permissions."
   desc  "Improper access permissions for directory data files could allow
@@ -9,8 +7,8 @@ unauthorized users to read, modify, or delete directory data.
     The SYSVOL directory contains public files (to the domain) such as policies
 and logon scripts. Data in shared subdirectories are replicated to all domain
 controllers in a domain."
-  desc  "rationale", ""
-  desc  "check", "This applies to domain controllers. It is NA for other systems.
+  desc  'rationale', ''
+  desc  'check', "This applies to domain controllers. It is NA for other systems.
 
     Open a command prompt.
 
@@ -70,7 +68,7 @@ all selected except Full control)
     CREATOR OWNER - Full control - Subfolders and files only
     Administrators - Full control - Subfolders and files only
     SYSTEM - Full control - This folder, subfolders, and files"
-  desc  "fix", "
+  desc  'fix', "
     Maintain the permissions on the SYSVOL directory. Do not allow greater than
 \"Read & execute\" permissions for standard user accounts or groups. The
 defaults below meet this requirement:
@@ -89,20 +87,20 @@ all selected except Full control)
     Administrators - Full control - Subfolders and files only
     SYSTEM - Full control - This folder, subfolders, and files"
   impact 0.7
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
-  tag 'gid': 'V-93031'
-  tag 'rid': 'SV-103119r1_rule'
-  tag 'stig_id': 'WN19-DC-000080'
-  tag 'fix_id': 'F-99277r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000324-GPOS-00125'
+  tag gid: 'V-93031'
+  tag rid: 'SV-103119r1_rule'
+  tag stig_id: 'WN19-DC-000080'
+  tag fix_id: 'F-99277r1_fix'
+  tag cci: ['CCI-002235']
+  tag nist: ['AC-6 (10)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
-  if domain_role == '4' || domain_role == '5'
-   sysvol_perm = json( command: "icacls 'c:\\Windows\\SYSVOL' | ConvertTo-Json").params.map { |e| e.strip }[0..-3].map{ |e| e.gsub("c:\\Windows\\SYSVOL ", '') }
-   
-    describe "c:\\ permissions are set correctly on folder structure" do
+  if ['4', '5'].include?(domain_role)
+    sysvol_perm = json(command: "icacls 'c:\\Windows\\SYSVOL' | ConvertTo-Json").params.map(&:strip)[0..-3].map { |e| e.gsub('c:\\Windows\\SYSVOL ', '') }
+
+    describe 'c:\\ permissions are set correctly on folder structure' do
       subject { sysvol_perm.eql? input('c_windows_sysvol_perm') }
       it { should eq true }
     end
@@ -112,4 +110,3 @@ all selected except Full control)
     end
   end
 end
-

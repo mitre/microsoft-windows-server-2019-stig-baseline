@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93101" do
+control 'V-93101' do
   title "Windows Server 2019 must be configured to audit Privilege Use -
 Sensitive Privilege Use successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -13,7 +11,7 @@ assets and detecting signs of suspicious and unexpected behavior.
     Sensitive Privilege Use records events related to use of sensitive
 privileges, such as \"Act as part of the operating system\" or \"Debug
 programs\"."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -36,16 +34,16 @@ Windows Settings >> Security Settings >> Advanced Audit Policy Configuration >>
 System Audit Policies >> Privilege Use >> \"Audit Sensitive Privilege Use\"
 with \"Success\" selected."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000327-GPOS-00127'
-  tag 'satisfies': ["SRG-OS-000327-GPOS-00127", "SRG-OS-000064-GPOS-00033",
-"SRG-OS-000462-GPOS-00206", "SRG-OS-000466-GPOS-00210"]
-  tag 'gid': 'V-93101'
-  tag 'rid': 'SV-103189r1_rule'
-  tag 'stig_id': 'WN19-AU-000300'
-  tag 'fix_id': 'F-99347r1_fix'
-  tag 'cci': ["CCI-000172", "CCI-002234"]
-  tag 'nist': ["AU-12 c", "AC-6 (9)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000327-GPOS-00127'
+  tag satisfies: ['SRG-OS-000327-GPOS-00127', 'SRG-OS-000064-GPOS-00033',
+                  'SRG-OS-000462-GPOS-00206', 'SRG-OS-000466-GPOS-00210']
+  tag gid: 'V-93101'
+  tag rid: 'SV-103189r1_rule'
+  tag stig_id: 'WN19-AU-000300'
+  tag fix_id: 'F-99347r1_fix'
+  tag cci: ['CCI-000172', 'CCI-002234']
+  tag nist: ['AU-12 c', 'AC-6 (9)', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -56,4 +54,3 @@ with \"Success\" selected."
     end
   end
 end
-

@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93159" do
+control 'V-93159' do
   title "Windows Server 2019 must be configured to audit Logon/Logoff - Group
 Membership successes."
   desc  "Maintaining an audit trail of system activity logs can help identify
@@ -12,7 +10,7 @@ assets and detecting signs of suspicious and unexpected behavior.
 
     Audit Group Membership records information related to the group membership
 of a user's logon token."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Security Option \"Audit: Force audit policy subcategory settings (Windows
 Vista or later) to override audit policy category settings\" must be set to
 \"Enabled\" (WN19-SO-000050) for the detailed auditing subcategories to be
@@ -35,14 +33,14 @@ Windows Settings >> Advanced Audit Policy Configuration >> System Audit
 Policies >> Logon/Logoff >> \"Audit Group Membership\" with \"Success\"
 selected."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000470-GPOS-00214'
-  tag 'gid': 'V-93159'
-  tag 'rid': 'SV-103247r1_rule'
-  tag 'stig_id': 'WN19-AU-000170'
-  tag 'fix_id': 'F-99405r1_fix'
-  tag 'cci': ["CCI-000172"]
-  tag 'nist': ["AU-12 c", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000470-GPOS-00214'
+  tag gid: 'V-93159'
+  tag rid: 'SV-103247r1_rule'
+  tag stig_id: 'WN19-AU-000170'
+  tag fix_id: 'F-99405r1_fix'
+  tag cci: ['CCI-000172']
+  tag nist: ['AU-12 c', 'Rev_4']
 
   describe.one do
     describe audit_policy do
@@ -53,4 +51,3 @@ selected."
     end
   end
 end
-

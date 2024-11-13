@@ -1,10 +1,8 @@
-# encoding: UTF-8
-
-control "V-93319" do
-  title "Windows Server 2019 Exploit Protection system-level mitigation, Validate heap integrity, must be on."
-  desc  "Exploit protection enables mitigations against potential threats at the system and application level.  Several mitigations, including \"Validate heap integrity\", are enabled by default at the system level. \"Validate heap integrity\" terminates a process when heap corruption is detected. If this is turned off, Windows may be subject to various exploits."
-  desc  "rationale", ""
-  desc  "check", "This is applicable to unclassified systems, for other systems this is NA.
+control 'V-93319' do
+  title 'Windows Server 2019 Exploit Protection system-level mitigation, Validate heap integrity, must be on.'
+  desc  'Exploit protection enables mitigations against potential threats at the system and application level.  Several mitigations, including "Validate heap integrity", are enabled by default at the system level. "Validate heap integrity" terminates a process when heap corruption is detected. If this is turned off, Windows may be subject to various exploits.'
+  desc  'rationale', ''
+  desc  'check', "This is applicable to unclassified systems, for other systems this is NA.
 
     The default configuration in Exploit Protection is \"On by default\" which meets this requirement.  The PowerShell query results for this show as \"NOTSET\".
     Run \"Windows PowerShell\" with elevated privileges (run as administrator).
@@ -14,7 +12,7 @@ control "V-93319" do
 
     ON
     NOTSET (Default configuration)"
-  desc  "fix", "Ensure Exploit Protection system-level mitigation, \"Validate heap integrity\" is turned on. The default configuration in Exploit Protection is \"On by default\" which meets this requirement.
+  desc  'fix', "Ensure Exploit Protection system-level mitigation, \"Validate heap integrity\" is turned on. The default configuration in Exploit Protection is \"On by default\" which meets this requirement.
 
     Open \"Windows Defender Security Center\".
     Select \"App & browser control\".
@@ -30,15 +28,15 @@ control "V-93319" do
     The XML file is applied with the group policy setting Computer Configuration >> Administrative Settings >> Windows Components >> Windows Defender Exploit Guard >> Exploit Protection >> \"Use a common set of exploit protection settings\" configured to \"Enabled\" with file name and location defined under \"Options:\". It is recommended the file be in a read-only network location."
   impact 0.5
   tag severity: nil
-  tag gtitle: "SRG-OS-000480-GPOS-00227"
-  tag gid: "V-93319"
-  tag rid: "SV-103407r1_rule"
-  tag stig_id: "WN19-EP-000050"
-  tag fix_id: "F-99565r1_fix"
-  tag cci: ["CCI-000366"]
-  tag nist: ["CM-6 b", "Rev_4"]
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-93319'
+  tag rid: 'SV-103407r1_rule'
+  tag stig_id: 'WN19-EP-000050'
+  tag fix_id: 'F-99565r1_fix'
+  tag cci: ['CCI-000366']
+  tag nist: ['CM-6 b', 'Rev_4']
 
-  systemheap = json({ command: "Get-ProcessMitigation -System | ConvertTo-Json" }).params
+  systemheap = json({ command: 'Get-ProcessMitigation -System | ConvertTo-Json' }).params
 
   if input('sensitive_system') == true || nil
     impact 0.0
@@ -46,16 +44,16 @@ control "V-93319" do
       skip 'This Control is Not Applicable to sensitive systems.'
     end
   elsif systemheap.empty?
-    describe "Exploit Protection: the following mitigation" do
+    describe 'Exploit Protection: the following mitigation' do
       it "must be set to 'ON' for the System" do
-        failure_message = "Exploit Protection is not set"
+        failure_message = 'Exploit Protection is not set'
         expect(systemheap).not_to be_empty, failure_message
       end
     end
   else
     describe "Exploit Protection: the following mitigation must be set to 'ON' for the System" do
       subject { systemheap }
-      its(['Heap','TerminateOnError']) { should be_between(0,1) }
+      its(['Heap', 'TerminateOnError']) { should be_between(0, 1) }
     end
   end
 end

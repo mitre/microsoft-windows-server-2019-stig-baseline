@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93083" do
+control 'V-93083' do
   title "Windows Server 2019 Profile single process user right must only be
 assigned to the Administrators group."
   desc  "Inappropriate granting of user rights can provide system,
@@ -9,7 +7,7 @@ administrative, and other high-level capabilities.
     Accounts with the \"Profile single process\" user right can monitor
 non-system processes performance. An attacker could use this to identify
 processes to attack."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -38,25 +36,24 @@ single process\" to include only the following accounts or groups:
 
     - Administrators"
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
-  tag 'gid': 'V-93083'
-  tag 'rid': 'SV-103171r1_rule'
-  tag 'stig_id': 'WN19-UR-000200'
-  tag 'fix_id': 'F-99329r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000324-GPOS-00125'
+  tag gid: 'V-93083'
+  tag rid: 'SV-103171r1_rule'
+  tag stig_id: 'WN19-UR-000200'
+  tag fix_id: 'F-99329r1_fix'
+  tag cci: ['CCI-002235']
+  tag nist: ['AC-6 (10)', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeProfileSingleProcessPrivilege') { should eq ['S-1-5-32-544'] }
+      its('SeProfileSingleProcessPrivilege') { should eq ['S-1-5-32-544'] }
+    end
   end
- end
 end
-

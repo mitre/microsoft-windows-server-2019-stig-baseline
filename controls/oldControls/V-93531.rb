@@ -22,7 +22,7 @@ control 'V-93531' do
   tag stig_id: 'WN19-00-000230'
   tag fix_id: 'F-99775r1_fix'
   tag cci: ['CCI-001090']
-  tag nist: %w(SC-4 Rev_4)
+  tag nist: %w[SC-4 Rev_4]
 
   net_shares = json({ command: 'Get-SMBShare -Special $false | Where-Object -Property Name -notin C$,ADMIN$,IPC$,NETLOGON,SYSVOL | Select Name, Path | ConvertTo-Json' }).params
 

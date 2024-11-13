@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93063" do
+control 'V-93063' do
   title "Windows Server 2019 Create symbolic links user right must only be
 assigned to the Administrators group."
   desc  "Inappropriate granting of user rights can provide system,
@@ -8,7 +6,7 @@ administrative, and other high-level capabilities.
 
     Accounts with the \"Create symbolic links\" user right can create pointers
 to other objects, which could expose the system to attack."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "Verify the effective setting in Local Group Policy Editor.
 
     Run \"gpedit.msc\".
@@ -45,25 +43,24 @@ symbolic links\" to include only the following accounts or groups:
 given this user right. If this needs to be added manually, enter it as \"NT
 Virtual Machine\\Virtual Machines\". "
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
-  tag 'gid': 'V-93063'
-  tag 'rid': 'SV-103151r1_rule'
-  tag 'stig_id': 'WN19-UR-000090'
-  tag 'fix_id': 'F-99309r1_fix'
-  tag 'cci': ["CCI-002235"]
-  tag 'nist': ["AC-6 (10)", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000324-GPOS-00125'
+  tag gid: 'V-93063'
+  tag rid: 'SV-103151r1_rule'
+  tag stig_id: 'WN19-UR-000090'
+  tag fix_id: 'F-99309r1_fix'
+  tag cci: ['CCI-002235']
+  tag nist: ['AC-6 (10)', 'Rev_4']
 
   os_type = command('Test-Path "$env:windir\explorer.exe"').stdout.strip
 
   if os_type == 'False'
-     describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
+    describe 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt' do
       skip 'This system is a Server Core Installation, and a manual check will need to be performed with command Secedit /Export /Areas User_Rights /cfg c:\\path\\filename.txt'
-     end
+    end
   else
     describe security_policy do
-     its('SeCreateSymbolicLinkPrivilege') { should eq ['S-1-5-32-544'] }
+      its('SeCreateSymbolicLinkPrivilege') { should eq ['S-1-5-32-544'] }
+    end
   end
- end
 end
-

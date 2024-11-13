@@ -78,16 +78,16 @@ control 'V-93019' do
       Users - Create files/write data - Subfolders only
       CREATOR OWNER - Full Control - Subfolders and files only"
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000312-GPOS-00122'
-  tag 'satisfies': %w(SRG-OS-000312-GPOS-00122 SRG-OS-000312-GPOS-00123
-SRG-OS-000312-GPOS-00124)
-  tag 'gid': 'V-93019'
-  tag 'rid': 'SV-103107r1_rule'
-  tag 'stig_id': 'WN19-00-000140'
-  tag 'fix_id': 'F-99265r1_fix'
-  tag 'cci': ['CCI-002165']
-  tag 'nist': ['AC-3 (4)', 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000312-GPOS-00122'
+  tag satisfies: %w[SRG-OS-000312-GPOS-00122 SRG-OS-000312-GPOS-00123
+                    SRG-OS-000312-GPOS-00124]
+  tag gid: 'V-93019'
+  tag rid: 'SV-103107r1_rule'
+  tag stig_id: 'WN19-00-000140'
+  tag fix_id: 'F-99265r1_fix'
+  tag cci: ['CCI-002165']
+  tag nist: ['AC-3 (4)', 'Rev_4']
 
   expected_c_perm = input('c_perm')
   describe.one do

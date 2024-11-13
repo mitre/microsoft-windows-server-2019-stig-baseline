@@ -43,14 +43,14 @@ this is a finding:
     (I) - permission inherited from parent container
     (F) - full access"
   impact 0.7
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000324-GPOS-00125'
-  tag 'gid': 'V-93029'
-  tag 'rid': 'SV-103117r1_rule'
-  tag 'stig_id': 'WN19-DC-000070'
-  tag 'fix_id': 'F-99275r1_fix'
-  tag 'cci': ['CCI-002235']
-  tag 'nist': ['AC-6 (10)', 'Rev_4']
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000324-GPOS-00125'
+  tag gid: 'V-93029'
+  tag rid: 'SV-103117r1_rule'
+  tag stig_id: 'WN19-DC-000070'
+  tag fix_id: 'F-99275r1_fix'
+  tag cci: ['CCI-002235']
+  tag nist: ['AC-6 (10)', 'Rev_4']
 
   domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
@@ -59,7 +59,7 @@ this is a finding:
   # Command Gets the Location of the Property Required
   ntds_dsa_working_directory = json(command: 'Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\NTDS\\Parameters | Select-Object -ExpandProperty "DSA Working Directory" | ConvertTo-Json').params
   expected_permissions = input('ntds_permissions')
-  if domain_role == '4' || domain_role == '5'
+  if ['4', '5'].include?(domain_role)
     if ntds_database_logs_files_path == ntds_dsa_working_directory
       perms = json(command: "icacls '#{ntds_dsa_working_directory}\\*.*' | convertto-json").params.map(&:strip)[0..-3].map { |e| e.gsub(/^[^\s]*\s/, '') }.reject(&:empty?)
       describe "Permissions on each file in #{ntds_dsa_working_directory} is set" do

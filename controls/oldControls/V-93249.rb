@@ -1,6 +1,4 @@
-# encoding: UTF-8
-
-control "V-93249" do
+control 'V-93249' do
   title "Windows Server 2019 Early Launch Antimalware, Boot-Start Driver
 Initialization Policy must prevent boot drivers identified as bad."
   desc  "Compromised boot drivers can introduce malware prior to protection
@@ -8,7 +6,7 @@ mechanisms that load after initialization. The Early Launch Antimalware driver
 can limit allowed drivers based on classifications determined by the malware
 protection application. At a minimum, drivers determined to be bad must not be
 allowed."
-  desc  "rationale", ""
+  desc  'rationale', ''
   desc  'check', "The default behavior is for Early Launch Antimalware - Boot-Start Driver
 Initialization policy to enforce \"Good, unknown and bad but critical\"
 (preventing \"bad\").
@@ -42,14 +40,14 @@ Templates >> System >> Early Launch Antimalware >> \"Boot-Start Driver
 Initialization Policy\" to \"Not Configured\" or \"Enabled\" with any option
 other than \"All\" selected."
   impact 0.5
-  tag 'severity': nil
-  tag 'gtitle': 'SRG-OS-000480-GPOS-00227'
-  tag 'gid': 'V-93249'
-  tag 'rid': 'SV-103337r1_rule'
-  tag 'stig_id': 'WN19-CC-000130'
-  tag 'fix_id': 'F-99495r1_fix'
-  tag 'cci': ["CCI-000366"]
-  tag 'nist': ["CM-6 b", "Rev_4"]
+  tag severity: nil
+  tag gtitle: 'SRG-OS-000480-GPOS-00227'
+  tag gid: 'V-93249'
+  tag rid: 'SV-103337r1_rule'
+  tag stig_id: 'WN19-CC-000130'
+  tag fix_id: 'F-99495r1_fix'
+  tag cci: ['CCI-000366']
+  tag nist: ['CM-6 b', 'Rev_4']
 
   describe.one do
     describe registry_key('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Policies\EarlyLaunch') do
@@ -61,4 +59,3 @@ other than \"All\" selected."
     end
   end
 end
-
