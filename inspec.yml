@@ -28,12 +28,12 @@ inputs:
     value:
       -
 
-  - name: temporary_account_period # V-92975
+  - name: temporary_account_period # SV-205624
     desc: "List the number of days that temporary accounts remain active for"
     type: Numeric
     value: 3
 
-  - name: emergency_accounts_domain # V-92977
+  - name: emergency_accounts_domain # SV-205710
     desc: "List of emergency accounts on the domain"
     type: Array
     value:
@@ -50,17 +50,17 @@ inputs:
     type: Numeric
     value: 3
 
-  - name: max_pass_lockout # V-93141
+  - name: max_pass_lockout # SV-205629
     desc: "Account lockout threshold is recommended to be 3 or less invalid logon attempts [3]"
     type: Numeric
     value: 3
 
-  - name: pass_lock_time # V-93143
+  - name: pass_lock_time # SV-205630
     desc: "List the number of minutes before a session is locked out [15]"
     type: Numeric
     value: 15
 
-  - name: pass_lock_duration # V-93145
+  - name: pass_lock_duration # SV-205795
     desc: "List the number of minutes for account lockout duration"
     type: Numeric
     value: 15
