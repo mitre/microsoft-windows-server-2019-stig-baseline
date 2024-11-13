@@ -1,6 +1,6 @@
 control 'SV-205710' do
-  title 'Windows Server 2019 must automatically remove or disable emergency accounts after the crisis is resolved or within 72 hours.'
-  desc 'Emergency administrator accounts are privileged accounts established in response to crisis situations where the need for rapid account activation is required. Therefore, emergency account activation may bypass normal account authorization processes. If these accounts are automatically disabled, system maintenance during emergencies may not be possible, thus adversely affecting system availability.
+  title "Windows Server 2019 must automatically remove or disable emergency accounts after the crisis is resolved or within #{input('emergency_account_period')*24} hours."
+  desc "Emergency administrator accounts are privileged accounts established in response to crisis situations where the need for rapid account activation is required. Therefore, emergency account activation may bypass normal account authorization processes. If these accounts are automatically disabled, system maintenance during emergencies may not be possible, thus adversely affecting system availability.
 
 Emergency administrator accounts are different from infrequently used accounts (i.e., local logon accounts used by system administrators when network or normal logon/access is not available). Infrequently used accounts are not subject to automatic termination dates. Emergency accounts are accounts created in response to crisis situations, usually for use by maintenance personnel. The automatic expiration or disabling time period may be extended as needed until the crisis is resolved; however, it must not be extended indefinitely. A permanent account should be established for privileged users who need long-term maintenance accounts.
 
@@ -13,24 +13,24 @@ If emergency administrator accounts have not been configured with an expiration 
 
 Domain Controllers:
 
-Open "PowerShell".
+Open \"PowerShell\".
 
-Enter "Search-ADAccount -AccountExpiring | FT Name, AccountExpirationDate".
+Enter \"Search-ADAccount -AccountExpiring | FT Name, AccountExpirationDate\".
 
-If "AccountExpirationDate" has been defined and is not within 72 hours for an emergency administrator account, this is a finding.
+If \"AccountExpirationDate\" has been defined and is not within #{input('emergency_account_period')*24} hours for an emergency administrator account, this is a finding.
 
 Member servers and standalone or nondomain-joined systems:
 
-Open "Command Prompt".
+Open \"Command Prompt\".
 
-Run "Net user [username]", where [username] is the name of the emergency account.
+Run \"Net user [username]\", where [username] is the name of the emergency account.
 
-If "Account expires" has been defined and is not within 72 hours for an emergency administrator account, this is a finding.'
-  desc 'fix', 'Remove emergency administrator accounts after a crisis has been resolved or configure the accounts to automatically expire within 72 hours.
+If \"Account expires\" has been defined and is not within #{input('emergency_account_period')*24} hours for an emergency administrator account, this is a finding."
+  desc 'fix', "Remove emergency administrator accounts after a crisis has been resolved or configure the accounts to automatically expire within #{input('emergency_account_period')*24} hours.
 
-Domain accounts can be configured with an account expiration date, under "Account" properties.
+Domain accounts can be configured with an account expiration date, under \"Account\" properties.
 
-Local accounts can be configured to expire with the command "Net user [username] /expires:[mm/dd/yyyy]", where username is the name of the temporary user account.'
+Local accounts can be configured to expire with the command \"Net user [username] /expires:[mm/dd/yyyy]\", where username is the name of the temporary user account."
   impact 0.5
   ref 'DPMS Target Microsoft Windows Server 2019'
   tag severity: 'medium'
