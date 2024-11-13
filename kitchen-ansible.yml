@@ -1,0 +1,52 @@
+driver:
+  name: vagrant
+  #provision: true
+  guest: :windows
+  gui: true
+  winrm:
+     username: vagrant
+     password: vagrant
+  customize:
+    cpus: 4
+    memory: 8192
+    accelerate3d: "off"
+    accelerate2dvideo: "off"
+    audio: "none"
+    usbcardreader: "off"
+    vrde: "off"
+    usb: "off"
+    nictype1: "82540EM"
+    clipboard: "disabled"
+    #nestedpaging: "off"
+
+transport:
+  name: winrm
+#  elevated: true
+
+provisioner:
+  name: ansible_playbook
+  roles_path: ./test/ansible
+  playbook: ./test/ansible/site.yml
+  hosts: all
+  deprecations_as_errors: true
+  ansible_connection: winrm
+  require_windows_support: true
+  require_chef_for_busser: false
+
+verifier:
+  name: inspec
+  inspec_tests:
+    - name: microsoft-windows-server-2019-stig
+      path: .
+  reporter:
+    - cli
+    - json:results/%{suite}-test-result.json
+
+
+platforms:
+  - name: windows-2019
+    driver:
+      box: stromweld/windows-2019
+
+suites:
+  - name: AnsibleWin2019STIG
