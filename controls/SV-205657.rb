@@ -58,6 +58,23 @@ https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-overview#win
         end
       end
     end
+
+    # Verify LAPS configuration
+    laps_config = command('Get-GPResultantSetOfPolicy -Computer -ReportType XML | Select-String -Pattern "LAPS"').stdout
+    describe 'LAPS Configuration' do
+      it 'LAPS must be configured and operational.' do
+        expect(laps_config).not_to be_empty
+      end
+    end
+
+    # Verify LAPS operational logs
+    laps_logs = command('Get-WinEvent -LogName "Microsoft-Windows-LAPS/Operational" | Select-Object -First 1').stdout
+    describe 'LAPS Operational Logs' do
+      it 'LAPS policy process must be completing.' do
+        expect(laps_logs).not_to be_empty
+      end
+    end
+
     local_password_set_date = json({ command: "Get-LocalUser -name #{administrator} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-60)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
     local_date = local_password_set_date['DateTime']
     describe 'Password Last Set Date' do
