@@ -1,8 +1,8 @@
 control 'SV-205736' do
   title 'Windows Server 2019 permissions for the Windows installation directory must conform to minimum requirements.'
-  desc %q(Changing the system's file and directory permissions allows the possibility of unauthorized and anonymous modification to the operating system and installed applications.
+  desc 'Changing the system\'s file and directory permissions allows the possibility of unauthorized and anonymous modification to the operating system and installed applications.
 
-The default permissions are adequate when the Security Option "Network access: Let Everyone permissions apply to anonymous users" is set to "Disabled" (WN19-SO-000240).)
+The default permissions are adequate when the Security Option "Network access: Let Everyone permissions apply to anonymous users" is set to "Disabled" (WN19-SO-000240).'
   desc 'check', 'The default permissions are adequate when the Security Option "Network access: Let Everyone permissions apply to anonymous users" is set to "Disabled" (WN19-SO-000240).
 
 Review the permissions for the Windows installation directory (usually C:\\Windows). Non-privileged groups such as Users or Authenticated Users must not have greater than "Read & execute" permissions. Individual accounts must not be used to assign permissions.
