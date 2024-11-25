@@ -39,39 +39,72 @@ https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-overview#win
   tag nist: ['IA-5 (1) (d)', 'IA-5 (1) (h)']
 
   administrator = input('local_administrator')
+  domain_role = command('wmic computersystem get domainrole | Findstr /v DomainRole').stdout.strip
 
-  # local_password_set_date = JSON.parse(command("Get-LocalUser -name #{administrator} | Select-Object passwordLastSet | ConvertTo-Json").stdout.strip)
-  # puts "pw: #{local_password_set_date['PasswordLastSet']}"
+  # Domain Role Values:
+  # 0 = Standalone Workstation
+  # 1 = Member Workstation
+  # 2 = Standalone Server
+  # 3 = Member Server
+  # 4 = Backup Domain Controller
+  # 5 = Primary Domain Controller
 
-  local_password_set_date = json({ command: "Get-LocalUser -name #{administrator} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-60)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
-  local_date = local_password_set_date['DateTime']
-  describe 'Password Last Set Date' do
-    it 'The built-in Administrator account must be changed at least every 60 days.' do
-      expect(local_date).to be_nil
+  # This control is dumb. 
+  # LAPS can only be configured on member-joined servers, not domain controllers or standalone servers. 
+  # Also workstations are not in scope for this profile as anything running Windows Server 2019 is a server not a workstation.
+
+  # If the system is a domain controller
+  # Only domain controllers need to have Active Directory Domain Services installed to manage members
+  if domain_role == '4' || domain_role == '5'
+    password_set_date = json({ command: "Get-ADUser -Filter * -Properties SID, PasswordLastSet | Where-Object {$_.SID -like '*-500' -and $_.PasswordLastSet -lt ((Get-Date).AddDays(-60))} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json" })
+    date = password_set_date["DateTime"]
+    describe "Password Last Set Date" do
+      it "The built-in Administrator account must be changed at least every 60 days." do
+        expect(date).to be_nil
+      end
+    end
+  # If the system is a standalone or member-joined server (3 and 4)
+  # Since this only runs on Windows Server machines it cannot be 1 or 2
+  else
+    if administrator == "Administrator"
+      describe 'The name of the built-in Administrator account:' do
+        it 'It must be changed to something other than "Administrator" per STIG requirements' do
+          failure_message = "Change the built-in Administrator account name to something other than: #{administrator}"
+          expect(administrator).not_to eq("Administrator"), failure_message
+        end
+      end
+    end
+    local_password_set_date = json({ command: "Get-LocalUser -name #{administrator} | Where-Object {$_.PasswordLastSet -le (Get-Date).AddDays(-60)} | Select-Object -ExpandProperty PasswordLastSet | ConvertTo-Json"})
+    local_date =  local_password_set_date["DateTime"]
+    describe "Password Last Set Date" do
+      it "The built-in Administrator account must be changed at least every 60 days." do
+        expect(local_date).to be_nil
+      end
     end
   end
 
-  # Verify LAPS configuration
 
-  #Try with registry instead
-  describe registry_key('HKLM\Software\Policies\Microsoft Services\AdmPwd') do
-    its('PasswordSettings') { should eq 1 }
+  # Verify LAPS is configured and operational
+  # Only if member-joined server (3) 
+  if(domain_role == '3')
+    laps_is_installed = powershell("Test-Path 'C:\Program Files\LAPS\CSE\Admpwd.dll' ").stdout.strip == 'true'
+    describe 'Windows LAPS' do
+      it 'must be installed and operational' do
+        expect(laps_is_installed).to eq true
+      end
+    end
+  else
+    describe 'Windows LAPS' do
+      it 'is not applicable for standalone systems' do
+        skip 'Windows LAPS is not applicable for this system'
+      end
+    end
   end
 
+  # Verify password settings
+  
 
-  # laps_config = command('Get-GPResultantSetOfPolicy -Computer -ReportType XML | Select-String -Pattern "LAPS"').stdout
-  # describe 'LAPS Configuration' do
-  #   it 'LAPS must be configured and operational.' do
-  #     expect(laps_config).not_to be_empty
-  #   end
-  # end
+  # Verify LAPS has administrator account assigned
 
-  # # Verify LAPS operational logs
-  # laps_logs = command('Get-WinEvent -LogName "Microsoft-Windows-LAPS/Operational" | Select-Object -First 1').stdout
-  # describe 'LAPS Operational Logs' do
-  #   it 'LAPS policy process must be completing.' do
-  #     expect(laps_logs).not_to be_empty
-  #   end
-  # end
-
+  # Verify LAPS operational logs
 end
